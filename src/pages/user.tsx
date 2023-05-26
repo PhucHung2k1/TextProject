@@ -1,6 +1,6 @@
 import React from "react";
-import { User } from "@/services/user.services/user.interface";
-import { UserServices } from "@/services/user.services/user.services";
+import { User } from "@/services/user.service/user.interface";
+import { UserServices } from "@/services/user.service/user.services";
 import { Popover } from "antd";
 
 interface UserPageProps {
@@ -23,7 +23,7 @@ function UserPage({ userList }: UserPageProps) {
               </a>
             </div>
           </div>
-         
+
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
               List User
