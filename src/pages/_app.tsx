@@ -19,11 +19,11 @@ NProgress.configure({
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  Router.events.on("routeChangeStart", (_url) => {
+  Router.events.on("routeChangeStart", (_url: any) => {
     NProgress.start();
   });
 
-  Router.events.on("routeChangeComplete", (_url) => {
+  Router.events.on("routeChangeComplete", (_url: any) => {
     NProgress.done();
   });
 
