@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Input } from "antd";
 
 import Link from "next/link";
-export interface LoginFormProps {}
+
 const listDataForm = [
   {
     label: "First Name",
