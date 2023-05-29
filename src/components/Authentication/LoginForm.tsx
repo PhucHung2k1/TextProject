@@ -5,9 +5,15 @@ import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { RootState } from "@/store/store";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 
 import { useState } from "react";
 export interface LoginFormProps {}
+
+interface dataTypeProps {
+  email: string;
+  password: string;
+}
 
 export default function LoginForm(props: LoginFormProps) {
   const router = useRouter();
@@ -15,6 +21,16 @@ export default function LoginForm(props: LoginFormProps) {
   const listCustomer = useAppSelector(
     (state: RootState) => state.customer.listCustomer
   );
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data: dataTypeProps) => {
+    console.log(data);
+  };
+
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (value: string) => {
@@ -36,13 +52,14 @@ export default function LoginForm(props: LoginFormProps) {
         icon="password"
         value={inputValue}
         onChange={handleInputChange}
+        typeInput="password"
       />
 
       <div className="flex items-center justify-between w-full">
         <Checkbox onChange={onChange} className="text-26 text-base">
           Remember me
         </Checkbox>
-        <div className="text-mango-primary-blue text-base font-medium">
+        <div className="text-mango-primary-blue text-base font-medium cursor-pointer">
           Forgot Password?
         </div>
       </div>
@@ -51,7 +68,7 @@ export default function LoginForm(props: LoginFormProps) {
       </div>
       <div className="flex items-center justify-center gap-2">
         <div>Don't have an account? </div>
-        <div className="text-mango-primary-blue text-base font-medium">
+        <div className="text-mango-primary-blue text-base font-medium cursor-pointer">
           Create an account
         </div>
       </div>

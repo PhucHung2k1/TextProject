@@ -17,20 +17,20 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
           className="w-[50%]"
         />
 
-        <div className="flex flex-col items-center mt-20 w-[70%]">
+        <div className="flex flex-col items-center mt-20 w-[80%]">
           {type == "login" ? (
             <>
               <p className="text-2xl text-[#262626]">Welcome back to</p>
-              <p className=" text-[40px]  font-bold text-[#262626]">
+              <p className=" text-[35px]  font-bold text-[#262626]">
                 Mango For Salon
               </p>
             </>
           ) : type == "register" ? (
-            <p className=" text-[40px]  font-bold text-[#262626]">
+            <p className=" text-[35px]  font-bold text-[#262626]">
               Create an account
             </p>
           ) : (
-            <p className=" text-[40px]  font-bold text-[#262626]">
+            <p className=" text-[35px]  font-bold text-[#262626]">
               Verify your account
             </p>
           )}
@@ -38,7 +38,7 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
           <div className="mt-10 w-[100%] flex flex-col gap-5">{children}</div>
         </div>
       </div>
-      <div className="h-[10%]">
+      <div className="h-[12%]">
         <div className="flex flex-col items-center justify-center">
           <p className="text-sm font-normal text-[#505050]">Connect with us</p>
           <div className="flex items-center justify-center gap-5 mt-2">

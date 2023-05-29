@@ -6,12 +6,14 @@ interface CustomInputProps {
   icon?: string;
   value: string;
   onChange: (value: string) => void;
+  typeInput?: string;
 }
 const CustomInput: React.FC<CustomInputProps> = ({
   placeholder,
   icon = {},
   value,
   onChange,
+  typeInput = "text",
 }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -40,6 +42,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           value={value}
           className="h-[48px] text-center placeholder-center"
           onChange={handleChange}
+          type={typeInput}
         />
       </div>
     </div>
