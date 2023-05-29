@@ -1,7 +1,5 @@
 import React from "react";
 
-import logo from "../../../public/assets/images/Authentication/logoIcon.png";
-
 export interface LayoutAuthenProps {
   children: React.ReactNode;
   type: string;

@@ -1,9 +1,6 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import type { CheckboxChangeEvent } from "antd/es/checkbox";
-import CustomInput from "../Inputs/Input";
 
 import Link from "next/link";
-import { useState } from "react";
 export interface LoginFormProps {}
 const listDataForm = [
   {
@@ -39,7 +36,7 @@ const listDataForm = [
     type: "password",
   },
 ];
-export default function SignUpForm(props: LoginFormProps) {
+export default function SignUpForm() {
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
@@ -55,7 +52,7 @@ export default function SignUpForm(props: LoginFormProps) {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        {listDataForm.map((item, index) => (
+        {listDataForm.map((item) => (
           <Form.Item
             key={item.name}
             label={item.label}

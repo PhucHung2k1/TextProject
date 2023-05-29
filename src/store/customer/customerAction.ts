@@ -1,6 +1,5 @@
 import { CusServices } from "@/services/customer.service/customer.service";
-import { Dispatch, createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getListCustomer = createAsyncThunk(
   "cus/getListCustomer",
@@ -19,7 +18,7 @@ export const getListCustomer = createAsyncThunk(
 );
 export const addCustomer = createAsyncThunk(
   "cus/addCustomer",
-  async (body: any, { dispatch, extra }) => {
+  async (body: any, { dispatch }) => {
     const cusServices = new CusServices();
     try {
       const { data } = await cusServices.addCus(body);
@@ -34,7 +33,7 @@ export const addCustomer = createAsyncThunk(
 );
 export const deleteCustomer = createAsyncThunk(
   "cus/deleteCustomer",
-  async (id: number, { dispatch, extra }) => {
+  async (id: number, { dispatch }) => {
     const cusServices = new CusServices();
     try {
       const { data } = await cusServices.deleteCus(id);
@@ -50,7 +49,7 @@ export const deleteCustomer = createAsyncThunk(
 );
 export const updateCustomer = createAsyncThunk(
   "cus/updateCustomer",
-  async (body: any, { dispatch, extra }) => {
+  async (body: any, { dispatch }) => {
     const cusServices = new CusServices();
 
     try {

@@ -1,27 +1,13 @@
 import React from "react";
 import CustomInput from "../Inputs/Input";
-import { Checkbox } from "antd";
+import { Button, Checkbox } from "antd";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
-import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { RootState } from "@/store/store";
-import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
 
 import { useState } from "react";
 import Link from "next/link";
 export interface LoginFormProps {}
 
-interface dataTypeProps {
-  email: string;
-  password: string;
-}
-
-export default function LoginForm(props: LoginFormProps) {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-  const listCustomer = useAppSelector(
-    (state: RootState) => state.customer.listCustomer
-  );
+export default function LoginForm() {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (value: string) => {
@@ -43,6 +29,7 @@ export default function LoginForm(props: LoginFormProps) {
         icon="password"
         value={inputValue}
         onChange={handleInputChange}
+        typeInput="password"
       />
 
       <div className="flex items-center justify-between w-full">
@@ -62,9 +49,9 @@ export default function LoginForm(props: LoginFormProps) {
           Forgot Password?
         </Link>
       </div>
-      <div className="flex items-center justify-center bg-mango-primary-blue text-white h-12 rounded cursor-pointer">
+      <Button className="flex items-center justify-center bg-mango-primary-blue text-white h-12 rounded cursor-pointer">
         Log in
-      </div>
+      </Button>
       <div className="flex items-center justify-center gap-2">
         <div>Don't have an account? </div>
 

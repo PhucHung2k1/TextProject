@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import queryString from "query-string";
 import Cookies from "js-cookie";
-import { getSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 export default abstract class asyncHttpClient {
   protected readonly instance: AxiosInstance;
