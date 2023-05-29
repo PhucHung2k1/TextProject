@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
 import { useState } from "react";
+import Link from "next/link";
 export interface LoginFormProps {}
 
 interface dataTypeProps {
@@ -21,16 +22,6 @@ export default function LoginForm(props: LoginFormProps) {
   const listCustomer = useAppSelector(
     (state: RootState) => state.customer.listCustomer
   );
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data: dataTypeProps) => {
-    console.log(data);
-  };
-
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (value: string) => {
@@ -52,25 +43,37 @@ export default function LoginForm(props: LoginFormProps) {
         icon="password"
         value={inputValue}
         onChange={handleInputChange}
-        typeInput="password"
       />
 
       <div className="flex items-center justify-between w-full">
-        <Checkbox onChange={onChange} className="text-26 text-base">
-          Remember me
-        </Checkbox>
-        <div className="text-mango-primary-blue text-base font-medium cursor-pointer">
-          Forgot Password?
+        <div className="flex items-center justify-center gap-2">
+          <Checkbox
+            onChange={onChange}
+            className="text-26 text-base"
+          ></Checkbox>
+          <div className="text-base text-26">Remember me</div>
         </div>
+
+        <div className=""></div>
+        <Link
+          href={"/"}
+          className="text-mango-primary-blue text-base font-medium cursor-pointer"
+        >
+          Forgot Password?
+        </Link>
       </div>
       <div className="flex items-center justify-center bg-mango-primary-blue text-white h-12 rounded cursor-pointer">
         Log in
       </div>
       <div className="flex items-center justify-center gap-2">
         <div>Don't have an account? </div>
-        <div className="text-mango-primary-blue text-base font-medium cursor-pointer">
+
+        <Link
+          href={"/signup"}
+          className="text-mango-primary-blue text-base font-medium cursor-pointer"
+        >
           Create an account
-        </div>
+        </Link>
       </div>
     </div>
   );
