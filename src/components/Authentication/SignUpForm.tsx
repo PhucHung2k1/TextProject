@@ -1,9 +1,7 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import type { CheckboxChangeEvent } from "antd/es/checkbox";
-import CustomInput from "../Inputs/Input";
 
 import Link from "next/link";
-import { useState } from "react";
+
 export interface LoginFormProps {}
 const listDataForm = [
   {
