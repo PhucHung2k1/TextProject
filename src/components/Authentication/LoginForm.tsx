@@ -7,6 +7,7 @@ import { RootState } from "@/store/store";
 import { useRouter } from "next/router";
 
 import { useState } from "react";
+import Link from "next/link";
 export interface LoginFormProps {}
 
 export default function LoginForm(props: LoginFormProps) {
@@ -49,11 +50,14 @@ export default function LoginForm(props: LoginFormProps) {
       <div className="flex items-center justify-center bg-mango-primary-blue text-white h-12 rounded cursor-pointer">
         Log in
       </div>
-      <div className="flex items-center justify-center gap-2">
-        <div>Don't have an account? </div>
-        <div className="text-mango-primary-blue text-base font-medium">
+      <div className="mx-auto gap-2">
+        <span>Don't have an account? </span>
+        <Link
+          href={"/signup"}
+          className="text-mango-primary-blue text-base font-medium"
+        >
           Create an account
-        </div>
+        </Link>
       </div>
     </div>
   );

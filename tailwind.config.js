@@ -17,6 +17,8 @@ module.exports = {
     extend: {
       colors: {
         "mango-primary-blue": "#00BED6",
+        "mango-text-black-1": "#262626",
+        "mango-text-blue-1": "#2F54EB",
         26: "#262626",
         50: "#505050",
         gray: {
