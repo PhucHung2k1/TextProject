@@ -10,3 +10,26 @@
   margin: 5px;
   padding: 10px;
 }
+.inputinner ::placeholder {
+  text-align: center;
+}
+
+.inputinner::-webkit-input-placeholder {
+  text-align: center;
+}
+
+.inputinner::-moz-placeholder {
+  text-align: center;
+}
+
+.inputinner:-ms-input-placeholder {
+  text-align: center;
+}
+
+.inputinner::-ms-input-placeholder {
+  text-align: center;
+}
+
+.inputinner::placeholder-shown {
+  text-align: center;
+}
