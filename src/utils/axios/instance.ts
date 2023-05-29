@@ -11,6 +11,7 @@ export default abstract class asyncHttpClient {
 
     const headers: any = {
       "content-type": "application/json",
+      "ngrok-skip-browser-warning": "true",
     };
     if (accessToken) {
       headers.Authorization = `Bearer ${accessToken}`;

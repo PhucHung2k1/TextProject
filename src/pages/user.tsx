@@ -1,11 +1,12 @@
 import React from "react";
-import { User } from "@/services/user.services/user.interface";
-import { UserServices } from "@/services/user.services/user.services";
+
 import { Button, Popover } from "antd";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { useAppDispatch } from "@/store/hook";
 import { showModal, setModalContent } from "@/store/modal/modalSlice";
+import { User } from "@/services/user.service/user.interface";
+import { UserServices } from "@/services/user.service/user.services";
 
 interface UserPageProps {
   baseUrl: string;
