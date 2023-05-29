@@ -1,7 +1,11 @@
 import React from "react";
 import { User } from "@/services/user.services/user.interface";
 import { UserServices } from "@/services/user.services/user.services";
-import { Popover } from "antd";
+import { Button, Popover } from "antd";
+import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import { useAppDispatch } from "@/store/hook";
+import { showModal, setModalContent } from "@/store/modal/modalSlice";
 
 interface UserPageProps {
   baseUrl: string;
@@ -9,6 +13,13 @@ interface UserPageProps {
 }
 
 function UserPage({ userList }: UserPageProps) {
+  const router = useRouter();
+  const dispath = useAppDispatch();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="bg-white">
       {/* <header className="absolute inset-x-0 top-0 z-50"></header> */}
@@ -23,11 +34,29 @@ function UserPage({ userList }: UserPageProps) {
               </a>
             </div>
           </div>
-         
+
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
               List User
             </h1>
+            <div className="flex flex-row items-center justify-center space-x-4">
+              <Button
+                onClick={() => {
+                  dispath(
+                    setModalContent(
+                      <>
+                        <h1>aaaaaa</h1>
+                      </>
+                    )
+                  );
+                  dispath(showModal());
+                }}
+              >
+                Show Modal
+              </Button>
+              <Button>Show Toast</Button>
+              <Button>Fetch User</Button>
+            </div>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
               lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
@@ -71,10 +100,9 @@ function UserPage({ userList }: UserPageProps) {
   );
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async (_) => {
   const userServices = new UserServices();
   let userList = [];
-
   try {
     const { data } = await userServices.fetchUser();
     if (data) {
@@ -87,8 +115,9 @@ export async function getServerSideProps() {
   return {
     props: {
       userList,
+      fallback: true,
     },
   };
-}
+};
 
 export default UserPage;
