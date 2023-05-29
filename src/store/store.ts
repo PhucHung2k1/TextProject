@@ -1,10 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import customerReducer from "./customer/customerSlice";
+import { createWrapper } from "next-redux-wrapper";
+import toastSlice from "./toast/toastSlice";
+import modalSlice from "./modal/modalSlice";
+
 export const store = configureStore({
-  reducer: {
-    customer: customerReducer,
-  },
+  reducer: { toastSlice, modalSlice },
 });
+
+const makeStore = () => store;
+
+export const wrapper = createWrapper(makeStore);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

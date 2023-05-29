@@ -6,7 +6,7 @@ const URL_GET_ALL_USER = "/users";
 
 export class UserServices extends HttpClient {
   constructor() {
-    super(process.env.API_BASE_URL ?? "");
+    super(process.env.NEXT_PUBLIC_API_BASE_URL ?? "");
   }
 
   public fetchUser = async (): Promise<IResponse> => {
@@ -15,5 +15,4 @@ export class UserServices extends HttpClient {
       .catch(catchAxiosError);
     return response;
   };
-  
 }
