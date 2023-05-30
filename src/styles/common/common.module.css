@@ -1,35 +1,3 @@
-.container {
-  display: flex;
-  width: 300px;
-  background-color: red;
-}
-
-.item {
-  flex-shrink: 3;
-  background-color: lightblue;
-  margin: 5px;
-  padding: 10px;
-}
-.inputinner ::placeholder {
-  text-align: center;
-}
-
-.inputinner::-webkit-input-placeholder {
-  text-align: center;
-}
-
-.inputinner::-moz-placeholder {
-  text-align: center;
-}
-
-.inputinner:-ms-input-placeholder {
-  text-align: center;
-}
-
-.inputinner::-ms-input-placeholder {
-  text-align: center;
-}
-
-.inputinner::placeholder-shown {
+.inputTextCenter .ant-input {
   text-align: center;
 }

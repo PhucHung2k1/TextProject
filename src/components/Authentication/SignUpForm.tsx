@@ -35,6 +35,14 @@ const listDataForm = [
     messageRequired: "Enter your password",
     type: "password",
   },
+  {
+    label: "Password1",
+    name: "password1",
+    placeHoler: "Enter your password1",
+    required: true,
+    messageRequired: "Enter your password1",
+    type: "password",
+  },
 ];
 export default function SignUpForm() {
   const onFinish = (values: any) => {

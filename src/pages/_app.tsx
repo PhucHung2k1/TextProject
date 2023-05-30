@@ -6,6 +6,7 @@ import { Roboto } from "next/font/google";
 import NProgress from "nprogress";
 import { Router } from "next/router";
 import ModalContainer from "@/components/Modal";
+import { SessionProvider } from "next-auth/react";
 const roboto = Roboto({
   weight: "400",
   subsets: ["latin"],
@@ -30,11 +31,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Provider store={store}>
-        <main className={roboto.className}>
-          <Component {...pageProps} />
+        <SessionProvider session={pageProps.session}>
+          <main className={roboto.className}>
+            <Component {...pageProps} />
 
-          <ModalContainer />
-        </main>
+            <ModalContainer />
+          </main>
+        </SessionProvider>
       </Provider>
     </>
   );
