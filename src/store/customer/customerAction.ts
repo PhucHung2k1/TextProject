@@ -6,7 +6,7 @@ export const getListCustomer = createAsyncThunk(
   async () => {
     const cusServices = new CusServices();
     try {
-      const { data } = await cusServices.getCus();
+      const { data } = await cusServices.getCustomer();
 
       if (data) {
         return data;
@@ -21,7 +21,7 @@ export const addCustomer = createAsyncThunk(
   async (body: any, { dispatch }) => {
     const cusServices = new CusServices();
     try {
-      const { data } = await cusServices.addCus(body);
+      const { data } = await cusServices.addCustomer(body);
       if (data) {
         dispatch(getListCustomer());
         return data;
@@ -36,7 +36,7 @@ export const deleteCustomer = createAsyncThunk(
   async (id: number, { dispatch }) => {
     const cusServices = new CusServices();
     try {
-      const { data } = await cusServices.deleteCus(id);
+      const { data } = await cusServices.deleteCustomer(id);
 
       if (data) {
         dispatch(getListCustomer());
@@ -53,7 +53,7 @@ export const updateCustomer = createAsyncThunk(
     const cusServices = new CusServices();
 
     try {
-      const { data } = await cusServices.updateCus(body);
+      const { data } = await cusServices.updateCustomer(body);
 
       if (data) {
         dispatch(getListCustomer());
