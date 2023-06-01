@@ -26,3 +26,6 @@ a:hover {
 .content ul {
   @apply my-6;
 }
+.text-input-center .ant-input {
+  text-align: center;
+}

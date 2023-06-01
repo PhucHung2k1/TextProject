@@ -2,14 +2,10 @@ import "../styles/global.css";
 import { Provider } from "react-redux";
 import type { AppProps } from "next/app";
 import { store, wrapper } from "@/store/store";
-import { Roboto } from "next/font/google";
 import NProgress from "nprogress";
 import { Router } from "next/router";
 import ModalContainer from "@/components/Modal";
-const roboto = Roboto({
-  weight: "400",
-  subsets: ["latin"],
-});
+import { SessionProvider } from "next-auth/react";
 
 NProgress.configure({
   showSpinner: false,
@@ -30,11 +26,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Provider store={store}>
-        <main className={roboto.className}>
-          <Component {...pageProps} />
+        <SessionProvider session={pageProps.session}>
+          <main>
+            <Component {...pageProps} />
 
-          <ModalContainer />
-        </main>
+            <ModalContainer />
+          </main>
+        </SessionProvider>
       </Provider>
     </>
   );
