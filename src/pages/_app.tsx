@@ -24,6 +24,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   });
 
   return (
+<<<<<<< Updated upstream
     <>
       <Provider store={store}>
         <SessionProvider session={pageProps.session}>
@@ -37,5 +38,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     </>
   );
 };
+=======
+    <Provider store={store}>
+      <main className={roboto.className}>
+        <Component {...pageProps} />
+        <ModalContainer />
+      </main>
+    </Provider>
+  )
+}
+>>>>>>> Stashed changes
 
 export default wrapper.withRedux(MyApp);

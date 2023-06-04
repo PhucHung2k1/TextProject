@@ -110,7 +110,11 @@ export const getServerSideProps: GetServerSideProps = async (_) => {
       userList = data;
     }
   } catch (error) {
+<<<<<<< Updated upstream
     console.error(error);
+=======
+    // console.error(error)
+>>>>>>> Stashed changes
   }
 
   return {

@@ -14,6 +14,7 @@ export const getListCustomer = createAsyncThunk(
     } catch (error) {
       console.log(error);
     }
+<<<<<<< Updated upstream
   }
 );
 export const addCustomer = createAsyncThunk(
@@ -37,6 +38,24 @@ export const deleteCustomer = createAsyncThunk(
     const cusServices = new CusServices();
     try {
       const { data } = await cusServices.deleteCustomer(id);
+=======
+  } catch (error) {}
+})
+export const addCustomer = createAsyncThunk('cus/addCustomer', async (body: any, { dispatch }) => {
+  const cusServices = new CusServices()
+  try {
+    const { data } = await cusServices.addCustomer(body)
+    if (data) {
+      dispatch(getListCustomer())
+      return data
+    }
+  } catch (error) {}
+})
+export const deleteCustomer = createAsyncThunk('cus/deleteCustomer', async (id: number, { dispatch }) => {
+  const cusServices = new CusServices()
+  try {
+    const { data } = await cusServices.deleteCustomer(id)
+>>>>>>> Stashed changes
 
       if (data) {
         dispatch(getListCustomer());
@@ -45,12 +64,19 @@ export const deleteCustomer = createAsyncThunk(
     } catch (error) {
       console.log(error);
     }
+<<<<<<< Updated upstream
   }
 );
 export const updateCustomer = createAsyncThunk(
   "cus/updateCustomer",
   async (body: any, { dispatch }) => {
     const cusServices = new CusServices();
+=======
+  } catch (error) {}
+})
+export const updateCustomer = createAsyncThunk('cus/updateCustomer', async (body: any, { dispatch }) => {
+  const cusServices = new CusServices()
+>>>>>>> Stashed changes
 
     try {
       const { data } = await cusServices.updateCustomer(body);
@@ -63,5 +89,10 @@ export const updateCustomer = createAsyncThunk(
     } catch (error) {
       console.log(error);
     }
+<<<<<<< Updated upstream
   }
 );
+=======
+  } catch (error) {}
+})
+>>>>>>> Stashed changes
