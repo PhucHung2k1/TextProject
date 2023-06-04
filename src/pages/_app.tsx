@@ -1,52 +1,44 @@
-import "../styles/global.css";
-import { Provider } from "react-redux";
-import type { AppProps } from "next/app";
-import { store, wrapper } from "@/store/store";
-import NProgress from "nprogress";
-import { Router } from "next/router";
-import ModalContainer from "@/components/Modal";
-import { SessionProvider } from "next-auth/react";
+import '../styles/global.css';
+
+import type { AppProps } from 'next/app';
+import { Roboto } from 'next/font/google';
+import { Router } from 'next/router';
+import NProgress from 'nprogress';
+import { Provider } from 'react-redux';
+
+import ModalContainer from '@/components/Modal';
+import { store, wrapper } from '@/store/store';
+
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 NProgress.configure({
   showSpinner: false,
-  easing: "ease",
+  easing: 'ease',
   speed: 500,
   trickleSpeed: 800,
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  Router.events.on("routeChangeStart", (_url: any) => {
+  Router.events.on('routeChangeStart', (_url: any) => {
     NProgress.start();
   });
 
-  Router.events.on("routeChangeComplete", (_url: any) => {
+  Router.events.on('routeChangeComplete', (_url: any) => {
     NProgress.done();
   });
 
   return (
-<<<<<<< Updated upstream
-    <>
-      <Provider store={store}>
-        <SessionProvider session={pageProps.session}>
-          <main>
-            <Component {...pageProps} />
-
-            <ModalContainer />
-          </main>
-        </SessionProvider>
-      </Provider>
-    </>
-  );
-};
-=======
     <Provider store={store}>
       <main className={roboto.className}>
         <Component {...pageProps} />
+
         <ModalContainer />
       </main>
     </Provider>
-  )
-}
->>>>>>> Stashed changes
+  );
+};
 
 export default wrapper.withRedux(MyApp);

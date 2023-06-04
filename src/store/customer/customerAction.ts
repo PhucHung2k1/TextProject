@@ -1,8 +1,9 @@
-import { CusServices } from "@/services/customer.service/customer.service";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+import { CusServices } from '@/services/customer.service/customer.service';
 
 export const getListCustomer = createAsyncThunk(
-  "cus/getListCustomer",
+  'cus/getListCustomer',
   async () => {
     const cusServices = new CusServices();
     try {
@@ -11,14 +12,11 @@ export const getListCustomer = createAsyncThunk(
       if (data) {
         return data;
       }
-    } catch (error) {
-      console.log(error);
-    }
-<<<<<<< Updated upstream
+    } catch (error) {}
   }
 );
 export const addCustomer = createAsyncThunk(
-  "cus/addCustomer",
+  'cus/addCustomer',
   async (body: any, { dispatch }) => {
     const cusServices = new CusServices();
     try {
@@ -27,56 +25,27 @@ export const addCustomer = createAsyncThunk(
         dispatch(getListCustomer());
         return data;
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 );
 export const deleteCustomer = createAsyncThunk(
-  "cus/deleteCustomer",
+  'cus/deleteCustomer',
   async (id: number, { dispatch }) => {
     const cusServices = new CusServices();
     try {
       const { data } = await cusServices.deleteCustomer(id);
-=======
-  } catch (error) {}
-})
-export const addCustomer = createAsyncThunk('cus/addCustomer', async (body: any, { dispatch }) => {
-  const cusServices = new CusServices()
-  try {
-    const { data } = await cusServices.addCustomer(body)
-    if (data) {
-      dispatch(getListCustomer())
-      return data
-    }
-  } catch (error) {}
-})
-export const deleteCustomer = createAsyncThunk('cus/deleteCustomer', async (id: number, { dispatch }) => {
-  const cusServices = new CusServices()
-  try {
-    const { data } = await cusServices.deleteCustomer(id)
->>>>>>> Stashed changes
 
       if (data) {
         dispatch(getListCustomer());
         return data;
       }
-    } catch (error) {
-      console.log(error);
-    }
-<<<<<<< Updated upstream
+    } catch (error) {}
   }
 );
 export const updateCustomer = createAsyncThunk(
-  "cus/updateCustomer",
+  'cus/updateCustomer',
   async (body: any, { dispatch }) => {
     const cusServices = new CusServices();
-=======
-  } catch (error) {}
-})
-export const updateCustomer = createAsyncThunk('cus/updateCustomer', async (body: any, { dispatch }) => {
-  const cusServices = new CusServices()
->>>>>>> Stashed changes
 
     try {
       const { data } = await cusServices.updateCustomer(body);
@@ -86,13 +55,6 @@ export const updateCustomer = createAsyncThunk('cus/updateCustomer', async (body
 
         return data;
       }
-    } catch (error) {
-      console.log(error);
-    }
-<<<<<<< Updated upstream
+    } catch (error) {}
   }
 );
-=======
-  } catch (error) {}
-})
->>>>>>> Stashed changes
