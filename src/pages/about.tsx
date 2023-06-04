@@ -1,8 +1,9 @@
-import { Meta } from "@/layouts/Meta";
-import { useAppDispatch } from "@/store/hook";
-import { Main } from "@/templates/Main";
-import { Button } from "antd";
-import { showToast } from "@/store/toast/toastSlice";
+import { Button } from 'antd';
+
+import { Meta } from '@/layouts/Meta';
+import { useAppDispatch } from '@/store/hook';
+import { showToast } from '@/store/toast/toastSlice';
+import { Main } from '@/templates/Main';
 
 const About = () => {
   const dispatch = useAppDispatch();

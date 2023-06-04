@@ -24,7 +24,6 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
             alt="logo"
             className="mt-12 w-[50%]"
           />
-
           <div className="mt-20 flex w-[80%] flex-col items-center">
             <p className="text-2xl text-[#262626]">
               {type === 'login'

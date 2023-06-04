@@ -40,12 +40,12 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/login',
   },
+
   callbacks: {
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
     async session({ session, token }) {
-      // Send properties to the client, like an access_token from a provider.
       session.user = token as any;
       return session;
     },

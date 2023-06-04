@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 type ModalModel = {
   isShowModal: boolean;
@@ -11,7 +11,7 @@ const initialState = {
 } as ModalModel;
 
 const modalSlice = createSlice({
-  name: "modal",
+  name: 'modal',
   initialState,
   reducers: {
     showModal: (state) => {

@@ -85,7 +85,7 @@ export default function SignUpForm() {
                   name={item.name}
                   placeholder={item.placeholder}
                   registerOptions={registerOptions}
-                  className="border-mango-text-gray-1 !rounded-sm border"
+                  className="!rounded-sm border border-mango-text-gray-1"
                   register={register}
                   errors={errors}
                 />

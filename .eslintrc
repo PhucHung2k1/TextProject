@@ -41,8 +41,11 @@
       },
       "rules": {
         "no-empty": "off",
-        "no-underscore-dangle": "off",
         "react/no-unescaped-entities": "off",
+        "import/order": "off",
+        "simple-import-sort/imports": "off",
+        "no-underscore-dangle": "off",
+        "import/no-extraneous-dependencies": "off",
         "class-methods-use-this": "off",
         "no-nested-ternary": "off",
         "no-param-reassign": "off",
@@ -71,7 +74,6 @@
           "WithStatement"
         ], // Overrides Airbnb configuration and enable no-restricted-syntax
         "import/prefer-default-export": "off", // Named export is easier to refactor automatically
-        "simple-import-sort/imports": "error", // Import configuration for `eslint-plugin-simple-import-sort`
         "simple-import-sort/exports": "error", // Export configuration for `eslint-plugin-simple-import-sort`
         "@typescript-eslint/no-unused-vars": "off",
         "unused-imports/no-unused-imports": "error",

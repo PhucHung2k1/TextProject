@@ -1,79 +1,97 @@
-import { Button } from '@mui/material'
-import moment from 'moment'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { Button } from '@mui/material';
+import moment from 'moment';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const VerifyAccount = () => {
-  const [countDown, setCountDown] = useState<number>(60)
-  const [isActive, setIsActive] = useState<boolean>(false)
+  const [countDown, setCountDown] = useState<number>(60);
+  const [isActive, setIsActive] = useState<boolean>(false);
 
   const startCountDown = () => {
-    setCountDown(60)
-    setIsActive(true)
-  }
+    setCountDown(60);
+    setIsActive(true);
+  };
 
-  const [inputValues, setInputValues] = useState<string[]>(['', '', '', '', '', ''])
+  const [inputValues, setInputValues] = useState<string[]>([
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ]);
 
   const handleInputChange = (index: number, value: string) => {
-    const newInputValues = [...inputValues]
-    newInputValues[index] = value
-    setInputValues(newInputValues)
+    const newInputValues = [...inputValues];
+    newInputValues[index] = value;
+    setInputValues(newInputValues);
     // Focus to next input element after enter number
     if (/^\d$/.test(value)) {
-      const nextInput = document.getElementById(`input-${index + 1}`) as HTMLInputElement
-      const endNext = nextInput?.value.length
-      nextInput?.focus()
-      nextInput?.setSelectionRange(endNext, endNext)
+      const nextInput = document.getElementById(
+        `input-${index + 1}`
+      ) as HTMLInputElement;
+      const endNext = nextInput?.value.length;
+      nextInput?.focus();
+      nextInput?.setSelectionRange(endNext, endNext);
     }
-  }
+  };
   const formatTime = (time: number): string => {
-    const duration = moment.duration(time, 'seconds')
-    return moment.utc(duration.asMilliseconds()).format('mm:ss')
-  }
-  const handleKeyDown = (index: number, event: React.KeyboardEvent<HTMLInputElement>) => {
+    const duration = moment.duration(time, 'seconds');
+    return moment.utc(duration.asMilliseconds()).format('mm:ss');
+  };
+  const handleKeyDown = (
+    index: number,
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     // Focus to next input element
     if (event.key === 'ArrowRight' && index < inputValues.length - 1) {
-      const nextInput = document.getElementById(`input-${index + 1}`) as HTMLInputElement
-      const endNext = nextInput?.value.length
-      nextInput?.focus()
-      nextInput?.setSelectionRange(endNext, endNext)
+      const nextInput = document.getElementById(
+        `input-${index + 1}`
+      ) as HTMLInputElement;
+      const endNext = nextInput?.value.length;
+      nextInput?.focus();
+      nextInput?.setSelectionRange(endNext, endNext);
     }
     // Focus to previous input element
     if (
       (event.key === 'ArrowLeft' && index > 0) ||
-      (event.key === 'Backspace' && inputValues[index]?.length !== 1 && index > 0)
+      (event.key === 'Backspace' &&
+        inputValues[index]?.length !== 1 &&
+        index > 0)
     ) {
-      const prevInput = document.getElementById(`input-${index - 1}`) as HTMLInputElement
-      const endPrev = prevInput?.value.length
-      prevInput?.focus()
-      prevInput?.setSelectionRange(endPrev, endPrev)
+      const prevInput = document.getElementById(
+        `input-${index - 1}`
+      ) as HTMLInputElement;
+      const endPrev = prevInput?.value.length;
+      prevInput?.focus();
+      prevInput?.setSelectionRange(endPrev, endPrev);
     }
-  }
+  };
   const handleVerifyAccount = () => {
-    const verifyNumber = inputValues.toString().concat().replaceAll(',', '')
+    const verifyNumber = inputValues.toString().concat().replaceAll(',', '');
     if (verifyNumber.length === 6) {
       // console.log('verifyNumber', verifyNumber)
-      startCountDown()
+      startCountDown();
     }
-  }
+  };
   useEffect(() => {
-    let intervalId: NodeJS.Timeout | undefined
+    let intervalId: NodeJS.Timeout | undefined;
 
     if (isActive) {
       intervalId = setInterval(() => {
-        setCountDown((prevCountdown) => prevCountdown - 1)
-      }, 1000)
+        setCountDown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
     }
 
     if (countDown === 0) {
-      setIsActive(false)
-      clearInterval(intervalId)
+      setIsActive(false);
+      clearInterval(intervalId);
     }
 
     return () => {
-      clearInterval(intervalId)
-    }
-  }, [isActive, countDown])
+      clearInterval(intervalId);
+    };
+  }, [isActive, countDown]);
   return (
     <div className=" w-full">
       <p>Enter the code we sent over email to admin@enrichco.us.</p>
@@ -106,7 +124,9 @@ const VerifyAccount = () => {
       </div>
       <Button
         onClick={handleVerifyAccount}
-        disabled={inputValues.toString().concat().replaceAll(',', '').length !== 6}
+        disabled={
+          inputValues.toString().concat().replaceAll(',', '').length !== 6
+        }
         className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize"
         variant="contained"
 
@@ -126,6 +146,6 @@ const VerifyAccount = () => {
         </button>
       </div>
     </div>
-  )
-}
-export default VerifyAccount
+  );
+};
+export default VerifyAccount;

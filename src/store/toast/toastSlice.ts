@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isShowToast: false,
 };
 
 const toastSlice = createSlice({
-  name: "toast",
+  name: 'toast',
   initialState,
   reducers: {
     showToast: (state) => {

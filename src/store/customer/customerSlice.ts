@@ -1,11 +1,13 @@
-import { Customer } from "@/services/customer.service/customer.interface";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+
+import type { Customer } from '@/services/customer.service/customer.interface';
+
 import {
   addCustomer,
   deleteCustomer,
   getListCustomer,
   updateCustomer,
-} from "./customerAction";
+} from './customerAction';
 
 export interface CusDataState {
   listCustomer: Customer[];
@@ -19,11 +21,11 @@ const initialState: CusDataState = {
   isLoading: false,
   isError: false,
   isSuccess: false,
-  errorMessage: "",
+  errorMessage: '',
 };
 
 const cusSlice = createSlice({
-  name: "customer",
+  name: 'customer',
   initialState,
   reducers: {
     setListCustomer: (state, action) => {

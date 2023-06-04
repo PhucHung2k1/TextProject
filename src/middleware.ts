@@ -1,19 +1,20 @@
-import { withAuth } from "next-auth/middleware";
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { withAuth } from 'next-auth/middleware';
 
 export default withAuth(
   function middleware(req: NextRequest) {
     // return NextResponse
-    return NextResponse.rewrite(new URL("/", req.url));
+    return NextResponse.rewrite(new URL('/', req.url));
   },
   // If user is admin then run this function
   {
     callbacks: {
       authorized({ token }) {
-        return token?.role === "admin";
+        return token?.role === 'admin';
       },
     },
   }
 );
 
-export const config = { matcher: ["/", "/admin", "/book"] };
+export const config = { matcher: ['/', '/admin', '/book'] };

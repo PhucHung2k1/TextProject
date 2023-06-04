@@ -1,17 +1,18 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
-import queryString from "query-string";
-import Cookies from "js-cookie";
-import { signOut } from "next-auth/react";
+import type { AxiosInstance, AxiosResponse } from 'axios';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { signOut } from 'next-auth/react';
+import queryString from 'query-string';
 
-export default abstract class asyncHttpClient {
+export default abstract class AsyncHttpClient {
   protected readonly instance: AxiosInstance;
 
   constructor(baseURL: string) {
-    const accessToken = Cookies.get("token");
+    const accessToken = Cookies.get('token');
 
     const headers: any = {
-      "content-type": "application/json",
-      "ngrok-skip-browser-warning": "true",
+      'content-type': 'application/json',
+      'ngrok-skip-browser-warning': 'true',
     };
     if (accessToken) {
       headers.Authorization = `Bearer ${accessToken}`;
@@ -25,6 +26,7 @@ export default abstract class asyncHttpClient {
 
     this.responseInterceptor();
   }
+
   /*
    * When response code is 401, try to refresh the token.
    * Eject the interceptor so it doesn't loop in case
@@ -45,10 +47,10 @@ export default abstract class asyncHttpClient {
 
   protected handleError = (error: any) => {
     if (error?.response?.status === 401) {
-      Cookies.remove("portal-token");
-      localStorage.removeItem("userInfo");
+      Cookies.remove('portal-token');
+      localStorage.removeItem('userInfo');
       signOut({
-        callbackUrl: "/",
+        callbackUrl: '/',
         redirect: true,
       });
       window.location.reload();
