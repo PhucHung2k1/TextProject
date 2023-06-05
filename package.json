@@ -10,7 +10,7 @@
     "build-prod": "run-s clean build export",
     "clean": "rimraf .next .swc out coverage",
     "lint": "next lint",
-    "format": "next lint --fix && prettier '**/*.{json,yaml}' --write --ignore-path .gitignore",
+    "format": "next lint --fix && prettier **/*.{json,yaml} --write --ignore-path .gitignore",
     "commit": "cz",
     "postbuild": "next-sitemap"
   },
