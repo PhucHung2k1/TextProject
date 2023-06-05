@@ -41,6 +41,7 @@
       },
       "rules": {
         "no-empty": "off",
+        "react/jsx-no-useless-fragment": "off",
         "react/no-unescaped-entities": "off",
         "import/order": "off",
         "simple-import-sort/imports": "off",
