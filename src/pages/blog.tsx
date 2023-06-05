@@ -1,4 +1,3 @@
-import { DatePicker } from 'antd';
 import Link from 'next/link';
 
 import { Meta } from '@/layouts/Meta';
@@ -12,7 +11,6 @@ const Blog = () => (
       voluptatibus distinctio recusandae autem esse explicabo molestias officia
       placeat, accusamus aut saepe.
     </p>
-    <DatePicker />
     {Array.from(Array(10).keys()).map((elt) => (
       <div
         className="my-4 w-full rounded-md border-2 border-gray-400 px-2 py-1"

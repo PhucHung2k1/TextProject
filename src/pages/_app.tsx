@@ -6,6 +6,7 @@ import NProgress from 'nprogress';
 import { Router } from 'next/router';
 import ModalContainer from '@/components/Modal';
 import { SessionProvider } from 'next-auth/react';
+import PrevLoader from '@/components/Loading/PrevLoader';
 
 NProgress.configure({
   showSpinner: false,
@@ -28,7 +29,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <SessionProvider session={pageProps.session}>
         <main>
           <Component {...pageProps} />
-
+          <PrevLoader />
           <ModalContainer />
         </main>
       </SessionProvider>

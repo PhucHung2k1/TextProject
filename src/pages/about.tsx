@@ -1,13 +1,7 @@
-import { Button } from 'antd';
-
 import { Meta } from '@/layouts/Meta';
-import { useAppDispatch } from '@/store/hook';
-import { showToast } from '@/store/toast/toastSlice';
 import { Main } from '@/templates/Main';
 
 const About = () => {
-  const dispatch = useAppDispatch();
-
   return (
     <Main meta={<Meta title="Lorem ipsum" description="Lorem ipsum" />}>
       <p>
@@ -22,13 +16,6 @@ const About = () => {
         labore voluptatibus distinctio recusandae autem esse explicabo molestias
         officia placeat, accusamus aut saepe.
       </p>
-      <Button
-        onClick={() => {
-          dispatch(showToast());
-        }}
-      >
-        aaaa
-      </Button>
     </Main>
   );
 };
