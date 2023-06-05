@@ -3,9 +3,11 @@ import Link from 'next/link';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { EmailValidationRegex } from '@/utils/helper/isValidEmail';
+import { emailRegex } from '@/utils/helper/isValidEmail';
 
 import InputField from '../FormHelper/InputField';
+import { useAppDispatch } from '@/store/hook';
+import { signUp } from '@/store/auth/authAction';
 
 interface IFormInput {
   firstName: string;
@@ -53,13 +55,14 @@ const listFormData = [
   },
 ];
 export default function SignUpForm() {
+  const dispatch = useAppDispatch();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<IFormInput>();
-  const onSubmit = (data: IFormInput) => {
-    console.log(data);
+  const onSubmit = async (values: IFormInput) => {
+    dispatch(signUp(values));
   };
   return (
     <div className="flex flex-col gap-0">
@@ -69,7 +72,7 @@ export default function SignUpForm() {
           if (item.required) registerOptions.required = item.messageRequired;
           if (item.name === 'email')
             registerOptions.pattern = {
-              value: EmailValidationRegex,
+              value: emailRegex,
               message: 'Invalid email address',
             };
           return (

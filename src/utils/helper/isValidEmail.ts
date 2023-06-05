@@ -1,4 +1,4 @@
-export const EmailValidationRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/;
+export const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 export const isValidEmail = (values: string) => {
-  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values);
+  /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/i.test(values);
 };

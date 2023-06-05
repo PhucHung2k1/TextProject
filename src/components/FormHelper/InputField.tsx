@@ -1,7 +1,8 @@
 import { ErrorMessage } from '@hookform/error-message';
-import { Delete } from '@mui/icons-material';
+import { Delete, Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton, InputAdornment } from '@mui/material';
 import cc from 'classnames';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   label?: string;
@@ -53,7 +54,7 @@ const InputField = (props: Props) => {
   } = props;
 
   const { name, required } = registerOptions as RegisterOptions;
-
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   useEffect(() => {}, [defaultValue]);
 
   const handleClear = (e: any) => {
@@ -67,7 +68,7 @@ const InputField = (props: Props) => {
     register(name).onChange(e);
     onChange && onChange(e.target.value);
   };
-
+  const newKeyBoardType = showPassword ? 'password' : 'text';
   return (
     <div
       className={cc(
@@ -88,40 +89,57 @@ const InputField = (props: Props) => {
           {required && <span className="ml-1 text-red-500">*</span>}
         </label>
       )}
-      <input // CÓ thể sử dụng Input của MUI và truyền các props tương ứng
-        {...register(name, registerOptions)}
-        {...rest}
-        className={cc(
-          'pl-4 pr-9 py-3 rounded-sm md:py-2 focus:outline-none',
-          inlineStyle ? 'w-4/5' : 'w-full',
-          className
-        )}
-        {...option}
-        placeholder={placeholder}
-        defaultValue={defaultValue}
-        disabled={disabled}
-        onChange={handleInputFieldChange}
-        type={keyboardType ?? 'text'}
-      />
-
-      {setValue && (
-        <Delete
+      <div className="relative">
+        <input // CÓ thể sử dụng Input của MUI và truyền các props tương ứng
+          {...register(name, registerOptions)}
+          {...rest}
           className={cc(
-            'w-5 h-5 absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400',
-            {
-              'cursor-pointer': !disabled,
-            }
+            'pl-4 pr-9 py-3 rounded-sm md:py-2 focus:outline-none ',
+            inlineStyle ? 'w-4/5' : 'w-full',
+            className
           )}
-          onClick={handleClear}
+          {...option}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+          disabled={disabled}
+          onChange={handleInputFieldChange}
+          type={
+            keyboardType === 'password'
+              ? newKeyBoardType
+              : keyboardType ?? 'text'
+          }
         />
-      )}
+        {keyboardType === 'password' && (
+          <InputAdornment
+            position="end"
+            className="absolute !right-3 top-[55%]"
+          >
+            <IconButton
+              onClick={() => setShowPassword(!showPassword)}
+              edge="end"
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </InputAdornment>
+        )}
+        {setValue && (
+          <Delete
+            className={cc(
+              'w-5 h-5 absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400',
+              {
+                'cursor-pointer': !disabled,
+              }
+            )}
+            onClick={handleClear}
+          />
+        )}
+      </div>
 
       {alert && alert}
-
       <ErrorMessage
         errors={errors}
         name={name}
-        render={({ message }) => (
+        render={({ message }: any) => (
           <div className="mt-2 text-sm text-red-700" role="alert">
             <span className="font-medium">{message}</span>
           </div>
