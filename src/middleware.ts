@@ -1,20 +1,6 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
-import { withAuth } from 'next-auth/middleware';
+// https://next-auth.js.org/configuration/nextjs
 
-export default withAuth(
-  function middleware(req: NextRequest) {
-    // return NextResponse
-    return NextResponse.rewrite(new URL('/', req.url));
-  },
-  // If user is admin then run this function
-  {
-    callbacks: {
-      authorized({ token }) {
-        return token?.role === 'admin';
-      },
-    },
-  }
-);
+// eslint-disable-next-line no-restricted-exports
+export { default } from 'next-auth/middleware';
 
-export const config = { matcher: ['/', '/admin', '/book'] };
+export const config = { matcher: ['/', '/book'] };

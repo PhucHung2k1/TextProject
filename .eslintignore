@@ -1,2 +1,4 @@
 node_modules
 out
+[...nextauth].ts
+next-auth.d.ts
