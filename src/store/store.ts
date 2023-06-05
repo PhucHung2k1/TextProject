@@ -1,10 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { createWrapper } from "next-redux-wrapper";
-import toastSlice from "./toast/toastSlice";
-import modalSlice from "./modal/modalSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
+import loadingSlice from './loading/loadingSlice';
+import modalSlice from './modal/modalSlice';
+import toastSlice from './toast/toastSlice';
 
 export const store = configureStore({
-  reducer: { toastSlice, modalSlice },
+  reducer: { toastSlice, modalSlice, loadingSlice },
 });
 
 const makeStore = () => store;

@@ -1,40 +1,39 @@
-import "../styles/global.css";
-import { Provider } from "react-redux";
-import type { AppProps } from "next/app";
-import { store, wrapper } from "@/store/store";
-import NProgress from "nprogress";
-import { Router } from "next/router";
-import ModalContainer from "@/components/Modal";
-import { SessionProvider } from "next-auth/react";
+import '../styles/global.css';
+import { Provider } from 'react-redux';
+import type { AppProps } from 'next/app';
+import { store, wrapper } from '@/store/store';
+import NProgress from 'nprogress';
+import { Router } from 'next/router';
+import ModalContainer from '@/components/Modal';
+import { SessionProvider } from 'next-auth/react';
+import PrevLoader from '@/components/Loading/PrevLoader';
 
 NProgress.configure({
   showSpinner: false,
-  easing: "ease",
+  easing: 'ease',
   speed: 500,
   trickleSpeed: 800,
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  Router.events.on("routeChangeStart", (_url: any) => {
+  Router.events.on('routeChangeStart', (_url: any) => {
     NProgress.start();
   });
 
-  Router.events.on("routeChangeComplete", (_url: any) => {
+  Router.events.on('routeChangeComplete', (_url: any) => {
     NProgress.done();
   });
 
   return (
-    <>
-      <Provider store={store}>
-        <SessionProvider session={pageProps.session}>
-          <main>
-            <Component {...pageProps} />
-
-            <ModalContainer />
-          </main>
-        </SessionProvider>
-      </Provider>
-    </>
+    <Provider store={store}>
+      <SessionProvider session={pageProps.session}>
+        <main>
+          <Component {...pageProps} />
+          <PrevLoader />
+          <ModalContainer />
+        </main>
+      </SessionProvider>
+    </Provider>
   );
 };
 

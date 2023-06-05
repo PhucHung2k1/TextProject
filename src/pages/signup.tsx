@@ -1,5 +1,5 @@
-import LayoutAuthen from "@/components/Authentication/LayoutAuthen";
-import SignUpForm from "@/components/Authentication/SignUpForm";
+import LayoutAuthen from '@/components/Authentication/LayoutAuthen';
+import SignUpForm from '@/components/Authentication/SignUpForm';
 
 const SignUp = () => {
   return (

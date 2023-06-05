@@ -1,8 +1,9 @@
-import { CusServices } from "@/services/customer.service/customer.service";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+import { CusServices } from '@/services/customer.service/customer.service';
 
 export const getListCustomer = createAsyncThunk(
-  "cus/getListCustomer",
+  'cus/getListCustomer',
   async () => {
     const cusServices = new CusServices();
     try {
@@ -11,13 +12,11 @@ export const getListCustomer = createAsyncThunk(
       if (data) {
         return data;
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 );
 export const addCustomer = createAsyncThunk(
-  "cus/addCustomer",
+  'cus/addCustomer',
   async (body: any, { dispatch }) => {
     const cusServices = new CusServices();
     try {
@@ -26,13 +25,11 @@ export const addCustomer = createAsyncThunk(
         dispatch(getListCustomer());
         return data;
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 );
 export const deleteCustomer = createAsyncThunk(
-  "cus/deleteCustomer",
+  'cus/deleteCustomer',
   async (id: number, { dispatch }) => {
     const cusServices = new CusServices();
     try {
@@ -42,13 +39,11 @@ export const deleteCustomer = createAsyncThunk(
         dispatch(getListCustomer());
         return data;
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 );
 export const updateCustomer = createAsyncThunk(
-  "cus/updateCustomer",
+  'cus/updateCustomer',
   async (body: any, { dispatch }) => {
     const cusServices = new CusServices();
 
@@ -60,8 +55,6 @@ export const updateCustomer = createAsyncThunk(
 
         return data;
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 );

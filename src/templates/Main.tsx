@@ -1,7 +1,7 @@
-import Link from "next/link";
-import type { ReactNode } from "react";
+import Link from 'next/link';
+import type { ReactNode } from 'react';
 
-import { AppConfig } from "@/utils/AppConfig";
+import { AppConfig } from '@/utils/AppConfig';
 
 type IMainProps = {
   meta: ReactNode;
@@ -18,7 +18,7 @@ const Main = (props: IMainProps) => (
           <h1 className="text-3xl font-bold text-gray-900">
             {AppConfig.title}
           </h1>
-          <h2 className="text-xl pt-3">{AppConfig.description}</h2>
+          <h2 className="pt-3 text-xl">{AppConfig.description}</h2>
         </div>
         <nav>
           <ul className="flex flex-wrap text-xl">
@@ -39,12 +39,12 @@ const Main = (props: IMainProps) => (
               </Link>
             </li>
             <li className="mr-6">
-              <a
+              <Link
                 className="border-none text-gray-700 hover:text-gray-900"
                 href="/user/"
               >
                 User
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

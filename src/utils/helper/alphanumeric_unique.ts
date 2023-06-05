@@ -1,4 +1,4 @@
-export const alphanumeric_unique = (): string => {
+export const alphanumericUnique = (): string => {
   return Math.random()
     .toString(36)
     .split('')
