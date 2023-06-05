@@ -13,8 +13,8 @@ const authOptions: NextAuthOptions = {
       type: 'credentials',
       credentials: {},
       async authorize(credentials) {
-        const { userName, password } = credentials as {
-          userName: string;
+        const { username, password } = credentials as {
+          username: string;
           password: string;
         };
 
@@ -22,7 +22,7 @@ const authOptions: NextAuthOptions = {
 
         try {
           const { data, status, error } = await servicesAuthAPI.signIn({
-            username: userName,
+            username,
             password,
           });
 

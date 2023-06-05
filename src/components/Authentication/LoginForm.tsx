@@ -1,14 +1,12 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
-import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { getSession, signIn } from 'next-auth/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-
-import type { IAuthResponse } from '@/services/auth.service/auth.interface';
 import type { ISignInForm } from '@/services/auth.service/auth.service';
 
 import InputField from '../FormHelper/InputField';
+import { getSession, signIn } from 'next-auth/react';
+import Cookies from 'js-cookie';
 
 export default function LoginForm() {
   const showPassword = false;
@@ -21,23 +19,21 @@ export default function LoginForm() {
 
   const handleSignIn = async (values: ISignInForm) => {
     await signIn('credentials', {
-      userName: values.username,
+      username: values.username,
       password: values.password,
       redirect: false,
     }).then((callback) => {
       if (callback?.error) {
+        // eslint-disable-next-line no-alert
+        alert(callback?.error);
       }
 
       if (callback?.ok && !callback?.error) {
         getSession().then((session) => {
           if (session) {
             const { user } = session;
-
-            if (user) {
-              const userObj = user as IAuthResponse;
-              Cookies.set('auth-token', userObj.accessToken);
-              Cookies.set('refresh-token', userObj.refreshToken);
-            }
+            Cookies.set('auth-token', user.accessToken);
+            Cookies.set('refresh-token', user.refreshToken);
           }
         });
       }
@@ -60,7 +56,7 @@ export default function LoginForm() {
             required: 'Enter your Email !',
             maxLength: { value: 255, message: 'over 255 characters' },
           }}
-          className=" border border-gray-400 border-opacity-75 bg-gray-100"
+          className=" border border-gray-400  bg-gray-100"
           errors={errors}
         />
 
@@ -82,7 +78,7 @@ export default function LoginForm() {
             //   message: 'Mật khẩu phải có ít nhất một ký tự viết thường, một ký tự viết HOA và một ký tự số.',
             // },
           }}
-          className="border border-gray-400 border-opacity-75 bg-gray-100"
+          className="border border-gray-400  bg-gray-100"
           errors={errors}
         />
 
