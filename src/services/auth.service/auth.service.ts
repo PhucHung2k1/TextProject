@@ -8,7 +8,7 @@ const SIGN_IN_ACCESS_TOKEN = '/access-token';
 export interface ISignInForm {
   username: string;
   password: string;
-  remember?: boolean;
+  hasRefreshToken?: boolean;
 }
 
 export class AuthAPI extends HttpClient {
