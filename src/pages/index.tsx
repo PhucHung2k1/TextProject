@@ -5,10 +5,16 @@ import Link from 'next/link';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 import { AppConfig } from '@/utils/AppConfig';
+import Cookies from 'js-cookie';
 
 const Index = () => {
   const { status, data } = useSession();
 
+  const handleSignOut = () => {
+    Cookies.remove('auth-token');
+    Cookies.remove('refresh-token');
+    signOut();
+  };
   return status === 'authenticated' ? (
     <Main
       meta={
@@ -18,7 +24,7 @@ const Index = () => {
       <div className="flex flex-col items-start">
         {data?.user ? (
           <Button
-            onClick={() => signOut()}
+            onClick={handleSignOut}
             variant="contained"
             className=" bg-blue-400"
           >
