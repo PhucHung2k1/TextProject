@@ -7,7 +7,7 @@ const SIGN_UP = '/account/sign-up';
 export interface ISignInForm {
   username: string;
   password: string;
-  remember?: boolean;
+  hasRefreshToken?: boolean;
 }
 export interface ISignUp {
   firstName: string;
