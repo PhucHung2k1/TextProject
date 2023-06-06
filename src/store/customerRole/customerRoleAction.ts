@@ -1,6 +1,7 @@
 import { CustomerRole } from '@/services/customerRole.service/customerRole.service';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setListRole } from './customerRoleSlice';
+import { setMessageToast, showToast } from '../toast/toastSlice';
 
 export const getAllRole = createAsyncThunk(
   'account/customerRole',
@@ -17,6 +18,8 @@ export const getAllRole = createAsyncThunk(
 
       throw new Error(error ? JSON.stringify(error) : 'Failed.');
     } catch (err: any) {
+      dispatch(setMessageToast(err.extendData[0].Message));
+      dispatch(showToast());
       // throw new Error(`Error signing in: ${err.message}`);
     }
   }

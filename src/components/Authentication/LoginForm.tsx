@@ -7,10 +7,12 @@ import type { ISignInForm } from '@/services/auth.service/auth.service';
 import InputField from '../FormHelper/InputField';
 import { getSession, signIn } from 'next-auth/react';
 import Cookies from 'js-cookie';
+import { getAllRole } from '@/store/customerRole/customerRoleAction';
+import { useAppDispatch } from '@/store/hook';
 
 export default function LoginForm() {
   const showPassword = false;
-
+  const dispatch = useAppDispatch();
   const {
     register,
     formState: { errors },
@@ -32,6 +34,7 @@ export default function LoginForm() {
         getSession().then((session) => {
           if (session) {
             const { user } = session;
+            dispatch(getAllRole({}));
             Cookies.set('auth-token', user.accessToken);
             Cookies.set('refresh-token', user.refreshToken);
           }

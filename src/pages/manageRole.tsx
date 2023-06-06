@@ -7,6 +7,7 @@ import {
 } from '@/store/customerRole/customerRoleAction';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { setModalContent, showModal } from '@/store/modal/modalSlice';
+import { setMessageToast, showToast } from '@/store/toast/toastSlice';
 
 import { Button } from '@mui/material';
 
@@ -65,8 +66,13 @@ const ManageRole = () => {
     dispatch(setModalContent(modalContent));
     dispatch(showModal());
   };
+  const handleShowToast = () => {
+    dispatch(setMessageToast('Test'));
+    dispatch(showToast());
+  };
   return (
     <div className="mx-auto max-w-2xl bg-white py-16">
+      <Button onClick={handleShowToast}>Test</Button>
       <form
         name="basic"
         autoComplete="off"

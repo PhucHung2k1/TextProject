@@ -3,18 +3,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const signUp = createAsyncThunk(
   'account/signUp',
-  async (
-    body: any
-    // { dispatch}
-  ) => {
+  async (body: any, { dispatch }) => {
     const servicesAccountAPI = new Account();
 
     try {
       const { data, status, error } = await servicesAccountAPI.signUp(body);
 
       if (status === 200 && data) {
-        console.log('success', data);
-        // dispatch(showToast())
         return data;
       }
 
