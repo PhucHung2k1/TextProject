@@ -8,9 +8,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { setModalContent, showModal } from '@/store/modal/modalSlice';
 import { setMessageToast, showToast } from '@/store/toast/toastSlice';
-
 import { Button } from '@mui/material';
-
 import { useForm } from 'react-hook-form';
 
 const ManageRole = () => {
@@ -32,8 +30,6 @@ const ManageRole = () => {
     dispatch(getAllRole({}));
   };
   const handleShowInfoRole = (name: string) => {
-    console.log('name', name);
-
     const modalContent = (
       <div>
         <h1 className="mb-4 text-center text-xl font-bold">Update Role</h1>

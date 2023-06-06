@@ -3,7 +3,6 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { AuthAPI } from '@/services/auth.service/auth.service';
 
-
 const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
@@ -16,7 +15,7 @@ const authOptions: NextAuthOptions = {
         const { username, password, hasRefreshToken } = credentials as {
           username: string;
           password: string;
-          hasRefreshToken : boolean
+          hasRefreshToken: boolean;
         };
 
         const servicesAuthAPI = new AuthAPI();

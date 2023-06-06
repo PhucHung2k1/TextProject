@@ -5,7 +5,7 @@ import { setMessageToast, showToast } from '../toast/toastSlice';
 
 export const getAllRole = createAsyncThunk(
   'account/customerRole',
-  async (body: any, { dispatch }) => {
+  async (_body: any, { dispatch }) => {
     const servicesCustomerRoleAPI = new CustomerRole();
 
     try {

@@ -5,10 +5,10 @@ function PrevLoader() {
   const showLoading = useAppSelector((state) => state.loadingSlice.isLoading);
 
   return showLoading ? (
-    <div className="z-1002 fixed inset-0 h-screen w-screen cursor-wait">
+    <div className="fixed inset-0 h-screen w-screen cursor-wait">
       <div className="relative flex h-full w-full items-center justify-center">
         <div
-          className="-z-1 absolute inset-0 bg-black bg-opacity-30 bg-cover"
+          className="absolute inset-0 bg-black bg-cover"
           style={{
             backdropFilter: 'blur(3px)',
             WebkitBackdropFilter: 'blur(3px)',
