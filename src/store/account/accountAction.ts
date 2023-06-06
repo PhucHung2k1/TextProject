@@ -1,25 +1,26 @@
-import { AuthAPI } from '@/services/auth.service/auth.service';
+import { Account } from '@/services/account.service/account.service';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const signUp = createAsyncThunk(
-  'auth/signUp',
+  'account/signUp',
   async (
     body: any
-    // { dispatch, extra }
+    // { dispatch}
   ) => {
-    const servicesAuthAPI = new AuthAPI();
+    const servicesAccountAPI = new Account();
 
     try {
-      const { data, status, error } = await servicesAuthAPI.signUp(body);
+      const { data, status, error } = await servicesAccountAPI.signUp(body);
 
       if (status === 200 && data) {
         console.log('success', data);
-
+        // dispatch(showToast())
         return data;
       }
 
       throw new Error(error ? JSON.stringify(error) : 'Sign-Up failed.');
     } catch (err: any) {
+      // dispatch(showToast())
       // throw new Error(`Error signing in: ${err.message}`);
     }
   }

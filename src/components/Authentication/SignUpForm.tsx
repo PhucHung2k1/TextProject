@@ -7,7 +7,7 @@ import { emailRegex } from '@/utils/helper/isValidEmail';
 
 import InputField from '../FormHelper/InputField';
 import { useAppDispatch } from '@/store/hook';
-import { signUp } from '@/store/auth/authAction';
+import { signUp } from '@/store/account/accountAction';
 
 interface IFormInput {
   firstName: string;
