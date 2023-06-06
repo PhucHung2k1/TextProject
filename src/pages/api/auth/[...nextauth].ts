@@ -1,8 +1,8 @@
 import type { NextAuthOptions } from 'next-auth';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-
 import { AuthAPI } from '@/services/auth.service/auth.service';
+
 
 const authOptions: NextAuthOptions = {
   session: {
@@ -13,9 +13,10 @@ const authOptions: NextAuthOptions = {
       type: 'credentials',
       credentials: {},
       async authorize(credentials) {
-        const { username, password } = credentials as {
+        const { username, password, hasRefreshToken } = credentials as {
           username: string;
           password: string;
+          hasRefreshToken : boolean
         };
 
         const servicesAuthAPI = new AuthAPI();
@@ -24,6 +25,7 @@ const authOptions: NextAuthOptions = {
           const { data, status, error } = await servicesAuthAPI.signIn({
             username,
             password,
+            hasRefreshToken,
           });
 
           if (status === 200 && data) {
