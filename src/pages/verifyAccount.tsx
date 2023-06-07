@@ -1,11 +1,11 @@
-import LayoutAuthen from '@/components/Authentication/LayoutAuthen';
+import LayoutHeader from '@/components/Authentication/LayoutHeader';
 import VerifyAccount from '@/components/Authentication/VerifyAccount';
 
 const VerifyAccountPage = () => {
   return (
-    <LayoutAuthen type="">
+    <LayoutHeader>
       <VerifyAccount />
-    </LayoutAuthen>
+    </LayoutHeader>
   );
 };
 export default VerifyAccountPage;

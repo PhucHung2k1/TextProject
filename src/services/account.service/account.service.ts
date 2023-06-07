@@ -1,5 +1,4 @@
 import type { IResponse } from '@/utils/axios/entities';
-import { catchAxiosError } from '@/utils/axios/error';
 import HttpClient from '@/utils/axios/instance';
 import type { ISignUp } from './account.interface';
 
@@ -11,9 +10,8 @@ export class Account extends HttpClient {
   }
 
   public signUp = async (data: ISignUp): Promise<IResponse> => {
-    const response: IResponse = await this.instance
-      .post(SIGN_UP, data)
-      .catch(catchAxiosError);
+    const response: IResponse = await this.instance.post(SIGN_UP, data);
+    // .catch(catchAxiosError);
     return response;
   };
 }

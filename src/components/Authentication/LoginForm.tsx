@@ -48,7 +48,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex flex-col ">
+    <div>
       <form
         className="container mx-auto flex w-full max-w-2xl flex-col items-center justify-start gap-3"
         onSubmit={handleSubmit(handleSignIn)}
