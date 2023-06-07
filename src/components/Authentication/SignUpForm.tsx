@@ -24,8 +24,6 @@ export default function SignUpForm() {
     handleSubmit,
   } = useForm<IFormInput>();
   const onSubmit = async (values: IFormInput) => {
-    console.log('values', values);
-
     dispatch(signUp(values)).then((res) => {
       if (res.payload) {
         router.push('/verifyAccount');

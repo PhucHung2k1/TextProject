@@ -1,5 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export type IToastState = {
+  isShowToast: boolean;
+  messageToast: string;
+  propertiesToast: {
+    autoHideDuration: number;
+    position: {
+      vertical: 'top' | 'bottom';
+      horizontal: 'left' | 'center' | 'right';
+    };
+  };
+  typeAlert: 'success' | 'error' | 'warning' | 'info';
+};
 const initialState = {
   isShowToast: false,
   messageToast: '',
@@ -9,9 +21,9 @@ const initialState = {
       vertical: 'top',
       horizontal: 'center',
     },
-    typeAlert: 'success',
   },
-};
+  typeAlert: 'success',
+} as IToastState;
 
 const toastSlice = createSlice({
   name: 'toast',
@@ -29,9 +41,17 @@ const toastSlice = createSlice({
     setPropertiesToast: (state, action) => {
       state.propertiesToast = action.payload;
     },
+    setTypeAlertToast: (state, action) => {
+      state.typeAlert = action.payload;
+    },
   },
 });
 
-export const { showToast, hideToast, setMessageToast, setPropertiesToast } =
-  toastSlice.actions;
+export const {
+  showToast,
+  hideToast,
+  setMessageToast,
+  setPropertiesToast,
+  setTypeAlertToast,
+} = toastSlice.actions;
 export default toastSlice.reducer;

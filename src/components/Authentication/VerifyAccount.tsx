@@ -1,17 +1,23 @@
+import type { ISignUpVerify } from '@/services/account.service/account.interface';
+import { signUpSendVerify, signUpVerify } from '@/store/account/accountAction';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import {
+  setMessageToast,
+  setTypeAlertToast,
+  showToast,
+} from '@/store/toast/toastSlice';
+import { formatTimeMMSS } from '@/utils/helper/formatTime';
 import { Button } from '@mui/material';
-import moment from 'moment';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const VerifyAccount = () => {
-  const [countDown, setCountDown] = useState<number>(60);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const [countDown, setCountDown] = useState<number>(90);
   const [isActive, setIsActive] = useState<boolean>(false);
-  // const [isOtpWrong, setIsOtpWrong] = useState<boolean>(false);
-  const startCountDown = () => {
-    setCountDown(60);
-    setIsActive(true);
-  };
-
+  const [isOtpWrong, setIsOtpWrong] = useState<boolean>(false);
   const [otpValues, setOtpValues] = useState<string[]>([
     '',
     '',
@@ -21,7 +27,19 @@ const VerifyAccount = () => {
     '',
   ]);
 
+  const emailSignUp = useAppSelector((state) => state.accountSlice.emailSignUp);
+  const handleResend = () => {
+    setCountDown(90);
+    setIsActive(true);
+    // dispatch(setEmailSignUp('phanphutrong001@gmail.com'));
+    dispatch(signUpSendVerify({ email: emailSignUp }));
+  };
+
   const handleInputChange = (index: number, value: string) => {
+    if (isOtpWrong) {
+      setIsOtpWrong(false);
+    }
+
     const newInputValues = [...otpValues];
     newInputValues[index] = value;
     setOtpValues(newInputValues);
@@ -35,10 +53,7 @@ const VerifyAccount = () => {
       nextInput?.setSelectionRange(endNext, endNext);
     }
   };
-  const formatTime = (time: number): string => {
-    const duration = moment.duration(time, 'seconds');
-    return moment.utc(duration.asMilliseconds()).format('mm:ss');
-  };
+
   const handleKeyDown = (
     index: number,
     event: React.KeyboardEvent<HTMLInputElement>
@@ -68,9 +83,30 @@ const VerifyAccount = () => {
   const handleVerifyAccount = () => {
     const verifyNumber = otpValues.toString().concat().replaceAll(',', '');
     if (verifyNumber.length === 6) {
-      // console.log('verifyNumber', verifyNumber)
+      const body: ISignUpVerify = {
+        email: emailSignUp,
+        otp: verifyNumber,
+      };
 
-      startCountDown();
+      dispatch(signUpVerify(body)).then((res) => {
+        const responseData = res.payload;
+        if (responseData) {
+          if (responseData.status === 200) {
+            dispatch(setTypeAlertToast('success'));
+            dispatch(setMessageToast(responseData?.message));
+            dispatch(showToast());
+            setIsOtpWrong(false);
+            setCountDown(90);
+            setIsActive(true);
+            router.push('/login');
+          } else {
+            dispatch(setTypeAlertToast('error'));
+            dispatch(setMessageToast(responseData?.message));
+            dispatch(showToast());
+            setIsOtpWrong(true);
+          }
+        }
+      });
     }
   };
   useEffect(() => {
@@ -98,7 +134,7 @@ const VerifyAccount = () => {
         <p>
           A text message with the code has been sent to{' '}
           <span className="font-bold text-mango-text-gray-2">
-            admin@enrichco.us.
+            {emailSignUp}.
           </span>
         </p>
         <Link href="/" className="!text-mango-primary-blue">
@@ -106,14 +142,15 @@ const VerifyAccount = () => {
         </Link>
 
         {/*  */}
-        <div className=" mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
           {otpValues.map((value, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <div className="h-16 w-16" key={`input-${index}`}>
-              {/* <span className="border-b-4 w-1/2 border-mango-text-gray-1 absolute top-[80%] left-[25%]"></span> */}
               <input
                 id={`input-${index}`}
-                className="h-full w-full rounded border-2 border-mango-gray-light-1 text-center text-3xl font-bold focus:border-none"
+                className={`h-full w-full rounded border-2  text-center text-3xl font-bold focus:border-none ${
+                  isOtpWrong ? 'border-red-600 ' : 'border-mango-gray-light-1'
+                }`}
                 minLength={1}
                 maxLength={1}
                 autoComplete="new-password"
@@ -134,10 +171,10 @@ const VerifyAccount = () => {
           <button
             type="button"
             className="cursor-pointer text-base font-medium text-mango-primary-blue hover:underline "
-            onClick={startCountDown}
-            disabled={isActive}
+            onClick={handleResend}
+            // disabled={isActive}
           >
-            Resend ({formatTime(countDown)})
+            Resend ({formatTimeMMSS(countDown)})
           </button>
         </div>
         <Button
