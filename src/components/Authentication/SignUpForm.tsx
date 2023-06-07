@@ -7,7 +7,8 @@ import { emailRegex } from '@/utils/helper/isValidEmail';
 
 import InputField from '../FormHelper/InputField';
 import { useAppDispatch } from '@/store/hook';
-import { signUp } from '@/store/auth/authAction';
+import { signUp } from '@/store/account/accountAction';
+import { useRouter } from 'next/router';
 
 interface IFormInput {
   firstName: string;
@@ -56,13 +57,18 @@ const listFormData = [
 ];
 export default function SignUpForm() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<IFormInput>();
   const onSubmit = async (values: IFormInput) => {
-    dispatch(signUp(values));
+    dispatch(signUp(values)).then((res) => {
+      if (res.payload) {
+        router.push('/verifyAccount');
+      }
+    });
   };
   return (
     <div className="flex flex-col gap-0">

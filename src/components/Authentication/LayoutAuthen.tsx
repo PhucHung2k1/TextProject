@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 export interface LayoutAuthenProps {
@@ -19,11 +20,15 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
       </div>
       <div className="flex h-full w-[40%] flex-col items-center justify-between overflow-auto bg-white pb-8">
         <div className="flex w-[70%] flex-col items-center ">
-          <img
-            src="/assets/images/Authentication/logoIcon.png"
-            alt="logo"
-            className="mt-12 w-[50%]"
-          />
+          <div className="mt-12 w-[50%]">
+            <Image
+              src="/assets/images/Authentication/logoIcon.png"
+              alt="logo"
+              layout="responsive"
+              width="100%"
+              height="40%"
+            />
+          </div>
           <div className="mt-20 flex w-[80%] flex-col items-center">
             <p className="text-2xl text-[#262626]">
               {type === 'login'
@@ -45,21 +50,27 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
           <p className="text-sm font-normal text-[#505050]">Connect with us</p>
           <div className="mt-2 flex items-center justify-center gap-5">
             <div className="flex h-[40px] w-[40px] items-center justify-center rounded-3xl bg-[#F4F4F8]">
-              <img
+              <Image
+                width="60%"
+                height="60%"
                 src="/assets/images/Authentication/facebookIcon.png"
                 alt="fbIcon"
                 className="w-[60%] cursor-pointer"
               />
             </div>
             <div className="flex h-[40px] w-[40px] items-center justify-center rounded-3xl bg-[#F4F4F8]">
-              <img
+              <Image
+                width="60%"
+                height="60%"
                 src="/assets/images/Authentication/youtobeIcon.png"
                 alt="fbIcon"
                 className="w-[60%] cursor-pointer"
               />
             </div>
             <div className="flex h-[40px] w-[40px] items-center justify-center rounded-3xl bg-[#F4F4F8]">
-              <img
+              <Image
+                width="60%"
+                height="60%"
                 src="/assets/images/Authentication/instagramIcon.png"
                 alt="fbIcon"
                 className="w-[60%] cursor-pointer"

@@ -3,9 +3,10 @@ import { createWrapper } from 'next-redux-wrapper';
 import loadingSlice from './loading/loadingSlice';
 import modalSlice from './modal/modalSlice';
 import toastSlice from './toast/toastSlice';
+import customerRoleSlice from './customerRole/customerRoleSlice';
 
 export const store = configureStore({
-  reducer: { toastSlice, modalSlice, loadingSlice },
+  reducer: { toastSlice, modalSlice, loadingSlice, customerRoleSlice },
 });
 
 const makeStore = () => store;

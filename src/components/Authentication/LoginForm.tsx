@@ -1,15 +1,17 @@
-import { Checkbox, FormControlLabel } from "@mui/material";
-import Link from "next/link";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import type { ISignInForm } from "@/services/auth.service/auth.service";
-
-import InputField from "../FormHelper/InputField";
-import { getSession, signIn } from "next-auth/react";
-import Cookies from "js-cookie";
-import { IAuthResponse } from "@/services/auth.service/auth.interface";
+import { Checkbox, FormControlLabel } from '@mui/material';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import type { ISignInForm } from '@/services/auth.service/auth.service';
+import InputField from '../FormHelper/InputField';
+import { getSession, signIn } from 'next-auth/react';
+import Cookies from 'js-cookie';
+import { getAllRole } from '@/store/customerRole/customerRoleAction';
+import { useAppDispatch } from '@/store/hook';
+import type { IAuthResponse } from '@/services/auth.service/auth.interface';
 
 export default function LoginForm() {
+  const dispatch = useAppDispatch();
   const showPassword = false;
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
@@ -20,7 +22,7 @@ export default function LoginForm() {
   } = useForm<ISignInForm>();
 
   const handleSignIn = async (values: ISignInForm) => {
-    await signIn("credentials", {
+    await signIn('credentials', {
       username: values.username,
       password: values.password,
       hasRefreshToken: rememberMe,
@@ -35,10 +37,10 @@ export default function LoginForm() {
         getSession().then((session) => {
           if (session) {
             const { user } = session;
-            var iAuthResponse = user as unknown as IAuthResponse;
-
-            Cookies.set("auth-token", iAuthResponse.AccessToken);
-            Cookies.set("refresh-token", iAuthResponse.RefreshToken);
+            dispatch(getAllRole({}));
+            const iAuthResponse = user as unknown as IAuthResponse;
+            Cookies.set('auth-token', iAuthResponse.AccessToken);
+            Cookies.set('refresh-token', iAuthResponse.RefreshToken);
           }
         });
       }
@@ -57,23 +59,23 @@ export default function LoginForm() {
           fullWidth
           register={register}
           registerOptions={{
-            name: "username", // email
-            required: "Enter your Email !",
-            maxLength: { value: 255, message: "over 255 characters" },
+            name: 'username', // email
+            required: 'Enter your Email !',
+            maxLength: { value: 255, message: 'over 255 characters' },
           }}
           className=" border border-gray-400  bg-gray-100"
           errors={errors}
         />
 
         <InputField
-          keyboardType={!showPassword ? "password" : "text"}
+          keyboardType={!showPassword ? 'password' : 'text'}
           placeholder="Password"
           fullWidth
           type="password"
           register={register}
           registerOptions={{
-            name: "password",
-            required: "Enter your Password !",
+            name: 'password',
+            required: 'Enter your Password !',
             // minLength: {
             //   value: 8,
             //   message: 'Mật khẩu phải từ 8 ký tự trở lên.',
@@ -93,7 +95,7 @@ export default function LoginForm() {
               <Checkbox
                 checked={rememberMe}
                 onChange={(_, v) => {
-                  setRememberMe(v)
+                  setRememberMe(v);
                 }}
               />
             }

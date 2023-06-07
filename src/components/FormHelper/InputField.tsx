@@ -54,8 +54,12 @@ const InputField = (props: Props) => {
   } = props;
 
   const { name, required } = registerOptions as RegisterOptions;
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  useEffect(() => {}, [defaultValue]);
+  const [showPassword, setShowPassword] = useState<boolean>(true);
+  const [valueDefault, setValueDefault] = useState<string | undefined>('');
+
+  useEffect(() => {
+    setValueDefault(defaultValue);
+  }, [defaultValue]);
 
   const handleClear = (e: any) => {
     if (!disabled) {
@@ -100,7 +104,7 @@ const InputField = (props: Props) => {
           )}
           {...option}
           placeholder={placeholder}
-          defaultValue={defaultValue}
+          defaultValue={valueDefault}
           disabled={disabled}
           onChange={handleInputFieldChange}
           type={
