@@ -8,7 +8,7 @@ export default abstract class AsyncHttpClient {
   protected readonly instance: AxiosInstance;
 
   constructor(baseURL: string) {
-    const accessToken = Cookies.get('token');
+    const accessToken = Cookies.get('auth-token');
 
     const headers: any = {
       'content-type': 'application/json',

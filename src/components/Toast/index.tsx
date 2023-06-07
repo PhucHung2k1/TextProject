@@ -17,6 +17,7 @@ export default function ToastContainer() {
   const propertiesToast = useAppSelector(
     (state) => state.toastSlice.propertiesToast
   );
+  const typeAlert = useAppSelector((state) => state.toastSlice.typeAlert);
   const messageToast = useAppSelector((state) => state.toastSlice.messageToast);
   const isShowToast = useAppSelector((state) => state.toastSlice.isShowToast);
 
@@ -34,20 +35,13 @@ export default function ToastContainer() {
   return (
     <Snackbar
       anchorOrigin={
-        (propertiesToast.position as {
-          vertical: 'top';
-          horizontal: 'center';
-        }) || { vertical: 'top', horizontal: 'center' }
+        propertiesToast.position || { vertical: 'top', horizontal: 'center' }
       }
       open={isShowToast}
       autoHideDuration={propertiesToast.autoHideDuration || 3000}
       onClose={handleClose}
     >
-      <Alert
-        onClose={handleClose}
-        severity={(propertiesToast.typeAlert as 'success') || 'success'}
-        sx={{ width: '100%' }}
-      >
+      <Alert onClose={handleClose} severity={typeAlert} sx={{ width: '100%' }}>
         {messageToast}
       </Alert>
     </Snackbar>
