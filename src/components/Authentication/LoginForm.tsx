@@ -50,7 +50,7 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col ">
       <form
-        className="container mx-auto flex w-full max-w-2xl flex-col items-center justify-start"
+        className="container mx-auto flex w-full max-w-2xl flex-col items-center justify-start gap-3"
         onSubmit={handleSubmit(handleSignIn)}
       >
         <InputField
@@ -89,7 +89,7 @@ export default function LoginForm() {
           errors={errors}
         />
 
-        <div className="flex items-center justify-between">
+        <div className="flex w-full items-center justify-between">
           <FormControlLabel
             control={
               <Checkbox
@@ -107,23 +107,21 @@ export default function LoginForm() {
         </div>
 
         <button
-          className="rounded-lg bg-green-500 font-semibold text-white ring-2 ring-white hover:bg-green-400 focus:bg-green-700 focus:outline-none md:focus:shadow"
-          style={{ width: 158, height: 49 }}
+          className="h-12 w-full  rounded-lg bg-green-500 font-semibold text-white ring-2 ring-white hover:bg-green-400 focus:bg-green-700 focus:outline-none md:focus:shadow"
           type="submit"
         >
           LOG IN
         </button>
+        <div className="flex items-center justify-center gap-2">
+          <div>Don't have an account?</div>
+          <Link
+            href="/signup"
+            className="cursor-pointer text-base font-medium text-mango-primary-blue"
+          >
+            Create an account
+          </Link>
+        </div>
       </form>
-
-      <div className="flex items-center justify-center gap-2">
-        <div>Don't have an account?</div>
-        <Link
-          href="/signup"
-          className="cursor-pointer text-base font-medium text-mango-primary-blue"
-        >
-          Create an account
-        </Link>
-      </div>
     </div>
   );
 }
