@@ -3,13 +3,15 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { ISignInForm } from '@/services/auth.service/auth.service';
-
 import InputField from '../FormHelper/InputField';
 import { getSession, signIn } from 'next-auth/react';
 import Cookies from 'js-cookie';
+import { getAllRole } from '@/store/customerRole/customerRoleAction';
+import { useAppDispatch } from '@/store/hook';
 import type { IAuthResponse } from '@/services/auth.service/auth.interface';
 
 export default function LoginForm() {
+  const dispatch = useAppDispatch();
   const showPassword = false;
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
@@ -35,8 +37,8 @@ export default function LoginForm() {
         getSession().then((session) => {
           if (session) {
             const { user } = session;
+            dispatch(getAllRole({}));
             const iAuthResponse = user as unknown as IAuthResponse;
-
             Cookies.set('auth-token', iAuthResponse.AccessToken);
             Cookies.set('refresh-token', iAuthResponse.RefreshToken);
           }

@@ -55,7 +55,6 @@ const InputField = (props: Props) => {
 
   const { name, required } = registerOptions as RegisterOptions;
   const [showPassword, setShowPassword] = useState<boolean>(true);
-  useEffect(() => {}, [defaultValue]);
 
   const handleClear = (e: any) => {
     if (!disabled) {
