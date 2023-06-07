@@ -1,24 +1,36 @@
-import { Checkbox, FormControlLabel } from '@mui/material';
+import {
+  Checkbox,
+  FormControlLabel,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from '@mui/material';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import type { ISignInForm } from '@/services/auth.service/auth.service';
-import InputField from '../FormHelper/InputField';
-import { getSession, signIn } from 'next-auth/react';
-import Cookies from 'js-cookie';
-import { getAllRole } from '@/store/customerRole/customerRoleAction';
-import { useAppDispatch } from '@/store/hook';
+import Image from 'next/image';
+
 import type { IAuthResponse } from '@/services/auth.service/auth.interface';
+import Cookies from 'js-cookie';
+import { signIn, getSession } from 'next-auth/react';
+import { VisibilityOff, Visibility } from '@mui/icons-material';
+import { setMessageToast, showToast } from '@/store/toast/toastSlice';
+import { useAppDispatch } from '@/store/hook';
 
 export default function LoginForm() {
-  const dispatch = useAppDispatch();
-  const showPassword = false;
   const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const {
-    register,
-    formState: { errors },
     handleSubmit,
+    control,
+    formState: { errors },
   } = useForm<ISignInForm>();
 
   const handleSignIn = async (values: ISignInForm) => {
@@ -27,6 +39,7 @@ export default function LoginForm() {
       password: values.password,
       hasRefreshToken: rememberMe,
       redirect: false,
+      callbackUrl: '/',
     }).then((callback) => {
       if (callback?.error) {
         // eslint-disable-next-line no-alert
@@ -37,10 +50,17 @@ export default function LoginForm() {
         getSession().then((session) => {
           if (session) {
             const { user } = session;
-            dispatch(getAllRole({}));
             const iAuthResponse = user as unknown as IAuthResponse;
-            Cookies.set('auth-token', iAuthResponse.AccessToken);
-            Cookies.set('refresh-token', iAuthResponse.RefreshToken);
+
+            if (iAuthResponse.AccessToken) {
+              Cookies.set('auth-token', iAuthResponse.AccessToken);
+            }
+            if (iAuthResponse.RefreshToken) {
+              Cookies.set('refresh-token', iAuthResponse.RefreshToken);
+            }
+
+            dispatch(setMessageToast('Login Sucess!'));
+            dispatch(showToast());
           }
         });
       }
@@ -48,45 +68,77 @@ export default function LoginForm() {
   };
 
   return (
-    <div>
+
+    <div className=" flex h-[70%] w-[30%] flex-col items-center justify-between rounded-2xl bg-white p-6 py-5">
+      <div className="mt-5 flex w-full items-center justify-center ">
+        <Image
+          src="/assets/images/Authentication/logoIcon.png"
+          alt="logo"
+          width={150}
+          height={50}
+        />
+      </div>
+      <div className="flex flex-col ">
+        <h1 className="text-4xl font-semibold tracking-tighter text-text-title">
+          Hi, welcome back
+        </h1>
+      </div>
+
+
+  
+
       <form
-        className="container mx-auto flex w-full max-w-2xl flex-col items-center justify-start gap-3"
+        className="container mx-auto mb-10 flex w-full max-w-2xl flex-col items-center justify-start gap-5"
         onSubmit={handleSubmit(handleSignIn)}
       >
-        <InputField
-          placeholder="Email"
-          type="email"
-          fullWidth
-          register={register}
-          registerOptions={{
-            name: 'username', // email
-            required: 'Enter your Email !',
-            maxLength: { value: 255, message: 'over 255 characters' },
-          }}
-          className=" border border-gray-400  bg-gray-100"
-          errors={errors}
+        <Controller
+          name="username"
+          control={control}
+          rules={{ required: 'Username is required' }}
+          defaultValue=""
+          render={({ field }) => (
+            <TextField
+              {...field}
+              id="outlined-username-input"
+              label="Username"
+              type="text"
+              autoComplete="username"
+              className="w-full"
+              error={!!errors.username}
+              helperText={errors.username?.message}
+            />
+          )}
         />
 
-        <InputField
-          keyboardType={!showPassword ? 'password' : 'text'}
-          placeholder="Password"
-          fullWidth
-          type="password"
-          register={register}
-          registerOptions={{
-            name: 'password',
-            required: 'Enter your Password !',
-            // minLength: {
-            //   value: 8,
-            //   message: 'Mật khẩu phải từ 8 ký tự trở lên.',
-            // },
-            // pattern: {
-            //   value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%\^&\*]{8,}$/,
-            //   message: 'Mật khẩu phải có ít nhất một ký tự viết thường, một ký tự viết HOA và một ký tự số.',
-            // },
-          }}
-          className="border border-gray-400  bg-gray-100"
-          errors={errors}
+        <Controller
+          name="password"
+          control={control}
+          defaultValue=""
+          rules={{ required: 'Password is required' }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Password"
+              variant="outlined"
+              type={showPassword ? 'text' : 'password'}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
         />
 
         <div className="flex w-full items-center justify-between">
@@ -101,27 +153,34 @@ export default function LoginForm() {
             }
             label="Remember me"
           />
-          <Link href="/" className="font-medium  text-mango-primary-blue ">
-            Forgot Password?
+          <Link
+            href="/"
+            className="cursor-pointer  font-medium text-mango-primary-blue"
+          >
+            <div className="text-text-primary-dark">Forgot Password?</div>
           </Link>
         </div>
 
         <button
-          className="h-12 w-full  rounded-lg bg-green-500 font-semibold text-white ring-2 ring-white hover:bg-green-400 focus:bg-green-700 focus:outline-none md:focus:shadow"
+          className="h-12 w-full  rounded-lg bg-mango-primary-blue font-semibold text-white"
           type="submit"
         >
           LOG IN
         </button>
-        <div className="flex items-center justify-center gap-2">
-          <div>Don't have an account?</div>
-          <Link
-            href="/signup"
-            className="cursor-pointer text-base font-medium text-mango-primary-blue"
-          >
-            Create an account
-          </Link>
-        </div>
       </form>
+      <Link href="/signUp">
+        <div className="flex h-12 w-full cursor-pointer items-center justify-center gap-3 rounded-lg bg-[#0000000D] font-semibold text-text-secondary">
+          <div>Create new account</div>
+          <div>
+            <Image
+              src="/assets/images/Authentication/image_arrow_right.png"
+              alt="logo"
+              width={13}
+              height={13}
+            />
+          </div>
+        </div>
+      </Link>
     </div>
   );
 }

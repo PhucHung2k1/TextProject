@@ -30,8 +30,10 @@ module.exports = {
         'mango-text-gray-1': '#A7A7A7',
         'mango-text-gray-2': '#737277',
         'mango-gray-light-1': '#D5D7DA',
+        'text-title': '#1F1F23',
+        'text-secondary': '#737277',
+        'text-primary-dark': '#00ADC3',
         'mango-gray-light-2': '#F5F5F5',
-
         26: '#262626',
         50: '#505050',
         gray: {

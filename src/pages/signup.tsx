@@ -3,7 +3,10 @@ import SignUpForm from '@/components/Authentication/SignUpForm';
 
 const SignUp = () => {
   return (
+
+
     <LayoutHeader>
+
       <SignUpForm />
     </LayoutHeader>
   );
