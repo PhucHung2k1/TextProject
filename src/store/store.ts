@@ -4,9 +4,16 @@ import loadingSlice from './loading/loadingSlice';
 import modalSlice from './modal/modalSlice';
 import toastSlice from './toast/toastSlice';
 import customerRoleSlice from './customerRole/customerRoleSlice';
+import permissionSlice from './permission/permissionSlice';
 
 export const store = configureStore({
-  reducer: { toastSlice, modalSlice, loadingSlice, customerRoleSlice },
+  reducer: {
+    toastSlice,
+    modalSlice,
+    loadingSlice,
+    customerRoleSlice,
+    permissionSlice,
+  },
 });
 
 const makeStore = () => store;

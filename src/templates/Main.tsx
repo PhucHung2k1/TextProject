@@ -30,6 +30,14 @@ const Main = (props: IMainProps) => (
                 Home
               </Link>
             </li>
+            <li className="mr-6">
+              <Link
+                href="/permission"
+                className="border-none text-gray-700 hover:text-gray-900"
+              >
+                Permission
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>
