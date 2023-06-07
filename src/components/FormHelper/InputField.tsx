@@ -2,7 +2,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { Delete, Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment } from '@mui/material';
 import cc from 'classnames';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface Props {
   label?: string;

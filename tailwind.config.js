@@ -28,6 +28,9 @@ module.exports = {
         'mango-text-blue-1': '#2F54EB',
         'mango-text-gray-1': '#A7A7A7',
         'mango-gray-light-1': '#D5D7DA',
+        'text-title': '#1F1F23',
+        'text-secondary': '#737277',
+        'text-primary-dark': '#00ADC3',
 
         26: '#262626',
         50: '#505050',

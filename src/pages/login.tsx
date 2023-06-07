@@ -16,7 +16,7 @@ const Login = () => {
   }, [status]);
 
   return (
-    <LayoutAuthen type="login">
+    <LayoutAuthen>
       <LoginForm />
     </LayoutAuthen>
   );

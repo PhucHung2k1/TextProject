@@ -3,12 +3,18 @@ import NextAuth from "next-auth/next";
 declare module "next-auth" {
   interface Session {
     user: {
-      Id: string;
-      UserName: string;
-      AccessToken: string;
-      RefreshToken: string;
+      AccessToken?: string;
+      Email: string;
       ExpiresIn: number;
-      RefreshTokenExpiresIn: number;
+      Id: string;
+      IsVerified: boolean;
+      RefreshToken?: string;
+      RefreshTokenExpiresIn?: number;
+      UserName: string;
+      exp:number;
+      iat: number;
+      jti:string;
+      PhoneNumber?: number;
     };
   }
 }

@@ -3,7 +3,7 @@ import VerifyAccount from '@/components/Authentication/VerifyAccount';
 
 const VerifyAccountPage = () => {
   return (
-    <LayoutAuthen type="">
+    <LayoutAuthen>
       <VerifyAccount />
     </LayoutAuthen>
   );
