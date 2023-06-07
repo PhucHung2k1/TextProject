@@ -68,6 +68,7 @@ export default function LoginForm() {
   };
 
   return (
+
     <div className=" flex h-[70%] w-[30%] flex-col items-center justify-between rounded-2xl bg-white p-6 py-5">
       <div className="mt-5 flex w-full items-center justify-center ">
         <Image
@@ -82,6 +83,9 @@ export default function LoginForm() {
           Hi, welcome back
         </h1>
       </div>
+
+
+  
 
       <form
         className="container mx-auto mb-10 flex w-full max-w-2xl flex-col items-center justify-start gap-5"

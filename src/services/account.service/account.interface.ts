@@ -11,3 +11,10 @@ export interface ISignUp {
   zipPostalCode?: string;
   country?: string;
 }
+export interface ISignUpVerify {
+  email: string;
+  otp: string;
+}
+export interface ISignUpSendVerify {
+  email: string;
+}

@@ -4,10 +4,10 @@ import type { AppProps } from 'next/app';
 import { store, wrapper } from '@/store/store';
 import NProgress from 'nprogress';
 import { Router } from 'next/router';
-import ModalContainer from '@/components/Modal';
 import { SessionProvider } from 'next-auth/react';
-import PrevLoader from '@/components/Loading/PrevLoader';
 import ToastContainer from '@/components/Toast';
+import PrevLoader from '@/components/Loading/PrevLoader';
+import ModalContainer from '@/components/Modal';
 
 NProgress.configure({
   showSpinner: false,
