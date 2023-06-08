@@ -1,4 +1,5 @@
 import '../styles/global.css';
+import "animate.css";
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
 import { store, wrapper } from '@/store/store';
@@ -8,6 +9,7 @@ import { SessionProvider } from 'next-auth/react';
 import ToastContainer from '@/components/Toast';
 import PrevLoader from '@/components/Loading/PrevLoader';
 import ModalContainer from '@/components/Modal';
+import MetaSEO, { IMetaSEOProps } from '@/components/MetaSEO';
 
 NProgress.configure({
   showSpinner: false,
@@ -17,6 +19,10 @@ NProgress.configure({
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+
+  const { pageDetail } = pageProps;
+
+
   Router.events.on('routeChangeStart', (_url: any) => {
     NProgress.start();
   });
@@ -25,8 +31,18 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     NProgress.done();
   });
 
+  const configMetaSeoPostDetail: IMetaSEOProps = {
+    title: pageDetail?.title ?? process.env.NEXT_PUBLIC_TITLE,
+    defaultMeta: {
+      name: {
+        description: pageDetail?.description ?? process.env.NEXT_PUBLIC_TITLE
+      }
+    },
+  };
+
   return (
     <Provider store={store}>
+      <MetaSEO {...configMetaSeoPostDetail} />
       <SessionProvider session={pageProps.session}>
         <main>
           <Component {...pageProps} />

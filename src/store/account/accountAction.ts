@@ -20,6 +20,26 @@ export const signUp = createAsyncThunk(
     } catch (err: any) {}
   }
 );
+
+
+export const checkExistEmail = createAsyncThunk(
+  'account/checkExistEmail',
+  async (body: any, { dispatch }) => {
+    const servicesAccountAPI = new Account();
+
+    try {
+      const { data, status, error } = await servicesAccountAPI.checkExistEmail(body);
+
+      if (status === 200 && data) {
+        dispatch(setEmailSignUp(body.email));
+        return data;
+      }
+
+      throw new Error(error ? JSON.stringify(error) : 'Failed.');
+    } catch (err: any) { }
+  }
+);
+
 export const signUpVerify = createAsyncThunk(
   'account/signUpVerify',
   async (body: ISignUpVerify) => {
