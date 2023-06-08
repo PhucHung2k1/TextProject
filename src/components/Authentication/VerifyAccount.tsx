@@ -97,8 +97,8 @@ const VerifyAccount = () => {
       dispatch(signUpVerify(body)).then((res) => {
         const responseData = res.payload;
         if (responseData) {
-          if (responseData.status === 200) {
-            dispatch(setTypeAlertToast("success"));
+          if (responseData?.status === 200) {
+            dispatch(setTypeAlertToast('success'));
             dispatch(setMessageToast(responseData?.message));
             dispatch(showToast());
             setIsOtpWrong(false);

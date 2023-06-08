@@ -243,7 +243,6 @@ export default function SignUpForm() {
                 <TextField
                   label="Password"
                   type="password"
-                  required
                   placeholder="Password"
                   error={Boolean(errors.password)}
                   {...register("password", {

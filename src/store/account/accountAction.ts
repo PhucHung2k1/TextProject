@@ -54,9 +54,7 @@ export const signUpVerify = createAsyncThunk(
       }
 
       return error;
-    } catch (err: any) {
-      // dispatch(showToast())
-    }
+    } catch (err: any) {}
   }
 );
 export const signUpSendVerify = createAsyncThunk(
