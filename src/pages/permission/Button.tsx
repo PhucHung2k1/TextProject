@@ -9,7 +9,7 @@ type btnProps = {
 const ButtonCustom = ({ title }: btnProps) => {
   return (
     <Button
-      type="primary"
+      type="button"
       onClick={() => {
         // let per1Permission = JSON.parse(Cookies.get("permissionList") || "");
         // if (per1Permission && per1Permission[0] && per1Permission[0].value)

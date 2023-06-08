@@ -164,7 +164,7 @@
 
 // export default CustomForm;
 
-import * as React from 'react';
+import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -180,9 +180,9 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function CustomForm() {
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = useState('');
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setAge(event.target.value);
   };
 
@@ -294,8 +294,11 @@ export default function CustomForm() {
                   label="Age"
                   onChange={handleChange}
                 >
-                  {categories.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
+                  {categories.map((item, index) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <MenuItem key={index} value={item}>
+                      {item}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -352,8 +355,11 @@ export default function CustomForm() {
                   label="Age"
                   onChange={handleChange}
                 >
-                  {categories.map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
+                  {categories.map((item, index) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <MenuItem key={index} value={item}>
+                      {item}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
