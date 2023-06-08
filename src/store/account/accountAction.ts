@@ -30,13 +30,11 @@ export const signUpVerify = createAsyncThunk(
       );
 
       if (status === 200 && data) {
-        return data;
+        return { data, status, message: 'Successfully verified your email' };
       }
 
       return error;
-    } catch (err: any) {
-      // dispatch(showToast())
-    }
+    } catch (err: any) {}
   }
 );
 export const signUpSendVerify = createAsyncThunk(
