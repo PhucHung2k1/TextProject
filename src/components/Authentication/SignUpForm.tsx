@@ -83,7 +83,6 @@ export default function SignUpForm() {
                 <TextField
                   label="Last Name"
                   type="text"
-                  required
                   placeholder="Last Name"
                   {...register('lastName', {
                     required: 'Enter Your Last Name!',
@@ -109,7 +108,6 @@ export default function SignUpForm() {
                 <TextField
                   label="Email Address"
                   type="email"
-                  required
                   placeholder="Email Address"
                   {...register('email', {
                     required: 'Enter Your Email Address!',
@@ -139,7 +137,6 @@ export default function SignUpForm() {
                 <TextField
                   label="Password"
                   type="password"
-                  required
                   placeholder="Password"
                   {...register('password', {
                     required: 'Enter Your Password!',
