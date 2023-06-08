@@ -2,7 +2,7 @@
 
 export const AppConfig = {
   site_name: 'Starter',
-  title: 'Nextjs Starter',
+  title: 'MANGO APP',
   description: 'Starter Nextjs with Tailwind CSS, Ant Design',
   locale: 'en',
 };

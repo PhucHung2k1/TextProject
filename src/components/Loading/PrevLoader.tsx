@@ -8,7 +8,7 @@ function PrevLoader() {
     <div className="fixed inset-0 h-screen w-screen cursor-wait">
       <div className="relative flex h-full w-full items-center justify-center">
         <div
-          className="absolute inset-0 bg-black bg-cover"
+          className="absolute inset-0 bg-cover"
           style={{
             backdropFilter: 'blur(3px)',
             WebkitBackdropFilter: 'blur(3px)',

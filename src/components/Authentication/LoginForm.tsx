@@ -4,19 +4,22 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-} from '@mui/material';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import type { ISignInForm } from '@/services/auth.service/auth.service';
-import Image from 'next/image';
-
-import type { IAuthResponse } from '@/services/auth.service/auth.interface';
-import Cookies from 'js-cookie';
-import { signIn, getSession } from 'next-auth/react';
-import { VisibilityOff, Visibility } from '@mui/icons-material';
-import { setMessageToast, showToast } from '@/store/toast/toastSlice';
-import { useAppDispatch } from '@/store/hook';
+} from "@mui/material";
+import Link from "next/link";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import type { ISignInForm } from "@/services/auth.service/auth.service";
+import Image from "next/image";
+import type { IAuthResponse } from "@/services/auth.service/auth.interface";
+import Cookies from "js-cookie";
+import { signIn, getSession } from "next-auth/react";
+import { VisibilityOff, Visibility } from "@mui/icons-material";
+import {
+  setMessageToast,
+  setTypeAlertToast,
+  showToast,
+} from "@/store/toast/toastSlice";
+import { useAppDispatch } from "@/store/hook";
 
 export default function LoginForm() {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
@@ -34,33 +37,41 @@ export default function LoginForm() {
   } = useForm<ISignInForm>();
 
   const handleSignIn = async (values: ISignInForm) => {
-    await signIn('credentials', {
+    await signIn("credentials", {
       username: values.username,
       password: values.password,
       hasRefreshToken: rememberMe,
       redirect: false,
-      callbackUrl: '/',
+      callbackUrl: "/",
     }).then((callback) => {
       if (callback?.error) {
         // eslint-disable-next-line no-alert
-        alert(callback?.error);
+        dispatch(setTypeAlertToast("error"));
+        dispatch(setMessageToast("Wrong username / password!"));
+        dispatch(showToast());
       }
 
       if (callback?.ok && !callback?.error) {
         getSession().then((session) => {
           if (session) {
             const { user } = session;
-            const iAuthResponse = user as unknown as IAuthResponse;
 
-            if (iAuthResponse.AccessToken) {
-              Cookies.set('auth-token', iAuthResponse.AccessToken);
+            if (!user.IsVerified) {
+              dispatch(setTypeAlertToast("error"));
+              dispatch(setMessageToast("Please activate your account"));
+              dispatch(showToast());
+            } else {
+              const iAuthResponse = user as unknown as IAuthResponse;
+              if (iAuthResponse.AccessToken) {
+                Cookies.set("auth-token", iAuthResponse.AccessToken);
+              }
+              if (iAuthResponse.RefreshToken) {
+                Cookies.set("refresh-token", iAuthResponse.RefreshToken);
+              }
+              dispatch(setTypeAlertToast("success"));
+              dispatch(setMessageToast("Login Success!"));
+              dispatch(showToast());
             }
-            if (iAuthResponse.RefreshToken) {
-              Cookies.set('refresh-token', iAuthResponse.RefreshToken);
-            }
-
-            dispatch(setMessageToast('Login Sucess!'));
-            dispatch(showToast());
           }
         });
       }
@@ -90,7 +101,7 @@ export default function LoginForm() {
         <Controller
           name="username"
           control={control}
-          rules={{ required: 'Username is required' }}
+          rules={{ required: "Username is required" }}
           defaultValue=""
           render={({ field }) => (
             <TextField
@@ -110,13 +121,13 @@ export default function LoginForm() {
           name="password"
           control={control}
           defaultValue=""
-          rules={{ required: 'Password is required' }}
+          rules={{ required: "Password is required" }}
           render={({ field }) => (
             <TextField
               {...field}
               label="Password"
               variant="outlined"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               error={!!errors.password}
               helperText={errors.password?.message}
               fullWidth
@@ -164,7 +175,7 @@ export default function LoginForm() {
           LOG IN
         </button>
       </form>
-      <Link href="/signUp">
+      <Link href="/sign-up">
         <div className="flex h-12 w-full cursor-pointer items-center justify-center gap-3 rounded-lg bg-[#0000000D] font-semibold text-text-secondary">
           <div>Create new account</div>
           <div>
