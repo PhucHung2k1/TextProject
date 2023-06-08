@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Head from 'next/head';
 
 export interface IMetaSEOProps {
   title?: string;
@@ -21,10 +21,10 @@ export interface IMetaSEOProps {
   };
 }
 
-const MetaSEO = ({ title, defaultMeta, }: IMetaSEOProps) => {
+const MetaSEO = ({ title, defaultMeta }: IMetaSEOProps) => {
   return (
     <Head>
-      <title>{title ?? "MANGO APP"}</title>
+      <title>{title ?? 'MANGO APP'}</title>
 
       {!defaultMeta?.name?.description ? undefined : (
         <meta name="description" content={defaultMeta.name.description} />

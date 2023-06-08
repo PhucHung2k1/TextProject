@@ -4,22 +4,22 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-} from "@mui/material";
-import Link from "next/link";
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import type { ISignInForm } from "@/services/auth.service/auth.service";
-import Image from "next/image";
-import type { IAuthResponse } from "@/services/auth.service/auth.interface";
-import Cookies from "js-cookie";
-import { signIn, getSession } from "next-auth/react";
-import { VisibilityOff, Visibility } from "@mui/icons-material";
+} from '@mui/material';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import type { ISignInForm } from '@/services/auth.service/auth.service';
+import Image from 'next/image';
+import type { IAuthResponse } from '@/services/auth.service/auth.interface';
+import Cookies from 'js-cookie';
+import { signIn, getSession } from 'next-auth/react';
+import { VisibilityOff, Visibility } from '@mui/icons-material';
 import {
   setMessageToast,
   setTypeAlertToast,
   showToast,
-} from "@/store/toast/toastSlice";
-import { useAppDispatch } from "@/store/hook";
+} from '@/store/toast/toastSlice';
+import { useAppDispatch } from '@/store/hook';
 
 export default function LoginForm() {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
@@ -37,17 +37,17 @@ export default function LoginForm() {
   } = useForm<ISignInForm>();
 
   const handleSignIn = async (values: ISignInForm) => {
-    await signIn("credentials", {
+    await signIn('credentials', {
       username: values.username,
       password: values.password,
       hasRefreshToken: rememberMe,
       redirect: false,
-      callbackUrl: "/",
+      callbackUrl: '/',
     }).then((callback) => {
       if (callback?.error) {
         // eslint-disable-next-line no-alert
-        dispatch(setTypeAlertToast("error"));
-        dispatch(setMessageToast("Wrong username / password!"));
+        dispatch(setTypeAlertToast('error'));
+        dispatch(setMessageToast('Wrong username / password!'));
         dispatch(showToast());
       }
 
@@ -57,19 +57,19 @@ export default function LoginForm() {
             const { user } = session;
 
             if (!user.IsVerified) {
-              dispatch(setTypeAlertToast("error"));
-              dispatch(setMessageToast("Please activate your account"));
+              dispatch(setTypeAlertToast('error'));
+              dispatch(setMessageToast('Please activate your account'));
               dispatch(showToast());
             } else {
               const iAuthResponse = user as unknown as IAuthResponse;
               if (iAuthResponse.AccessToken) {
-                Cookies.set("auth-token", iAuthResponse.AccessToken);
+                Cookies.set('auth-token', iAuthResponse.AccessToken);
               }
               if (iAuthResponse.RefreshToken) {
-                Cookies.set("refresh-token", iAuthResponse.RefreshToken);
+                Cookies.set('refresh-token', iAuthResponse.RefreshToken);
               }
-              dispatch(setTypeAlertToast("success"));
-              dispatch(setMessageToast("Login Success!"));
+              dispatch(setTypeAlertToast('success'));
+              dispatch(setMessageToast('Login Success!'));
               dispatch(showToast());
             }
           }
@@ -101,7 +101,7 @@ export default function LoginForm() {
         <Controller
           name="username"
           control={control}
-          rules={{ required: "Username is required" }}
+          rules={{ required: 'Username is required' }}
           defaultValue=""
           render={({ field }) => (
             <TextField
@@ -121,13 +121,13 @@ export default function LoginForm() {
           name="password"
           control={control}
           defaultValue=""
-          rules={{ required: "Password is required" }}
+          rules={{ required: 'Password is required' }}
           render={({ field }) => (
             <TextField
               {...field}
               label="Password"
               variant="outlined"
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               error={!!errors.password}
               helperText={errors.password?.message}
               fullWidth

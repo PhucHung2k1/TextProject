@@ -29,7 +29,7 @@ const ManageRole = () => {
   const handleGetListRole = () => {
     dispatch(getAllRole({}));
   };
-  
+
   const handleShowInfoRole = (name: string) => {
     const modalContent = (
       <div>
@@ -67,7 +67,7 @@ const ManageRole = () => {
     dispatch(setMessageToast('Test'));
     dispatch(showToast());
   };
-  
+
   return (
     <div className="mx-auto max-w-2xl bg-white py-16">
       <Button onClick={handleShowToast}>Test</Button>

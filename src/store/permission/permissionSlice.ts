@@ -1,9 +1,9 @@
-import type { Customer } from '@/services/customer.service/customer.interface';
+import type { ICustomer } from '@/services/customer.service/customer.interface';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PermissionItem } from '@/services/permission.services/permission.interface';
 
 export interface CusDataState {
-  listCustomer: Customer[];
+  listCustomer: ICustomer[];
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
@@ -41,7 +41,7 @@ const cusSlice = createSlice({
       state.permissionAll = action.payload;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: () => {
     // builder.addCase(getListCustomer.pending, (state) => {
     //   state.isLoading = true;
     // });

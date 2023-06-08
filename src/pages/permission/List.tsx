@@ -39,6 +39,7 @@ function ListView() {
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       {data.map((item, index) => (
+        // eslint-disable-next-line react/no-array-index-key
         <ListItem key={`${item.title}${index}`}>
           <ListItemAvatar>
             <Avatar>{item.icon}</Avatar>
