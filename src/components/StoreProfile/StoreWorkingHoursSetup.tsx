@@ -12,11 +12,11 @@ const StoreWorkingHoursSetup: NextPage = () => {
     { id: 7, day: 'Saturday', workTime: 'Closed' },
   ];
   return (
-    <div className="relative h-[1080px] w-full bg-background-paper-elevation-1 text-center text-base text-t-secondary">
+    <div className="relative h-[1080px] w-full bg-background-paper-elevation-1 text-center text-base text-text-secondary">
       <div className="absolute left-[676px] top-[calc(50%_-_400px)] h-[716px] w-[568px] rounded-2xl bg-primary-contrast">
         <div className="absolute left-[0px] top-[0px]  h-4 w-full rounded-t-xl bg-primary-states-hover" />
         <div className="absolute left-[0px] top-[0px] h-4 w-60 rounded-t-xl [background:linear-gradient(90deg,_#80dfeb_68.23%,_rgba(255,_255,_255,_0.52)_99.99%,_rgba(0,_240,_255,_0))]" />
-        <div className=" mt-12 mb-12 text-center">
+        <div className=" my-12 text-center">
           <div className="flex items-center justify-center ">
             <img
               className="cursor-pointer text-3xl"
@@ -24,7 +24,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
               alt=""
             />
 
-            <p className="mx-auto text-[32px] font-semibold text-t-title">
+            <p className="mx-auto text-[32px] font-semibold text-text-title">
               Add your working hours
             </p>
           </div>
