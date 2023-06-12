@@ -12,7 +12,6 @@ export const getAllPermission = createAsyncThunk(
     try {
       const { data, status, error } =
         await PermissionServiceAPI.getAllPermission();
-      console.log({ data, status, error });
 
       if ((status === 200 || status === 201) && data) {
         dispatch(setPermissionAll(data));
