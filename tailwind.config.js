@@ -67,8 +67,6 @@ module.exports = {
         'line-light': '#eaeaf0',
         'primary-main': '#00bdd6',
         'primary-contrast': '#fff',
-        'text-title': '#1f1f23',
-        'text-secondary': '#737277',
       },
     },
   },
