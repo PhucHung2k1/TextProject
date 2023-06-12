@@ -51,7 +51,7 @@ const AddYourLocation = () => {
               />
 
               <p className="mx-auto text-[32px] font-semibold">
-                Confirm your address
+                Add your location
               </p>
             </div>
 
