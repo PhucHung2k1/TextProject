@@ -21,6 +21,15 @@ module.exports = {
       '5xl': '3rem',
       '6xl': '4rem',
     },
+    borderWidth: {
+      DEFAULT: '1px',
+      '0': '0',
+      '2': '2px',
+      '3': '3px',
+      '4': '4px',
+      '6': '6px',
+      '8': '8px',
+    },
     extend: {
       colors: {
         'mango-primary-blue': '#00BED6',
@@ -30,6 +39,7 @@ module.exports = {
         'mango-text-gray-1': '#A7A7A7',
         'mango-text-gray-2': '#737277',
         'mango-gray-light-1': '#D5D7DA',
+        'mango-gray-light-3': '#B0B2C6',
         'text-title': '#1F1F23',
         'text-secondary': '#737277',
         'text-primary-dark': '#00ADC3',
