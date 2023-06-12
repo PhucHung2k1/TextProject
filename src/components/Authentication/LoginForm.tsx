@@ -1,4 +1,5 @@
 import {
+  Button,
   Checkbox,
   FormControlLabel,
   IconButton,
@@ -9,7 +10,6 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import type { ISignInForm } from '@/services/auth.service/auth.service';
-import Image from 'next/image';
 import type { IAuthResponse } from '@/services/auth.service/auth.interface';
 import Cookies from 'js-cookie';
 import { signIn, getSession } from 'next-auth/react';
@@ -79,23 +79,9 @@ export default function LoginForm() {
   };
 
   return (
-    <div className=" flex h-[70%] w-[30%] flex-col items-center justify-between rounded-2xl bg-white p-6 py-5">
-      <div className="mt-5 flex w-full items-center justify-center ">
-        <Image
-          src="/assets/images/Authentication/logoIcon.png"
-          alt="logo"
-          width={150}
-          height={50}
-        />
-      </div>
-      <div className="flex flex-col ">
-        <h1 className="text-4xl font-semibold tracking-tighter text-text-title">
-          Hi, welcome back
-        </h1>
-      </div>
-
+    <div>
       <form
-        className="container mx-auto mb-10 flex w-full max-w-2xl flex-col items-center justify-start gap-5"
+        className="container mx-auto mb-10 mt-5 flex w-full max-w-2xl flex-col items-center justify-start gap-5"
         onSubmit={handleSubmit(handleSignIn)}
       >
         <Controller
@@ -168,26 +154,23 @@ export default function LoginForm() {
           </Link>
         </div>
 
-        <button
-          className="h-12 w-full  rounded-lg bg-mango-primary-blue font-semibold text-white"
+        <Button
+          variant="contained"
+          className="mt-3 h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
           type="submit"
+          sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
         >
-          LOG IN
-        </button>
-      </form>
-      <Link href="/sign-up">
-        <div className="flex h-12 w-full cursor-pointer items-center justify-center gap-3 rounded-lg bg-[#0000000D] font-semibold text-text-secondary">
-          <div>Create new account</div>
-          <div>
-            <Image
-              src="/assets/images/Authentication/image_arrow_right.png"
-              alt="logo"
-              width={13}
-              height={13}
-            />
-          </div>
+          LOGIN
+        </Button>
+        <div className="flex cursor-pointer items-center justify-center gap-1">
+          <div>Don't have an account?</div>
+          <Link href="/sign-up">
+            <div className="font-bold text-mango-primary-blue">
+              Create new account
+            </div>
+          </Link>
         </div>
-      </Link>
+      </form>
     </div>
   );
 }
