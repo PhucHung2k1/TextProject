@@ -32,8 +32,11 @@ module.exports = {
         'mango-gray-light-1': '#D5D7DA',
         'text-title': '#1F1F23',
         'text-secondary': '#737277',
+        'text-disable': '#C5C4C9',
         'text-primary-dark': '#00ADC3',
         'mango-gray-light-2': '#F5F5F5',
+        'icon-color': '#5C5D6A',
+        'primary-dark': '#404044',
         26: '#262626',
         50: '#505050',
         gray: {
