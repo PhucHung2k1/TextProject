@@ -1,5 +1,5 @@
 import type { IResponse } from '@/utils/axios/entities';
-import HttpClient from '@/utils/axios/instance';
+import { apiPost } from '@/utils/axios/instance';
 import type {
   ISignUp,
   ISignUpSendVerify,
@@ -12,29 +12,25 @@ const SIGN_UP_VERIFY = '/account/sign-up-verify';
 const SIGN_UP_SEND_VERIFY = '/account/sign-up-send-verify';
 const CHECK_EXIST_EMAIL = '/common/check-exist-email';
 
-export class Account extends HttpClient {
-  constructor() {
-    super(process.env.NEXT_PUBLIC_API_BASE_URL_DEV ?? '');
-  }
-
+export class Account {
   public signUp = async (data: ISignUp): Promise<IResponse> => {
-    const response: IResponse = await this.instance
-      .post(SIGN_UP, data)
-      .catch(catchAxiosError);
+    const response: IResponse = await apiPost(SIGN_UP, data).catch(
+      catchAxiosError
+    );
     return response;
   };
 
   public checkExistEmail = async (data: ISignUp): Promise<IResponse> => {
-    const response: IResponse = await this.instance
-      .post(CHECK_EXIST_EMAIL, data)
-      .catch(catchAxiosError);
+    const response: IResponse = await apiPost(CHECK_EXIST_EMAIL, data).catch(
+      catchAxiosError
+    );
     return response;
   };
 
   public signUpVerify = async (data: ISignUpVerify): Promise<IResponse> => {
-    const response: IResponse = await this.instance
-      .post(SIGN_UP_VERIFY, data)
-      .catch(catchAxiosError);
+    const response: IResponse = await apiPost(SIGN_UP_VERIFY, data).catch(
+      catchAxiosError
+    );
 
     return response;
   };
@@ -42,9 +38,9 @@ export class Account extends HttpClient {
   public signUpSendVerify = async (
     data: ISignUpSendVerify
   ): Promise<IResponse> => {
-    const response: IResponse = await this.instance
-      .post(SIGN_UP_SEND_VERIFY, data)
-      .catch(catchAxiosError);
+    const response: IResponse = await apiPost(SIGN_UP_SEND_VERIFY, data).catch(
+      catchAxiosError
+    );
     return response;
   };
 }

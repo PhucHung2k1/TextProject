@@ -1,60 +1,103 @@
-import type { AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import Cookies from 'js-cookie';
-import { signOut } from 'next-auth/react';
-import queryString from 'query-string';
+import type { IResponse } from './entities';
 
-export default abstract class AsyncHttpClient {
-  protected readonly instance: AxiosInstance;
+const axiosService = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL_DEV as string,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-  constructor(baseURL: string) {
-    const accessToken = Cookies.get('auth-token');
+axiosService.interceptors.request.use(async (config) => {
+  const accessToken = Cookies.get('token');
 
-    const headers: any = {
-      'content-type': 'application/json',
-      'ngrok-skip-browser-warning': 'true',
-    };
-    if (accessToken) {
-      headers.Authorization = `Bearer ${accessToken}`;
-    }
-    // if (accessToken !== null && accessToken !== undefined && accessToken !== '')
-    this.instance = axios.create({
-      baseURL,
-      headers,
-      paramsSerializer: (params) => queryString.stringify(params),
-    });
-
-    this.responseInterceptor();
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
+  return config;
+});
 
-  /*
-   * When response code is 401, try to refresh the token.
-   * Eject the interceptor so it doesn't loop in case
-   * token refresh causes the 401 response
-   */
-  // axios.interceptors.response.eject(interceptor);
-  private responseInterceptor = () => {
-    this.instance.interceptors.response.use(
-      this._handleResponse,
-      this.handleError
-    );
-  };
+axiosService.interceptors.response.use(
+  (res) => {
+    return Promise.resolve(res);
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 
-  private _handleResponse = ({ data, status }: AxiosResponse): any => ({
-    data,
-    status,
-  });
+// @ts-ignore
+const refreshAuthLogic = async (failedRequest) => {
+  const t = Cookies.get('token');
+  const rt = Cookies.get('refreshToken');
 
-  protected handleError = (error: any) => {
-    if (error?.response?.status === 401) {
-      Cookies.remove('portal-token');
-      localStorage.removeItem('userInfo');
-      signOut({
-        callbackUrl: '/',
-        redirect: true,
+  if (t && rt) {
+    return axios
+      .post(
+        '/api/User/RefreshToken',
+        {
+          accessToken: t,
+          refreshToken: rt,
+        },
+        {
+          baseURL: process.env.NEXT_PUBLIC_API_BASE_URL_DEV as string,
+        }
+      )
+      .then((tokenRefreshResponse) => {
+        const { accessToken } = tokenRefreshResponse.data;
+        failedRequest.response.config.headers.Authorization = `Bearer ${accessToken}`;
+        Cookies.set('token', tokenRefreshResponse.data.accessToken);
+        Cookies.set('refreshToken', tokenRefreshResponse.data.refreshToken);
+        Cookies.set('userName', tokenRefreshResponse.data.userName);
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 401) {
+        }
       });
-      window.location.reload();
-    }
-    throw error;
-  };
-}
+  }
+};
+
+createAuthRefreshInterceptor(axiosService, refreshAuthLogic);
+
+export const apiGet = async <T = any>(url: string): Promise<IResponse> => {
+  const response = await axiosService.get<T>(url);
+
+  return response;
+};
+
+export const apiPost = async <T = any>(
+  url: string,
+  payload: any
+): Promise<IResponse> => {
+  const response = await axiosService.post<T>(url, payload);
+  return response;
+};
+
+export const apiPostPhoto = async <T = any>(
+  url: string,
+  payload: any
+): Promise<IResponse> => {
+  const response = await axiosService.post<T>(url, payload, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response;
+};
+
+export const apiPatch = async <T = any>(
+  url: string,
+  payload: any
+): Promise<IResponse> => {
+  const response = await axiosService.patch<T>(url, payload);
+  return response;
+};
+
+export const apiDelete = async <T = any>(url: string): Promise<IResponse> => {
+  const response = await axiosService.delete<T>(url);
+  return response;
+};
+
+export default axiosService;
