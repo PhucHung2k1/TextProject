@@ -71,7 +71,6 @@ export const apiLogin = async (
   return response;
 };
 
-
 export const apiGet = async <T = any>(url: string): Promise<IResponse> => {
   const response = await axiosService.get<T>(url);
 
