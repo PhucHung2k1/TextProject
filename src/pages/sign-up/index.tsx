@@ -1,11 +1,11 @@
-import LayoutHeader from '@/components/Authentication/LayoutHeader';
+import LayoutAuthen from '@/components/Authentication/LayoutAuthen';
 import SignUpForm from '@/components/Authentication/SignUpForm';
 
 const SignUp = () => {
   return (
-    <LayoutHeader>
+    <LayoutAuthen type="signup">
       <SignUpForm />
-    </LayoutHeader>
+    </LayoutAuthen>
   );
 };
 export default SignUp;
