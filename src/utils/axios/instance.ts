@@ -42,7 +42,7 @@ const refreshAuthLogic = async (failedRequest) => {
           refreshToken: rt,
         },
         {
-          baseURL: process.env.NEXT_PUBLIC_API_BASE_URL_DEV as string,
+          baseURL: process.env.NEXT_PUBLIC_API_AUTH_URL as string,
         }
       )
       .then((tokenRefreshResponse) => {
@@ -60,6 +60,17 @@ const refreshAuthLogic = async (failedRequest) => {
 };
 
 createAuthRefreshInterceptor(axiosService, refreshAuthLogic);
+
+export const apiLogin = async (
+  url: string,
+  payload: any
+): Promise<IResponse> => {
+  const response = await axios.post(url, payload, {
+    baseURL: process.env.NEXT_PUBLIC_API_AUTH_URL as string,
+  });
+  return response;
+};
+
 
 export const apiGet = async <T = any>(url: string): Promise<IResponse> => {
   const response = await axiosService.get<T>(url);
