@@ -1,14 +1,13 @@
- import VerifyPhoneNumber from '@/components/StoreProfile/VerifyPhoneNumber';
-import AboutYourBusiness from '@/components/StoreProfile/AboutYourBusiness';
+import AddYourStaffMember from '@/components/StoreProfile/AddYourStaffMember';
 
 const StoreProfile = () => {
   return (
-
     <main className="h-screen bg-mango-gray-light-2">
-      <VerifyPhoneNumber />
-      {/* <AddYourStaffMember /> */}
-
- </main>
+      {/* <VerifyPhoneNumber /> */}
+      {/* <AddYourEmployee /> */}
+      <AddYourStaffMember />
+      {/* <Congratulations /> */}
+    </main>
   );
 };
 export default StoreProfile;

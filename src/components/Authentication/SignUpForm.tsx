@@ -17,6 +17,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
 
 interface IFormInput {
   firstName: string;
@@ -32,6 +36,14 @@ export default function SignUpForm() {
     emailStatus: 'idle', // existed , available
   });
   const [agreePolicy, setAgreePolicy] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCfPassword, setShowCfPassword] = useState(false);
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleToggleCfPassword = () => {
+    setShowCfPassword(!showCfPassword);
+  };
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -63,7 +75,6 @@ export default function SignUpForm() {
   };
 
   const passwordValueRealtime = watch('password');
-  const confirmPasswordValueRealtime = watch('confirmPassword');
 
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
@@ -103,23 +114,18 @@ export default function SignUpForm() {
       setError('email', { type: 'manual', message: 'errorMessage' });
     }
   };
+  const validateConfirmPassword = (value: string) => {
+    if (value === passwordValueRealtime) {
+      return true;
+    }
+    return 'Passwords do not match';
+  };
 
   useEffect(() => {
     return () => {
       validateEmail.cancel();
     };
   }, [validateEmail]);
-
-  useEffect(() => {
-    if (confirmPasswordValueRealtime !== passwordValueRealtime) {
-      setError('confirmPassword', {
-        type: 'manual',
-        message: 'Passwords do not match',
-      });
-    } else {
-      clearErrors('confirmPassword');
-    }
-  }, [confirmPasswordValueRealtime]);
 
   return (
     <div>
@@ -134,7 +140,6 @@ export default function SignUpForm() {
                 label="First Name"
                 required
                 type="text"
-                placeholder="First Name"
                 error={Boolean(errors.firstName)}
                 {...register('firstName', {
                   required: 'Enter Your First Name!',
@@ -162,7 +167,6 @@ export default function SignUpForm() {
                 type="text"
                 required
                 error={Boolean(errors.lastName)}
-                placeholder="Last Name"
                 {...register('lastName', {
                   required: 'Enter Your Last Name!',
                 })}
@@ -189,7 +193,6 @@ export default function SignUpForm() {
                 type="email"
                 required
                 error={Boolean(errors.email)}
-                placeholder="Email Address"
                 {...register('email', {
                   required: 'Enter Your Email!',
                 })}
@@ -226,13 +229,21 @@ export default function SignUpForm() {
             >
               <TextField
                 label="Password"
-                type="password"
-                placeholder="Password"
+                type={showPassword ? 'text' : 'password'}
                 error={Boolean(errors.password)}
                 {...register('password', {
                   required: 'Enter Your Password!',
                 })}
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleTogglePassword}>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <ErrorMessage
                 errors={errors}
@@ -253,17 +264,26 @@ export default function SignUpForm() {
             >
               <TextField
                 label="Confirm Password"
-                type="password"
+                type={showCfPassword ? 'text' : 'password'}
                 required
-                placeholder="Confirm Password"
                 error={Boolean(errors.confirmPassword)}
                 {...register('confirmPassword', {
                   required: 'Confirm Password is required!',
                   // validate: (value) =>
                   //   value === passwordValueRealtime ||
                   //   "Passwords do not match",
+                  validate: validateConfirmPassword,
                 })}
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleToggleCfPassword}>
+                        {showCfPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <ErrorMessage
                 errors={errors}
