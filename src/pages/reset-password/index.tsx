@@ -12,12 +12,13 @@ const ResetPassword = () => {
   const {
     register,
     formState: { errors },
-
+    watch,
     handleSubmit,
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showCfPassword, setShowCfPassword] = useState(false);
+  const passwordValueRealtime = watch('password');
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -25,12 +26,20 @@ const ResetPassword = () => {
     setShowCfPassword(!showCfPassword);
   };
 
-  const onSubmit = (values: any) => {
+  const handleResetPassword = (values: any) => {
+    // eslint-disable-next-line no-console
     console.log(
       '🚀 ~ file: forgotPassword.tsx:78 ~ onSubmit ~ values:',
       values
     );
   };
+  const validateConfirmPassword = (value: string) => {
+    if (value === passwordValueRealtime) {
+      return true;
+    }
+    return 'Passwords do not match';
+  };
+
   return (
     <main className="flex h-screen items-center justify-center bg-mango-gray-light-2">
       <div className="flex min-h-[30%] w-[25%] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-8">
@@ -44,7 +53,7 @@ const ResetPassword = () => {
         </div>
 
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(handleResetPassword)}
           className="mt-8 w-full"
           noValidate
         >
@@ -96,6 +105,7 @@ const ResetPassword = () => {
                   error={Boolean(errors.confirmPassword)}
                   {...register('confirmPassword', {
                     required: 'Confirm Password is required!',
+                    validate: validateConfirmPassword,
                   })}
                   className="!rounded-sm border border-mango-text-gray-1 !outline-none"
                   InputProps={{

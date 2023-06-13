@@ -39,7 +39,7 @@ const refreshAuthLogic = async (failedRequest) => {
         '/refresh-token',
         {
           accessToken: token,
-          refreshToken: refreshToken,
+          refreshToken,
         },
         {
           baseURL: process.env.NEXT_PUBLIC_API_AUTH_URL as string,

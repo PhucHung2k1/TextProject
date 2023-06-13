@@ -1,5 +1,6 @@
-import { Button } from "@mui/material";
-import { TextField } from "@mui/material";
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { Button, TextField } from '@mui/material';
+
 const AboutYourBusiness = () => {
   return (
     <div className="flex justify-center pt-[90px]">
@@ -13,8 +14,8 @@ const AboutYourBusiness = () => {
         </p>
 
         <form className="mt-6 flex flex-wrap justify-center gap-2">
-          <div className="relative w-[186px] h-[186px] rounded-full bg-[#F2F2F5] flex justify-center items-center">
-            {" "}
+          <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full bg-[#F2F2F5]">
+            {' '}
             <svg
               width="42"
               height="42"
@@ -33,7 +34,10 @@ const AboutYourBusiness = () => {
               id="imageUpload"
               accept=".png, .jpg, .jpeg"
             />
-            <label className="flex justify-center items-center w-[59px] h-[59px] mb-0 rounded-full bg-[#00BDD6] absolute bottom-0 right-0 h-16 w-16">
+            <label
+              htmlFor="label"
+              className="absolute bottom-0 right-0 mb-0 flex h-16  w-16  items-center justify-center rounded-full bg-[#00BDD6]"
+            >
               <svg
                 width="33"
                 height="31"
@@ -48,17 +52,17 @@ const AboutYourBusiness = () => {
               </svg>
             </label>
           </div>
-          <p className="text-center text-mango-text-gray-2 w-full pt-[16px] ">
+          <p className="w-full pt-[16px] text-center text-mango-text-gray-2 ">
             Upload your business profile picture
           </p>
-          <div className="h-[56px] w-full mt-[40px] mb-1">
+          <div className="mb-1 mt-[40px] h-[56px] w-full">
             <input
-              className={`border-mango-gray-light-3 border h-full w-full text-left text-[16px] pl-4 rounded placeholder:text-mango-text-gray-2
+              className={`h-full w-full rounded border border-mango-gray-light-3 pl-4 text-left text-[16px] placeholder:text-mango-text-gray-2
               `}
               placeholder="Your business name"
             />
           </div>
-          <div className="flex justify-between w-full">
+          <div className="flex w-full justify-between">
             <TextField
               id="outlined-username-input"
               label="Preifx"
@@ -67,7 +71,7 @@ const AboutYourBusiness = () => {
             />
             <div className="h-[56px] w-[352px] ">
               <input
-                className={`border-mango-gray-light-3 border h-full w-full text-left text-[16px] pl-4 rounded placeholder:text-mango-text-gray-2
+                className={`h-full w-full rounded border border-mango-gray-light-3 pl-4 text-left text-[16px] placeholder:text-mango-text-gray-2
               `}
                 placeholder="Your business name"
               />
