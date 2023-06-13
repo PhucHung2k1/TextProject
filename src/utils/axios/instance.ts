@@ -11,7 +11,7 @@ const axiosService = axios.create({
 });
 
 axiosService.interceptors.request.use(async (config) => {
-  const accessToken = Cookies.get('token');
+  const accessToken = Cookies.get('auth-token');
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -30,15 +30,16 @@ axiosService.interceptors.response.use(
 
 // @ts-ignore
 const refreshAuthLogic = async (failedRequest) => {
-  const t = Cookies.get('token');
-  const rt = Cookies.get('refreshToken');
+  const t = Cookies.get('auth-token');
+  const rt = Cookies.get('refresh-token');
 
   if (t && rt) {
+    console.log("rf tokenn");
+    
     return axios
       .post(
-        '/api/User/RefreshToken',
+        '/refresh-token',
         {
-          accessToken: t,
           refreshToken: rt,
         },
         {
@@ -48,8 +49,8 @@ const refreshAuthLogic = async (failedRequest) => {
       .then((tokenRefreshResponse) => {
         const { accessToken } = tokenRefreshResponse.data;
         failedRequest.response.config.headers.Authorization = `Bearer ${accessToken}`;
-        Cookies.set('token', tokenRefreshResponse.data.accessToken);
-        Cookies.set('refreshToken', tokenRefreshResponse.data.refreshToken);
+        Cookies.set('auth-token', tokenRefreshResponse.data.accessToken);
+        Cookies.set('refresh-token', tokenRefreshResponse.data.refreshToken);
         Cookies.set('userName', tokenRefreshResponse.data.userName);
       })
       .catch((err) => {
