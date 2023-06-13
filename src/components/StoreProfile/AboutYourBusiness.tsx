@@ -1,3 +1,5 @@
+
+import { Button, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
 import {
   Button,
@@ -59,7 +61,6 @@ const AboutYourBusiness = () => {
           <p className="mb-[48px] text-center text-mango-text-gray-2">
             Tell us about your salon
           </p>
-
           <form className="mt-6 flex flex-wrap justify-center gap-2">
             <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full bg-[#F2F2F5] border border-{#CBCBDB}">
               {selectedImage ? (

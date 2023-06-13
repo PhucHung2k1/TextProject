@@ -1,25 +1,29 @@
 import {
+  Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
-  IconButton,
-  InputAdornment,
+  Grid,
   TextField,
 } from '@mui/material';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import type { ISignInForm } from '@/services/auth.service/auth.service';
-import Image from 'next/image';
 import type { IAuthResponse } from '@/services/auth.service/auth.interface';
 import Cookies from 'js-cookie';
 import { signIn, getSession } from 'next-auth/react';
-import { VisibilityOff, Visibility } from '@mui/icons-material';
 import {
   setMessageToast,
   setTypeAlertToast,
   showToast,
 } from '@/store/toast/toastSlice';
 import { useAppDispatch } from '@/store/hook';
+import { ErrorMessage } from '@hookform/error-message';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import { useForm } from 'react-hook-form';
 
 export default function LoginForm() {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
@@ -30,10 +34,15 @@ export default function LoginForm() {
     setShowPassword(!showPassword);
   };
 
+  // const {
+  //   handleSubmit,
+  //   control,
+  //   formState: { errors },
+  // } = useForm<ISignInForm>();
   const {
-    handleSubmit,
-    control,
+    register,
     formState: { errors },
+    handleSubmit,
   } = useForm<ISignInForm>();
 
   const handleSignIn = async (values: ISignInForm) => {
@@ -79,26 +88,12 @@ export default function LoginForm() {
   };
 
   return (
-    <div className=" flex h-[70%] w-[30%] flex-col items-center justify-between rounded-2xl bg-white p-6 py-5">
-      <div className="mt-5 flex w-full items-center justify-center ">
-        <Image
-          src="/assets/images/Authentication/logoIcon.png"
-          alt="logo"
-          width={150}
-          height={50}
-        />
-      </div>
-      <div className="flex flex-col ">
-        <h1 className="text-4xl font-semibold tracking-tighter text-text-title">
-          Hi, welcome back
-        </h1>
-      </div>
-
+    <div>
       <form
-        className="container mx-auto mb-10 flex w-full max-w-2xl flex-col items-center justify-start gap-5"
+        className="container mx-auto mb-10 mt-8 flex w-full max-w-2xl flex-col items-center justify-start gap-5"
         onSubmit={handleSubmit(handleSignIn)}
       >
-        <Controller
+        {/* <Controller
           name="username"
           control={control}
           rules={{ required: 'Username is required' }}
@@ -146,7 +141,94 @@ export default function LoginForm() {
               }}
             />
           )}
-        />
+        /> */}
+        <Grid container spacing={2}>
+          {/* <Grid xs={12} item>
+            <FormControl
+              fullWidth
+              className="text-sm font-normal !text-mango-text-black-1"
+            >
+              <TextField
+                label="Username"
+                type="text"
+                required
+                error={Boolean(errors.username)}
+                {...register('username', {
+                  required: 'Enter Your Username!',
+                })}
+                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+              />
+              <ErrorMessage
+                errors={errors}
+                name="username"
+                render={({ message }: any) => (
+                  <div className="mt-2 text-sm text-red-700" role="alert">
+                    <span className="font-medium">{message}</span>
+                  </div>
+                )}
+              />
+            </FormControl>
+          </Grid> */}
+          <Grid xs={12} item>
+            <FormControl
+              fullWidth
+              className="text-sm font-normal !text-mango-text-black-1"
+            >
+              <TextField
+                label="Email Address"
+                type="text"
+                error={Boolean(errors.username)}
+                {...register('username', {
+                  required: 'Enter Your Email Address!',
+                })}
+                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+              />
+              <ErrorMessage
+                errors={errors}
+                name="username"
+                render={({ message }: any) => (
+                  <div className="mt-2 text-sm text-red-700" role="alert">
+                    <span className="font-medium">{message}</span>
+                  </div>
+                )}
+              />
+            </FormControl>
+          </Grid>
+          <Grid xs={12} item>
+            <FormControl
+              fullWidth
+              className="text-sm font-normal !text-mango-text-black-1"
+            >
+              <TextField
+                label="Password"
+                type={showPassword ? 'text' : 'password'}
+                error={Boolean(errors.password)}
+                {...register('password', {
+                  required: 'Enter Your Password!',
+                })}
+                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleClickShowPassword}>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="password"
+                render={({ message }: any) => (
+                  <div className="mt-2 text-sm text-red-700" role="alert">
+                    <span className="font-medium">{message}</span>
+                  </div>
+                )}
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
 
         <div className="flex w-full items-center justify-between">
           <FormControlLabel
@@ -161,33 +243,30 @@ export default function LoginForm() {
             label="Remember me"
           />
           <Link
-            href="/"
+            href="/forget-password"
             className="cursor-pointer  font-medium text-mango-primary-blue"
           >
-            <div className="text-text-primary-dark">Forgot Password?</div>
+            <div className="text-text-primary-dark">Forget Password?</div>
           </Link>
         </div>
 
-        <button
-          className="h-12 w-full  rounded-lg bg-mango-primary-blue font-semibold text-white"
+        <Button
+          variant="contained"
+          className="mt-3 h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
           type="submit"
+          sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
         >
-          LOG IN
-        </button>
-      </form>
-      <Link href="/sign-up">
-        <div className="flex h-12 w-full cursor-pointer items-center justify-center gap-3 rounded-lg bg-[#0000000D] font-semibold text-text-secondary">
-          <div>Create new account</div>
-          <div>
-            <Image
-              src="/assets/images/Authentication/image_arrow_right.png"
-              alt="logo"
-              width={13}
-              height={13}
-            />
-          </div>
+          LOGIN
+        </Button>
+        <div className="flex cursor-pointer items-center justify-center gap-1">
+          <div>Don't have an account?</div>
+          <Link href="/sign-up">
+            <div className="font-bold text-mango-primary-blue">
+              Create new account
+            </div>
+          </Link>
         </div>
-      </Link>
+      </form>
     </div>
   );
 }
