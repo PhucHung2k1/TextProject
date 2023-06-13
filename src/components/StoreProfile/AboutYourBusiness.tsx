@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Button,
   TextField,
   InputAdornment,
   Divider,
-  colors,
   Box,
   LinearProgress,
-} from "@mui/material";
-import Image from "next/image";
+} from '@mui/material';
+import Image from 'next/image';
 
 const AboutYourBusiness = () => {
   const [selectedImage, setSelectedImage] = useState<Blob>();
@@ -19,27 +18,26 @@ const AboutYourBusiness = () => {
       setSelectedImage(e.target.files[0]);
     }
   };
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress((oldProgress) => {
-  //       if (oldProgress === 100) {
-  //         return 0;
-  //       }
-  //       const diff = Math.random() * 10;
-  //       return Math.min(oldProgress + diff, 100);
-  //     });
-  //   }, 500);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress === 100) {
+          return 0;
+        }
+        return Math.min(oldProgress);
+      });
+    });
 
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <div>
-      <div className="flex justify-center pt-[90px] relative">
-        <div className=" w-[568px]  rounded-2xl bg-white p-8 shadow-md relative overflow-hidden	">
-          <Box className=" absolute top-0 left-0 w-[568px]">
+      <div className="relative flex justify-center pt-[90px]">
+        <div className=" relative  w-[568px] overflow-hidden rounded-2xl bg-white p-8 shadow-md	">
+          <Box className=" absolute left-0 top-0 w-[568px]">
             <LinearProgress
               variant="determinate"
               value={40}
@@ -48,17 +46,17 @@ const AboutYourBusiness = () => {
                 background: `linear-gradient(90deg, #00BDD614 8% ${
                   100 - progress
                 }%, #9c64f4 100%)`,
-                "> span": {
+                '> span': {
                   background:
-                    "linear-gradient(90deg, #80DFEB 80%, #FFFFFF86 89%, #00F0FF00 0%);",
+                    'linear-gradient(90deg, #80DFEB 80%, #FFFFFF86 89%, #00F0FF00 0%);',
                 },
               }}
             />
           </Box>
-          <p className="text-center text-[32px] font-semibold text-text-title mb-[8px]">
+          <p className="mb-[8px] mt-[16px] text-center text-[32px] font-semibold text-text-title">
             About your salon
           </p>
-          <p className="text-center text-mango-text-gray-2 mb-[48px]">
+          <p className="mb-[48px] text-center text-mango-text-gray-2">
             Tell us about your salon
           </p>
 
@@ -69,7 +67,7 @@ const AboutYourBusiness = () => {
                   src={
                     selectedImage
                       ? `${URL.createObjectURL(selectedImage)}`
-                      : "/assets/images/SetupStore/image.svg"
+                      : '/assets/images/SetupStore/image.svg'
                   }
                   alt="logo"
                   layout="fill"
@@ -113,15 +111,15 @@ const AboutYourBusiness = () => {
                 id="outlined-basic"
                 label="Your salon name"
                 variant="outlined"
-                className="w-full mb-2"
+                className="mb-2 w-full"
                 sx={{
-                  "& .MuiInputBase-root.Mui-focused": {
-                    "& > fieldset": {
-                      borderColor: "#00BDD6",
+                  '& .MuiInputBase-root.Mui-focused': {
+                    '& > fieldset': {
+                      borderColor: '#00BDD6',
                     },
                   },
-                  "& label.Mui-focused": {
-                    color: "#00BDD6",
+                  '& label.Mui-focused': {
+                    color: '#00BDD6',
                   },
                 }}
               />
@@ -131,10 +129,10 @@ const AboutYourBusiness = () => {
                 disabled
                 className="w-[128px] bg-[#F2F2F2]"
                 sx={{
-                  "& .MuiInputBase-input.Mui-disabled": {
-                    WebkitTextFillColor: "#404044",
-                    fontWeight: "600",
-                    fontSize: "16px",
+                  '& .MuiInputBase-input.Mui-disabled': {
+                    WebkitTextFillColor: '#404044',
+                    fontWeight: '600',
+                    fontSize: '16px',
                   },
                 }}
                 id="input-with-icon-textfield"
@@ -163,13 +161,13 @@ const AboutYourBusiness = () => {
               <div className="h-[56px] w-[352px] ">
                 <TextField
                   sx={{
-                    "& .MuiInputBase-root.Mui-focused": {
-                      "& > fieldset": {
-                        borderColor: "#00BDD6",
+                    '& .MuiInputBase-root.Mui-focused': {
+                      '& > fieldset': {
+                        borderColor: '#00BDD6',
                       },
                     },
-                    "& label.Mui-focused": {
-                      color: "#00BDD6",
+                    '& label.Mui-focused': {
+                      color: '#00BDD6',
                     },
                   }}
                   id="outlined-basic"
