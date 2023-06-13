@@ -1,6 +1,3 @@
-
-import { Button, TextField } from '@mui/material';
-import { useState, useEffect } from 'react';
 import {
   Button,
   TextField,
@@ -9,6 +6,8 @@ import {
   Box,
   LinearProgress,
 } from '@mui/material';
+import { useState, useEffect } from 'react';
+
 import Image from 'next/image';
 
 const AboutYourBusiness = () => {
