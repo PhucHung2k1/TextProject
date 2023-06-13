@@ -1,5 +1,4 @@
 import {
-  FormControlLabel,
   Switch,
   FormControl,
   InputLabel,
@@ -7,19 +6,20 @@ import {
   FormHelperText,
   Select,
   Grid,
-  Divider,
   Button,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import type { NextPage } from "next";
-import Image from "next/image";
-import { useState } from "react";
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import type { NextPage } from 'next';
+import { useState } from 'react';
 
 const EditBusinessHours: NextPage = () => {
-  const [startHour, setStartHour] = useState("");
-  const [endHour, setEndHour] = useState("");
+  const [startHour, setStartHour] = useState('');
+  const [endHour, setEndHour] = useState('');
   const [forms, setForms] = useState([{ id: 0 }]);
+
+  console.log(startHour, endHour);
+
   const addForm = () => {
     const newFormId = forms.length + 1;
     setForms([...forms, { id: newFormId }]);
@@ -40,24 +40,24 @@ const EditBusinessHours: NextPage = () => {
               alt=""
             />
 
-            <p className="mx-auto text-[32px] font-semibold text-center text-text-title">
+            <p className="mx-auto text-center text-[32px] font-semibold text-text-title">
               Edit business hours
             </p>
           </div>
 
-          <div className="w-full flex flex-col gap-[12px] text-text-primary">
-            <div className="flex flex-row items-center justify-start  text-center mt-8">
+          <div className="flex w-full flex-col gap-[12px] text-text-primary">
+            <div className="mt-8 flex flex-row items-center  justify-start text-center">
               <div>
                 <Switch className="p-3" />
               </div>
-              <div className="w-[30%] leading-[133.4%] font-semibold">
+              <div className="w-[30%] font-semibold leading-[133.4%]">
                 Every Monday
               </div>
               <div className="leading-[140%] text-text-secondary">12h 0min</div>
             </div>
             <Grid className="items-center" container spacing={4}>
               <Grid item xs={5.5}>
-                <label className="leading-[140%] font-semibold">Start</label>
+                <div className="font-semibold leading-[140%]">Start</div>
                 <FormControl fullWidth variant="outlined">
                   <InputLabel color="primary" />
                   <Select
@@ -90,10 +90,10 @@ const EditBusinessHours: NextPage = () => {
                 </FormControl>
               </Grid>
               <Grid item xs={1}>
-                <div className="box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px] mt-8" />
+                <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
               </Grid>
               <Grid item xs={5.5}>
-                <label className="leading-[140%] font-semibold">End</label>
+                <div className="font-semibold leading-[140%]">End</div>
                 <FormControl fullWidth variant="outlined">
                   <InputLabel color="primary" />
                   <Select
@@ -128,13 +128,11 @@ const EditBusinessHours: NextPage = () => {
             </Grid>
             {forms.length > 1 ? (
               <>
-                <div className="box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px] mt-8" />
-                <label className="leading-[140%] font-semibold">
-                  Break Time
-                </label>
+                <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
+                <div className="font-semibold leading-[140%]">Break Time</div>
               </>
             ) : (
-              ""
+              ''
             )}
             {forms.length > 1 ? (
               <>
@@ -212,30 +210,30 @@ const EditBusinessHours: NextPage = () => {
                           </Grid>
                           <Grid item xs={1}>
                             <Button
-                              className="justify-center items-center"
+                              className="items-center justify-center"
                               variant="text"
                               startIcon={
-                                <DeleteOutlineIcon sx={{ color: "#F28500" }} />
+                                <DeleteOutlineIcon sx={{ color: '#F28500' }} />
                               }
                               onClick={() => removeForm(form.id)}
-                            ></Button>
+                            />
                           </Grid>
                         </Grid>
                       </div>
                     ) : (
-                      ""
+                      ''
                     )}
                   </>
                 ))}
               </>
             ) : (
-              ""
+              ''
             )}
 
             <Button
-              className="justify-start text-primary-main font-semibold"
+              className="justify-start font-semibold text-primary-main"
               variant="text"
-              startIcon={<AddIcon sx={{ color: "#00bdd6" }} />}
+              startIcon={<AddIcon sx={{ color: '#00bdd6' }} />}
               onClick={addForm}
             >
               Add Break

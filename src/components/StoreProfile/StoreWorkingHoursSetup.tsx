@@ -1,16 +1,16 @@
-import { Switch } from "@mui/material";
-import type { NextPage } from "next";
-import Image from "next/image";
+import { Switch } from '@mui/material';
+import type { NextPage } from 'next';
+import Image from 'next/image';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const listData = [
-    { id: 1, day: "Sunday", workTime: "Closed" },
-    { id: 2, day: "Monday", workTime: "9:00 AM - 9:00 PM" },
-    { id: 3, day: "Tuesday", workTime: "9:00 AM - 9:00 PM" },
-    { id: 4, day: "Wednesday", workTime: "9:00 AM - 9:00 PM" },
-    { id: 5, day: "Thursday", workTime: "9:00 AM - 9:00 PM" },
-    { id: 6, day: "Friday", workTime: "9:00 AM - 9:00 PM" },
-    { id: 7, day: "Saturday", workTime: "Closed" },
+    { id: 1, day: 'Sunday', workTime: 'Closed' },
+    { id: 2, day: 'Monday', workTime: '9:00 AM - 9:00 PM' },
+    { id: 3, day: 'Tuesday', workTime: '9:00 AM - 9:00 PM' },
+    { id: 4, day: 'Wednesday', workTime: '9:00 AM - 9:00 PM' },
+    { id: 5, day: 'Thursday', workTime: '9:00 AM - 9:00 PM' },
+    { id: 6, day: 'Friday', workTime: '9:00 AM - 9:00 PM' },
+    { id: 7, day: 'Saturday', workTime: 'Closed' },
   ];
   return (
     <div className="flex h-screen w-full items-center justify-center bg-mango-gray-light-2 bg-cover bg-center bg-no-repeat ">
@@ -35,7 +35,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
             you
           </p>
         </div>
-        <div className="w-[90%] flex flex-col justify-center gap-[12px] text-text-primary">
+        <div className="flex w-[90%] flex-col justify-center gap-[12px] text-text-primary">
           {listData.map((item) => (
             <div key={item.id}>
               <div>
@@ -43,13 +43,13 @@ const StoreWorkingHoursSetup: NextPage = () => {
                   <div>
                     <Switch className="p-3" />
                   </div>
-                  <div className="font-semibold w-[70px] leading-[140%]">
+                  <div className="w-[70px] font-semibold leading-[140%]">
                     {item.day}
                   </div>
                   <div className="w-[70%] text-center leading-[140%]">
                     {item.workTime}
                   </div>
-                  {item.workTime !== "Closed" ? (
+                  {item.workTime !== 'Closed' ? (
                     <Image
                       src="/chevronrightfilled.svg"
                       width="20"
@@ -59,7 +59,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                       className="hidden overflow-hidden"
                     />
                   ) : (
-                    ""
+                    ''
                   )}
                 </div>
               </div>
