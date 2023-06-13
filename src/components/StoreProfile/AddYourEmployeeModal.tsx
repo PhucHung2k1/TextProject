@@ -135,10 +135,7 @@ export const AddYourEmployeeModal = () => {
         </div>
 
         {/*  */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="h-[90%] w-full overflow-auto pt-8"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full pt-8">
           <Grid container rowSpacing={2}>
             <Grid container spacing={2}>
               <Grid xs={6} item>
