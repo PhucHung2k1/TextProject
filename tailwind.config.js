@@ -24,12 +24,12 @@ module.exports = {
     },
     borderWidth: {
       DEFAULT: '1px',
-      '0': '0',
-      '2': '2px',
-      '3': '3px',
-      '4': '4px',
-      '6': '6px',
-      '8': '8px',
+      0: '0',
+      2: '2px',
+      3: '3px',
+      4: '4px',
+      6: '6px',
+      8: '8px',
     },
     extend: {
       colors: {
@@ -41,6 +41,7 @@ module.exports = {
         'mango-text-gray-2': '#737277',
         'mango-gray-light-1': '#D5D7DA',
         'mango-gray-light-3': '#B0B2C6',
+        'mango-blue-light-1': '#E0F7FA',
         'text-title': '#1F1F23',
         'text-secondary': '#737277',
         'text-disable': '#C5C4C9',
