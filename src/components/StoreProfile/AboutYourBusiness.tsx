@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import {
   Button,
   TextField,
@@ -7,6 +6,8 @@ import {
   Box,
   LinearProgress,
 } from '@mui/material';
+import { useState, useEffect } from 'react';
+
 import Image from 'next/image';
 // import { getStoreProfile } from "@/store/store/storeAction";
 
@@ -63,7 +64,6 @@ const AboutYourBusiness = () => {
           <p className="mb-[48px] text-center text-[14px] text-mango-text-gray-2">
             Tell us about your salon
           </p>
-
           <form className="mt-6 flex flex-wrap justify-center gap-2">
             <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full bg-[#F2F2F5] border border-{#CBCBDB}">
               {selectedImage ? (

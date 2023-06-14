@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_307" data-name="Rectangle 307" width="30" height="30" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="setting" transform="translate(-0.007 0.061)">
+    <g id="H11" transform="translate(0.007 -0.061)">
+      <g id="Layer_166" data-name="Layer 166" transform="translate(0 0)">
+        <g id="Group_7748" data-name="Group 7748" clip-path="url(#clip-path)">
+          <rect id="Rectangle_304" data-name="Rectangle 304" width="29.673" height="2.225" transform="translate(-0.003 3.389)" fill="#fff"/>
+          <path id="Path_7223" data-name="Path 7223" d="M67.985,3.6a3.585,3.585,0,1,0,3.585,3.585A3.585,3.585,0,0,0,67.985,3.6" transform="translate(-44.498 -2.375)" fill="#00b8cf"/>
+          <path id="Path_7224" data-name="Path 7224" d="M65.5,9.4a4.7,4.7,0,1,1,4.7-4.7,4.7,4.7,0,0,1-4.7,4.7Zm0-7.171A2.473,2.473,0,1,0,67.971,4.7,2.473,2.473,0,0,0,65.5,2.225Z" transform="translate(-42.011 0.112)" fill="#fff"/>
+          <rect id="Rectangle_305" data-name="Rectangle 305" width="29.673" height="2.225" transform="translate(-0.003 14.145)" fill="#fff"/>
+          <path id="Path_7225" data-name="Path 7225" d="M11.985,43.571A3.585,3.585,0,1,0,8.4,39.985a3.585,3.585,0,0,0,3.585,3.585" transform="translate(-5.807 -25.037)" fill="#00b8cf"/>
+          <path id="Path_7226" data-name="Path 7226" d="M9.5,42.2a4.7,4.7,0,1,1,4.7-4.7,4.7,4.7,0,0,1-4.7,4.7Zm0-7.171A2.473,2.473,0,1,0,11.971,37.5,2.473,2.473,0,0,0,9.5,35.025Z" transform="translate(-3.32 -22.55)" fill="#fff"/>
+          <rect id="Rectangle_306" data-name="Rectangle 306" width="29.673" height="2.225" transform="translate(-0.003 23.665)" fill="#fff"/>
+          <path id="Path_7227" data-name="Path 7227" d="M67.985,69.2a3.585,3.585,0,1,0,3.585,3.585A3.585,3.585,0,0,0,67.985,69.2" transform="translate(-44.498 -47.699)" fill="#00b8cf"/>
+          <path id="Path_7228" data-name="Path 7228" d="M65.5,75a4.7,4.7,0,1,1,4.7-4.7A4.7,4.7,0,0,1,65.5,75Zm0-7.171A2.473,2.473,0,1,0,67.971,70.3,2.473,2.473,0,0,0,65.5,67.825Z" transform="translate(-42.011 -45.211)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
