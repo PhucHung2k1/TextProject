@@ -16,7 +16,7 @@ const initialState = {
   isShowToast: false,
   messageToast: '',
   propertiesToast: {
-    autoHideDuration: 3000,
+    autoHideDuration: 2000,
     position: {
       vertical: 'top',
       horizontal: 'center',
