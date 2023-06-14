@@ -12,7 +12,7 @@ export default function LayoutHeader({ children }: LayoutHeaderProps) {
       <nav className="flex h-16 items-center bg-mango-primary-blue px-3">
         <Link href="/">
           <Image
-            src="/assets/images/Authentication/logoIcon.png"
+            src="/assets/images/Authentication/logoIcon.svg"
             width="120"
             height="28"
             alt="logo"

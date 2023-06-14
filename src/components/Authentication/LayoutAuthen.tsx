@@ -12,7 +12,7 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
       <div className=" flex min-h-[70%] w-[28%] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-6 py-5">
         <div className="mt-5 flex w-full items-center justify-center ">
           <Image
-            src="/assets/images/Authentication/logoIcon.png"
+            src="/assets/images/Authentication/logoIcon.svg"
             alt="logo"
             width={150}
             height={50}
@@ -36,7 +36,7 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
               <div className="mt-2 flex items-center justify-center gap-5">
                 <div className="flex h-[40px] w-[40px] items-center justify-center rounded-3xl bg-[#F4F4F8]">
                   <Image
-                    src="/assets/images/Authentication/facebookIcon.png"
+                    src="/assets/images/Authentication/facebookIcon.svg"
                     alt="fbIcon"
                     width={20}
                     height={20}
@@ -45,7 +45,7 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
                 </div>
                 <div className="flex h-[40px] w-[40px] items-center justify-center rounded-3xl bg-[#F4F4F8]">
                   <Image
-                    src="/assets/images/Authentication/youtobeIcon.png"
+                    src="/assets/images/Authentication/youtobeIcon.svg"
                     alt="fbIcon"
                     width={23}
                     height={16}
@@ -54,7 +54,7 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
                 </div>
                 <div className="flex h-[40px] w-[40px] items-center justify-center rounded-3xl bg-[#F4F4F8]">
                   <Image
-                    src="/assets/images/Authentication/instagramIcon.png"
+                    src="/assets/images/Authentication/instagramIcon.svg"
                     alt="fbIcon"
                     width={18}
                     height={18}

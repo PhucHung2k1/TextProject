@@ -31,9 +31,11 @@ const authOptions: NextAuthOptions = {
             return data;
           }
 
-          throw new Error(error ? JSON.stringify(error) : 'Sign-in failed.');
+          throw new Error(
+            error ? JSON.stringify(error.message) : 'Sign-in failed.'
+          );
         } catch (err: any) {
-          throw new Error(`Error signing in: ${err.message}`);
+          throw new Error(err.message);
         }
       },
     }),

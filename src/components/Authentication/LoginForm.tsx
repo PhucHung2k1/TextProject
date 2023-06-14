@@ -24,6 +24,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { useForm } from 'react-hook-form';
+import { showToastMessage } from '@/utils/helper/showToastMessage';
 
 export default function LoginForm() {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
@@ -55,9 +56,11 @@ export default function LoginForm() {
     }).then((callback) => {
       if (callback?.error) {
         // eslint-disable-next-line no-alert
-        dispatch(setTypeAlertToast('error'));
-        dispatch(setMessageToast('Wrong username / password!'));
-        dispatch(showToast());
+        showToastMessage(
+          dispatch,
+          `${callback?.error}`.replace(/"/g, ' '),
+          'error'
+        );
       }
 
       if (callback?.ok && !callback?.error) {
@@ -93,82 +96,7 @@ export default function LoginForm() {
         className="container mx-auto mb-10 mt-8 flex w-full max-w-2xl flex-col items-center justify-start gap-5"
         onSubmit={handleSubmit(handleSignIn)}
       >
-        {/* <Controller
-          name="username"
-          control={control}
-          rules={{ required: 'Username is required' }}
-          defaultValue=""
-          render={({ field }) => (
-            <TextField
-              {...field}
-              id="outlined-username-input"
-              label="Username"
-              type="text"
-              autoComplete="username"
-              className="w-full"
-              error={!!errors.username}
-              helperText={errors.username?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="password"
-          control={control}
-          defaultValue=""
-          rules={{ required: 'Password is required' }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Password"
-              variant="outlined"
-              type={showPassword ? 'text' : 'password'}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-              fullWidth
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          )}
-        /> */}
         <Grid container spacing={2}>
-          {/* <Grid xs={12} item>
-            <FormControl
-              fullWidth
-              className="text-sm font-normal !text-mango-text-black-1"
-            >
-              <TextField
-                label="Username"
-                type="text"
-                required
-                error={Boolean(errors.username)}
-                {...register('username', {
-                  required: 'Enter Your Username!',
-                })}
-                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-              />
-              <ErrorMessage
-                errors={errors}
-                name="username"
-                render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
-                    <span className="font-medium">{message}</span>
-                  </div>
-                )}
-              />
-            </FormControl>
-          </Grid> */}
           <Grid xs={12} item>
             <FormControl
               fullWidth
@@ -246,7 +174,9 @@ export default function LoginForm() {
             href="/forget-password"
             className="cursor-pointer  font-medium text-mango-primary-blue"
           >
-            <div className="text-text-primary-dark">Forget Password?</div>
+            <div className="cursor-pointer text-text-primary-dark ">
+              Forget Password?
+            </div>
           </Link>
         </div>
 
