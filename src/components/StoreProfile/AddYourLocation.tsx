@@ -7,12 +7,13 @@ import {
 } from '@mui/material';
 
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { LinearProgressWithLabel } from './LinearProgressWithLabel';
 import { listTimeZone } from '@/utils/helper/listTimeZone';
+import { useForm } from 'react-hook-form';
 
-interface IFormInput {
+interface IFormLocation {
   addressLine1: string;
   addressLine2: string;
   city: string;
@@ -25,16 +26,8 @@ const AddYourLocation = () => {
   // const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const {
-    // register,
-    // formState: { errors },
-    handleSubmit,
-    // setError,
-    // trigger,
-    // clearErrors,
-    // watch,
-  } = useForm<IFormInput>();
-  const onSubmit = (values: IFormInput) => {
+  const { handleSubmit, register } = useForm<IFormLocation>();
+  const onSubmit = (values: IFormLocation) => {
     console.log('values', values);
   };
 
@@ -61,7 +54,7 @@ const AddYourLocation = () => {
           </div>
 
           {/*  */}
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-8" noValidate>
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
             <Grid container spacing={2}>
               <Grid xs={12} item>
                 <FormControl
@@ -71,7 +64,7 @@ const AddYourLocation = () => {
                   <TextField
                     label="Address line 1"
                     type="text"
-                    name="addressLine1"
+                    {...register('addressLine1', {})}
                     placeholder="Address line 1"
                     className="!rounded-sm border border-mango-text-gray-1 !outline-none"
                   />
@@ -84,8 +77,8 @@ const AddYourLocation = () => {
                 >
                   <TextField
                     label="Address line 2"
-                    name="addressLine2"
                     type="text"
+                    {...register('addressLine2', {})}
                     placeholder="Address line 2"
                     className="!rounded-sm border border-mango-text-gray-1 !outline-none"
                   />
@@ -112,8 +105,8 @@ const AddYourLocation = () => {
                 >
                   <TextField
                     label="State"
-                    name="state"
                     type="text"
+                    {...register('state', {})}
                     placeholder="State"
                     className="!rounded-sm border border-mango-text-gray-1 !outline-none"
                   />
@@ -127,8 +120,8 @@ const AddYourLocation = () => {
                 >
                   <TextField
                     label="Zip code"
-                    name="zipCode"
                     type="text"
+                    {...register('zipCode', {})}
                     placeholder="Zip code"
                     className="!rounded-sm border border-mango-text-gray-1 !outline-none"
                   />
@@ -140,12 +133,11 @@ const AddYourLocation = () => {
                   className="text-sm font-normal !text-mango-text-black-1"
                 >
                   <Autocomplete
-                    id="grouped-demo"
                     options={listTimeZone.map((option) => option.text)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        name="timeZone"
+                        {...register('timeZone', {})}
                         label="Time Zone"
                       />
                     )}

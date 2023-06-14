@@ -26,7 +26,6 @@ const ConfirmYourAddress = () => {
   const handleSearchMap = (value: string) => {
     setValueSearchMap(value);
   };
-
   useEffect(() => {
     if (valueSearchMap.length > 0) {
       setLoading(true);
@@ -87,13 +86,7 @@ const ConfirmYourAddress = () => {
                       <Grid item sx={{ display: 'flex', width: 44 }}>
                         <LocationOnIcon sx={{ color: 'text.secondary' }} />
                       </Grid>
-                      <Grid
-                        item
-                        sx={{
-                          width: 'calc(100% - 44px)',
-                          wordWrap: 'break-word',
-                        }}
-                      >
+                      <Grid item>
                         <Typography
                           component="span"
                           variant="body2"
