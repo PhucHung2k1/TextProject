@@ -3,12 +3,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type {
   IChangePasswordByToken,
   IForgotPassword,
-  IValidatePasswordToken,
 } from '@/services/passwordCustomer.service/passwordCustomer.service';
 import { PasswordCustomerService } from '@/services/passwordCustomer.service/passwordCustomer.service';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
-import { setPermissionAll } from '../permission/permissionSlice';
-import { setMessageToast, showToast } from '../toast/toastSlice';
 
 export const forgotPassword = createAsyncThunk(
   'paswordCustomer/forgotPassword',
@@ -20,11 +17,11 @@ export const forgotPassword = createAsyncThunk(
     );
 
     if (status === 200) {
-      showToastMessage(dispatch, 'Email Sent Successfully!', 'success');
+      showToastMessage(dispatch, 'Email Sent Successfully', 'success');
     } else {
       showToastMessage(
         dispatch,
-        'UserName Does Not Exist In The System!',
+        'UserName Does Not Exist In The System',
         'error'
       );
 
@@ -38,41 +35,35 @@ export const changePasswordByToken = createAsyncThunk(
     const PasswordCustomerServiceAPI = new PasswordCustomerService();
 
     try {
-      const { data, status, error } =
+      const { status, error } =
         await PasswordCustomerServiceAPI.changePasswordByToken(_body);
 
-      if ((status === 200 || status === 201) && data) {
-        dispatch(setPermissionAll(data));
+      if (status === 200) {
+        showToastMessage(dispatch, 'Password Reset Successful', 'success');
+      } else {
+        throw new Error(error && JSON.stringify(error));
       }
-
-      throw new Error(error ? JSON.stringify(error) : 'Failed.');
     } catch (err: any) {
-      dispatch(setMessageToast(err.extendData[0].Message));
-      dispatch(showToast());
-      // throw new Error(`Error signing in: ${err.message}`);
+      throw new Error(err && JSON.stringify(err.message));
     }
   }
 );
 export const validateForgotPasswordToken = createAsyncThunk(
   'paswordCustomer/validateForgotPasswordToken',
-  async (_body: IValidatePasswordToken, { dispatch }) => {
+  async (_body: any, { dispatch }) => {
     const PasswordCustomerServiceAPI = new PasswordCustomerService();
 
     try {
-      const { data, status, error } =
+      const { status, error } =
         await PasswordCustomerServiceAPI.validateForgotPasswordToken(_body);
 
-      if ((status === 200 || status === 201) && data) {
-        // dispatch(setPermissionAll(data));
-        console.log(data);
-        console.log(status);
+      if (status === 200) {
+      } else {
+        showToastMessage(dispatch, error?.message, 'error');
+        throw new Error(error ? JSON.stringify(error.message) : 'Failed.');
       }
-
-      throw new Error(error ? JSON.stringify(error) : 'Failed.');
     } catch (err: any) {
-      dispatch(setMessageToast(err.extendData[0].Message));
-      dispatch(showToast());
-      // throw new Error(`Error signing in: ${err.message}`);
+      throw new Error(err && JSON.stringify(err.message));
     }
   }
 );

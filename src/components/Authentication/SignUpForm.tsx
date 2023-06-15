@@ -233,6 +233,10 @@ export default function SignUpForm() {
                 error={Boolean(errors.password)}
                 {...register('password', {
                   required: 'Enter Your Password!',
+                  minLength: {
+                    value: 9,
+                    message: 'Password must be more than 8 characters!',
+                  },
                 })}
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
                 InputProps={{
