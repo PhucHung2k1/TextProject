@@ -30,26 +30,30 @@ axiosService.interceptors.response.use(
 
 // @ts-ignore
 const refreshAuthLogic = async (failedRequest) => {
-  const token = Cookies.get('token');
-  const refreshToken = Cookies.get('refreshToken');
+  const token = Cookies.get('auth-token');
+  const refreshToken = Cookies.get('refresh-token');
 
   if (token && refreshToken) {
     return axios
       .post(
         '/refresh-token',
         {
-          accessToken: token,
-          refreshToken,
+          // eslint-disable-next-line object-shorthand
+          refreshToken: refreshToken,
         },
         {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           baseURL: process.env.NEXT_PUBLIC_API_AUTH_URL as string,
         }
       )
       .then((tokenRefreshResponse) => {
         const { accessToken } = tokenRefreshResponse.data;
+
         failedRequest.response.config.headers.Authorization = `Bearer ${accessToken}`;
-        Cookies.set('auth-token', tokenRefreshResponse.data.accessToken);
-        Cookies.set('refresh-token', tokenRefreshResponse.data.refreshToken);
+        Cookies.set('auth-token', tokenRefreshResponse.data.AccessToken);
+        Cookies.set('refresh-token', tokenRefreshResponse.data.RefreshToken);
       })
       .catch((err) => {
         if (err.response && err.response.status === 401) {
@@ -58,7 +62,10 @@ const refreshAuthLogic = async (failedRequest) => {
   }
 };
 
-createAuthRefreshInterceptor(axiosService, refreshAuthLogic);
+createAuthRefreshInterceptor(axiosService, refreshAuthLogic, {
+  statusCodes: [401, 403],
+  pauseInstanceWhileRefreshing: true,
+});
 
 export const apiLogin = async (
   url: string,
