@@ -1,6 +1,7 @@
 import { Switch } from '@mui/material';
 import type { NextPage } from 'next';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const listData = [
@@ -12,6 +13,10 @@ const StoreWorkingHoursSetup: NextPage = () => {
     { id: 6, day: 'Friday', workTime: '9:00 AM - 9:00 PM' },
     { id: 7, day: 'Saturday', workTime: 'Closed' },
   ];
+  const router = useRouter();
+  const editBusinessHoursRouter = () => {
+    router.push('/edit-business-hours');
+  };
   return (
     <div className="flex h-screen w-full items-center justify-center bg-mango-gray-light-2 bg-cover bg-center bg-no-repeat ">
       <div className="flex min-h-[70%] w-[35%] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-6 py-5">
@@ -57,6 +62,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                       alt=""
                       objectFit="cover"
                       className="hidden overflow-hidden"
+                      onClick={editBusinessHoursRouter}
                     />
                   ) : (
                     ''

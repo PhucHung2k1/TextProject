@@ -16,9 +16,35 @@ import { useState } from 'react';
 const EditBusinessHours: NextPage = () => {
   const [startHour, setStartHour] = useState('');
   const [endHour, setEndHour] = useState('');
+  const [showForm, setShowForm] = useState(false);
   const [forms, setForms] = useState([{ id: 0 }]);
 
   console.log(startHour, endHour);
+  const timeOptions = [
+    '05:00 AM',
+    '06:00 AM',
+    '07:00 AM',
+    '08:00 AM',
+    '09:00 AM',
+    '10:00 AM',
+    '11:00 AM',
+    '12:00 AM',
+    '01:00 PM',
+    '02:00 PM',
+    '03:00 PM',
+    '04:00 PM',
+    '05:00 PM',
+    '06:00 PM',
+    '07:00 PM',
+    '08:00 PM',
+    '09:00 PM',
+    '10:00 PM',
+    '11:00 PM',
+  ];
+
+  const handleSwitchChange = () => {
+    setShowForm(!showForm);
+  };
 
   const addForm = () => {
     const newFormId = forms.length + 1;
@@ -48,196 +74,151 @@ const EditBusinessHours: NextPage = () => {
           <div className="flex w-full flex-col gap-[12px] text-text-primary">
             <div className="mt-8 flex flex-row items-center  justify-start text-center">
               <div>
-                <Switch className="p-3" />
+                <Switch
+                  className="p-3"
+                  checked={showForm}
+                  onChange={handleSwitchChange}
+                />
               </div>
               <div className="w-[30%] font-semibold leading-[133.4%]">
                 Every Monday
               </div>
               <div className="leading-[140%] text-text-secondary">12h 0min</div>
             </div>
-            <Grid className="items-center" container spacing={4}>
-              <Grid item xs={5.5}>
-                <div className="font-semibold leading-[140%]">Start</div>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel color="primary" />
-                  <Select
-                    color="primary"
-                    defaultValue="09:00 AM"
-                    size="medium"
-                    onChange={(e) => setStartHour(e.target.value)}
-                  >
-                    <MenuItem value="05:00 AM">05:00 AM</MenuItem>
-                    <MenuItem value="06:00 AM">06:00 AM</MenuItem>
-                    <MenuItem value="07:00 AM">07:00 AM</MenuItem>
-                    <MenuItem value="08:00 AM">08:00 AM</MenuItem>
-                    <MenuItem value="09:00 AM">09:00 AM</MenuItem>
-                    <MenuItem value="10:00 AM">10:00 AM</MenuItem>
-                    <MenuItem value="11:00 AM">11:00 AM</MenuItem>
-                    <MenuItem value="12:00 AM">12:00 AM</MenuItem>
-                    <MenuItem value="01:00 PM">01:00 PM</MenuItem>
-                    <MenuItem value="02:00 PM">02:00 PM</MenuItem>
-                    <MenuItem value="03:00 PM">03:00 PM</MenuItem>
-                    <MenuItem value="04:00 PM">04:00 PM</MenuItem>
-                    <MenuItem value="05:00 PM">05:00 PM</MenuItem>
-                    <MenuItem value="06:00 PM">06:00 PM</MenuItem>
-                    <MenuItem value="07:00 PM">07:00 PM</MenuItem>
-                    <MenuItem value="08:00 PM">08:00 PM</MenuItem>
-                    <MenuItem value="09:00 PM">09:00 PM</MenuItem>
-                    <MenuItem value="10:00 PM">10:00 PM</MenuItem>
-                    <MenuItem value="11:00 PM">11:00 PM</MenuItem>
-                  </Select>
-                  <FormHelperText />
-                </FormControl>
-              </Grid>
-              <Grid item xs={1}>
-                <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
-              </Grid>
-              <Grid item xs={5.5}>
-                <div className="font-semibold leading-[140%]">End</div>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel color="primary" />
-                  <Select
-                    color="primary"
-                    defaultValue="09:00 PM"
-                    size="medium"
-                    onChange={(e) => setEndHour(e.target.value)}
-                  >
-                    <MenuItem value="05:00 AM">05:00 AM</MenuItem>
-                    <MenuItem value="06:00 AM">06:00 AM</MenuItem>
-                    <MenuItem value="07:00 AM">07:00 AM</MenuItem>
-                    <MenuItem value="08:00 AM">08:00 AM</MenuItem>
-                    <MenuItem value="09:00 AM">09:00 AM</MenuItem>
-                    <MenuItem value="10:00 AM">10:00 AM</MenuItem>
-                    <MenuItem value="11:00 AM">11:00 AM</MenuItem>
-                    <MenuItem value="12:00 AM">12:00 AM</MenuItem>
-                    <MenuItem value="01:00 PM">01:00 PM</MenuItem>
-                    <MenuItem value="02:00 PM">02:00 PM</MenuItem>
-                    <MenuItem value="03:00 PM">03:00 PM</MenuItem>
-                    <MenuItem value="04:00 PM">04:00 PM</MenuItem>
-                    <MenuItem value="05:00 PM">05:00 PM</MenuItem>
-                    <MenuItem value="06:00 PM">06:00 PM</MenuItem>
-                    <MenuItem value="07:00 PM">07:00 PM</MenuItem>
-                    <MenuItem value="08:00 PM">08:00 PM</MenuItem>
-                    <MenuItem value="09:00 PM">09:00 PM</MenuItem>
-                    <MenuItem value="10:00 PM">10:00 PM</MenuItem>
-                    <MenuItem value="11:00 PM">11:00 PM</MenuItem>
-                  </Select>
-                  <FormHelperText />
-                </FormControl>
-              </Grid>
-            </Grid>
-            {forms.length > 1 ? (
+            {showForm && (
               <>
-                <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
-                <div className="font-semibold leading-[140%]">Break Time</div>
-              </>
-            ) : (
-              ''
-            )}
-            {forms.length > 1 ? (
-              <>
-                {forms.map((form) => (
+                <Grid className="items-center" container spacing={4}>
+                  <Grid item xs={5.5}>
+                    <div className="font-semibold leading-[140%]">Start</div>
+                    <FormControl fullWidth variant="outlined">
+                      <InputLabel color="primary" />
+                      <Select
+                        color="primary"
+                        defaultValue="09:00 AM"
+                        size="medium"
+                        onChange={(e) => setStartHour(e.target.value)}
+                      >
+                        {timeOptions.map((item) => (
+                          <MenuItem value={item}>{item}</MenuItem>
+                        ))}
+                      </Select>
+                      <FormHelperText />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
+                  </Grid>
+                  <Grid item xs={5.5}>
+                    <div className="font-semibold leading-[140%]">End</div>
+                    <FormControl fullWidth variant="outlined">
+                      <InputLabel color="primary" />
+                      <Select
+                        color="primary"
+                        defaultValue="09:00 PM"
+                        size="medium"
+                        onChange={(e) => setEndHour(e.target.value)}
+                      >
+                        {timeOptions.map((item) => (
+                          <MenuItem value={item}>{item}</MenuItem>
+                        ))}
+                      </Select>
+                      <FormHelperText />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+                {forms.length > 1 ? (
                   <>
-                    {form.id > 0 ? (
-                      <div key={form.id}>
-                        <Grid className="items-center" container spacing={3}>
-                          <Grid item xs={5}>
-                            <FormControl fullWidth variant="outlined">
-                              <InputLabel color="primary" />
-                              <Select
-                                color="primary"
-                                defaultValue="09:00 AM"
-                                size="medium"
-                                onChange={(e) => setStartHour(e.target.value)}
-                              >
-                                <MenuItem value="05:00 AM">05:00 AM</MenuItem>
-                                <MenuItem value="06:00 AM">06:00 AM</MenuItem>
-                                <MenuItem value="07:00 AM">07:00 AM</MenuItem>
-                                <MenuItem value="08:00 AM">08:00 AM</MenuItem>
-                                <MenuItem value="09:00 AM">09:00 AM</MenuItem>
-                                <MenuItem value="10:00 AM">10:00 AM</MenuItem>
-                                <MenuItem value="11:00 AM">11:00 AM</MenuItem>
-                                <MenuItem value="12:00 AM">12:00 AM</MenuItem>
-                                <MenuItem value="01:00 PM">01:00 PM</MenuItem>
-                                <MenuItem value="02:00 PM">02:00 PM</MenuItem>
-                                <MenuItem value="03:00 PM">03:00 PM</MenuItem>
-                                <MenuItem value="04:00 PM">04:00 PM</MenuItem>
-                                <MenuItem value="05:00 PM">05:00 PM</MenuItem>
-                                <MenuItem value="06:00 PM">06:00 PM</MenuItem>
-                                <MenuItem value="07:00 PM">07:00 PM</MenuItem>
-                                <MenuItem value="08:00 PM">08:00 PM</MenuItem>
-                                <MenuItem value="09:00 PM">09:00 PM</MenuItem>
-                                <MenuItem value="10:00 PM">10:00 PM</MenuItem>
-                                <MenuItem value="11:00 PM">11:00 PM</MenuItem>
-                              </Select>
-                              <FormHelperText />
-                            </FormControl>
-                          </Grid>
-                          <Grid item xs={1}>
-                            <div className="box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
-                          </Grid>
-                          <Grid item xs={5}>
-                            <FormControl fullWidth variant="outlined">
-                              <InputLabel color="primary" />
-                              <Select
-                                color="primary"
-                                defaultValue="09:00 PM"
-                                size="medium"
-                                onChange={(e) => setEndHour(e.target.value)}
-                              >
-                                <MenuItem value="05:00 AM">05:00 AM</MenuItem>
-                                <MenuItem value="06:00 AM">06:00 AM</MenuItem>
-                                <MenuItem value="07:00 AM">07:00 AM</MenuItem>
-                                <MenuItem value="08:00 AM">08:00 AM</MenuItem>
-                                <MenuItem value="09:00 AM">09:00 AM</MenuItem>
-                                <MenuItem value="10:00 AM">10:00 AM</MenuItem>
-                                <MenuItem value="11:00 AM">11:00 AM</MenuItem>
-                                <MenuItem value="12:00 AM">12:00 AM</MenuItem>
-                                <MenuItem value="01:00 PM">01:00 PM</MenuItem>
-                                <MenuItem value="02:00 PM">02:00 PM</MenuItem>
-                                <MenuItem value="03:00 PM">03:00 PM</MenuItem>
-                                <MenuItem value="04:00 PM">04:00 PM</MenuItem>
-                                <MenuItem value="05:00 PM">05:00 PM</MenuItem>
-                                <MenuItem value="06:00 PM">06:00 PM</MenuItem>
-                                <MenuItem value="07:00 PM">07:00 PM</MenuItem>
-                                <MenuItem value="08:00 PM">08:00 PM</MenuItem>
-                                <MenuItem value="09:00 PM">09:00 PM</MenuItem>
-                                <MenuItem value="10:00 PM">10:00 PM</MenuItem>
-                                <MenuItem value="11:00 PM">11:00 PM</MenuItem>
-                              </Select>
-                              <FormHelperText />
-                            </FormControl>
-                          </Grid>
-                          <Grid item xs={1}>
-                            <Button
-                              className="items-center justify-center"
-                              variant="text"
-                              startIcon={
-                                <DeleteOutlineIcon sx={{ color: '#F28500' }} />
-                              }
-                              onClick={() => removeForm(form.id)}
-                            />
-                          </Grid>
-                        </Grid>
-                      </div>
-                    ) : (
-                      ''
-                    )}
+                    <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
+                    <div className="font-semibold leading-[140%]">
+                      Break Time
+                    </div>
                   </>
-                ))}
+                ) : (
+                  ''
+                )}
+                {forms.length > 1 ? (
+                  <>
+                    {forms.map((form) => (
+                      <>
+                        {form.id > 0 ? (
+                          <div key={form.id}>
+                            <Grid
+                              className="items-center"
+                              container
+                              spacing={3}
+                            >
+                              <Grid item xs={5}>
+                                <FormControl fullWidth variant="outlined">
+                                  <InputLabel color="primary" />
+                                  <Select
+                                    color="primary"
+                                    defaultValue="09:00 AM"
+                                    size="medium"
+                                    onChange={(e) =>
+                                      setStartHour(e.target.value)
+                                    }
+                                  >
+                                    {timeOptions.map((item) => (
+                                      <MenuItem value={item}>{item}</MenuItem>
+                                    ))}
+                                  </Select>
+                                  <FormHelperText />
+                                </FormControl>
+                              </Grid>
+                              <Grid item xs={1}>
+                                <div className="box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
+                              </Grid>
+                              <Grid item xs={5}>
+                                <FormControl fullWidth variant="outlined">
+                                  <InputLabel color="primary" />
+                                  <Select
+                                    color="primary"
+                                    defaultValue="09:00 PM"
+                                    size="medium"
+                                    onChange={(e) => setEndHour(e.target.value)}
+                                  >
+                                    {timeOptions.map((item) => (
+                                      <MenuItem value={item}>{item}</MenuItem>
+                                    ))}
+                                  </Select>
+                                  <FormHelperText />
+                                </FormControl>
+                              </Grid>
+                              <Grid item xs={1}>
+                                <Button
+                                  className="items-center justify-center"
+                                  variant="text"
+                                  startIcon={
+                                    <DeleteOutlineIcon
+                                      sx={{ color: '#F28500' }}
+                                    />
+                                  }
+                                  onClick={() => removeForm(form.id)}
+                                />
+                              </Grid>
+                            </Grid>
+                          </div>
+                        ) : (
+                          ''
+                        )}
+                      </>
+                    ))}
+                  </>
+                ) : (
+                  ''
+                )}
+
+                <Button
+                  className="justify-start font-semibold text-primary-main"
+                  variant="text"
+                  startIcon={<AddIcon sx={{ color: '#00bdd6' }} />}
+                  onClick={addForm}
+                >
+                  Add Break
+                </Button>
               </>
-            ) : (
-              ''
             )}
 
-            <Button
-              className="justify-start font-semibold text-primary-main"
-              variant="text"
-              startIcon={<AddIcon sx={{ color: '#00bdd6' }} />}
-              onClick={addForm}
-            >
-              Add Break
-            </Button>
             <button
               type="button"
               className="mt-8 box-border flex w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] py-[13px] text-[18px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"

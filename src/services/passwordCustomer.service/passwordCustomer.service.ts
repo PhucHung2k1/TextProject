@@ -11,10 +11,10 @@ export interface IChangePasswordByToken {
   passwordConfirm: string;
 }
 export interface IValidatePasswordToken {
-  token: string;
+  token: any;
 }
 const FORGOT_PASSWORD = '/account/forgot-password';
-const VALIDATE_FORGOT_PASSWORD_TOKEN = '/account/forgot-password';
+const VALIDATE_FORGOT_PASSWORD_TOKEN = '/account/validate-forgot-password';
 const CHANGE_PASSWORD_BY_TOKEN = '/customer/change-password-by-token';
 export class PasswordCustomerService {
   public forgotPassword = async (data: IForgotPassword): Promise<IResponse> => {
