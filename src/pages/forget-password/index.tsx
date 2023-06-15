@@ -76,11 +76,6 @@ const ForgotPassword = () => {
   };
 
   const handleForgotPassword = (values: any) => {
-    // eslint-disable-next-line no-console
-    console.log(
-      '🚀 ~ file: forgotPassword.tsx:78 ~ onSubmit ~ values:',
-      values
-    );
     dispatch(
       forgotPassword({
         UserName: values.email,
