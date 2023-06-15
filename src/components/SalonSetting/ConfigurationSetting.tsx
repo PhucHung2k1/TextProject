@@ -31,42 +31,28 @@ const StyledTabs = styled((props: StyledTabsProps) => (
 export const ConfigurationSetting = () => {
   const [activeKey, setActiveKey] = useState<number>(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log(
-      '🚀 ~ file: ConfigurationSetting.tsx:35 ~ handleChange ~ event:',
-      event
-    );
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setActiveKey(newValue);
   };
 
   const items = [
     {
       id: 0,
-      label: (
-        <span style={{ font: 'normal normal 600 var(--s-18)' }}>GENERAL</span>
-      ),
+      label: <span>GENERAL</span>,
       key: 'general',
 
       children: <General />,
     },
     {
       id: 1,
-      label: (
-        <span style={{ font: 'normal normal 600 var(--s-18)' }}>
-          NOTIFICATIONS
-        </span>
-      ),
+      label: <span>NOTIFICATIONS</span>,
       key: 'notifications',
       children: <></>,
     },
 
     {
       id: 2,
-      label: (
-        <span style={{ font: 'normal normal 600 var(--s-18)' }}>
-          DEVICE MANAGER
-        </span>
-      ),
+      label: <span>DEVICE MANAGER</span>,
       key: 'deviceManager',
       children: <></>,
     },

@@ -1,9 +1,9 @@
-import { AddYourEmployeeModal } from '@/components/StoreProfile/AddYourEmployeeModal';
+import AddYourEmployee from '@/components/StoreProfile/AddYourEmployee';
 
 const StoreProfile = () => {
   return (
     <main className="flex h-screen items-center justify-center bg-mango-gray-light-2">
-      <AddYourEmployeeModal />
+      <AddYourEmployee />
     </main>
   );
 };

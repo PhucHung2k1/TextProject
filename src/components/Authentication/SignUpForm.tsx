@@ -1,7 +1,7 @@
 import { checkExistEmail, signUp } from '@/store/account/accountAction';
 import Button from '@mui/material/Button';
 import { useAppDispatch } from '@/store/hook';
-import { emailRegex } from '@/utils/helper/isValidEmail';
+import { emailRegex } from '@/utils/helper/regex';
 import { ErrorMessage } from '@hookform/error-message';
 import { Check, Error } from '@mui/icons-material';
 import {
