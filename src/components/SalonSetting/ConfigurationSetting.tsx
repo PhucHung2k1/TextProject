@@ -32,6 +32,10 @@ export const ConfigurationSetting = () => {
   const [activeKey, setActiveKey] = useState<number>(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log(
+      '🚀 ~ file: ConfigurationSetting.tsx:35 ~ handleChange ~ event:',
+      event
+    );
     setActiveKey(newValue);
   };
 
