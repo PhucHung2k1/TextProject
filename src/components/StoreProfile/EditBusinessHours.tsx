@@ -20,7 +20,6 @@ const EditBusinessHours: NextPage = () => {
   const [forms, setForms] = useState([{ id: 0 }]);
 
   console.log(startHour, endHour);
-
   const timeOptions = [
     '05:00 AM',
     '06:00 AM',
