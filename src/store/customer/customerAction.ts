@@ -3,6 +3,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setMessageToast, showToast } from '../toast/toastSlice';
 import { Customer } from '@/services/customer.service/customer.service';
 import { setCustomerProfile } from './customerSlice';
+import type {
+  IConfirmInvitationPayload,
+  ISendInvitationPayload,
+} from '@/services/customer.service/customer.interface';
+import { clearModalContentMUI, hideModalMUI } from '../modal/modalSlice';
+import { showToastMessage } from '@/utils/helper/showToastMessage';
+import { setInvitationList } from '../customerRole/customerRoleSlice';
 
 export const getCustomerProfile = createAsyncThunk(
   'account/customerRole',
@@ -22,6 +29,70 @@ export const getCustomerProfile = createAsyncThunk(
       dispatch(setMessageToast(err.extendData[0].Message));
       dispatch(showToast());
       // throw new Error(`Error signing in: ${err.message}`);
+    }
+  }
+);
+
+export const invitationList = createAsyncThunk(
+  'customer/invitationList',
+  async (_body: any, { dispatch }) => {
+    const servicesCustomerAPI = new Customer();
+
+    try {
+      const { data, status } = await servicesCustomerAPI.invitationList();
+
+      if ((status === 200 || status === 201) && data) {
+        dispatch(setInvitationList(data));
+      }
+    } catch (err: any) {
+      // showToastMessage(dispatch, err?.extendData[0]?.Message, 'error');
+    }
+  }
+);
+
+export const sendInvitation = createAsyncThunk(
+  'customer/sendInvitation',
+  async (_body: ISendInvitationPayload, { dispatch }) => {
+    const servicesCustomerAPI = new Customer();
+
+    try {
+      const { status, error } = await servicesCustomerAPI.sendInvitation(_body);
+
+      if (status === 200 || status === 201) {
+        dispatch(invitationList({}));
+        dispatch(hideModalMUI());
+        dispatch(clearModalContentMUI());
+        showToastMessage(
+          dispatch,
+          'Invitation sent successfully, Please check your email!',
+          'success'
+        );
+      }
+
+      if (error) {
+        showToastMessage(dispatch, 'Something went wrong', 'error');
+      }
+    } catch (err: any) {
+      // showToastMessage(dispatch, err?.extendData[0]?.Message, 'error');
+    }
+  }
+);
+
+export const confirmInvitation = createAsyncThunk(
+  'customer/confirmInvitation',
+  async (_body: IConfirmInvitationPayload) => {
+    const servicesCustomerAPI = new Customer();
+
+    try {
+      const { data, status } = await servicesCustomerAPI.confirmInvitation(
+        _body
+      );
+
+      if ((status === 200 || status === 201) && data) {
+        // dispatch(setCustomerProfile(data));
+      }
+    } catch (err: any) {
+      // showToastMessage(dispatch, err?.extendData[0]?.Message, 'error');
     }
   }
 );

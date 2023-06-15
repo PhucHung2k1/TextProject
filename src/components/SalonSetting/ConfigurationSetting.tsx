@@ -38,31 +38,21 @@ export const ConfigurationSetting = () => {
   const items = [
     {
       id: 0,
-      label: (
-        <span style={{ font: 'normal normal 600 var(--s-18)' }}>GENERAL</span>
-      ),
+      label: <span>GENERAL</span>,
       key: 'general',
 
       children: <General />,
     },
     {
       id: 1,
-      label: (
-        <span style={{ font: 'normal normal 600 var(--s-18)' }}>
-          NOTIFICATIONS
-        </span>
-      ),
+      label: <span>NOTIFICATIONS</span>,
       key: 'notifications',
       children: <></>,
     },
 
     {
       id: 2,
-      label: (
-        <span style={{ font: 'normal normal 600 var(--s-18)' }}>
-          DEVICE MANAGER
-        </span>
-      ),
+      label: <span>DEVICE MANAGER</span>,
       key: 'deviceManager',
       children: <></>,
     },

@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { emailRegex } from '@/utils/helper/isValidEmail';
+import { emailRegex } from '@/utils/helper/regex';
 import { checkExistEmail } from '@/store/account/accountAction';
 import { useAppDispatch } from '@/store/hook';
 import { Check, Error } from '@mui/icons-material';
