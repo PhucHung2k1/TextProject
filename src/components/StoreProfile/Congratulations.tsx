@@ -15,7 +15,7 @@ const Congratulations = () => {
             </div>
           </div>
           <Image
-            src="/assets/images/StoreProfile/image-welcome.png"
+            src="/assets/images/StoreProfile/image-welcome.svg"
             alt="img-welcome"
             width={228}
             height={238}

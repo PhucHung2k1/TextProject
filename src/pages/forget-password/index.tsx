@@ -15,6 +15,7 @@ import { Check, Error } from '@mui/icons-material';
 import { ErrorMessage } from '@hookform/error-message';
 import SendIcon from '@mui/icons-material/Send';
 import GetYourPasswordSucess from '@/components/Authentication/GetYourPasswordSucess';
+import { forgotPassword } from '@/store/passwordCustomer/passwordCustomerAction';
 
 const ForgotPassword = () => {
   const {
@@ -43,11 +44,11 @@ const ForgotPassword = () => {
           Email: emailValue,
         })
       ).then((res) => {
-        if (res.payload) {
+        if (!res.payload) {
           setEmailState((pre) => ({ ...pre, emailStatus: 'existed' }));
           setError('email', {
             type: 'manual',
-            message: 'Email already exists',
+            message: 'Email does not exists',
           });
         } else {
           setEmailState((pre) => ({ ...pre, emailStatus: 'available' }));
@@ -80,7 +81,15 @@ const ForgotPassword = () => {
       '🚀 ~ file: forgotPassword.tsx:78 ~ onSubmit ~ values:',
       values
     );
-    setShowSuccess(true);
+    dispatch(
+      forgotPassword({
+        UserName: values.email,
+      })
+    ).then((res: any) => {
+      if (!res.error) {
+        setShowSuccess(true);
+      }
+    });
   };
   return (
     <>
@@ -151,6 +160,7 @@ const ForgotPassword = () => {
                       className="mt-3 h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
                       type="submit"
                       sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
+                      disabled={!!errors.email}
                     >
                       SEND{' '}
                       <SendIcon fontSize="small" style={{ marginLeft: 5 }} />

@@ -14,25 +14,25 @@ interface IStaff {
 const AddYourStaffMember = () => {
   const listStaff: IStaff[] = [
     {
-      avatar: '/assets/images/StoreProfile/image_avt.png',
+      avatar: '/assets/images/StoreProfile/image-avt.svg',
       name: 'Olivia Rodrigo',
       subName: 'Technician',
       status: true,
     },
     {
-      avatar: '/assets/images/StoreProfile/image_avt.png',
+      avatar: '/assets/images/StoreProfile/image-avt.svg',
       name: 'William Wilson',
       subName: 'Manager',
       status: false,
     },
     {
-      avatar: '/assets/images/StoreProfile/image_avt.png',
+      avatar: '/assets/images/StoreProfile/image-avt.svg',
       name: 'William Wilson',
       subName: 'Manager',
       status: false,
     },
     {
-      avatar: '/assets/images/StoreProfile/image_avt.png',
+      avatar: '/assets/images/StoreProfile/image-avt.svg',
       name: 'William Wilson',
       subName: 'Manager',
       status: false,

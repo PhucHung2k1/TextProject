@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {
-  Grid,
   FormControl,
-  TextField,
   Button,
   CircularProgress,
   debounce,
@@ -10,6 +8,9 @@ import {
   Typography,
   Link,
   Autocomplete,
+  InputAdornment,
+  TextField,
+  Grid,
 } from '@mui/material';
 import router from 'next/router';
 import * as React from 'react';
@@ -63,7 +64,7 @@ export const AddYourEmployeeModal = () => {
     handleSubmit,
     register,
     formState: { errors },
-    // clearErrors,
+    clearErrors,
     setError,
     trigger,
   } = useForm<IFormInput>();
@@ -74,23 +75,12 @@ export const AddYourEmployeeModal = () => {
 
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
-      setEmailState((pre) => ({ ...pre, emailName: emailValue }));
-      // dispatch(
-      //   checkExistEmail({
-      //     Email: emailValue,
-      //   })
-      // ).then((res) => {
-      //   if (res.payload) {
-      //     setEmailState((pre) => ({ ...pre, emailStatus: 'existed' }));
-      //     setError('email', {
-      //       type: 'manual',
-      //       message: 'Email already exists',
-      //     });
-      //   } else {
-      //     setEmailState((pre) => ({ ...pre, emailStatus: 'available' }));
-      //     clearErrors('email');
-      //   }
-      // });
+      setEmailState((pre) => ({
+        ...pre,
+        emailName: emailValue,
+        emailStatus: 'available',
+      }));
+      clearErrors('email');
     } else {
       setEmailState({ emailStatus: 'idle', emailName: '' });
       setError('email', {
@@ -116,7 +106,7 @@ export const AddYourEmployeeModal = () => {
 
   return (
     <div className=" w-[568px] rounded-2xl bg-white shadow-md">
-      <div className="px-8 pb-8 pt-12">
+      <div className="max-h-screen  overflow-y-scroll px-8 pb-8 pt-12">
         <div className=" text-center">
           <div className="flex items-center justify-center ">
             <Clear
@@ -135,20 +125,20 @@ export const AddYourEmployeeModal = () => {
         </div>
 
         {/*  */}
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full pt-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="h-full w-full pt-8">
           <Grid container rowSpacing={2}>
             <Grid container spacing={2}>
               <Grid xs={6} item>
                 <FormControl
                   fullWidth
+                  required
                   className="text-sm font-normal !text-mango-text-black-1"
                 >
                   <TextField
                     label="First Name"
-                    required
                     type="text"
-                    placeholder="First Name"
                     error={Boolean(errors.firstName)}
+                    placeholder="First Name"
                     {...register('firstName', {
                       required: 'Enter Your First Name!',
                     })}
@@ -229,46 +219,100 @@ export const AddYourEmployeeModal = () => {
               sx={{ height: 28, width: 'calc(100%)', ml: 'auto' }}
               orientation="horizontal"
             />
-
-            <Grid xs={12} item>
-              <FormControl
-                fullWidth
-                className="text-sm font-normal !text-mango-text-black-1"
-              >
+            <Grid container spacing={2}>
+              <Grid xs={12} item>
+                <FormControl
+                  fullWidth
+                  className="text-sm font-normal !text-mango-text-black-1"
+                >
+                  <TextField
+                    label="Email Address"
+                    type="email"
+                    required
+                    error={Boolean(errors.email)}
+                    placeholder="Email Address"
+                    {...register('email', {
+                      required: 'Enter Your Email!',
+                    })}
+                    onChange={handleEmailChange}
+                    className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                    InputProps={{
+                      endAdornment:
+                        emailState.emailStatus === 'available' ? (
+                          <Check className=" bg-transparent text-green-700" />
+                        ) : emailState.emailStatus === 'existed' ? (
+                          <Error className="text-red-500" />
+                        ) : emailState.emailName ? (
+                          <CircularProgress size="1.2rem" />
+                        ) : (
+                          <></>
+                        ),
+                    }}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="email"
+                    render={({ message }: any) => (
+                      <div className="mt-2 text-sm text-red-700" role="alert">
+                        <span className="font-medium">{message}</span>
+                      </div>
+                    )}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid xs={4} item>
                 <TextField
-                  label="Email Address"
-                  type="email"
-                  required
-                  error={Boolean(errors.email)}
-                  placeholder="Email Address"
-                  {...register('email', {
-                    required: 'Enter Your Email!',
-                  })}
-                  onChange={handleEmailChange}
-                  className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                  InputProps={{
-                    endAdornment:
-                      emailState.emailStatus === 'available' ? (
-                        <Check className=" bg-transparent text-green-700" />
-                      ) : emailState.emailStatus === 'existed' ? (
-                        <Error className="text-red-500" />
-                      ) : emailState.emailName ? (
-                        <CircularProgress size="1.2rem" />
-                      ) : (
-                        <></>
-                      ),
+                  disabled
+                  className=" bg-[#F2F2F2]"
+                  sx={{
+                    '& .MuiInputBase-input.Mui-disabled': {
+                      WebkitTextFillColor: '#404044',
+                      fontWeight: '600',
+                      fontSize: '16px',
+                    },
                   }}
+                  id="input-with-icon-textfield"
+                  label="Prefix"
+                  defaultValue="(+1)"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <img
+                          loading="lazy"
+                          width="20"
+                          src="/assets/images/SetupStore/US.png"
+                          alt=""
+                          className="mr-1"
+                        />
+                        <Divider
+                          className="mr-10"
+                          sx={{ height: 28, m: 0.5 }}
+                          orientation="vertical"
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="outlined"
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="email"
-                  render={({ message }: any) => (
-                    <div className="mt-2 text-sm text-red-700" role="alert">
-                      <span className="font-medium">{message}</span>
-                    </div>
-                  )}
+              </Grid>
+              <Grid xs={8} item>
+                <TextField
+                  sx={{
+                    '& .MuiInputBase-root.Mui-focused': {
+                      '& > fieldset': {
+                        borderColor: '#00BDD6',
+                      },
+                    },
+                    '& label.Mui-focused': {
+                      color: '#00BDD6',
+                    },
+                  }}
+                  id="outlined-basic"
+                  label="Phone number"
+                  variant="outlined"
+                  className="w-full font-[16px] text-[#404044]"
                 />
-              </FormControl>
+              </Grid>
             </Grid>
             <Grid xs={12} item className="pt-2">
               <Typography
@@ -297,7 +341,7 @@ export const AddYourEmployeeModal = () => {
                 orientation="horizontal"
               />
             </Grid>
-            <div className=" ">
+            <div className=" mt-4 h-[150px] w-full overflow-x-hidden overflow-y-scroll">
               <Grid container rowSpacing={2} className="mt-2  w-full">
                 <Grid xs={12} item>
                   <Typography fontSize={20} fontWeight={600} mb={1}>
@@ -315,7 +359,7 @@ export const AddYourEmployeeModal = () => {
                         return (
                           <li
                             {...props}
-                            className=" cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
+                            className=" cursor-pointer  p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
                           >
                             <Grid container alignItems="center">
                               <Grid item sx={{ display: 'flex', width: 40 }}>
@@ -363,7 +407,7 @@ export const AddYourEmployeeModal = () => {
                         return (
                           <li
                             {...props}
-                            className=" cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
+                            className="  cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
                           >
                             <Grid container alignItems="center">
                               <Grid item sx={{ display: 'flex', width: 40 }}>
@@ -413,7 +457,7 @@ export const AddYourEmployeeModal = () => {
                         return (
                           <li
                             {...props}
-                            className=" cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
+                            className=" cursor-pointer bg-white p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
                           >
                             <Grid container alignItems="center">
                               <Grid item sx={{ display: 'flex', width: 40 }}>
@@ -445,9 +489,9 @@ export const AddYourEmployeeModal = () => {
                 className="text-sm font-normal !text-mango-text-black-1"
               >
                 <Button
-                  variant="contained"
-                  className="mt-3 h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
                   type="submit"
+                  variant="contained"
+                  className="h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white"
                   sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
                 >
                   SAVE

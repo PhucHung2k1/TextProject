@@ -9,8 +9,10 @@ import {
 import { useState, useEffect } from 'react';
 
 import Image from 'next/image';
+// import { getStoreProfile } from "@/store/store/storeAction";
 
 const AboutYourBusiness = () => {
+  // const dispatch = useAppDispatch();
   const [selectedImage, setSelectedImage] = useState<Blob>();
   const [progress, setProgress] = useState<number>(0);
 
@@ -20,6 +22,7 @@ const AboutYourBusiness = () => {
     }
   };
   useEffect(() => {
+    const getStore = async () => {};
     const timer = setInterval(() => {
       setProgress((oldProgress) => {
         if (oldProgress === 100) {
@@ -30,6 +33,7 @@ const AboutYourBusiness = () => {
     });
 
     return () => {
+      getStore();
       clearInterval(timer);
     };
   }, []);
@@ -37,7 +41,7 @@ const AboutYourBusiness = () => {
   return (
     <div>
       <div className="relative flex justify-center pt-[90px]">
-        <div className=" relative  w-[568px] overflow-hidden rounded-2xl bg-white p-8 shadow-md	">
+        <div className=" relative w-[568px] overflow-hidden rounded-2xl bg-white p-8 shadow-md	">
           <Box className=" absolute left-0 top-0 w-[568px]">
             <LinearProgress
               variant="determinate"
@@ -57,7 +61,7 @@ const AboutYourBusiness = () => {
           <p className="mb-[8px] mt-[16px] text-center text-[32px] font-semibold text-text-title">
             About your salon
           </p>
-          <p className="mb-[48px] text-center text-mango-text-gray-2">
+          <p className="mb-[48px] text-center text-[14px] text-mango-text-gray-2">
             Tell us about your salon
           </p>
           <form className="mt-6 flex flex-wrap justify-center gap-2">
@@ -102,11 +106,6 @@ const AboutYourBusiness = () => {
               Upload your salon profile picture
             </p>
             <div className="mb-1 mt-[36px] h-[56px] w-full">
-              {/* <input
-              className={`h-full w-full rounded border border-mango-gray-light-3 pl-4 text-left text-[16px] placeholder:text-mango-text-gray-2
-              `}
-              placeholder="Your business name"
-            /> */}
               <TextField
                 id="outlined-basic"
                 label="Your salon name"
