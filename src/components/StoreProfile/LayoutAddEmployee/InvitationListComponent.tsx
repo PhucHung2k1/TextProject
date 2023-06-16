@@ -4,6 +4,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { AddYourEmployeeModal } from './AddYourEmployeeModal';
 import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
+import { getAllRole } from '@/store/customerRole/customerRoleAction';
+import { lookupData } from '@/store/common/commonAction';
 
 const InvitationListComponent = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +14,8 @@ const InvitationListComponent = () => {
   );
 
   const handleAddEmployee = () => {
+    dispatch(getAllRole({}));
+    dispatch(lookupData({}));
     dispatch(setModalContentMUI(<AddYourEmployeeModal />));
     dispatch(showModalMUI());
   };

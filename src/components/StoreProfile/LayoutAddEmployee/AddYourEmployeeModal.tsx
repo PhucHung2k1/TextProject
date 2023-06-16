@@ -24,6 +24,7 @@ import type { ISendInvitationPayload } from '@/services/customer.service/custome
 import { useState } from 'react';
 import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
 import { sendInvitation } from '@/store/customer/customerAction';
+import type { CountryPhone } from '@/services/common/common.interface';
 
 interface IFormInput {
   firstName: string;
@@ -38,18 +39,6 @@ interface IFormInput {
   serviceAndProduct: string;
 }
 
-const listPayStructure = [
-  {
-    id: 1,
-    name: 'Commission',
-  },
-];
-const listServiceProduct = [
-  {
-    id: 1,
-    name: 'All',
-  },
-];
 const sxTextField = {
   '& .MuiInputBase-root.Mui-focused': {
     '& > fieldset': {
@@ -76,8 +65,22 @@ export const AddYourEmployeeModal = () => {
     emailStatus: 'idle', // existed , available
   });
   const listRole = useAppSelector((state) => state.customerRoleSlice.listRole);
-  const [valueRole, setValueRole] = useState<IAllCustomerRole>();
+  const listPayStructure = useAppSelector(
+    (state) => state.commonSlice.lookupData.PayStructure
+  );
+  const listServiceProduct = useAppSelector(
+    (state) => state.commonSlice.lookupData.ProductType
+  );
+  const [valueRole, setValueRole] = useState<IAllCustomerRole | any>(
+    listRole[0]
+  );
 
+  const [valueServiceProduct, setValueServiceProduct] = useState<
+    CountryPhone | any
+  >(listPayStructure[0]);
+  const [valuePayStructure, setValuePayStructure] = useState<
+    CountryPhone | any
+  >(listServiceProduct[0]);
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
       setEmailState((pre) => ({
@@ -115,8 +118,8 @@ export const AddYourEmployeeModal = () => {
       email: values?.email,
       jobTitle: values?.jobTitle,
       customerRoleId: valueRole?.Id || '',
-      payStructure: values?.payStructure,
-      serviceAndProduct: values?.serviceAndProduct,
+      payStructure: valuePayStructure?.Value,
+      serviceAndProduct: valueServiceProduct?.Value,
       isSendInvitation: true,
     };
 
@@ -443,8 +446,11 @@ export const AddYourEmployeeModal = () => {
                   >
                     <Autocomplete
                       options={listPayStructure}
-                      getOptionLabel={(option) => option.name}
-                      defaultValue={listPayStructure[0]}
+                      getOptionLabel={(option) => option.Name}
+                      value={valuePayStructure}
+                      onChange={(_event: any, newValue: any) => {
+                        setValuePayStructure(newValue);
+                      }}
                       renderOption={(props, option) => {
                         return (
                           <li
@@ -457,7 +463,7 @@ export const AddYourEmployeeModal = () => {
                               </Grid>
                               <Grid item>
                                 <Typography variant="body2" fontSize={16}>
-                                  {option.name}
+                                  {option.Name}
                                 </Typography>
                               </Grid>
                             </Grid>
@@ -493,8 +499,11 @@ export const AddYourEmployeeModal = () => {
                   >
                     <Autocomplete
                       options={listServiceProduct}
-                      getOptionLabel={(option) => option.name}
-                      defaultValue={listServiceProduct[0]}
+                      getOptionLabel={(option) => option.Name}
+                      value={valueServiceProduct}
+                      onChange={(_event: any, newValue: any) => {
+                        setValueServiceProduct(newValue);
+                      }}
                       renderOption={(props, option) => {
                         return (
                           <li
@@ -507,7 +516,7 @@ export const AddYourEmployeeModal = () => {
                               </Grid>
                               <Grid item>
                                 <Typography variant="body2" fontSize={16}>
-                                  {option.name}
+                                  {option.Name}
                                 </Typography>
                               </Grid>
                             </Grid>

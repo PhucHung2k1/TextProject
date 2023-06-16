@@ -19,6 +19,7 @@ import {
   handlePreviousProgressSetupStore,
 } from '@/components/StoreProfile/helper';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
+import CustomModal from '../Modal';
 
 const ConfirmYourAddress = () => {
   const dispatch = useAppDispatch();
