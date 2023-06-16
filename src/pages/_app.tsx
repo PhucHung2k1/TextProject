@@ -11,6 +11,7 @@ import PrevLoader from '@/components/Loading/PrevLoader';
 import ModalContainer from '@/components/Modal';
 import type { IMetaSEOProps } from '@/components/MetaSEO';
 import MetaSEO from '@/components/MetaSEO';
+import ModalMUIContainer from '@/components/Modal/ModalMUI';
 
 NProgress.configure({
   showSpinner: false,
@@ -47,6 +48,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <Component {...pageProps} />
           <PrevLoader />
           <ModalContainer />
+          <ModalMUIContainer />
           <ToastContainer />
         </main>
       </SessionProvider>

@@ -12,38 +12,33 @@ import {
   TextField,
   Grid,
 } from '@mui/material';
-import router from 'next/router';
-import * as React from 'react';
+
 import { Check, Clear, Error } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { emailRegex } from '@/utils/helper/isValidEmail';
+import { emailRegex, phoneNumberRegex } from '@/utils/helper/regex';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import { clearModalContentMUI, hideModalMUI } from '@/store/modal/modalSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import type { ISendInvitationPayload } from '@/services/customer.service/customer.interface';
+import { useEffect, useState } from 'react';
+import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
+import { sendInvitation } from '@/store/customer/customerAction';
+import { getAllRole } from '@/store/customerRole/customerRoleAction';
 
 interface IFormInput {
   firstName: string;
   lastName: string;
   nickName: string;
   jobTitle: string;
-  email: number | string;
+  email: string;
   prefixPhone: string;
   phoneNumber: string;
-  role: string;
+  customerRoleId: string;
   payStructure: string;
-  serviceProduct: string;
+  serviceAndProduct: string;
 }
-const listRole = [
-  {
-    id: 1,
-    name: 'Technician',
-  },
-  {
-    id: 2,
-    name: 'Manager',
-  },
-  { id: 3, name: 'Owner' },
-  { id: 4, name: 'Add new role' },
-];
+
 const listPayStructure = [
   {
     id: 1,
@@ -56,9 +51,18 @@ const listServiceProduct = [
     name: 'All',
   },
 ];
-
+const sxTextField = {
+  '& .MuiInputBase-root.Mui-focused': {
+    '& > fieldset': {
+      borderColor: '#00BDD6',
+    },
+  },
+  '& label.Mui-focused': {
+    color: '#00BDD6',
+  },
+};
 export const AddYourEmployeeModal = () => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     handleSubmit,
@@ -68,10 +72,12 @@ export const AddYourEmployeeModal = () => {
     setError,
     trigger,
   } = useForm<IFormInput>();
-  const [emailState, setEmailState] = React.useState({
+  const [emailState, setEmailState] = useState({
     emailName: '',
     emailStatus: 'idle', // existed , available
   });
+  const listRole = useAppSelector((state) => state.customerRoleSlice.listRole);
+  const [valueRole, setValueRole] = useState<IAllCustomerRole>();
 
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
@@ -89,6 +95,7 @@ export const AddYourEmployeeModal = () => {
       });
     }
   }, 800);
+
   const handleEmailChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -99,21 +106,39 @@ export const AddYourEmployeeModal = () => {
       setError('email', { type: 'manual', message: 'errorMessage' });
     }
   };
+  useEffect(() => {
+    dispatch(getAllRole({}));
+  }, []);
+  const onSubmit = (values: IFormInput) => {
+    const body: ISendInvitationPayload = {
+      firstName: values.firstName,
+      lastName: values?.lastName,
+      nickName: values?.nickName,
+      phoneNumber: values?.phoneNumber,
+      email: values?.email,
+      jobTitle: values?.jobTitle,
+      customerRoleId: valueRole?.Id || '',
+      payStructure: values?.payStructure,
+      serviceAndProduct: values?.serviceAndProduct,
+      isSendInvitation: true,
+    };
 
-  const onSubmit = (values: any) => {
-    console.log('values', values);
+    dispatch(sendInvitation(body));
+  };
+  const handleCloseModal = () => {
+    dispatch(hideModalMUI());
+    dispatch(clearModalContentMUI());
   };
 
   return (
-    <div className=" w-[568px] rounded-2xl bg-white shadow-md">
-      <div className="max-h-screen  overflow-y-scroll px-8 pb-8 pt-12">
+    <div className="h-auto w-[568px] rounded-2xl bg-white shadow-md">
+      <div className="h-full overflow-y-auto px-8 pb-8 pt-12">
         <div className=" text-center">
           <div className="flex items-center justify-center ">
             <Clear
-              onClick={() => router.back()}
+              onClick={handleCloseModal}
               className="cursor-pointer text-3xl"
             />
-
             <p className="mx-auto text-[32px] font-semibold">
               Add your employee
             </p>
@@ -125,7 +150,11 @@ export const AddYourEmployeeModal = () => {
         </div>
 
         {/*  */}
-        <form onSubmit={handleSubmit(onSubmit)} className="h-full w-full pt-8">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="h-full w-full pt-8"
+          noValidate
+        >
           <Grid container rowSpacing={2}>
             <Grid container spacing={2}>
               <Grid xs={6} item>
@@ -137,6 +166,7 @@ export const AddYourEmployeeModal = () => {
                   <TextField
                     label="First Name"
                     type="text"
+                    sx={sxTextField}
                     error={Boolean(errors.firstName)}
                     placeholder="First Name"
                     {...register('firstName', {
@@ -165,6 +195,7 @@ export const AddYourEmployeeModal = () => {
                     label="Last Name"
                     type="text"
                     required
+                    sx={sxTextField}
                     error={Boolean(errors.lastName)}
                     placeholder="Last Name"
                     {...register('lastName', {
@@ -193,6 +224,7 @@ export const AddYourEmployeeModal = () => {
                 <TextField
                   label="Nick Name"
                   type="text"
+                  sx={sxTextField}
                   placeholder="Nick Name"
                   {...register('nickName', {})}
                   className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -230,6 +262,7 @@ export const AddYourEmployeeModal = () => {
                     type="email"
                     required
                     error={Boolean(errors.email)}
+                    sx={sxTextField}
                     placeholder="Email Address"
                     {...register('email', {
                       required: 'Enter Your Email!',
@@ -297,20 +330,26 @@ export const AddYourEmployeeModal = () => {
               </Grid>
               <Grid xs={8} item>
                 <TextField
-                  sx={{
-                    '& .MuiInputBase-root.Mui-focused': {
-                      '& > fieldset': {
-                        borderColor: '#00BDD6',
-                      },
-                    },
-                    '& label.Mui-focused': {
-                      color: '#00BDD6',
-                    },
-                  }}
+                  sx={sxTextField}
                   id="outlined-basic"
                   label="Phone number"
+                  required
                   variant="outlined"
+                  {...register('phoneNumber', {
+                    required: 'Enter Your Phone Number!',
+                    validate: (value) =>
+                      phoneNumberRegex.test(value) || 'Invalid Phone Number!',
+                  })}
                   className="w-full font-[16px] text-[#404044]"
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="phoneNumber"
+                  render={({ message }: any) => (
+                    <div className="mt-2 text-sm text-red-700" role="alert">
+                      <span className="font-medium">{message}</span>
+                    </div>
+                  )}
                 />
               </Grid>
             </Grid>
@@ -353,13 +392,17 @@ export const AddYourEmployeeModal = () => {
                   >
                     <Autocomplete
                       options={listRole}
-                      getOptionLabel={(option) => option.name}
+                      getOptionLabel={(option) => option.Name}
                       defaultValue={listRole[0]}
+                      value={valueRole}
+                      onChange={(_event: any, newValue: any) => {
+                        setValueRole(newValue);
+                      }}
                       renderOption={(props, option) => {
                         return (
                           <li
                             {...props}
-                            className=" cursor-pointer  p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
+                            className=" cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
                           >
                             <Grid container alignItems="center">
                               <Grid item sx={{ display: 'flex', width: 40 }}>
@@ -367,7 +410,7 @@ export const AddYourEmployeeModal = () => {
                               </Grid>
                               <Grid item>
                                 <Typography variant="body2" fontSize={16}>
-                                  {option.name}
+                                  {option.Name}
                                 </Typography>
                               </Grid>
                             </Grid>
@@ -375,7 +418,10 @@ export const AddYourEmployeeModal = () => {
                         );
                       }}
                       renderInput={(params) => (
-                        <TextField {...params} {...register('role', {})} />
+                        <TextField
+                          {...params}
+                          {...register('customerRoleId', {})}
+                        />
                       )}
                     />
                   </FormControl>
@@ -475,7 +521,7 @@ export const AddYourEmployeeModal = () => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          {...register('serviceProduct', {})}
+                          {...register('serviceAndProduct', {})}
                         />
                       )}
                     />
