@@ -15,7 +15,7 @@ const AddYourEmployee = () => {
     (state) => state.customerRoleSlice.invitationList
   );
   const isEmptyInvitationList = invitationListData.length === 0;
-  const handleAddEmployee = () => {
+  const handleAddEmployee = async () => {
     dispatch(setModalContentMUI(<AddYourEmployeeModal />));
     dispatch(showModalMUI());
   };
@@ -28,7 +28,6 @@ const AddYourEmployee = () => {
         icon="back"
         subTitle="Invite employees to join your salon"
         title="Add your employee"
-        process={60}
         skip={isEmptyInvitationList}
         disableBtn={isEmptyInvitationList}
       >

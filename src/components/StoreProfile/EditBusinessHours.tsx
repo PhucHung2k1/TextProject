@@ -99,7 +99,9 @@ const EditBusinessHours: NextPage = () => {
                         onChange={(e) => setStartHour(e.target.value)}
                       >
                         {timeOptions.map((item) => (
-                          <MenuItem value={item}>{item}</MenuItem>
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
                         ))}
                       </Select>
                       <FormHelperText />
@@ -119,7 +121,9 @@ const EditBusinessHours: NextPage = () => {
                         onChange={(e) => setEndHour(e.target.value)}
                       >
                         {timeOptions.map((item) => (
-                          <MenuItem value={item}>{item}</MenuItem>
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
                         ))}
                       </Select>
                       <FormHelperText />
@@ -159,7 +163,9 @@ const EditBusinessHours: NextPage = () => {
                                     }
                                   >
                                     {timeOptions.map((item) => (
-                                      <MenuItem value={item}>{item}</MenuItem>
+                                      <MenuItem key={item} value={item}>
+                                        {item}
+                                      </MenuItem>
                                     ))}
                                   </Select>
                                   <FormHelperText />
@@ -178,7 +184,9 @@ const EditBusinessHours: NextPage = () => {
                                     onChange={(e) => setEndHour(e.target.value)}
                                   >
                                     {timeOptions.map((item) => (
-                                      <MenuItem value={item}>{item}</MenuItem>
+                                      <MenuItem key={item} value={item}>
+                                        {item}
+                                      </MenuItem>
                                     ))}
                                   </Select>
                                   <FormHelperText />
