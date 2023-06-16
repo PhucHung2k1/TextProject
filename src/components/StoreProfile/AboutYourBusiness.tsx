@@ -1,38 +1,53 @@
-import { Button, Divider, InputAdornment, TextField } from '@mui/material';
-import { useState } from 'react';
-
+import { Button, TextField, InputAdornment, Divider } from '@mui/material';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useAppDispatch } from '@/store/hook';
-// import { getStoreProfile } from "@/store/store/storeAction";
-import { handleForwardProgressSetupStore } from '@/components/StoreProfile/helper';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import { getStoreProfile } from '@/store/store/storeAction';
+import { useForm } from 'react-hook-form';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
+import { handleForwardProgressSetupStore } from './helper';
+
+interface IFormInput {
+  ProfilePictureUrl: string;
+  Name: string;
+  PhoneNumber: string;
+}
 
 const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
+  const storeList = useAppSelector((state) => state.storeSlice.StoreProfile);
+  console.log(storeList);
   const [selectedImage, setSelectedImage] = useState<Blob>();
   // const [progress, setProgress] = useState<number>(0);
-
+  const { register } = useForm<IFormInput>();
   const imageChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0]);
     }
   };
-  // useEffect(() => {
-  //   const getStore = async () => {};
-  //   const timer = setInterval(() => {
-  //     setProgress((oldProgress) => {
-  //       if (oldProgress === 100) {
-  //         return 0;
-  //       }
-  //       return Math.min(oldProgress);
-  //     });
-  //   });
-
-  //   return () => {
-  //     getStore();
-  //     clearInterval(timer);
-  //   };
-  // }, []);
+  // const onSubmit = async (values: IFormInput) => {
+  //   dispatch(updateStoreProfile(values)).then(
+  //     (res) => {
+  //       const responseData = res.payload;
+  //       // if (responseData?.status === 200) {
+  //       router.push(
+  //         {
+  //           pathname: '/Name',
+  //           query: {
+  //             name: values.Name,
+  //             PhoneNumber: values.PhoneNumber,
+  //             ProfilePictureUrl: values.ProfilePictureUrl,
+  //           },
+  //         },
+  //         '/Name'
+  //       );
+  //     }
+  //     // }
+  //   );
+  // };
+  useEffect(() => {
+    dispatch(getStoreProfile({}));
+  }, []);
 
   return (
     <LayoutStoreProfile>
@@ -42,7 +57,7 @@ const AboutYourBusiness = () => {
       <p className="mb-[48px] text-center text-[14px] text-mango-text-gray-2">
         Tell us about your salon
       </p>
-      <form className="mt-6 flex flex-wrap justify-center gap-2">
+      <form className="mt-6 flex flex-wrap justify-center gap-2" noValidate>
         <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full bg-[#F2F2F5] border border-{#CBCBDB}">
           {selectedImage ? (
             <Image
@@ -89,6 +104,7 @@ const AboutYourBusiness = () => {
             label="Your salon name"
             variant="outlined"
             className="mb-2 w-full"
+            {...register('Name', {})}
             sx={{
               '& .MuiInputBase-root.Mui-focused': {
                 '& > fieldset': {
@@ -105,6 +121,7 @@ const AboutYourBusiness = () => {
           <TextField
             disabled
             className="w-[128px] bg-[#F2F2F2]"
+            {...register('PhoneNumber', {})}
             sx={{
               '& .MuiInputBase-input.Mui-disabled': {
                 WebkitTextFillColor: '#404044',
@@ -154,14 +171,15 @@ const AboutYourBusiness = () => {
             />
           </div>
         </div>
+        <Button
+          className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-[#00ADC3]"
+          variant="contained"
+          type="submit"
+          onClick={() => handleForwardProgressSetupStore(dispatch)}
+        >
+          CONTINUE
+        </Button>
       </form>
-      <Button
-        className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-[#00ADC3]"
-        variant="contained"
-        onClick={() => handleForwardProgressSetupStore(dispatch)}
-      >
-        CONTINUE
-      </Button>
     </LayoutStoreProfile>
   );
 };

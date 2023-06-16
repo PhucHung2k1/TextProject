@@ -2,7 +2,7 @@ import type { IStoreProfile } from '@/services/store.service/store.interface';
 import { createSlice } from '@reduxjs/toolkit';
 
 type IInitialState = {
-  StoreProfile: IStoreProfile;
+  StoreProfile: IStoreProfile[];
   progressSetupStore: number;
   prevProgress: number;
 };
