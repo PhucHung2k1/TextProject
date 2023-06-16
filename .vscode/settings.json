@@ -6,7 +6,10 @@
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": ["source.addMissingImports", "source.fixAll.eslint"],
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.fixAll.eslint"
+  ],
   "jest.autoRun": {
     "watch": false // Start the jest with the watch flag
     // "onStartup": ["all-tests"] // Run all tests upon project launch
@@ -25,5 +28,8 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "prettier.singleQuote": true // Don't run prettier for files listed in .gitignore
+  "prettier.singleQuote": true,
+  "[postcss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  } // Don't run prettier for files listed in .gitignore
 }

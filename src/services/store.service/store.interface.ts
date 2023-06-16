@@ -9,3 +9,8 @@ export interface IStoreProfile {
   ExpiresIn: number;
   RefreshTokenExpiresIn: number;
 }
+
+export interface IConfigStore {
+  step: number,
+  component: React.ReactNode
+}

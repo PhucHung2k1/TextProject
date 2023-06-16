@@ -7,6 +7,7 @@ import customerRoleSlice from './customerRole/customerRoleSlice';
 import permissionSlice from './permission/permissionSlice';
 import customerSlice from './customer/customerSlice';
 import accountSlice from './account/accountSlice';
+import storeSlice from './store/storeSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +17,7 @@ export const store = configureStore({
     customerRoleSlice,
     permissionSlice,
     customerSlice,
-    accountSlice,
+    accountSlice, storeSlice
   },
 });
 

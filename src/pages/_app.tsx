@@ -1,4 +1,5 @@
 import '../styles/global.css';
+import '../styles/mapbox.css';
 import 'animate.css';
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';

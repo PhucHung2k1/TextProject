@@ -8,38 +8,35 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import debounce from 'lodash.debounce';
 import Link from 'next/link';
-import { LinearProgressWithLabel } from './LinearProgressWithLabel';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+
+import { IMapBoxPlace } from '@/services/map.services/map.interface';
+import { MapServices } from '@/services/map.services/map.services';
 import { Search } from '@mui/icons-material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { LinearProgressWithLabel } from './LinearProgressWithLabel';
+import MapboxMap from '@/common/MapBoxMap';
+import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
+import { useAppDispatch } from '@/store/hook';
 
 const ConfirmYourAddress = () => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const [valueSearchMap, setValueSearchMap] = useState<string>('');
-  const [listResultAddress, setListResultAddress] = useState<string[]>(['']);
-  const [open, setOpen] = useState<boolean>(false);
+  const [listPlace, setListPlace] = useState<IMapBoxPlace[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const handleSearchMap = (value: string) => {
-    setValueSearchMap(value);
-  };
-  useEffect(() => {
-    if (valueSearchMap.length > 0) {
-      setLoading(true);
-      // For testing purposes
-      setTimeout(() => {
-        setLoading(false);
-        setListResultAddress([
-          '142 White Ash Dr, Southaven, MS 38671, US.',
-          '142 White Ash Dr, Southaven, MS 38672, US.',
-          '142 White Ash Dr, Southaven, MS 38673, US.',
-        ]);
-      }, 1500);
-    }
-  }, [valueSearchMap]);
+
+  const handleSearchMap = debounce(async (value: string) => {
+    const mapServices = new MapServices();
+
+    mapServices.findAddressAndPlaces(value).then((res) => {
+      setListPlace(res);
+    });
+  }, 800);
 
   return (
     <div className="flex justify-center pt-[90px] ">
@@ -66,36 +63,19 @@ const ConfirmYourAddress = () => {
           {/*  */}
           <div className="mt-10">
             <Autocomplete
-              options={listResultAddress}
-              freeSolo
-              open={open}
-              onOpen={() => {
-                setOpen(true);
-              }}
-              onClose={() => {
-                setOpen(false);
-              }}
-              value={valueSearchMap}
+              options={listPlace}
+              getOptionLabel={(option) => option.place_name}
+              filterOptions={(options, state) => options}
               onInputChange={(_e, value) => handleSearchMap(value)}
               noOptionsText="No locations"
               loading={loading}
               renderOption={(props, option) => {
                 return (
                   <li {...props}>
-                    <Grid container alignItems="center">
-                      <Grid item sx={{ display: 'flex', width: 44 }}>
-                        <LocationOnIcon sx={{ color: 'text.secondary' }} />
-                      </Grid>
-                      <Grid item>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          color="text.secondary"
-                        >
-                          {option}
-                        </Typography>
-                      </Grid>
-                    </Grid>
+                    <div className="flex flex-row px-[20] py-[22]">
+                      <LocationOnIcon sx={{ color: 'text.secondary' }} />
+                      {option.place_name}
+                    </div>
                   </li>
                 );
               }}
@@ -127,13 +107,18 @@ const ConfirmYourAddress = () => {
             />
           </div>
           <div className="mt-5 flex h-56 w-full items-center justify-center border border-mango-text-gray-1">
-            Google Map
+            <MapboxMap />
           </div>
 
           <Button
             className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize "
             variant="contained"
-            disabled
+            //
+            onClick={() => {
+              dispatch(setModalContentMUI(<p>asda</p>));
+
+              dispatch(showModalMUI());
+            }}
           >
             CONTINUE
           </Button>
