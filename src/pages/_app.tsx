@@ -8,7 +8,6 @@ import { Router } from 'next/router';
 import { SessionProvider } from 'next-auth/react';
 import ToastContainer from '@/components/Toast';
 import PrevLoader from '@/components/Loading/PrevLoader';
-import ModalContainer from '@/components/Modal';
 import type { IMetaSEOProps } from '@/components/MetaSEO';
 import MetaSEO from '@/components/MetaSEO';
 import ModalMUIContainer from '@/components/Modal/ModalMUI';
@@ -47,7 +46,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <main>
           <Component {...pageProps} />
           <PrevLoader />
-          <ModalContainer />
           <ModalMUIContainer />
           <ToastContainer />
         </main>

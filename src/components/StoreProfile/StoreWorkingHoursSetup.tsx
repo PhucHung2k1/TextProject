@@ -9,6 +9,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
+import CustomModal from '../Modal';
+import EditBusinessHours from './EditBusinessHours';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -57,14 +59,18 @@ const StoreWorkingHoursSetup: NextPage = () => {
                   {item.workTime}
                 </div>
                 {item.workTime !== 'Closed' ? (
-                  <Image
-                    src="/chevronrightfilled.svg"
-                    width="20"
-                    height="20"
-                    alt=""
-                    objectFit="cover"
-                    className="hidden overflow-hidden"
-                    onClick={editBusinessHoursRouter}
+                  <CustomModal
+                    clickComponent={
+                      <Image
+                        src="/chevronrightfilled.svg"
+                        width="20"
+                        height="20"
+                        alt=""
+                        objectFit="cover"
+                        className="hidden overflow-hidden cursor-pointer"
+                      />
+                    }
+                    contentModal={<EditBusinessHours />}
                   />
                 ) : (
                   ''
