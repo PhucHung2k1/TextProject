@@ -7,7 +7,16 @@ type IInitialState = {
   invitationList: IInvitationListData[];
 };
 const initialState = {
-  listRole: [],
+  listRole: [
+    {
+      Name: '',
+      Active: true,
+      IsSystemRole: true,
+      SystemName: '',
+      Permissions: [],
+      Id: '',
+    },
+  ],
   invitationList: [],
 } as IInitialState;
 

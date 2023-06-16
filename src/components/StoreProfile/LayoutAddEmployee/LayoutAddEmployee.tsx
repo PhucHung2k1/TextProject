@@ -44,7 +44,7 @@ const LayoutAddMember: React.FC<LayoutAddMemberProps> = ({
 
           <p className="mx-auto text-[32px] font-semibold">{title}</p>
         </div>
-        q<p className="text-mango-text-gray-2"> {subTitle}</p>
+        <p className="text-mango-text-gray-2"> {subTitle}</p>
       </div>
 
       <div className="w-full flex-1 ">{children}</div>

@@ -68,9 +68,8 @@ export const sendInvitation = createAsyncThunk(
           'success'
         );
       }
-
       if (error) {
-        showToastMessage(dispatch, 'Something went wrong', 'error');
+        showToastMessage(dispatch, error?.data.extendData[0]?.Message, 'error');
       }
     } catch (err: any) {
       // showToastMessage(dispatch, err?.extendData[0]?.Message, 'error');
