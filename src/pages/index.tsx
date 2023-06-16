@@ -7,28 +7,44 @@ import { AppConfig } from '@/utils/AppConfig';
 import Cookies from 'js-cookie';
 import { useAppSelector, useAppDispatch } from '@/store/hook';
 import { useEffect } from 'react';
-import { getCustomerProfile } from '@/store/customer/customerAction';
+import { getStoreCustomer } from '@/store/store/storeAction';
+import { useRouter } from 'next/router';
+import { getCustomerProfile, getMyRole } from '@/store/customer/customerAction';
 
 const Index = () => {
   const { data } = useSession();
+  const router = useRouter();
 
   const showLoading = useAppSelector((state) => state.loadingSlice.isLoading);
 
   const dispatch = useAppDispatch();
-  const customerProfile = useAppSelector(
-    (state) => state.customerSlice.customerProfile
-  );
+  useEffect(() => {
+    dispatch(getStoreCustomer({}));
+  }, []);
+
+  const dataMyRole = useAppSelector((state) => state.customerSlice.dataMyRole);
 
   const handleSignOut = () => {
     Cookies.remove('auth-token');
     Cookies.remove('refresh-token');
+    Cookies.remove('store-customer');
+
     signOut();
   };
   useEffect(() => {
     if (data?.user?.AccessToken) {
+      dispatch(getMyRole({}));
       dispatch(getCustomerProfile({}));
     }
   }, [data?.user?.AccessToken]);
+
+  useEffect(() => {
+    const hasStoreCustomerCookie = Cookies.get('store-customer') !== undefined;
+
+    if (!hasStoreCustomerCookie) {
+      router.push('/select-store');
+    }
+  }, []);
 
   return showLoading ? (
     <div className="flex h-screen w-screen items-center justify-center bg-sky-100">
@@ -64,9 +80,11 @@ const Index = () => {
           {/* <Link href="/book">Move to book</Link> */}
           <h1>
             Customers Roles{' '}
-            {customerProfile?.CustomerRoles?.length === 0
+            {dataMyRole?.length === 0
               ? 'empty'
-              : customerProfile?.CustomerRoles?.length}
+              : dataMyRole?.map((item) => {
+                  return `${item.Name}, `;
+                })}
           </h1>
         </div>
       </Main>

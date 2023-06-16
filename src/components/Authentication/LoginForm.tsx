@@ -25,8 +25,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { useForm } from 'react-hook-form';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
+import { useRouter } from 'next/router';
 
 export default function LoginForm() {
+  const router = useRouter();
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -83,6 +85,7 @@ export default function LoginForm() {
               dispatch(setTypeAlertToast('success'));
               dispatch(setMessageToast('Login Success!'));
               dispatch(showToast());
+              router.push('/select-store');
             }
           }
         });
