@@ -7,7 +7,7 @@ type IInitialState = {
   prevProgress: number;
 };
 const initialState = {
-  StoreProfile: {},
+  StoreProfile: [],
   progressSetupStore: 1,
   prevProgress: 1,
 } as IInitialState;
