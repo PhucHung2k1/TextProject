@@ -38,6 +38,22 @@ const Main = (props: IMainProps) => (
                 Permission
               </Link>
             </li>
+            <li className="mr-6">
+              <Link
+                href="/manage-role"
+                className="border-none text-gray-700 hover:text-gray-900"
+              >
+                Manage Role
+              </Link>
+            </li>
+            <li className="mr-6">
+              <Link
+                href="/store-profile"
+                className="border-none text-gray-700 hover:text-gray-900"
+              >
+                Store Profile
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>

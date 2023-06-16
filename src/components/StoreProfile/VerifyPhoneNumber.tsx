@@ -134,7 +134,7 @@ const VerifyPhoneNumber = () => {
   return (
     <div className="flex justify-center pt-[90px]">
       <div className=" w-[568px] rounded-2xl bg-white shadow-md">
-        <LinearProgressWithLabel value={30} />
+        <LinearProgressWithLabel />
         <div className="px-8 pb-8 pt-12">
           <div className="text-center">
             <p className=" text-[32px] font-semibold">
