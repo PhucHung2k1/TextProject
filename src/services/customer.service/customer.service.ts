@@ -6,13 +6,14 @@ import type {
   ISendInvitationPayload,
 } from './customer.interface';
 
+const GET_MY_ROLE = 'customer/my-role';
 const GET_CUSTOMER_PROFILE = 'customer/profile';
 const SEND_INVITATION = 'customer/send-invitation';
 const CONFIRM_INVITATION = 'customer/confirm-invitation';
 const INVITATION_LIST = 'customer/invitation-list';
 export class Customer {
-  public getCustomerProfile = async (): Promise<IResponse> => {
-    const response: IResponse = await apiGet(GET_CUSTOMER_PROFILE).catch(
+  public getMyRole = async (): Promise<IResponse> => {
+    const response: IResponse = await apiGet(GET_MY_ROLE).catch(
       catchAxiosError
     );
     return response;
@@ -38,6 +39,13 @@ export class Customer {
 
   public invitationList = async (): Promise<IResponse> => {
     const response: IResponse = await apiGet(INVITATION_LIST).catch(
+      catchAxiosError
+    );
+    return response;
+  };
+
+  public getCustomerProfile = async (): Promise<IResponse> => {
+    const response: IResponse = await apiGet(GET_CUSTOMER_PROFILE).catch(
       catchAxiosError
     );
     return response;

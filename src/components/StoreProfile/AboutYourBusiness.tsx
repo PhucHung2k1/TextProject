@@ -2,10 +2,11 @@ import { Button, TextField, InputAdornment, Divider } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
-import { getStoreProfile } from '@/store/store/storeAction';
+
 import { useForm } from 'react-hook-form';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
 import { handleForwardProgressSetupStore } from './helper';
+import { getStoreCustomer } from '@/store/store/storeAction';
 
 interface IFormInput {
   ProfilePictureUrl: string;
@@ -15,8 +16,14 @@ interface IFormInput {
 
 const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
-  const storeList = useAppSelector((state) => state.storeSlice.StoreProfile);
-  console.log(storeList);
+  const storeCustomer = useAppSelector(
+    (state) => state.storeSlice.storeCustomer
+  );
+  // eslint-disable-next-line no-console
+  console.log(
+    '🚀 ~ file: AboutYourBusiness.tsx:22 ~ AboutYourBusiness ~ storeCustomer:',
+    storeCustomer
+  );
   const [selectedImage, setSelectedImage] = useState<Blob>();
   // const [progress, setProgress] = useState<number>(0);
   const { register } = useForm<IFormInput>();
@@ -46,7 +53,7 @@ const AboutYourBusiness = () => {
   //   );
   // };
   useEffect(() => {
-    dispatch(getStoreProfile({}));
+    dispatch(getStoreCustomer({}));
   }, []);
 
   return (
