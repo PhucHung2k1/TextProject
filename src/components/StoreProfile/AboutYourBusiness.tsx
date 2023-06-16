@@ -16,27 +16,29 @@ const AboutYourBusiness = () => {
     (state) => state.storeSlice.StoreProfile[0]?.Id
   );
   const [selectedImage, setSelectedImage] = useState<any>();
+  const [avatarImage, setAvatarImage] = useState<any>();
   const [formStore, setFormStore] = useState({
     Name: '',
     PhoneNumber: '',
     ProfilePictureUrl: '',
   });
-
   const uploadImage = async (imageFile: File): Promise<void> => {
     if (imageFile) {
       try {
         const formData = new FormData();
         formData.append('File', imageFile);
-        apiPostPhoto(POST_IMAGE, formData);
+        const res = await apiPostPhoto(POST_IMAGE, formData);
+        return res.data;
       } catch (error) {
         console.error(error);
       }
     }
   };
-  const handleFileImage = (e: any) => {
+  const handleFileImage = async (e: any) => {
     const file = e.target.files[0];
     setSelectedImage(file);
-    uploadImage(file);
+    const responsive = await uploadImage(file);
+    setAvatarImage(responsive);
   };
   const handleFieldChange = (e: any) => {
     setFormStore({
@@ -53,6 +55,11 @@ const AboutYourBusiness = () => {
       const patchData = [
         { op: 'replace', path: '/Name', value: formStore.Name },
         { op: 'replace', path: '/PhoneNumber', value: formStore.PhoneNumber },
+        {
+          op: 'replace',
+          path: '/ProfilePictureUrl',
+          value: avatarImage.OriginalPublishUrl,
+        },
       ];
 
       await storeAPI.updateStore(storeId, patchData);
