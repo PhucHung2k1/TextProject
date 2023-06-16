@@ -3,48 +3,63 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { getStoreProfile } from '@/store/store/storeAction';
-import { useForm } from 'react-hook-form';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
 import { handleForwardProgressSetupStore } from './helper';
+import { apiPostPhoto } from '@/utils/axios/instance';
+import { Store } from '@/services/store.service/store.service';
 
-interface IFormInput {
-  ProfilePictureUrl: string;
-  Name: string;
-  PhoneNumber: string;
-}
+const POST_IMAGE = '/file/upload-picture';
 
 const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
-  const storeList = useAppSelector((state) => state.storeSlice.StoreProfile);
-  console.log(storeList);
-  const [selectedImage, setSelectedImage] = useState<Blob>();
-  // const [progress, setProgress] = useState<number>(0);
-  const { register } = useForm<IFormInput>();
-  const imageChange = (e: any) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0]);
+  const storeId: any = useAppSelector(
+    (state) => state.storeSlice.StoreProfile[0]?.Id
+  );
+  const [selectedImage, setSelectedImage] = useState<any>();
+  const [formStore, setFormStore] = useState({
+    Name: '',
+    PhoneNumber: '',
+    ProfilePictureUrl: '',
+  });
+
+  const uploadImage = async (imageFile: File): Promise<void> => {
+    if (imageFile) {
+      try {
+        const formData = new FormData();
+        formData.append('File', imageFile);
+        apiPostPhoto(POST_IMAGE, formData);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
-  // const onSubmit = async (values: IFormInput) => {
-  //   dispatch(updateStoreProfile(values)).then(
-  //     (res) => {
-  //       const responseData = res.payload;
-  //       // if (responseData?.status === 200) {
-  //       router.push(
-  //         {
-  //           pathname: '/Name',
-  //           query: {
-  //             name: values.Name,
-  //             PhoneNumber: values.PhoneNumber,
-  //             ProfilePictureUrl: values.ProfilePictureUrl,
-  //           },
-  //         },
-  //         '/Name'
-  //       );
-  //     }
-  //     // }
-  //   );
-  // };
+  const handleFileImage = (e: any) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+    uploadImage(file);
+  };
+  const handleFieldChange = (e: any) => {
+    setFormStore({
+      ...formStore,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const submitForm = async (e: any) => {
+    e.preventDefault();
+    const storeAPI = new Store();
+
+    try {
+      const patchData = [
+        { op: 'replace', path: '/Name', value: formStore.Name },
+        { op: 'replace', path: '/PhoneNumber', value: formStore.PhoneNumber },
+      ];
+
+      await storeAPI.updateStore(storeId, patchData);
+      handleForwardProgressSetupStore(dispatch);
+    } catch (error) {}
+  };
+
   useEffect(() => {
     dispatch(getStoreProfile({}));
   }, []);
@@ -57,7 +72,11 @@ const AboutYourBusiness = () => {
       <p className="mb-[48px] text-center text-[14px] text-mango-text-gray-2">
         Tell us about your salon
       </p>
-      <form className="mt-6 flex flex-wrap justify-center gap-2" noValidate>
+      <form
+        className="mt-6 flex flex-wrap justify-center gap-2"
+        noValidate
+        onSubmit={submitForm}
+      >
         <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full bg-[#F2F2F5] border border-{#CBCBDB}">
           {selectedImage ? (
             <Image
@@ -82,7 +101,7 @@ const AboutYourBusiness = () => {
           <input
             className="absolute bottom-0 right-0 z-10 mb-0 h-[185px] w-[185px] cursor-pointer opacity-0"
             accept="image/*"
-            onChange={imageChange}
+            onChange={handleFileImage}
             type="file"
             id="imageUpload"
           />
@@ -104,7 +123,9 @@ const AboutYourBusiness = () => {
             label="Your salon name"
             variant="outlined"
             className="mb-2 w-full"
-            {...register('Name', {})}
+            value={formStore.Name}
+            name="Name"
+            onChange={handleFieldChange}
             sx={{
               '& .MuiInputBase-root.Mui-focused': {
                 '& > fieldset': {
@@ -121,7 +142,6 @@ const AboutYourBusiness = () => {
           <TextField
             disabled
             className="w-[128px] bg-[#F2F2F2]"
-            {...register('PhoneNumber', {})}
             sx={{
               '& .MuiInputBase-input.Mui-disabled': {
                 WebkitTextFillColor: '#404044',
@@ -164,6 +184,9 @@ const AboutYourBusiness = () => {
                   color: '#00BDD6',
                 },
               }}
+              value={formStore.PhoneNumber}
+              onChange={handleFieldChange}
+              name="PhoneNumber"
               id="outlined-basic"
               label="Phone number"
               variant="outlined"
@@ -175,7 +198,7 @@ const AboutYourBusiness = () => {
           className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-[#00ADC3]"
           variant="contained"
           type="submit"
-          onClick={() => handleForwardProgressSetupStore(dispatch)}
+          // onClick={() => handleForwardProgressSetupStore(dispatch)}
         >
           CONTINUE
         </Button>
