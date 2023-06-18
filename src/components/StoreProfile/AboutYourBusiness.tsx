@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Button,
   TextField,
@@ -5,11 +6,16 @@ import {
   Divider,
   FormControl,
 } from '@mui/material';
+=======
+import { Button, TextField, InputAdornment, Divider, Box } from '@mui/material';
+>>>>>>> 1c13509ef9919f2453f5362d056fe92b17e39f8c
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+
 import { useAppDispatch, useAppSelector } from '@/store/hook';
-import { getStoreProfile } from '@/store/store/storeAction';
+import { getStoreCustomer } from '@/store/store/storeAction';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
+
 import { handleForwardProgressSetupStore } from './helper';
 import { apiPostPhoto } from '@/utils/axios/instance';
 import { Store } from '@/services/store.service/store.service';
@@ -88,7 +94,7 @@ const AboutYourBusiness = () => {
   };
 
   useEffect(() => {
-    dispatch(getStoreProfile({}));
+    dispatch(getStoreCustomer({}));
   }, []);
 
   return (
@@ -187,15 +193,17 @@ const AboutYourBusiness = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <img
-                    loading="lazy"
-                    width="20"
-                    src="/assets/images/SetupStore/US.png"
-                    alt=""
-                    className="mr-1"
-                  />
+                  <Box className="h-5 w-5">
+                    <Image
+                      loading="lazy"
+                      width={20}
+                      height={20}
+                      src="/assets/images/SetupStore/US.png"
+                      alt=""
+                    />
+                  </Box>
                   <Divider
-                    className="mr-10"
+                    className="mr-4"
                     sx={{ height: 28, m: 0.5 }}
                     orientation="vertical"
                   />
@@ -237,7 +245,7 @@ const AboutYourBusiness = () => {
           className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-[#00ADC3]"
           variant="contained"
           type="submit"
-          // onClick={() => handleForwardProgressSetupStore(dispatch)}
+          onClick={() => handleForwardProgressSetupStore(dispatch)}
         >
           CONTINUE
         </Button>
