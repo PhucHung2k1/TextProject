@@ -24,8 +24,11 @@ const StoreSlice = createSlice({
     setStoreProfile: (state: any, action: any) => {
       state.StoreProfile = action.payload;
     },
-
-    setIncreaseProgressSetupStore: (state: any) => {
+    setResetProgressSetupStore: (state) => {
+      state.prevProgress = 0;
+      state.progressSetupStore = 1;
+    },
+    setIncreaseProgressSetupStore: (state) => {
       state.progressSetupStore += 1;
     },
     setDecreaseProgressSetupStore: (state: any) => {
@@ -43,6 +46,7 @@ const StoreSlice = createSlice({
 export const {
   setIncreaseProgressSetupStore,
   setDecreaseProgressSetupStore,
+  setResetProgressSetupStore,
   setPrevProgress,
   setStoreCustomer,
 } = StoreSlice.actions;

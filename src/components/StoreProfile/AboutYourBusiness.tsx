@@ -8,17 +8,17 @@ import {
 } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { getStoreCustomer } from '@/store/store/storeAction';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
-
 import { handleForwardProgressSetupStore } from './helper';
 import { apiPostPhoto } from '@/utils/axios/instance';
 import { Store } from '@/services/store.service/store.service';
-const POST_IMAGE = '/file/upload-picture';
 import type { IStoreProfile } from '@/services/store.service/store.interface';
 import { useForm } from 'react-hook-form';
+
+const POST_IMAGE = '/file/upload-picture';
+
 const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
   const storeId: any = useAppSelector(
@@ -62,10 +62,8 @@ const AboutYourBusiness = () => {
     });
   };
 
-  const submitForm = async (e: any) => {
-    // e.preventDefault();
+  const submitForm = async () => {
     const storeAPI = new Store();
-
     try {
       const patchData = [
         {
