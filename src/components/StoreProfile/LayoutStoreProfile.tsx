@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { LinearProgressWithLabel } from './LinearProgressWithLabel';
 import { Box } from '@mui/material';

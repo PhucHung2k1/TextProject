@@ -50,6 +50,7 @@ export interface IInvitationListData {
   IsAccepted: boolean;
   IsSentMail: boolean;
   CustomerRoleId: string;
+  CustomerRoleName?: string;
   ServiceAndProduct: string;
   PayStructure: string;
   JobTitle: string;

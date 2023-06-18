@@ -1,10 +1,9 @@
-import { Button, TextField, InputAdornment, Divider } from '@mui/material';
+import { Button, TextField, InputAdornment, Divider, Box } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useAppDispatch, useAppSelector } from '@/store/hook';
-
-import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '@/store/hook';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
+import { useForm } from 'react-hook-form';
 import { handleForwardProgressSetupStore } from './helper';
 import { getStoreCustomer } from '@/store/store/storeAction';
 
@@ -16,14 +15,8 @@ interface IFormInput {
 
 const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
-  const storeCustomer = useAppSelector(
-    (state) => state.storeSlice.storeCustomer
-  );
   // eslint-disable-next-line no-console
-  console.log(
-    '🚀 ~ file: AboutYourBusiness.tsx:22 ~ AboutYourBusiness ~ storeCustomer:',
-    storeCustomer
-  );
+
   const [selectedImage, setSelectedImage] = useState<Blob>();
   // const [progress, setProgress] = useState<number>(0);
   const { register } = useForm<IFormInput>();
@@ -142,15 +135,17 @@ const AboutYourBusiness = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <img
-                    loading="lazy"
-                    width="20"
-                    src="/assets/images/SetupStore/US.png"
-                    alt=""
-                    className="mr-1"
-                  />
+                  <Box className="h-5 w-5">
+                    <Image
+                      loading="lazy"
+                      width={20}
+                      height={20}
+                      src="/assets/images/SetupStore/US.png"
+                      alt=""
+                    />
+                  </Box>
                   <Divider
-                    className="mr-10"
+                    className="mr-4"
                     sx={{ height: 28, m: 0.5 }}
                     orientation="vertical"
                   />

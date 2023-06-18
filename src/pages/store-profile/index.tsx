@@ -3,7 +3,7 @@ import { getAllRole } from '@/store/customerRole/customerRoleAction';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { listStepConfigStore } from './listStepConfigStore';
+import { listStepConfigStore } from '../../components/StoreProfile/helper/listStepConfigStore';
 
 const StoreProfile = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   Autocomplete,
+  Box,
   Button,
   CircularProgress,
   Divider,
@@ -12,7 +13,7 @@ import {
   Typography,
   debounce,
 } from '@mui/material';
-
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { emailRegex, phoneNumberRegex } from '@/utils/helper/regex';
 import { clearModalContentMUI, hideModalMUI } from '@/store/modal/modalSlice';
@@ -25,6 +26,7 @@ import type { CountryPhone } from '@/services/common/common.interface';
 import { ErrorMessage } from '@hookform/error-message';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import { Clear, Check, Error } from '@mui/icons-material';
+import { sxTextField } from '@/utils/helper/styles';
 
 interface IFormInput {
   firstName: string;
@@ -39,16 +41,6 @@ interface IFormInput {
   serviceAndProduct: string;
 }
 
-const sxTextField = {
-  '& .MuiInputBase-root.Mui-focused': {
-    '& > fieldset': {
-      borderColor: '#00BDD6',
-    },
-  },
-  '& label.Mui-focused': {
-    color: '#00BDD6',
-  },
-};
 export const AddYourEmployeeModal = () => {
   const dispatch = useAppDispatch();
 
@@ -71,16 +63,17 @@ export const AddYourEmployeeModal = () => {
   const listServiceProduct = useAppSelector(
     (state) => state.commonSlice.lookupData.ProductType
   );
-  const [valueRole, setValueRole] = useState<IAllCustomerRole | any>(
-    listRole[0]
+
+  const [valueRole, setValueRole] = useState<IAllCustomerRole | null>(
+    listRole[0] || null
   );
 
-  const [valueServiceProduct, setValueServiceProduct] = useState<
-    CountryPhone | any
-  >(listPayStructure[0]);
-  const [valuePayStructure, setValuePayStructure] = useState<
-    CountryPhone | any
-  >(listServiceProduct[0]);
+  const [valueServiceProduct, setValueServiceProduct] =
+    useState<CountryPhone | null>(listServiceProduct[0] || null);
+
+  const [valuePayStructure, setValuePayStructure] =
+    useState<CountryPhone | null>(listPayStructure[0] || null);
+
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
       setEmailState((pre) => ({
@@ -118,8 +111,8 @@ export const AddYourEmployeeModal = () => {
       email: values?.email,
       jobTitle: values?.jobTitle,
       customerRoleId: valueRole?.Id || '',
-      payStructure: valuePayStructure?.Value,
-      serviceAndProduct: valueServiceProduct?.Value,
+      payStructure: valuePayStructure?.Value || '',
+      serviceAndProduct: valueServiceProduct?.Value || '',
       isSendInvitation: true,
     };
 
@@ -322,15 +315,17 @@ export const AddYourEmployeeModal = () => {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <img
-                              loading="lazy"
-                              width="20"
-                              src="/assets/images/SetupStore/US.png"
-                              alt=""
-                              className="mr-1"
-                            />
+                            <Box className="h-5 w-5">
+                              <Image
+                                loading="lazy"
+                                width={20}
+                                height={20}
+                                src="/assets/images/SetupStore/US.png"
+                                alt=""
+                              />
+                            </Box>
                             <Divider
-                              className="mr-10"
+                              className="mr-4"
                               sx={{ height: 28, m: 0.5 }}
                               orientation="vertical"
                             />

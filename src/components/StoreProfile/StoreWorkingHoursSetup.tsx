@@ -21,6 +21,7 @@ import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import moment from 'moment';
+import { Clear } from '@mui/icons-material';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const [showEditHours, setShowEditHours] = useState(false);
@@ -159,7 +160,9 @@ const StoreWorkingHoursSetup: NextPage = () => {
           <div className="  text-center">
             <div className="flex items-center justify-center ">
               <ArrowBackIcon
-                onClick={() => handlePreviousProgressSetupStore(dispatch)}
+                onClick={() => {
+                  handlePreviousProgressSetupStore(dispatch);
+                }}
                 className="cursor-pointer text-3xl"
               />
               <p className="mx-auto text-[32px] font-semibold text-text-title">
@@ -229,14 +232,9 @@ const StoreWorkingHoursSetup: NextPage = () => {
         <>
           <div>
             <div className="flex items-center justify-center ">
-              <Image
-                src="/closefilled.svg"
-                width="20"
-                height="20"
-                alt=""
-                objectFit="cover"
-                className="hidden cursor-pointer overflow-hidden"
+              <Clear
                 onClick={handleShowEditHours}
+                className="cursor-pointer text-3xl"
               />
               <p className="mx-auto text-center text-[32px] font-semibold text-text-title">
                 Edit business hours

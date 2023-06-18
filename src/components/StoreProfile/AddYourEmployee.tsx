@@ -13,7 +13,8 @@ const AddYourEmployee = () => {
 
   const invitationListData = useAppSelector(
     (state) => state.customerRoleSlice.invitationList
-  ).filter((item) => item.IsAccepted);
+  );
+  // .filter((item) => item.IsAccepted);
   const isEmptyInvitationList = invitationListData.length === 0;
   const handleAddEmployee = async () => {
     dispatch(setModalContentMUI(<AddYourEmployeeModal />));
@@ -31,7 +32,7 @@ const AddYourEmployee = () => {
         skip={isEmptyInvitationList}
         disableBtn={isEmptyInvitationList}
       >
-        <div className=" my-5 flex min-h-[160px] w-full ">
+        <div className=" my-5 flex w-full ">
           <Box
             className={`flex w-full items-center justify-center rounded-lg  !border-border-light  ${
               isEmptyInvitationList ? '!border !bg-blue-gray' : '!border-0 '
@@ -49,7 +50,10 @@ const AddYourEmployee = () => {
                 Add employee
               </Button>
             ) : (
-              <InvitationListComponent handleAddEmployee={handleAddEmployee} />
+              <InvitationListComponent
+                invitationListData={invitationListData}
+                handleAddEmployee={handleAddEmployee}
+              />
             )}
           </Box>
         </div>

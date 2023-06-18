@@ -1,5 +1,7 @@
+import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import * as React from 'react';
+
 interface ICustomModal {
   clickComponent: React.ReactNode;
   contentModal: React.ReactNode;
@@ -16,7 +18,7 @@ export default function CustomModal({
   return (
     <div>
       {clickComponent ? (
-        <div onClick={handleOpen}>{clickComponent}</div>
+        <Box onClick={handleOpen}>{clickComponent}</Box>
       ) : undefined}
 
       <Modal
@@ -25,7 +27,7 @@ export default function CustomModal({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <>{contentModal ? contentModal : undefined}</>
+        <>{contentModal || undefined}</>
       </Modal>
     </div>
   );
