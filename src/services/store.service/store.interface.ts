@@ -18,6 +18,7 @@ export interface IStoreCustomer {
   Id: string;
   CreateDate: Date;
   LastModifiedDate: Date;
+  ProfilePictureUrl: string;
 }
 export interface IConfigStore {
   step: number;
