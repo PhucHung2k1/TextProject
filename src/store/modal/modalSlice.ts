@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type React from 'react';
 
 type ModalModel = {
   isShowModal: boolean;
@@ -11,7 +12,7 @@ const initialState = {
   isShowModal: false,
   modalContent: null,
   isShowModalMUI: false,
-  modalContentMUI: null,
+  modalContentMUI: undefined,
 } as ModalModel;
 
 const modalSlice = createSlice({
@@ -40,7 +41,7 @@ const modalSlice = createSlice({
       state.modalContentMUI = action.payload;
     },
     clearModalContentMUI: (state) => {
-      state.modalContentMUI = null;
+      state.modalContentMUI = undefined;
     },
   },
 });

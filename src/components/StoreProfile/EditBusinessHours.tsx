@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import type { NextPage } from 'next';
 import { useState } from 'react';
+import { Clear } from '@mui/icons-material';
 
 const EditBusinessHours: NextPage = () => {
   const [startHour, setStartHour] = useState('');
@@ -54,20 +55,16 @@ const EditBusinessHours: NextPage = () => {
     setForms(forms.filter((form) => form.id !== formId));
   };
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-mango-gray-light-2 bg-cover bg-center bg-no-repeat ">
+    <div className="flex h-2/3 w-2/3 items-center justify-center bg-mango-gray-light-2 bg-cover bg-center bg-no-repeat ">
       <div className="flex min-h-[70%] w-[35%] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-6 py-5">
         {/* <div className="absolute left-[0px] top-[0px]  h-4 w-full rounded-t-xl bg-primary-states-hover" />
         <div className="absolute left-[0px] top-[0px] h-4 w-60 rounded-t-xl [background:linear-gradient(90deg,_#80dfeb_68.23%,_rgba(255,_255,_255,_0.52)_99.99%,_rgba(0,_240,_255,_0))]" /> */}
         <div className=" mt-12 w-[90%]">
           <div className="flex items-center justify-center ">
-            <img
-              className="cursor-pointer text-3xl"
-              src="/closefilled.svg"
-              alt=""
-            />
+            <Clear className="cursor-pointer text-3xl" />
 
             <p className="mx-auto text-center text-[32px] font-semibold text-text-title">
-              Edit business hours
+              Edit business hoursasd
             </p>
           </div>
 

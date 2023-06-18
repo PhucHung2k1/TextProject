@@ -8,6 +8,7 @@ import permissionSlice from './permission/permissionSlice';
 import customerSlice from './customer/customerSlice';
 import accountSlice from './account/accountSlice';
 import storeSlice from './store/storeSlice';
+import commonSlice from './common/commonSlice';
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     customerSlice,
     accountSlice,
     storeSlice,
+    commonSlice,
   },
 });
 

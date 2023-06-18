@@ -1,7 +1,13 @@
 import Image from 'next/image';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
+import { useRouter } from 'next/router';
+import { Button } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { handleResetProgressSetupStore } from './helper';
 
 const Congratulations = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   return (
     <LayoutStoreProfile>
       <div className="flex flex-col items-center gap-8 px-8 pb-8 pt-12">
@@ -32,9 +38,16 @@ const Congratulations = () => {
           >
             Contact mango
           </div>
-          <div className="flex h-12 w-[45%] items-center justify-center rounded bg-primary-main text-base font-bold uppercase text-white">
+          <Button
+            variant="contained"
+            onClick={() => {
+              router.push('/');
+              handleResetProgressSetupStore(dispatch);
+            }}
+            className="flex h-12 w-[45%] items-center justify-center rounded bg-primary-main text-base font-bold uppercase text-white !shadow-none hover:!bg-primary-main hover:!opacity-80"
+          >
             Explore
-          </div>
+          </Button>
         </div>
       </div>
     </LayoutStoreProfile>

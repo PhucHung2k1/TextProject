@@ -2,6 +2,7 @@ import type { AxiosError } from 'axios';
 
 export type ErrorResponse = {
   headers: any;
+  data: any;
   message: string;
   status: number;
 };
@@ -9,6 +10,7 @@ export type ErrorResponse = {
 export function catchAxiosError(err: AxiosError) {
   const error = {
     headers: null,
+    data: err.response?.data,
     message:
       'Something happened in setting up the request that triggered an Error',
     status: null,

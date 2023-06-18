@@ -3,6 +3,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button } from '@mui/material';
 import { ConfigurationSetting } from './ConfigurationSetting';
+import Image from 'next/image';
 
 export const SalonSettingComponent = () => {
   const [isClosedSlideBar, setIsClosedSlideBar] = useState<boolean>(true);
@@ -71,9 +72,11 @@ export const SalonSettingComponent = () => {
             } flex w-full cursor-pointer items-center rounded-[5px] p-2`}
             key={item.id}
             startIcon={
-              <img
+              <Image
                 src={item.selected ? item.image : item.image1}
                 className={`h-6 ${!isClosedSlideBar && 'm-auto'} `}
+                width={24}
+                height={24}
                 alt="logo"
               />
             }
