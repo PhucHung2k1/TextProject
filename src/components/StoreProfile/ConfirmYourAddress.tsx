@@ -12,7 +12,6 @@ import MapboxMap from '@/common/MapBox/MapBoxMap';
 import type { IMapBoxPlace } from '@/services/map.services/map.interface';
 import { MapServices } from '@/services/map.services/map.services';
 import { useAppDispatch } from '@/store/hook';
-import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
 import { Search } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -21,7 +20,11 @@ import { useRouter } from 'next/router';
 import type { SyntheticEvent } from 'react';
 import { useState } from 'react';
 import type { LngLat } from 'react-map-gl';
-import { LinearProgressWithLabel } from './LinearProgressWithLabel';
+import { LayoutStoreProfile } from './LayoutStoreProfile';
+import {
+  handleForwardProgressSetupStore,
+  handlePreviousProgressSetupStore,
+} from './helper';
 
 const ConfirmYourAddress = () => {
   const dispatch = useAppDispatch();
@@ -131,9 +134,8 @@ const ConfirmYourAddress = () => {
             className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize "
             variant="contained"
             //
-            onClick={() => {
-              onClick={() => handleForwardProgressSetupStore(dispatch)}
-            }}
+
+            onClick={() => handleForwardProgressSetupStore(dispatch)}
           >
             CONTINUE
           </Button>
