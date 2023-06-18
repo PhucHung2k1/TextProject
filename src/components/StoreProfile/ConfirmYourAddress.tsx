@@ -3,40 +3,45 @@ import {
   Autocomplete,
   Button,
   CircularProgress,
-  Grid,
   InputAdornment,
   TextField,
-  Typography,
 } from '@mui/material';
 import debounce from 'lodash.debounce';
 import Link from 'next/link';
-import Image from 'next/image';
 
+import MapboxMap from '@/common/MapBox/MapBoxMap';
 import { IMapBoxPlace } from '@/services/map.services/map.interface';
 import { MapServices } from '@/services/map.services/map.services';
+import { useAppDispatch } from '@/store/hook';
+import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
 import { Search } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import mapboxgl from 'mapbox-gl';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
+import { LngLat } from 'react-map-gl';
 import { LinearProgressWithLabel } from './LinearProgressWithLabel';
-import MapboxMap from '@/common/MapBoxMap';
-import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
-import { useAppDispatch } from '@/store/hook';
 
 const ConfirmYourAddress = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [yourAddress, setYourAddress] = useState<IMapBoxPlace | null>(null);
   const [listPlace, setListPlace] = useState<IMapBoxPlace[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [marker, setMarkers] = useState<LngLat>();
 
-  const handleSearchMap = debounce(async (value: string) => {
-    const mapServices = new MapServices();
-
-    mapServices.findAddressAndPlaces(value).then((res) => {
-      setListPlace(res);
-    });
-  }, 800);
+  const handleSearchMap = debounce(
+    async (value: string, event?: SyntheticEvent<Element, Event>) => {
+      if (event) {
+        const mapServices = new MapServices();
+        mapServices.findAddressAndPlaces(value).then((res) => {
+          setListPlace(res);
+        });
+      }
+    },
+    800
+  );
 
   return (
     <div className="flex justify-center pt-[90px] ">
@@ -63,10 +68,25 @@ const ConfirmYourAddress = () => {
           {/*  */}
           <div className="mt-10">
             <Autocomplete
+              value={yourAddress}
+              onChange={(event, value) => {
+                if (
+                  value &&
+                  value.geometry &&
+                  value.geometry.coordinates &&
+                  typeof value.geometry.coordinates[0] === 'number' &&
+                  typeof value.geometry.coordinates[1] === 'number'
+                ) {
+                  setYourAddress(value);
+                  const [lng, lat] = value.geometry.coordinates;
+                  const lngLat = new mapboxgl.LngLat(lng, lat);
+                  setMarkers(lngLat);
+                }
+              }}
               options={listPlace}
               getOptionLabel={(option) => option.place_name}
               filterOptions={(options, state) => options}
-              onInputChange={(_e, value) => handleSearchMap(value)}
+              onInputChange={(event, value) => handleSearchMap(value, event)}
               noOptionsText="No locations"
               loading={loading}
               renderOption={(props, option) => {
@@ -107,7 +127,13 @@ const ConfirmYourAddress = () => {
             />
           </div>
           <div className="mt-5 flex h-56 w-full items-center justify-center border border-mango-text-gray-1">
-            <MapboxMap />
+            <MapboxMap
+              center={[-74.5, 40]}
+              marker={marker ? marker : undefined}
+              onMapChangeMarker={(v: any) => {
+                setYourAddress(v as IMapBoxPlace);
+              }}
+            />
           </div>
 
           <Button
