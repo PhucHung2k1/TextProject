@@ -4,7 +4,7 @@ import AddYourService from '@/components/StoreProfile/AddYourService';
 import ConfirmYourAddress from '@/components/StoreProfile/ConfirmYourAddress';
 import Congratulations from '@/components/StoreProfile/Congratulations';
 import StoreWorkingHoursSetup from '@/components/StoreProfile/StoreWorkingHoursSetup';
-import { IConfigStore } from '@/services/store.service/store.interface';
+import type { IConfigStore } from '@/services/store.service/store.interface';
 
 export const listStepConfigStore: IConfigStore[] = [
   {

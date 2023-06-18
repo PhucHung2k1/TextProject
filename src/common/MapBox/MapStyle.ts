@@ -27,4 +27,4 @@ export const MapStyles = {
     ],
     'fill-extrusion-opacity': 0.6,
   },
-}
+};

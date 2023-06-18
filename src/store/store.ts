@@ -17,7 +17,8 @@ export const store = configureStore({
     customerRoleSlice,
     permissionSlice,
     customerSlice,
-    accountSlice, storeSlice
+    accountSlice,
+    storeSlice,
   },
 });
 

@@ -1,5 +1,6 @@
 import { MapServices } from '@/services/map.services/map.services';
-import mapboxgl, { AnyLayer, LngLat, LngLatLike, Map, Marker } from 'mapbox-gl';
+import type { AnyLayer, LngLat, LngLatLike, Map, Marker } from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import React, { useEffect, useRef, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { MapStyles } from './MapStyle';
@@ -17,10 +18,6 @@ const MapboxMap = ({ marker, center, onMapChangeMarker }: IMapboxMap) => {
   const map: React.MutableRefObject<Map | null> = useRef(null);
   const [listMarkers, setListMarkers] = useState<Marker[]>([]);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    marker && addMarkerToMap(marker);
-  }, [marker]);
 
   const addMarkerToMap = (markerSelected: LngLat, isChange?: boolean) => {
     setLoading(true);
@@ -64,13 +61,17 @@ const MapboxMap = ({ marker, center, onMapChangeMarker }: IMapboxMap) => {
   };
 
   useEffect(() => {
+    marker && addMarkerToMap(marker);
+  }, [marker]);
+
+  useEffect(() => {
     setLoading(true);
 
     if (mapContainer.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: center, // Set initial longitude and latitude
+        center, // Set initial longitude and latitude
         zoom: 10, // Set initial zoom level
       });
 
@@ -113,7 +114,7 @@ const MapboxMap = ({ marker, center, onMapChangeMarker }: IMapboxMap) => {
   return (
     <div ref={mapContainer} style={{ width: '100%', height: '100%' }}>
       {loading && (
-        <div className="absolute bg-opacity-60 bg-white h-full w-full flex items-center justify-center z-[999]">
+        <div className="absolute z-[999] flex h-full w-full items-center justify-center bg-white bg-opacity-60">
           <CircularProgress />
         </div>
       )}

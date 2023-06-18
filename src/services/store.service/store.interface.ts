@@ -11,6 +11,6 @@ export interface IStoreProfile {
 }
 
 export interface IConfigStore {
-  step: number,
-  component: React.ReactNode
+  step: number;
+  component: React.ReactNode;
 }

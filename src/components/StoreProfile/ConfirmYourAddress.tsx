@@ -10,7 +10,7 @@ import debounce from 'lodash.debounce';
 import Link from 'next/link';
 
 import MapboxMap from '@/common/MapBox/MapBoxMap';
-import { IMapBoxPlace } from '@/services/map.services/map.interface';
+import type { IMapBoxPlace } from '@/services/map.services/map.interface';
 import { MapServices } from '@/services/map.services/map.services';
 import { useAppDispatch } from '@/store/hook';
 import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
@@ -19,8 +19,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import mapboxgl from 'mapbox-gl';
 import { useRouter } from 'next/router';
-import { SyntheticEvent, useState } from 'react';
-import { LngLat } from 'react-map-gl';
+import type { SyntheticEvent } from 'react';
+import { useState } from 'react';
+import type { LngLat } from 'react-map-gl';
 import { LinearProgressWithLabel } from './LinearProgressWithLabel';
 
 const ConfirmYourAddress = () => {
@@ -85,7 +86,7 @@ const ConfirmYourAddress = () => {
               }}
               options={listPlace}
               getOptionLabel={(option) => option.place_name}
-              filterOptions={(options, state) => options}
+              filterOptions={(options) => options}
               onInputChange={(event, value) => handleSearchMap(value, event)}
               noOptionsText="No locations"
               loading={loading}
@@ -129,7 +130,7 @@ const ConfirmYourAddress = () => {
           <div className="mt-5 flex h-56 w-full items-center justify-center border border-mango-text-gray-1">
             <MapboxMap
               center={[-74.5, 40]}
-              marker={marker ? marker : undefined}
+              marker={marker || undefined}
               onMapChangeMarker={(v: any) => {
                 setYourAddress(v as IMapBoxPlace);
               }}

@@ -23,7 +23,7 @@ const StoreProfile = () => {
 
   return (
     <main className="flex h-screen items-center justify-center bg-mango-gray-light-2">
-      {listStepConfigStore.find((x) => x.step == currentStep)?.component}
+      {listStepConfigStore.find((x) => x.step === currentStep)?.component}
     </main>
   );
 };

@@ -1,4 +1,4 @@
-import type { IConfigStore, IStoreProfile } from '@/services/store.service/store.interface';
+import type { IStoreProfile } from '@/services/store.service/store.interface';
 import { createSlice } from '@reduxjs/toolkit';
 
 type IInitialState = {
@@ -7,7 +7,7 @@ type IInitialState = {
 };
 const initialState = {
   StoreProfile: {},
-  CurrentStepConfigStore: -1
+  CurrentStepConfigStore: -1,
 } as IInitialState;
 
 const StoreSlice = createSlice({
@@ -22,5 +22,6 @@ const StoreSlice = createSlice({
     },
   },
 });
-export const { setStoreProfile, setCurrentStepConfigStore } = StoreSlice.actions;
+export const { setStoreProfile, setCurrentStepConfigStore } =
+  StoreSlice.actions;
 export default StoreSlice.reducer;
