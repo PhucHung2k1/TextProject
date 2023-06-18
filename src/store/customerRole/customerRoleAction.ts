@@ -4,7 +4,7 @@ import { setListRole } from './customerRoleSlice';
 import { setMessageToast, showToast } from '../toast/toastSlice';
 
 export const getAllRole = createAsyncThunk(
-  'account/customerRole',
+  'account/getAllRole',
   async (_body: any, { dispatch }) => {
     const servicesCustomerRoleAPI = new CustomerRole();
 
@@ -26,7 +26,7 @@ export const getAllRole = createAsyncThunk(
 );
 
 export const addNewRole = createAsyncThunk(
-  'account/customerRole',
+  'account/addNewRole',
   async (body: any, { dispatch }) => {
     const servicesCustomerRoleAPI = new CustomerRole();
 
@@ -45,7 +45,7 @@ export const addNewRole = createAsyncThunk(
   }
 );
 export const deleteRole = createAsyncThunk(
-  'account/customerRole',
+  'account/deleteRole',
   async (id: string, { dispatch }) => {
     const servicesCustomerRoleAPI = new CustomerRole();
 

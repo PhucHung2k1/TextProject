@@ -8,7 +8,6 @@ import {
 } from '@mui/material';
 import debounce from 'lodash.debounce';
 import Link from 'next/link';
-
 import MapboxMap from '@/common/MapBox/MapBoxMap';
 import type { IMapBoxPlace } from '@/services/map.services/map.interface';
 import { MapServices } from '@/services/map.services/map.services';
@@ -45,28 +44,19 @@ const ConfirmYourAddress = () => {
   );
 
   return (
-    <div className="flex justify-center pt-[90px] ">
-      <div className="w-[568px]  rounded-2xl bg-white shadow-md">
-        <LinearProgressWithLabel value={30} />
-        <div className="px-8 pb-8 pt-12">
-          <div className=" text-center">
-            <div className="flex items-center justify-center ">
-              <ArrowBackIcon
-                onClick={() => router.back()}
-                className="cursor-pointer text-3xl"
-              />
+    <LayoutStoreProfile>
+      <div className="px-8 pb-8 pt-12">
+        <div className=" text-center">
+          <div className="flex items-center justify-center ">
+            <ArrowBackIcon
+              onClick={() => handlePreviousProgressSetupStore(dispatch)}
+              className="cursor-pointer text-3xl"
+            />
 
-              <p className="mx-auto text-[32px] font-semibold">
-                Confirm your address
-              </p>
-            </div>
-
-            <p className="text-mango-text-gray-2">
-              Where can clients find you?
+            <p className="mx-auto text-[32px] font-semibold">
+              Confirm your address
             </p>
           </div>
-
-          {/*  */}
           <div className="mt-10">
             <Autocomplete
               value={yourAddress}
@@ -142,9 +132,7 @@ const ConfirmYourAddress = () => {
             variant="contained"
             //
             onClick={() => {
-              dispatch(setModalContentMUI(<p>asda</p>));
-
-              dispatch(showModalMUI());
+              onClick={() => handleForwardProgressSetupStore(dispatch)}
             }}
           >
             CONTINUE
@@ -159,7 +147,7 @@ const ConfirmYourAddress = () => {
           </div>
         </div>
       </div>
-    </div>
+    </LayoutStoreProfile>
   );
 };
 export default ConfirmYourAddress;

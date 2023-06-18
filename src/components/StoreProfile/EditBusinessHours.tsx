@@ -54,7 +54,7 @@ const EditBusinessHours: NextPage = () => {
     setForms(forms.filter((form) => form.id !== formId));
   };
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-mango-gray-light-2 bg-cover bg-center bg-no-repeat ">
+    <div className="flex h-2/3 w-2/3 items-center justify-center bg-mango-gray-light-2 bg-cover bg-center bg-no-repeat ">
       <div className="flex min-h-[70%] w-[35%] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-6 py-5">
         {/* <div className="absolute left-[0px] top-[0px]  h-4 w-full rounded-t-xl bg-primary-states-hover" />
         <div className="absolute left-[0px] top-[0px] h-4 w-60 rounded-t-xl [background:linear-gradient(90deg,_#80dfeb_68.23%,_rgba(255,_255,_255,_0.52)_99.99%,_rgba(0,_240,_255,_0))]" /> */}
@@ -99,7 +99,9 @@ const EditBusinessHours: NextPage = () => {
                         onChange={(e) => setStartHour(e.target.value)}
                       >
                         {timeOptions.map((item) => (
-                          <MenuItem value={item}>{item}</MenuItem>
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
                         ))}
                       </Select>
                       <FormHelperText />
@@ -119,7 +121,9 @@ const EditBusinessHours: NextPage = () => {
                         onChange={(e) => setEndHour(e.target.value)}
                       >
                         {timeOptions.map((item) => (
-                          <MenuItem value={item}>{item}</MenuItem>
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
                         ))}
                       </Select>
                       <FormHelperText />
@@ -159,7 +163,9 @@ const EditBusinessHours: NextPage = () => {
                                     }
                                   >
                                     {timeOptions.map((item) => (
-                                      <MenuItem value={item}>{item}</MenuItem>
+                                      <MenuItem key={item} value={item}>
+                                        {item}
+                                      </MenuItem>
                                     ))}
                                   </Select>
                                   <FormHelperText />
@@ -178,7 +184,9 @@ const EditBusinessHours: NextPage = () => {
                                     onChange={(e) => setEndHour(e.target.value)}
                                   >
                                     {timeOptions.map((item) => (
-                                      <MenuItem value={item}>{item}</MenuItem>
+                                      <MenuItem key={item} value={item}>
+                                        {item}
+                                      </MenuItem>
                                     ))}
                                   </Select>
                                   <FormHelperText />

@@ -21,10 +21,9 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import { clearModalContentMUI, hideModalMUI } from '@/store/modal/modalSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import type { ISendInvitationPayload } from '@/services/customer.service/customer.interface';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
 import { sendInvitation } from '@/store/customer/customerAction';
-import { getAllRole } from '@/store/customerRole/customerRoleAction';
 
 interface IFormInput {
   firstName: string;
@@ -106,9 +105,7 @@ export const AddYourEmployeeModal = () => {
       setError('email', { type: 'manual', message: 'errorMessage' });
     }
   };
-  useEffect(() => {
-    dispatch(getAllRole({}));
-  }, []);
+
   const onSubmit = (values: IFormInput) => {
     const body: ISendInvitationPayload = {
       firstName: values.firstName,
@@ -392,8 +389,7 @@ export const AddYourEmployeeModal = () => {
                   >
                     <Autocomplete
                       options={listRole}
-                      getOptionLabel={(option) => option.Name}
-                      defaultValue={listRole[0]}
+                      getOptionLabel={(option) => option?.Name}
                       value={valueRole}
                       onChange={(_event: any, newValue: any) => {
                         setValueRole(newValue);
