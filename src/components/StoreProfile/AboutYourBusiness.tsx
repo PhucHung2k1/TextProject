@@ -1,4 +1,10 @@
-import { Button, TextField, InputAdornment, Divider } from '@mui/material';
+import {
+  Button,
+  TextField,
+  InputAdornment,
+  Divider,
+  FormControl,
+} from '@mui/material';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
@@ -7,13 +13,13 @@ import { LayoutStoreProfile } from './LayoutStoreProfile';
 import { handleForwardProgressSetupStore } from './helper';
 import { apiPostPhoto } from '@/utils/axios/instance';
 import { Store } from '@/services/store.service/store.service';
-
 const POST_IMAGE = '/file/upload-picture';
-
+import type { IStoreProfile } from '@/services/store.service/store.interface';
+import { useForm } from 'react-hook-form';
 const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
   const storeId: any = useAppSelector(
-    (state) => state.storeSlice.StoreProfile[0]?.Id
+    (state: any) => state.storeSlice.StoreProfile[0]?.Id
   );
   const [selectedImage, setSelectedImage] = useState<any>();
   const [avatarImage, setAvatarImage] = useState<any>();
@@ -22,6 +28,12 @@ const AboutYourBusiness = () => {
     PhoneNumber: '',
     ProfilePictureUrl: '',
   });
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IStoreProfile>();
+
   const uploadImage = async (imageFile: File): Promise<void> => {
     if (imageFile) {
       try {
@@ -48,17 +60,25 @@ const AboutYourBusiness = () => {
   };
 
   const submitForm = async (e: any) => {
-    e.preventDefault();
+    // e.preventDefault();
     const storeAPI = new Store();
 
     try {
       const patchData = [
-        { op: 'replace', path: '/Name', value: formStore.Name },
-        { op: 'replace', path: '/PhoneNumber', value: formStore.PhoneNumber },
+        {
+          op: 'replace',
+          path: '/Name',
+          value: formStore.Name ? formStore.Name : '',
+        },
+        {
+          op: 'replace',
+          path: '/PhoneNumber',
+          value: formStore.PhoneNumber ? formStore.PhoneNumber : '',
+        },
         {
           op: 'replace',
           path: '/ProfilePictureUrl',
-          value: avatarImage.OriginalPublishUrl,
+          value: avatarImage ? avatarImage.OriginalPublishUrl : '',
         },
       ];
 
@@ -82,7 +102,7 @@ const AboutYourBusiness = () => {
       <form
         className="mt-6 flex flex-wrap justify-center gap-2"
         noValidate
-        onSubmit={submitForm}
+        onSubmit={handleSubmit(submitForm)}
       >
         <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full bg-[#F2F2F5] border border-{#CBCBDB}">
           {selectedImage ? (
@@ -131,6 +151,11 @@ const AboutYourBusiness = () => {
             variant="outlined"
             className="mb-2 w-full"
             value={formStore.Name}
+            required
+            error={Boolean(errors.Name)}
+            {...register('Name', {
+              required: 'Enter Your Name!',
+            })}
             name="Name"
             onChange={handleFieldChange}
             sx={{
@@ -179,26 +204,33 @@ const AboutYourBusiness = () => {
             }}
             variant="outlined"
           />
-          <div className="h-[56px] w-[352px] ">
-            <TextField
-              sx={{
-                '& .MuiInputBase-root.Mui-focused': {
-                  '& > fieldset': {
-                    borderColor: '#00BDD6',
+          <div>
+            <FormControl className="h-[56px] w-[352px] ">
+              <TextField
+                sx={{
+                  '& .MuiInputBase-root.Mui-focused': {
+                    '& > fieldset': {
+                      borderColor: '#00BDD6',
+                    },
                   },
-                },
-                '& label.Mui-focused': {
-                  color: '#00BDD6',
-                },
-              }}
-              value={formStore.PhoneNumber}
-              onChange={handleFieldChange}
-              name="PhoneNumber"
-              id="outlined-basic"
-              label="Phone number"
-              variant="outlined"
-              className="w-full font-[16px] text-[#404044]"
-            />
+                  '& label.Mui-focused': {
+                    color: '#00BDD6',
+                  },
+                }}
+                value={formStore.PhoneNumber}
+                required
+                error={Boolean(errors.PhoneNumber)}
+                {...register('PhoneNumber', {
+                  required: 'Enter Your PhoneNumber!',
+                })}
+                onChange={handleFieldChange}
+                name="PhoneNumber"
+                id="outlined-basic"
+                label="Phone number"
+                variant="outlined"
+                className="w-full font-[16px] text-[#404044]"
+              />
+            </FormControl>
           </div>
         </div>
         <Button

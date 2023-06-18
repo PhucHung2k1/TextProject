@@ -16,17 +16,17 @@ const StoreSlice = createSlice({
   name: 'Store',
   initialState,
   reducers: {
-    setStoreProfile: (state, action) => {
+    setStoreProfile: (state: any, action: any) => {
       state.StoreProfile = action.payload;
     },
 
-    setIncreaseProgressSetupStore: (state) => {
+    setIncreaseProgressSetupStore: (state: any) => {
       state.progressSetupStore += 1;
     },
-    setDecreaseProgressSetupStore: (state) => {
+    setDecreaseProgressSetupStore: (state: any) => {
       state.progressSetupStore -= 1;
     },
-    setPrevProgress: (state) => {
+    setPrevProgress: (state: any) => {
       state.prevProgress = state.progressSetupStore;
     },
   },
