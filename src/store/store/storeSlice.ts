@@ -19,7 +19,6 @@ const StoreSlice = createSlice({
     setStoreProfile: (state, action) => {
       state.StoreProfile = action.payload;
     },
-
     setIncreaseProgressSetupStore: (state) => {
       state.progressSetupStore += 1;
     },
@@ -31,10 +30,12 @@ const StoreSlice = createSlice({
     },
   },
 });
+
 export const {
   setStoreProfile,
   setIncreaseProgressSetupStore,
   setDecreaseProgressSetupStore,
   setPrevProgress,
 } = StoreSlice.actions;
+
 export default StoreSlice.reducer;

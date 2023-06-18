@@ -3,48 +3,45 @@ import {
   Autocomplete,
   Button,
   CircularProgress,
-  Grid,
   InputAdornment,
   TextField,
-  Typography,
 } from '@mui/material';
+import debounce from 'lodash.debounce';
 import Link from 'next/link';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import React, { useEffect, useState } from 'react';
-import { Search } from '@mui/icons-material';
+import MapboxMap from '@/common/MapBox/MapBoxMap';
+import type { IMapBoxPlace } from '@/services/map.services/map.interface';
+import { MapServices } from '@/services/map.services/map.services';
 import { useAppDispatch } from '@/store/hook';
-import {
-  handleForwardProgressSetupStore,
-  handlePreviousProgressSetupStore,
-} from '@/components/StoreProfile/helper';
-import { LayoutStoreProfile } from './LayoutStoreProfile';
-import CustomModal from '../Modal';
+import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
+import { Search } from '@mui/icons-material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import mapboxgl from 'mapbox-gl';
+import { useRouter } from 'next/router';
+import type { SyntheticEvent } from 'react';
+import { useState } from 'react';
+import type { LngLat } from 'react-map-gl';
+import { LinearProgressWithLabel } from './LinearProgressWithLabel';
 
 const ConfirmYourAddress = () => {
   const dispatch = useAppDispatch();
-  // const router = useRouter();
-  const [valueSearchMap, setValueSearchMap] = useState<string>('');
-  const [listResultAddress, setListResultAddress] = useState<string[]>(['']);
-  const [open, setOpen] = useState<boolean>(false);
+  const router = useRouter();
+  const [yourAddress, setYourAddress] = useState<IMapBoxPlace | null>(null);
+  const [listPlace, setListPlace] = useState<IMapBoxPlace[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const handleSearchMap = (value: string) => {
-    setValueSearchMap(value);
-  };
-  useEffect(() => {
-    if (valueSearchMap.length > 0) {
-      setLoading(true);
-      // For testing purposes
-      setTimeout(() => {
-        setLoading(false);
-        setListResultAddress([
-          '142 White Ash Dr, Southaven, MS 38671, US.',
-          '142 White Ash Dr, Southaven, MS 38672, US.',
-          '142 White Ash Dr, Southaven, MS 38673, US.',
-        ]);
-      }, 1500);
-    }
-  }, [valueSearchMap]);
+  const [marker, setMarkers] = useState<LngLat>();
+
+  const handleSearchMap = debounce(
+    async (value: string, event?: SyntheticEvent<Element, Event>) => {
+      if (event) {
+        const mapServices = new MapServices();
+        mapServices.findAddressAndPlaces(value).then((res) => {
+          setListPlace(res);
+        });
+      }
+    },
+    800
+  );
 
   return (
     <LayoutStoreProfile>
@@ -60,91 +57,94 @@ const ConfirmYourAddress = () => {
               Confirm your address
             </p>
           </div>
-
-          <p className="text-mango-text-gray-2">Where can clients find you?</p>
-        </div>
-
-        {/*  */}
-        <div className="mt-10">
-          <Autocomplete
-            options={listResultAddress}
-            freeSolo
-            open={open}
-            onOpen={() => {
-              setOpen(true);
-            }}
-            onClose={() => {
-              setOpen(false);
-            }}
-            value={valueSearchMap}
-            onInputChange={(_e, value) => handleSearchMap(value)}
-            noOptionsText="No locations"
-            loading={loading}
-            renderOption={(props, option) => {
-              return (
-                <li {...props}>
-                  <Grid container alignItems="center">
-                    <Grid item sx={{ display: 'flex', width: 44 }}>
+          <div className="mt-10">
+            <Autocomplete
+              value={yourAddress}
+              onChange={(event, value) => {
+                if (
+                  value &&
+                  value.geometry &&
+                  value.geometry.coordinates &&
+                  typeof value.geometry.coordinates[0] === 'number' &&
+                  typeof value.geometry.coordinates[1] === 'number'
+                ) {
+                  setYourAddress(value);
+                  const [lng, lat] = value.geometry.coordinates;
+                  const lngLat = new mapboxgl.LngLat(lng, lat);
+                  setMarkers(lngLat);
+                }
+              }}
+              options={listPlace}
+              getOptionLabel={(option) => option.place_name}
+              filterOptions={(options) => options}
+              onInputChange={(event, value) => handleSearchMap(value, event)}
+              noOptionsText="No locations"
+              loading={loading}
+              renderOption={(props, option) => {
+                return (
+                  <li {...props}>
+                    <div className="flex flex-row px-[20] py-[22]">
                       <LocationOnIcon sx={{ color: 'text.secondary' }} />
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="text.secondary"
-                      >
-                        {option}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </li>
-              );
-            }}
-            renderInput={(params) => {
-              return (
-                <TextField
-                  {...params}
-                  placeholder="Search"
-                  label="Search your address"
-                  InputProps={{
-                    ...params.InputProps,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Search />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <>
-                        {loading ? (
-                          <CircularProgress color="inherit" size={20} />
-                        ) : null}
-                        {params.InputProps.endAdornment}
-                      </>
-                    ),
-                  }}
-                />
-              );
-            }}
-          />
-        </div>
-        <div className="mt-5 flex h-56 w-full items-center justify-center border border-mango-text-gray-1">
-          Google Map
-        </div>
+                      {option.place_name}
+                    </div>
+                  </li>
+                );
+              }}
+              renderInput={(params) => {
+                return (
+                  <TextField
+                    {...params}
+                    placeholder="Search"
+                    label="Search your address"
+                    InputProps={{
+                      ...params.InputProps,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Search />
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <>
+                          {loading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </>
+                      ),
+                    }}
+                  />
+                );
+              }}
+            />
+          </div>
+          <div className="mt-5 flex h-56 w-full items-center justify-center border border-mango-text-gray-1">
+            <MapboxMap
+              center={[-74.5, 40]}
+              marker={marker || undefined}
+              onMapChangeMarker={(v: any) => {
+                setYourAddress(v as IMapBoxPlace);
+              }}
+            />
+          </div>
 
-        <Button
-          className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize "
-          variant="contained"
-          onClick={() => handleForwardProgressSetupStore(dispatch)}
-        >
-          CONTINUE
-        </Button>
-        <div className="mt-4 text-center ">
-          <span>Can&apos;t find your address? </span>
-          <Link href="/" passHref>
-            <a className="font-bold text-mango-primary-blue">
-              Add your location
-            </a>
-          </Link>
+          <Button
+            className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize "
+            variant="contained"
+            //
+            onClick={() => {
+              onClick={() => handleForwardProgressSetupStore(dispatch)}
+            }}
+          >
+            CONTINUE
+          </Button>
+          <div className="mt-4 text-center ">
+            <span>Can&apos;t find your address? </span>
+            <Link href="/" passHref>
+              <a className="font-bold text-mango-primary-blue">
+                Add your location
+              </a>
+            </Link>
+          </div>
         </div>
       </div>
     </LayoutStoreProfile>
