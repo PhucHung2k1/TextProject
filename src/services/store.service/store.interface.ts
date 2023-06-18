@@ -17,3 +17,7 @@ export interface IStoreCustomer {
   CreateDate: Date;
   LastModifiedDate: Date;
 }
+export interface IConfigStore {
+  step: number;
+  component: React.ReactNode;
+}

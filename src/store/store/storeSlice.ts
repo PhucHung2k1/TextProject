@@ -1,12 +1,17 @@
-import type { IStoreCustomer } from '@/services/store.service/store.interface';
+import type {
+  IStoreCustomer,
+  IStoreProfile,
+} from '@/services/store.service/store.interface';
 import { createSlice } from '@reduxjs/toolkit';
 
 type IInitialState = {
+  StoreProfile: IStoreProfile[];
   progressSetupStore: number;
   prevProgress: number;
   storeCustomer: IStoreCustomer[];
 };
 const initialState = {
+  StoreProfile: [],
   progressSetupStore: 1,
   prevProgress: 1,
   storeCustomer: [],
@@ -16,6 +21,9 @@ const StoreSlice = createSlice({
   name: 'Store',
   initialState,
   reducers: {
+    setStoreProfile: (state, action) => {
+      state.StoreProfile = action.payload;
+    },
     setIncreaseProgressSetupStore: (state) => {
       state.progressSetupStore += 1;
     },
@@ -30,10 +38,12 @@ const StoreSlice = createSlice({
     },
   },
 });
+
 export const {
   setIncreaseProgressSetupStore,
   setDecreaseProgressSetupStore,
   setPrevProgress,
   setStoreCustomer,
 } = StoreSlice.actions;
+
 export default StoreSlice.reducer;
