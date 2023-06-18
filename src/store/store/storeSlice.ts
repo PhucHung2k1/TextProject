@@ -21,9 +21,6 @@ const StoreSlice = createSlice({
   name: 'Store',
   initialState,
   reducers: {
-    setStoreProfile: (state, action) => {
-      state.StoreProfile = action.payload;
-    },
     setResetProgressSetupStore: (state) => {
       state.prevProgress = 0;
       state.progressSetupStore = 1;

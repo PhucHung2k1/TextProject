@@ -14,16 +14,21 @@ const POST_IMAGE = '/file/upload-picture';
 
 const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
-  const storeId: any = useAppSelector(
-    (state) => state.storeSlice.StoreProfile[0]?.Id
+
+  const storeCustomer = useAppSelector(
+    (state) => state.storeSlice.storeCustomer
   );
+
   const [selectedImage, setSelectedImage] = useState<any>();
+
   const [avatarImage, setAvatarImage] = useState<any>();
   const [formStore, setFormStore] = useState({
-    Name: '',
-    PhoneNumber: '',
-    ProfilePictureUrl: '',
+    Id: storeCustomer[0]?.Id || '',
+    Name: storeCustomer[0]?.Name || '',
+    PhoneNumber: storeCustomer[0]?.PhoneNumber || '',
+    ProfilePictureUrl: storeCustomer[0]?.ProfilePictureUrl || '',
   });
+
   const uploadImage = async (imageFile: File): Promise<void> => {
     if (imageFile) {
       try {
@@ -50,6 +55,9 @@ const AboutYourBusiness = () => {
   };
 
   const submitForm = async (e: any) => {
+    // eslint-disable-next-line no-console
+    console.log('submit');
+
     e.preventDefault();
     const storeAPI = new Store();
 
@@ -64,14 +72,22 @@ const AboutYourBusiness = () => {
         },
       ];
 
-      await storeAPI.updateStore(storeId, patchData);
+      await storeAPI.updateStore(formStore.Id, patchData);
       handleForwardProgressSetupStore(dispatch);
     } catch (error) {}
   };
 
   useEffect(() => {
     dispatch(getStoreCustomer({}));
-  }, []);
+    if (storeCustomer) {
+      setFormStore({
+        Name: storeCustomer[0]?.Name || '',
+        PhoneNumber: storeCustomer[0]?.PhoneNumber || '',
+        ProfilePictureUrl: storeCustomer[0]?.ProfilePictureUrl || '',
+        Id: storeCustomer[0]?.Id || '',
+      });
+    }
+  }, [storeCustomer[0]?.Name]);
 
   return (
     <LayoutStoreProfile>
@@ -89,21 +105,21 @@ const AboutYourBusiness = () => {
         <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full bg-[#F2F2F5] border border-{#CBCBDB}">
           {selectedImage ? (
             <Image
-              src={
-                selectedImage
-                  ? `${URL.createObjectURL(selectedImage)}`
-                  : '/assets/images/SetupStore/image.svg'
-              }
+              src={URL?.createObjectURL(selectedImage)}
               alt="logo"
               layout="fill"
               className="rounded-full object-cover"
             />
           ) : (
             <Image
-              src="/assets/images/SetupStore/image.svg"
+              src={
+                formStore.ProfilePictureUrl !== ''
+                  ? formStore.ProfilePictureUrl
+                  : '/assets/images/SetupStore/image.svg'
+              }
               alt="logo"
-              width={45}
-              height={45}
+              width={186}
+              height={186}
             />
           )}
 
@@ -209,7 +225,7 @@ const AboutYourBusiness = () => {
           className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-[#00ADC3]"
           variant="contained"
           type="submit"
-          onClick={() => handleForwardProgressSetupStore(dispatch)}
+          // onClick={() => handleForwardProgressSetupStore(dispatch)}
         >
           CONTINUE
         </Button>

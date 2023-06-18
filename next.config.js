@@ -6,7 +6,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 module.exports = withBundleAnalyzer({
   images: {
-    domains: ['minio.domain.vn'],
+    domains: ['minio.domain.vn', 'ims-cloudstorage.enrichco.us'],
     formats: ['image/avif', 'image/webp'],
   },
   eslint: {
