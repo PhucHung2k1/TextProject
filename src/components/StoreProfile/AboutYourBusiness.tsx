@@ -1,14 +1,11 @@
-<<<<<<< HEAD
 import {
   Button,
   TextField,
   InputAdornment,
   Divider,
+  Box,
   FormControl,
 } from '@mui/material';
-=======
-import { Button, TextField, InputAdornment, Divider, Box } from '@mui/material';
->>>>>>> 1c13509ef9919f2453f5362d056fe92b17e39f8c
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
