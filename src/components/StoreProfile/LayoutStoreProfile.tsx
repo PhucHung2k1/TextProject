@@ -8,7 +8,7 @@ interface Props {
 export const LayoutStoreProfile = ({ children }: Props) => {
   return (
     <Box className="flex justify-center ">
-      <Box className="relative  w-[568px] rounded-2xl bg-white shadow-md">
+      <Box className="relative  w-[568px] rounded-2xl bg-white shadow-md overflow-hidden">
         <LinearProgressWithLabel />
         <Box className="px-8 pb-8 pt-12">{children}</Box>
       </Box>

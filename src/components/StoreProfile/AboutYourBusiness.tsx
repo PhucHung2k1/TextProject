@@ -23,22 +23,21 @@ const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
 
   const storeCustomer = useAppSelector(
-    (state) => state.storeSlice.storeCustomer
+    (state) => state.storeSlice.storeCustomer[0]
   );
 
   const [selectedImage, setSelectedImage] = useState<any>();
-
   const [avatarImage, setAvatarImage] = useState<any>();
   const [formStore, setFormStore] = useState({
-    Id: storeCustomer[0]?.Id || '',
-    Name: storeCustomer[0]?.Name || '',
-    PhoneNumber: storeCustomer[0]?.PhoneNumber || '',
-    ProfilePictureUrl: storeCustomer[0]?.ProfilePictureUrl || '',
+    Id: storeCustomer?.Id || '',
+    Name: storeCustomer?.Name || '',
+    PhoneNumber: storeCustomer?.PhoneNumber || '',
+    ProfilePictureUrl: storeCustomer?.ProfilePictureUrl || '',
   });
 
   const {
-    register,
-    formState: { errors },
+    // register,
+    // formState: { errors },
     handleSubmit,
   } = useForm<IStoreProfile>();
 
@@ -74,17 +73,19 @@ const AboutYourBusiness = () => {
         {
           op: 'replace',
           path: '/Name',
-          value: formStore.Name ? formStore.Name : '',
+          value: formStore.Name ? formStore.Name : storeCustomer?.Name,
         },
         {
           op: 'replace',
           path: '/PhoneNumber',
-          value: formStore.PhoneNumber ? formStore.PhoneNumber : '',
+          value: formStore.PhoneNumber
+            ? formStore.PhoneNumber
+            : storeCustomer?.PhoneNumber,
         },
         {
           op: 'replace',
           path: '/ProfilePictureUrl',
-          value: avatarImage ? avatarImage.OriginalPublishUrl : '',
+          value: avatarImage ? avatarImage.OriginalPublishUrl : avatarImage,
         },
       ];
 
@@ -97,13 +98,13 @@ const AboutYourBusiness = () => {
     dispatch(getStoreCustomer({}));
     if (storeCustomer) {
       setFormStore({
-        Name: storeCustomer[0]?.Name || '',
-        PhoneNumber: storeCustomer[0]?.PhoneNumber || '',
-        ProfilePictureUrl: storeCustomer[0]?.ProfilePictureUrl || '',
-        Id: storeCustomer[0]?.Id || '',
+        Name: storeCustomer?.Name || '',
+        PhoneNumber: storeCustomer?.PhoneNumber || '',
+        ProfilePictureUrl: storeCustomer?.ProfilePictureUrl || '',
+        Id: storeCustomer?.Id || '',
       });
     }
-  }, [storeCustomer[0]?.Name]);
+  }, [storeCustomer?.Name]);
 
   return (
     <LayoutStoreProfile>
@@ -131,11 +132,16 @@ const AboutYourBusiness = () => {
               src={
                 formStore.ProfilePictureUrl !== ''
                   ? formStore.ProfilePictureUrl
-                  : '/assets/images/SetupStore/image.svg'
+                  : '/assets/images/StoreProfile/store-default.png'
               }
-              alt="logo"
+              alt="logo1"
               width={186}
               height={186}
+              className={
+                formStore.ProfilePictureUrl !== ''
+                  ? 'rounded-full object-cover'
+                  : 'rounded-full'
+              }
             />
           )}
 
@@ -165,11 +171,10 @@ const AboutYourBusiness = () => {
             variant="outlined"
             className="mb-2 w-full"
             value={formStore.Name}
-            required
-            error={Boolean(errors.Name)}
-            {...register('Name', {
-              required: 'Enter Your Name!',
-            })}
+            // error={Boolean(errors.Name)}
+            // {...register('Name', {
+            //   required: 'Enter Your Name!',
+            // })}
             name="Name"
             onChange={handleFieldChange}
             sx={{
@@ -234,11 +239,10 @@ const AboutYourBusiness = () => {
                   },
                 }}
                 value={formStore.PhoneNumber}
-                required
-                error={Boolean(errors.PhoneNumber)}
-                {...register('PhoneNumber', {
-                  required: 'Enter Your PhoneNumber!',
-                })}
+                // error={Boolean(errors.PhoneNumber)}
+                // {...register('PhoneNumber', {
+                //   required: 'Enter Your PhoneNumber!',
+                // })}
                 onChange={handleFieldChange}
                 name="PhoneNumber"
                 id="outlined-basic"
