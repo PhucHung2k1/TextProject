@@ -7,19 +7,15 @@ import { AddYourEmployeeModal } from './LayoutAddEmployee/AddYourEmployeeModal';
 import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
 import InvitationListComponent from './LayoutAddEmployee/InvitationListComponent';
 import { invitationList } from '@/store/customer/customerAction';
-import { getAllRole } from '@/store/customerRole/customerRoleAction';
-import { lookupData } from '@/store/common/commonAction';
 
 const AddYourEmployee = () => {
   const dispatch = useAppDispatch();
 
   const invitationListData = useAppSelector(
     (state) => state.customerRoleSlice.invitationList
-  );
+  ).filter((item) => item.IsAccepted);
   const isEmptyInvitationList = invitationListData.length === 0;
   const handleAddEmployee = async () => {
-    dispatch(getAllRole({}));
-    dispatch(lookupData({}));
     dispatch(setModalContentMUI(<AddYourEmployeeModal />));
     dispatch(showModalMUI());
   };
@@ -53,7 +49,7 @@ const AddYourEmployee = () => {
                 Add employee
               </Button>
             ) : (
-              <InvitationListComponent />
+              <InvitationListComponent handleAddEmployee={handleAddEmployee} />
             )}
           </Box>
         </div>

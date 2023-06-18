@@ -4,13 +4,26 @@ import AddYourService from '@/components/StoreProfile/AddYourService';
 import ConfirmYourAddress from '@/components/StoreProfile/ConfirmYourAddress';
 import Congratulations from '@/components/StoreProfile/Congratulations';
 import StoreWorkingHoursSetup from '@/components/StoreProfile/StoreWorkingHoursSetup';
-import { useAppSelector } from '@/store/hook';
+import { lookupData } from '@/store/common/commonAction';
+import { getAllRole } from '@/store/customerRole/customerRoleAction';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const StoreProfile = () => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const progressSetupStore = useAppSelector(
     (state) => state.storeSlice.progressSetupStore
   );
+
+  useEffect(() => {
+    if (router.pathname === '/store-profile') {
+      dispatch(getAllRole({}));
+      dispatch(lookupData({}));
+    }
+  }, [router.pathname]);
+
   const listComponent = [
     {
       step: 1,

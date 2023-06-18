@@ -1,24 +1,20 @@
 import { Avatar, Box, Button, Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
-import { useAppDispatch, useAppSelector } from '@/store/hook';
-import { AddYourEmployeeModal } from './AddYourEmployeeModal';
-import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
-import { getAllRole } from '@/store/customerRole/customerRoleAction';
-import { lookupData } from '@/store/common/commonAction';
+import { useAppSelector } from '@/store/hook';
 
-const InvitationListComponent = () => {
-  const dispatch = useAppDispatch();
+const InvitationListComponent = ({ handleAddEmployee }: any) => {
+  // const dispatch = useAppDispatch();
   const invitationListData = useAppSelector(
     (state) => state.customerRoleSlice.invitationList
-  );
+  ).filter((item) => item.IsAccepted);
 
-  const handleAddEmployee = () => {
-    dispatch(getAllRole({}));
-    dispatch(lookupData({}));
-    dispatch(setModalContentMUI(<AddYourEmployeeModal />));
-    dispatch(showModalMUI());
-  };
+  // const handleAddEmployee = () => {
+  //   dispatch(getAllRole({}));
+  //   dispatch(lookupData({}));
+  //   dispatch(setModalContentMUI(<AddYourEmployeeModal />));
+  //   dispatch(showModalMUI());
+  // };
   return (
     <Box className="w-full overflow-y-auto overflow-x-hidden ">
       {invitationListData.map((item, index) => {

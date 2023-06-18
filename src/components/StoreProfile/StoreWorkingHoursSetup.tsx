@@ -22,7 +22,6 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import moment from 'moment';
 
-
 const StoreWorkingHoursSetup: NextPage = () => {
   const [showEditHours, setShowEditHours] = useState(false);
   const [startHour, setStartHour] = useState('');
@@ -157,7 +156,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
     <LayoutStoreProfile>
       {!showEditHours ? (
         <>
-          <div className=" my-12 text-center">
+          <div className="  text-center">
             <div className="flex items-center justify-center ">
               <ArrowBackIcon
                 onClick={() => handlePreviousProgressSetupStore(dispatch)}
@@ -173,7 +172,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
               you
             </p>
           </div>
-          <div className="flex w-[90%] flex-col justify-center gap-[12px] text-text-primary">
+          <div className="flex flex-col justify-center gap-[12px] text-text-primary">
             {listData.map((item, index) => (
               <div key={item.id}>
                 <div>
@@ -220,7 +219,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
             <button
               onClick={() => handleForwardProgressSetupStore(dispatch)}
               type="button"
-              className="mt-8 box-border flex w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] py-[13px] text-[18px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
+              className="mt-8 box-border flex h-12 w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
             >
               CONTINUE
             </button>
@@ -228,7 +227,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
         </>
       ) : (
         <>
-          <div className=" mt-12 w-[90%]">
+          <div>
             <div className="flex items-center justify-center ">
               <Image
                 src="/closefilled.svg"
@@ -406,7 +405,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
 
               <button
                 type="button"
-                className="mt-8 box-border flex w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] py-[13px] text-[18px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
+                className="mt-8 box-border flex h-12 w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
                 onClick={onSaveEditHours}
               >
                 SAVE
