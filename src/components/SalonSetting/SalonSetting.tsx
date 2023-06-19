@@ -4,17 +4,52 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button } from '@mui/material';
 import { ConfigurationSetting } from './ConfigurationSetting';
 import Image from 'next/image';
+import { EmployeeSetting } from './Employee';
 
 export const SalonSettingComponent = () => {
   const [isClosedSlideBar, setIsClosedSlideBar] = useState<boolean>(true);
 
   const [listFeature, setListFeature] = React.useState([
     {
+      id: 'storeProfile',
+      name: 'Store Profile',
+      image: '/assets/images/SalonSetting/setting-1.svg',
+      image1: '/assets/images/SalonSetting/5.svg',
+      selected: true,
+      component: <></>,
+    },
+    {
       id: 'configuration',
       name: 'Configuration',
       image: '/assets/images/SalonSetting/setting-1.svg',
       image1: '/assets/images/SalonSetting/5.svg',
-      selected: true,
+      selected: false,
+      component: <ConfigurationSetting />,
+    },
+    {
+      id: 'menu',
+      name: 'Menu',
+      image: '/assets/images/SalonSetting/setting-1.svg',
+      image1: '/assets/images/SalonSetting/5.svg',
+      selected: false,
+      component: <></>,
+    },
+
+    {
+      id: 'employee',
+      name: 'Employee',
+      image: '/assets/images/SalonSetting/setting-1.svg',
+      image1: '/assets/images/SalonSetting/5.svg',
+      selected: false,
+      component: <EmployeeSetting />,
+    },
+    {
+      id: 'workSchedule',
+      name: 'Work Schedule',
+      image: '/assets/images/SalonSetting/setting-1.svg',
+      image1: '/assets/images/SalonSetting/5.svg',
+      selected: false,
+      component: <></>,
     },
   ]);
   const handleSelectedListFeature = (value: any) => {
@@ -68,21 +103,21 @@ export const SalonSettingComponent = () => {
             className={`${
               item.selected
                 ? '!bg-mango-primary-blue text-white shadow-md'
-                : ' hover:!bg-[#00BED630]'
-            } flex w-full cursor-pointer items-center rounded-[5px] p-2`}
+                : ' text-mango-text-gray-2 hover:!bg-[#00BED630]'
+            } flex w-full cursor-pointer justify-start rounded-[5px] p-2`}
             key={item.id}
-            startIcon={
-              <Image
-                src={item.selected ? item.image : item.image1}
-                className={`h-6 ${!isClosedSlideBar && 'm-auto'} `}
-                width={24}
-                height={24}
-                alt="logo"
-              />
-            }
           >
+            <Image
+              src={item.selected ? item.image : item.image1}
+              className={`h-6 ${!isClosedSlideBar && 'm-auto'} `}
+              width={24}
+              height={24}
+              alt="logo"
+            />
             {isClosedSlideBar && (
-              <span className={` ml-2 truncate text-[16px] font-bold`}>
+              <span
+                className={` ml-2 truncate text-[16px] font-bold capitalize`}
+              >
                 {item.name}
               </span>
             )}
@@ -91,7 +126,7 @@ export const SalonSettingComponent = () => {
       </div>
       {/* Right Content  */}
       <div className="h-full w-full px-12 py-2 ">
-        <ConfigurationSetting />
+        {listFeature.find((feature) => feature.selected)?.component}
       </div>
     </div>
   );
