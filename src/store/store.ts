@@ -22,7 +22,7 @@ export const store = configureStore({
     accountSlice,
     storeSlice,
     commonSlice,
-    workingHoursSlice
+    workingHoursSlice,
   },
 });
 

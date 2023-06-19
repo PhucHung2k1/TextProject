@@ -23,7 +23,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import moment from 'moment';
 import { Clear } from '@mui/icons-material';
 import { getWorkingHours } from '@/store/workingHours/workingHoursAction';
-import { IWorkingHours } from '@/services/workingHours.service/workingHours.interface';
+import type { IWorkingHours } from '@/services/workingHours.service/workingHours.interface';
 import { convertTo12h } from '@/helper/stringHelper';
 
 const StoreWorkingHoursSetup: NextPage = () => {
@@ -39,12 +39,12 @@ const StoreWorkingHoursSetup: NextPage = () => {
     (state) => state.workingHoursSlice.workingHours
   );
 
-  const updatedList = workingHours.map((item) => ({
+  const fetchData = workingHours.map((item) => ({
     ...item,
     StartHours: convertTo12h(item.StartHours ?? '09:00:00'),
     EndHours: convertTo12h(item.EndHours ?? '21:00:00'),
   }));
-  const [listData, setListData] = useState<IWorkingHours[]>(updatedList);
+  const [listData, setListData] = useState<IWorkingHours[]>(fetchData);
   const dispatch = useAppDispatch();
   const timeOptions = [
     '05:00 AM',
@@ -84,10 +84,10 @@ const StoreWorkingHoursSetup: NextPage = () => {
   };
 
   const handleChangeStatus = (index: number) => () => {
-    const updatedList = listData.map((item, i) =>
+    const updatedStatus = listData.map((item, i) =>
       i === index ? { ...item, IsClosed: !item.IsClosed } : item
     );
-    setListData(updatedList);
+    setListData(updatedStatus);
   };
   const onSaveEditHours = () => {
     const updatedList = listData.map((item) =>

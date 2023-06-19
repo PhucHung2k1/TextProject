@@ -1,4 +1,3 @@
-
 export interface IWorkingHours {
   Id: string;
   DayName: string;
@@ -6,4 +5,3 @@ export interface IWorkingHours {
   EndHours: string;
   IsClosed: boolean;
 }
-

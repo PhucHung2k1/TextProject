@@ -9,10 +9,11 @@ export const getWorkingHours = createAsyncThunk(
   async (_body: any, { dispatch }) => {
     const servicesWorkingHours = new WorkingHours();
     try {
-      const { data, status, error } = await servicesWorkingHours.getWorkingHours();
+      const { data, status, error } =
+        await servicesWorkingHours.getWorkingHours();
 
       if ((status === 200 || status === 201) && data) {
-        dispatch(setWorkingHours(data))
+        dispatch(setWorkingHours(data));
         return data;
       }
 
