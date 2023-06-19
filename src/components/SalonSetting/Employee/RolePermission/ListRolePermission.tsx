@@ -27,6 +27,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import Badge from '@mui/material/Badge';
+
 const General = () => {
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(
     ({ theme, isActive }) => ({
@@ -50,36 +51,43 @@ const General = () => {
   );
   const avatar = [
     {
+      Id: 1,
       color: '#2D9DE3',
       avatarThumb: '/assets/images/RolePermission/4.svg',
       isActive: true,
     },
     {
+      Id: 2,
       color: '#9D46DE',
       avatarThumb: '/assets/images/RolePermission/5.svg',
       isActive: true,
     },
     {
+      Id: 3,
       color: '#00AD93',
       avatarThumb: '/assets/images/RolePermission/7.svg',
       isActive: false,
     },
     {
+      Id: 4,
       color: '#00AD93',
       avatarThumb: '/assets/images/RolePermission/8.svg',
       isActive: true,
     },
     {
+      Id: 5,
       color: '#00AD93',
       avatarThumb: '/assets/images/RolePermission/9.svg',
       isActive: false,
     },
     {
+      Id: 6,
       color: '#7DB400',
       avatarThumb: '/assets/images/RolePermission/2.svg',
       isActive: true,
     },
     {
+      Id: 7,
       color: '#2D9DE3',
       avatarThumb: '/assets/images/RolePermission/1.svg',
       isActive: false,
@@ -87,27 +95,35 @@ const General = () => {
   ];
   const accessibility = [
     {
+      Id: 1,
       Text: 'function 1',
     },
     {
+      Id: 2,
       Text: 'function 2',
     },
     {
+      Id: 3,
       Text: 'function 3',
     },
     {
+      Id: 4,
       Text: 'function 4',
     },
     {
+      Id: 5,
       Text: 'function 5',
     },
     {
+      Id: 6,
       Text: 'function 6',
     },
     {
+      Id: 7,
       Text: 'function 7',
     },
     {
+      Id: 8,
       Text: 'function 8',
     },
   ];
@@ -128,7 +144,7 @@ const General = () => {
         <Typography
           variant="h2"
           component="h2"
-          className="color-[#1F1F23] text-[32px] font-semibold"
+          className="text-[32px] font-semibold text-[#1F1F23]"
         >
           Role & Permission
         </Typography>
@@ -270,17 +286,18 @@ const General = () => {
               </TableRow>
             </TableHead>
             <TableBody className="text-[16px]">
-              <TableRow className="text-[16px] align-top">
+              <TableRow className="align-top text-[16px]">
                 <TableCell component="td" scope="row" className="text-[16px]">
                   Owner
                 </TableCell>
                 <TableCell component="td" scope="row" className="text-[16px]">
                   2 users
-                  <AvatarGroup max={3} className="justify-end mt-[4px]">
-                    {avatar.slice(0, 2).map((avatarItem, index) => (
+                  <AvatarGroup max={3} className="mt-[4px] justify-end">
+                    {avatar.slice(0, 2).map((avatarItem) => (
                       <StyledBadge
                         isActive={avatarItem.isActive}
                         overlap="circular"
+                        key={avatarItem.Id}
                         anchorOrigin={{
                           vertical: 'bottom',
                           horizontal: 'right',
@@ -288,7 +305,6 @@ const General = () => {
                         variant="dot"
                       >
                         <Avatar
-                          key={index}
                           src={avatarItem.avatarThumb}
                           style={{
                             border: `2px solid ${avatarItem.color}`,
@@ -302,7 +318,7 @@ const General = () => {
                 <TableCell component="td" scope="row">
                   <Stack direction="row" spacing={2}>
                     <Chip
-                      className="text-[16px] font-normal text-white bg-[#00BDD6] py-[7px] px-[10px]"
+                      className="bg-[#00BDD6] px-[10px] py-[7px] text-[16px] font-normal text-white"
                       label="All functions"
                     />
                   </Stack>
@@ -316,25 +332,26 @@ const General = () => {
                   </IconButton>
                 </TableCell>
               </TableRow>
-              <TableRow className="text-[16px] align-top w-[100%]">
+              <TableRow className="w-[100%] align-top text-[16px]">
                 <TableCell
                   component="td"
                   scope="row"
-                  className="text-[16px] w-[15%]"
+                  className="w-[15%] text-[16px]"
                 >
                   Manager
                 </TableCell>
                 <TableCell
                   component="td"
                   scope="row"
-                  className="text-[16px] w-[20%]"
+                  className="w-[20%] text-[16px]"
                 >
                   4 users
-                  <AvatarGroup className="justify-end mt-[4px]">
-                    {avatar.slice(0, 4).map((avatarItem, index) => (
+                  <AvatarGroup className="mt-[4px] justify-end">
+                    {avatar.slice(0, 4).map((avatarItem) => (
                       <StyledBadge
                         isActive={avatarItem.isActive}
                         overlap="circular"
+                        key={avatarItem.Id}
                         anchorOrigin={{
                           vertical: 'bottom',
                           horizontal: 'right',
@@ -342,7 +359,6 @@ const General = () => {
                         variant="dot"
                       >
                         <Avatar
-                          key={index}
                           src={avatarItem.avatarThumb}
                           style={{
                             border: `2px solid ${avatarItem.color}`,
@@ -357,10 +373,10 @@ const General = () => {
                   {accessibility.length} functions
                   <div>
                     <Stack direction="row" flexWrap="wrap">
-                      {accessibility.map((item, index) => (
+                      {accessibility.map((item) => (
                         <Chip
-                          key={index}
-                          className="overflow-visible mt-2 mr-2 float-right text-[16px] font-normal text-primary-dark bg-[#00BDD614] py-[7px] px-[10px] w-[100px]"
+                          key={item.Id}
+                          className="float-right mr-2 mt-2 w-[100px] overflow-visible bg-[#00BDD614] px-[10px] py-[7px] text-[16px] font-normal text-primary-dark"
                           label={item.Text}
                           sx={{
                             '& .css-6od3lo-MuiChip-label': {
@@ -372,7 +388,7 @@ const General = () => {
                     </Stack>
                   </div>
                 </TableCell>
-                <TableCell align="right" className="text-[16px] w-[10%]">
+                <TableCell align="right" className="w-[10%] text-[16px]">
                   <IconButton>
                     <EditIcon fontSize="small" />
                   </IconButton>
@@ -381,24 +397,25 @@ const General = () => {
                   </IconButton>
                 </TableCell>
               </TableRow>
-              <TableRow className="text-[16px] align-top w-[100%]">
+              <TableRow className="w-[100%] align-top text-[16px]">
                 <TableCell
                   component="td"
                   scope="row"
-                  className="text-[16px] w-[20%]"
+                  className="w-[20%] text-[16px]"
                 >
                   Technician
                 </TableCell>
                 <TableCell
                   component="td"
                   scope="row"
-                  className="text-[16px] w-[20%]"
+                  className="w-[20%] text-[16px]"
                 >
                   {avatar.length} users
-                  <AvatarGroup max={6} className="justify-end mt-[4px]">
-                    {avatar.map((avatarItem, index) => (
+                  <AvatarGroup max={6} className="mt-[4px] justify-end">
+                    {avatar.map((avatarItem) => (
                       <StyledBadge
                         isActive={avatarItem.isActive}
+                        key={avatarItem.Id}
                         overlap="circular"
                         anchorOrigin={{
                           vertical: 'bottom',
@@ -407,7 +424,6 @@ const General = () => {
                         variant="dot"
                       >
                         <Avatar
-                          key={index}
                           src={avatarItem.avatarThumb}
                           style={{
                             border: `2px solid ${avatarItem.color}`,
@@ -422,10 +438,10 @@ const General = () => {
                   6 functions
                   <div>
                     <Stack direction="row" flexWrap="wrap">
-                      {accessibility.slice(0, 6).map((item, index) => (
+                      {accessibility.slice(0, 6).map((item) => (
                         <Chip
-                          key={index}
-                          className="mt-2 mr-2 float-right text-[16px] font-normal text-primary-dark bg-[#00BDD614] py-[7px] px-[10px] w-[100px]"
+                          key={item.Id}
+                          className="float-right mr-2 mt-2 w-[100px] bg-[#00BDD614] px-[10px] py-[7px] text-[16px] font-normal text-primary-dark"
                           label={item.Text}
                           sx={{
                             '& .css-6od3lo-MuiChip-label': {
@@ -437,7 +453,7 @@ const General = () => {
                     </Stack>
                   </div>
                 </TableCell>
-                <TableCell align="right" className="text-[16px] w-[10%]">
+                <TableCell align="right" className="w-[10%] text-[16px]">
                   <IconButton>
                     <EditIcon fontSize="small" />
                   </IconButton>
