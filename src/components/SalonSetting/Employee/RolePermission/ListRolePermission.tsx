@@ -11,7 +11,6 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Paper,
   Select,
   MenuItem,
   Grid,
@@ -22,6 +21,7 @@ import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+
 const General = () => {
   const [filterPayStructures, setFilterPayStructures] = useState('');
   const [filterRolePermission, setFilterRolePermission] = useState('');
@@ -39,11 +39,11 @@ const General = () => {
         <Typography
           variant="h2"
           component="h2"
-          className="text-[32px] color-[#1F1F23] font-semibold"
+          className="color-[#1F1F23] text-[32px] font-semibold"
         >
           Role & Permission
         </Typography>
-        <div className="flex items-center justify-between w-[500px]">
+        <div className="flex w-[500px] items-center justify-between">
           <FormControl
             sx={{
               '& .MuiInputBase-root.Mui-focused': {
@@ -75,24 +75,27 @@ const General = () => {
           </FormControl>
 
           <Button
-            className="bg-[#00BDD6] text-[#ffff] text-[16px] font-bold w-[188px] h-[48px] hover:bg-[#00ADC3]"
+            className="h-[48px] w-[188px] bg-[#00BDD6] text-[16px] font-bold text-[#ffff] hover:bg-[#00ADC3]"
             variant="contained"
             startIcon={<AddIcon />}
           >
             Add Role
           </Button>
 
-          <Button
-            className=" text-[#ffff] text-[16px] font-bold w-[35] h-[48px] hover:bg-[#5C5D6A29] border-[#B0B2C6]"
+          {/* <Button
+            className=" h-[48px] w-[35] border-[#B0B2C6] text-[16px] font-bold text-[#ffff] hover:bg-[#5C5D6A29]"
             variant="outlined"
           >
             <MoreHorizIcon style={{ color: '#5C5D6A' }} />
-          </Button>
+          </Button> */}
+          <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded border border-mango-gray-light-3  hover:bg-[#5C5D6A29]">
+            <MoreHorizIcon />
+          </div>
         </div>
       </div>
-      <div className="bg-[##F3F4F6] w-full h-[80px] ">
+      <div className="h-[80px] w-full bg-[##F3F4F6] ">
         <Grid xs={12} item>
-          <div className=" bg-[#F3F4F6] w-full h-[80px] flex items-center gap-6 rounded-sm pr-4 pl-[16px] py-7 mt-[24px] ">
+          <div className=" mt-[24px] flex h-[80px] w-full items-center gap-6 rounded-sm bg-[#F3F4F6] py-7 pl-[16px] pr-4 ">
             <FormControl
               variant="outlined"
               size="small"
@@ -167,25 +170,25 @@ const General = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell className="text-[#737277] text-[14px] pb-[7px]">
+                <TableCell className="pb-[7px] text-[14px] text-[#737277]">
                   ROLE
                 </TableCell>
                 <TableCell
-                  className="text-[#737277] text-[14px] pb-[7px]"
+                  className="pb-[7px] text-[14px] text-[#737277]"
                   align="left"
                 >
                   EMPLOYEE
                 </TableCell>
                 <TableCell
-                  className="text-[#737277] text-[14px] pb-[7px]"
+                  className="pb-[7px] text-[14px] text-[#737277]"
                   align="left"
                 >
                   ACCESSIBILITY
                 </TableCell>
                 <TableCell
-                  className="text-[#737277] text-[14px] pb-[7px]"
+                  className="pb-[7px] text-[14px] text-[#737277]"
                   align="left"
-                ></TableCell>
+                />
               </TableRow>
             </TableHead>
             <TableBody>
@@ -196,7 +199,7 @@ const General = () => {
                 2 users
               </TableCell>
               <TableCell component="th" scope="row">
-                <div className="bg-[#00BDD6] text-[#ffff] text-[16px] text-center w-fit py-[7px] px-[10px] rounded-full">
+                <div className="w-fit rounded-full bg-[#00BDD6] px-[10px] py-[7px] text-center text-[16px] text-[#ffff]">
                   All functions{' '}
                 </div>
               </TableCell>
