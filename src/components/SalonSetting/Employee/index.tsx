@@ -2,6 +2,7 @@ import { Box, Tab, styled } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { useState } from 'react';
+import EmployeeList from './EmployeeList';
 import RolePermissionList from './RolePermission/ListRolePermission';
 
 interface StyledTabsProps {
@@ -9,6 +10,22 @@ interface StyledTabsProps {
   value: number;
   onChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
+interface StyledTabProps {
+  label: string;
+}
+
+const AntTab = styled((props: StyledTabProps) => (
+  <Tab disableRipple {...props} />
+))(() => ({
+  fontWeight: 500,
+
+  color: '#9B9BA00',
+  '&.Mui-selected': {
+    color: '#00BED6',
+    fontWeight: 700,
+  },
+}));
+
 const StyledTabs = styled((props: StyledTabsProps) => (
   <Tabs
     {...props}
@@ -19,9 +36,10 @@ const StyledTabs = styled((props: StyledTabsProps) => (
   '& .MuiTabs-indicator': {
     display: 'flex',
     justifyContent: 'center',
-
+    color: '#00BED6',
     backgroundColor: 'transparent',
   },
+
   '& .MuiTabs-indicatorSpan': {
     width: '100%',
     color: '#00BED6',
@@ -38,26 +56,26 @@ export const EmployeeSetting = () => {
   const items = [
     {
       id: 0,
-      label: <span>EMPLOYEE LIST</span>,
+      label: 'EMPLOYEE LIST',
       key: 'employeeList',
-      children: <></>,
+      children: <EmployeeList />,
     },
     {
       id: 1,
-      label: <span>ROLE & PERMISSION</span>,
+      label: 'ROLE & PERMISSION',
       key: 'rolePermissions',
       children: <RolePermissionList />,
     },
 
     {
       id: 2,
-      label: <span>PAY STRUCTURE</span>,
+      label: 'PAY STRUCTURE',
       key: 'payStructure',
       children: <></>,
     },
     {
       id: 3,
-      label: <span>SERVICE & PRODUCT</span>,
+      label: 'SERVICE & PRODUCT',
       key: 'serviceProduct',
       children: <></>,
     },
@@ -69,11 +87,7 @@ export const EmployeeSetting = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <StyledTabs value={activeKey} onChange={handleChange}>
             {items.map((item) => (
-              <Tab
-                key={item.key}
-                label={item.label}
-                className="text-xl font-bold"
-              />
+              <AntTab key={item.key} label={item.label} />
             ))}
           </StyledTabs>
         </Box>
