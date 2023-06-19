@@ -13,24 +13,24 @@ export const SalonSettingComponent = () => {
     {
       id: 'storeProfile',
       name: 'Store Profile',
-      image: '/assets/images/SalonSetting/setting-1.svg',
-      image1: '/assets/images/SalonSetting/5.svg',
+      image: '/assets/images/SalonSetting/store-profile-icon.svg',
+      image1: '/assets/images/SalonSetting/store-profile1-icon.svg',
       selected: true,
       component: <></>,
     },
     {
       id: 'configuration',
       name: 'Configuration',
-      image: '/assets/images/SalonSetting/setting-1.svg',
-      image1: '/assets/images/SalonSetting/5.svg',
+      image: '/assets/images/SalonSetting/configuration-icon.svg',
+      image1: '/assets/images/SalonSetting/configuration1-icon.svg',
       selected: false,
       component: <ConfigurationSetting />,
     },
     {
       id: 'menu',
       name: 'Menu',
-      image: '/assets/images/SalonSetting/setting-1.svg',
-      image1: '/assets/images/SalonSetting/5.svg',
+      image: '/assets/images/SalonSetting/menu-icon.svg',
+      image1: '/assets/images/SalonSetting/menu1-icon.svg',
       selected: false,
       component: <></>,
     },
@@ -38,16 +38,16 @@ export const SalonSettingComponent = () => {
     {
       id: 'employee',
       name: 'Employee',
-      image: '/assets/images/SalonSetting/setting-1.svg',
-      image1: '/assets/images/SalonSetting/5.svg',
+      image: '/assets/images/SalonSetting/employee-icon.svg',
+      image1: '/assets/images/SalonSetting/employee1-icon.svg',
       selected: false,
       component: <EmployeeSetting />,
     },
     {
       id: 'workSchedule',
       name: 'Work Schedule',
-      image: '/assets/images/SalonSetting/setting-1.svg',
-      image1: '/assets/images/SalonSetting/5.svg',
+      image: '/assets/images/SalonSetting/work-schedule-icon.svg',
+      image1: '/assets/images/SalonSetting/work-schedule1-icon.svg',
       selected: false,
       component: <></>,
     },
@@ -73,19 +73,12 @@ export const SalonSettingComponent = () => {
       <div
         className={`${
           isClosedSlideBar ? 'w-[288px]' : 'w-[100px]'
-        }  h-full bg-[#EAEDF1] p-2`}
+        }  h-full bg-mango-gray-light-5 p-2 shadow-mango-shadow-1`}
         style={{ transition: '0.3s ease-in' }}
       >
         <Button
           variant="text"
           onClick={handleChangeSlideBar}
-          endIcon={
-            !isClosedSlideBar ? (
-              <ArrowBackIosNewIcon />
-            ) : (
-              <ArrowForwardIosIcon />
-            )
-          }
           className="mb-6 flex h-[50px] w-full cursor-pointer rounded-[5px] !bg-white px-[10px] py-[15px] shadow-md"
         >
           {isClosedSlideBar && (
@@ -93,30 +86,42 @@ export const SalonSettingComponent = () => {
               SALON SETTINGS
             </h2>
           )}
+          {!isClosedSlideBar ? (
+            <ArrowBackIosNewIcon />
+          ) : (
+            <ArrowForwardIosIcon />
+          )}
         </Button>
         {/* List Feature */}
         {listFeature.map((item) => (
           <Button
             variant="text"
             onClick={() => handleSelectedListFeature(item.id)}
-            sx={{ mt: 2, color: 'white' }}
+            sx={{
+              mt: 2,
+            }}
+            // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
             className={`${
               item.selected
-                ? '!bg-mango-primary-blue text-white shadow-md'
+                ? ' bg-[#00bdd6] bg-opacity-20 !text-primary-main '
                 : ' text-mango-text-gray-2 hover:!bg-[#00BED630]'
-            } flex w-full cursor-pointer justify-start rounded-[5px] p-2`}
+            } ${
+              isClosedSlideBar && 'justify-start'
+            } flex h-14 w-full cursor-pointer rounded-[5px] p-2`}
             key={item.id}
           >
             <Image
-              src={item.selected ? item.image : item.image1}
-              className={`h-6 ${!isClosedSlideBar && 'm-auto'} `}
+              src={item.selected ? item.image1 : item.image}
+              className={` ${!isClosedSlideBar && 'm-auto'} `}
               width={24}
               height={24}
               alt="logo"
             />
             {isClosedSlideBar && (
               <span
-                className={` ml-2 truncate text-[16px] font-bold capitalize`}
+                className={`ml-2 truncate text-[16px] font-bold capitalize ${
+                  item.selected && 'text-mango-primary-blue'
+                }`}
               >
                 {item.name}
               </span>

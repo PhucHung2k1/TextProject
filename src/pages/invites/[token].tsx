@@ -7,11 +7,22 @@ import { useAppDispatch } from '@/store/hook';
 
 const AcceptInviteJoinStore = () => {
   const router = useRouter();
-  const { token }: any = router.query;
   const dispatch = useAppDispatch();
+  const { asPath } = router;
 
   const handleAcceptEmail = () => {
-    dispatch(confirmInvitation({ Token: token }));
+    const url = 'invites/';
+    const token = asPath.slice(asPath.indexOf(url), -1).replace(url, '');
+    dispatch(confirmInvitation({ Token: token })).then((res) => {
+      if (res.payload) {
+        if (
+          res.payload?.code === '40001' ||
+          res.payload?.message === 'Customer not exist'
+        ) {
+          router.push('/sign-up');
+        } else router.push('/login');
+      }
+    });
   };
   return (
     <main className="flex h-screen w-full items-center justify-center bg-mango-gray-light-2">

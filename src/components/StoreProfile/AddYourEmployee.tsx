@@ -34,7 +34,7 @@ const AddYourEmployee = () => {
       >
         <div className=" my-5 flex w-full ">
           <Box
-            className={`flex w-full items-center justify-center rounded-lg  !border-border-light  ${
+            className={`flex  w-full items-center justify-center rounded-lg !border-dashed !border-border-light  ${
               isEmptyInvitationList ? '!border !bg-blue-gray' : '!border-0 '
             }`}
           >
@@ -42,7 +42,7 @@ const AddYourEmployee = () => {
               <Button
                 variant="text"
                 onClick={handleAddEmployee}
-                className="h-full w-full gap-2 text-base font-bold !text-blue-gray-900 "
+                className="h-40 w-full  gap-2 text-base font-bold !text-blue-gray-900 "
                 startIcon={
                   <PersonAddIcon sx={{ mb: 0.5, height: 28, width: 22 }} />
                 }

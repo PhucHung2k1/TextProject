@@ -86,16 +86,17 @@ export const confirmInvitation = createAsyncThunk(
     const servicesCustomerAPI = new Customer();
 
     try {
-      const { status, error } = await servicesCustomerAPI.confirmInvitation(
-        _body
-      );
+      const { data, status, error } =
+        await servicesCustomerAPI.confirmInvitation(_body);
 
       if (status === 200) {
         dispatch(invitationList({}));
         showToastMessage(dispatch, 'Join Store Success', 'success');
+        return { data, status };
       }
       if (error) {
         showToastMessage(dispatch, error?.data.message, 'error');
+        return error?.data;
       }
     } catch (err: any) {
       // showToastMessage(dispatch, err?.extendData[0]?.Message, 'error');
