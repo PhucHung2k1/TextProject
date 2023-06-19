@@ -125,7 +125,7 @@ export const SalonSettingComponent = () => {
         ))}
       </div>
       {/* Right Content  */}
-      <div className="h-full w-full px-12 py-2 ">
+      <div className="h-full w-full bg-white px-12 py-2">
         {listFeature.find((feature) => feature.selected)?.component}
       </div>
     </div>

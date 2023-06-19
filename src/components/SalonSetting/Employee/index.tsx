@@ -2,6 +2,7 @@ import { Box, Tab, styled } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { useState } from 'react';
+import EmployeeList from './EmployeeList';
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -40,7 +41,7 @@ export const EmployeeSetting = () => {
       label: <span>EMPLOYEE LIST</span>,
       key: 'employeeList',
 
-      children: <></>,
+      children: <EmployeeList />,
     },
     {
       id: 1,
