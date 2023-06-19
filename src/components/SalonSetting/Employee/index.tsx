@@ -3,6 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { useState } from 'react';
 import RolePermissionList from './RolePermission/ListRolePermission';
+
 interface StyledTabsProps {
   children?: React.ReactNode;
   value: number;
