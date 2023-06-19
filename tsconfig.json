@@ -17,6 +17,7 @@
     "noUnusedParameters": true,
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true,
+    "downlevelIteration": true,
 
     "target": "es5",
     "outDir": "out",

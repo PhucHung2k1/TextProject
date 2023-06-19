@@ -54,6 +54,14 @@ const Main = (props: IMainProps) => (
                 Store Profile
               </Link>
             </li>
+            <li className="mr-6">
+              <Link
+                href="/salon-setting"
+                className="border-none text-gray-700 hover:text-gray-900"
+              >
+                Salon Setting
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>
