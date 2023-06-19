@@ -7,8 +7,6 @@ import { AddYourEmployeeModal } from './LayoutAddEmployee/AddYourEmployeeModal';
 import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
 import InvitationListComponent from './LayoutAddEmployee/InvitationListComponent';
 import { invitationList } from '@/store/customer/customerAction';
-import { getAllRole } from '@/store/customerRole/customerRoleAction';
-import { lookupData } from '@/store/common/commonAction';
 
 const AddYourEmployee = () => {
   const dispatch = useAppDispatch();
@@ -16,10 +14,9 @@ const AddYourEmployee = () => {
   const invitationListData = useAppSelector(
     (state) => state.customerRoleSlice.invitationList
   );
+  // .filter((item) => item.IsAccepted);
   const isEmptyInvitationList = invitationListData.length === 0;
   const handleAddEmployee = async () => {
-    dispatch(getAllRole({}));
-    dispatch(lookupData({}));
     dispatch(setModalContentMUI(<AddYourEmployeeModal />));
     dispatch(showModalMUI());
   };
@@ -35,7 +32,7 @@ const AddYourEmployee = () => {
         skip={isEmptyInvitationList}
         disableBtn={isEmptyInvitationList}
       >
-        <div className=" my-5 flex min-h-[160px] w-full ">
+        <div className=" my-5 flex w-full ">
           <Box
             className={`flex w-full items-center justify-center rounded-lg  !border-border-light  ${
               isEmptyInvitationList ? '!border !bg-blue-gray' : '!border-0 '
@@ -53,7 +50,10 @@ const AddYourEmployee = () => {
                 Add employee
               </Button>
             ) : (
-              <InvitationListComponent />
+              <InvitationListComponent
+                invitationListData={invitationListData}
+                handleAddEmployee={handleAddEmployee}
+              />
             )}
           </Box>
         </div>

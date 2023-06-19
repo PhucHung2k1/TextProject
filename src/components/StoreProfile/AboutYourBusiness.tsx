@@ -1,60 +1,114 @@
-import { Button, TextField, InputAdornment, Divider } from '@mui/material';
+import {
+  Button,
+  TextField,
+  InputAdornment,
+  Divider,
+  Box,
+  FormControl,
+} from '@mui/material';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
-
-import { useForm } from 'react-hook-form';
+import { getStoreCustomer } from '@/store/store/storeAction';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
 import { handleForwardProgressSetupStore } from './helper';
-import { getStoreCustomer } from '@/store/store/storeAction';
+import { apiPostPhoto } from '@/utils/axios/instance';
+import { Store } from '@/services/store.service/store.service';
+import type { IStoreProfile } from '@/services/store.service/store.interface';
+import { useForm } from 'react-hook-form';
 
-interface IFormInput {
-  ProfilePictureUrl: string;
-  Name: string;
-  PhoneNumber: string;
-}
+const POST_IMAGE = '/file/upload-picture';
 
 const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
+
   const storeCustomer = useAppSelector(
-    (state) => state.storeSlice.storeCustomer
+    (state) => state.storeSlice.storeCustomer[0]
   );
-  // eslint-disable-next-line no-console
-  console.log(
-    '🚀 ~ file: AboutYourBusiness.tsx:22 ~ AboutYourBusiness ~ storeCustomer:',
-    storeCustomer
-  );
-  const [selectedImage, setSelectedImage] = useState<Blob>();
-  // const [progress, setProgress] = useState<number>(0);
-  const { register } = useForm<IFormInput>();
-  const imageChange = (e: any) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0]);
+
+  const [selectedImage, setSelectedImage] = useState<any>();
+  const [avatarImage, setAvatarImage] = useState<any>();
+  const [formStore, setFormStore] = useState({
+    Id: storeCustomer?.Id || '',
+    Name: storeCustomer?.Name || '',
+    PhoneNumber: storeCustomer?.PhoneNumber || '',
+    ProfilePictureUrl: storeCustomer?.ProfilePictureUrl || '',
+  });
+
+  const {
+    // register,
+    // formState: { errors },
+    handleSubmit,
+  } = useForm<IStoreProfile>();
+
+  const uploadImage = async (imageFile: File): Promise<void> => {
+    if (imageFile) {
+      try {
+        const formData = new FormData();
+        formData.append('File', imageFile);
+        const res = await apiPostPhoto(POST_IMAGE, formData);
+        return res.data;
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
-  // const onSubmit = async (values: IFormInput) => {
-  //   dispatch(updateStoreProfile(values)).then(
-  //     (res) => {
-  //       const responseData = res.payload;
-  //       // if (responseData?.status === 200) {
-  //       router.push(
-  //         {
-  //           pathname: '/Name',
-  //           query: {
-  //             name: values.Name,
-  //             PhoneNumber: values.PhoneNumber,
-  //             ProfilePictureUrl: values.ProfilePictureUrl,
-  //           },
-  //         },
-  //         '/Name'
-  //       );
-  //     }
-  //     // }
-  //   );
-  // };
+  const handleFileImage = async (e: any) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+    const responsive = await uploadImage(file);
+    setAvatarImage(responsive);
+  };
+  const handleFieldChange = (e: any) => {
+    setFormStore({
+      ...formStore,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const submitForm = async () => {
+    const storeAPI = new Store();
+    try {
+      const patchData = [
+        {
+          op: 'replace',
+          path: '/Name',
+          value: formStore.Name ? formStore.Name : storeCustomer?.Name,
+        },
+        {
+          op: 'replace',
+          path: '/PhoneNumber',
+          value: formStore.PhoneNumber
+            ? formStore.PhoneNumber
+            : storeCustomer?.PhoneNumber,
+        },
+        {
+          op: 'replace',
+          path: '/ProfilePictureUrl',
+          value: avatarImage ? avatarImage.OriginalPublishUrl : avatarImage,
+        },
+      ];
+
+      await storeAPI.updateStore(formStore.Id, patchData);
+      handleForwardProgressSetupStore(dispatch);
+    } catch (error) {}
+  };
+
   useEffect(() => {
     dispatch(getStoreCustomer({}));
-  }, []);
+    if (storeCustomer) {
+      setFormStore({
+        Name: storeCustomer?.Name || '',
+        PhoneNumber: storeCustomer?.PhoneNumber || '',
+        ProfilePictureUrl: storeCustomer?.ProfilePictureUrl || '',
+        Id: storeCustomer?.Id || '',
+      });
+    }
+  }, [
+    storeCustomer?.Name,
+    storeCustomer?.PhoneNumber,
+    storeCustomer?.ProfilePictureUrl,
+  ]);
 
   return (
     <LayoutStoreProfile>
@@ -64,32 +118,41 @@ const AboutYourBusiness = () => {
       <p className="mb-[48px] text-center text-[14px] text-mango-text-gray-2">
         Tell us about your salon
       </p>
-      <form className="mt-6 flex flex-wrap justify-center gap-2" noValidate>
+      <form
+        className="mt-6 flex flex-wrap justify-center gap-2"
+        noValidate
+        onSubmit={handleSubmit(submitForm)}
+      >
         <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full bg-[#F2F2F5] border border-{#CBCBDB}">
           {selectedImage ? (
             <Image
-              src={
-                selectedImage
-                  ? `${URL.createObjectURL(selectedImage)}`
-                  : '/assets/images/SetupStore/image.svg'
-              }
+              src={URL?.createObjectURL(selectedImage)}
               alt="logo"
               layout="fill"
               className="rounded-full object-cover"
             />
           ) : (
             <Image
-              src="/assets/images/SetupStore/image.svg"
-              alt="logo"
-              width={45}
-              height={45}
+              src={
+                formStore.ProfilePictureUrl !== ''
+                  ? formStore.ProfilePictureUrl
+                  : '/assets/images/StoreProfile/store-default.png'
+              }
+              alt="logo1"
+              width={186}
+              height={186}
+              className={
+                formStore.ProfilePictureUrl !== ''
+                  ? 'rounded-full object-cover'
+                  : 'rounded-full'
+              }
             />
           )}
 
           <input
             className="absolute bottom-0 right-0 z-10 mb-0 h-[185px] w-[185px] cursor-pointer opacity-0"
             accept="image/*"
-            onChange={imageChange}
+            onChange={handleFileImage}
             type="file"
             id="imageUpload"
           />
@@ -111,7 +174,13 @@ const AboutYourBusiness = () => {
             label="Your salon name"
             variant="outlined"
             className="mb-2 w-full"
-            {...register('Name', {})}
+            value={formStore.Name}
+            // error={Boolean(errors.Name)}
+            // {...register('Name', {
+            //   required: 'Enter Your Name!',
+            // })}
+            name="Name"
+            onChange={handleFieldChange}
             sx={{
               '& .MuiInputBase-root.Mui-focused': {
                 '& > fieldset': {
@@ -128,7 +197,6 @@ const AboutYourBusiness = () => {
           <TextField
             disabled
             className="w-[128px] bg-[#F2F2F2]"
-            {...register('PhoneNumber', {})}
             sx={{
               '& .MuiInputBase-input.Mui-disabled': {
                 WebkitTextFillColor: '#404044',
@@ -142,15 +210,17 @@ const AboutYourBusiness = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <img
-                    loading="lazy"
-                    width="20"
-                    src="/assets/images/SetupStore/US.png"
-                    alt=""
-                    className="mr-1"
-                  />
+                  <Box className="h-5 w-5">
+                    <Image
+                      loading="lazy"
+                      width={20}
+                      height={20}
+                      src="/assets/images/SetupStore/US.png"
+                      alt=""
+                    />
+                  </Box>
                   <Divider
-                    className="mr-10"
+                    className="mr-4"
                     sx={{ height: 28, m: 0.5 }}
                     orientation="vertical"
                   />
@@ -159,30 +229,39 @@ const AboutYourBusiness = () => {
             }}
             variant="outlined"
           />
-          <div className="h-[56px] w-[352px] ">
-            <TextField
-              sx={{
-                '& .MuiInputBase-root.Mui-focused': {
-                  '& > fieldset': {
-                    borderColor: '#00BDD6',
+          <div>
+            <FormControl className="h-[56px] w-[352px] ">
+              <TextField
+                sx={{
+                  '& .MuiInputBase-root.Mui-focused': {
+                    '& > fieldset': {
+                      borderColor: '#00BDD6',
+                    },
                   },
-                },
-                '& label.Mui-focused': {
-                  color: '#00BDD6',
-                },
-              }}
-              id="outlined-basic"
-              label="Phone number"
-              variant="outlined"
-              className="w-full font-[16px] text-[#404044]"
-            />
+                  '& label.Mui-focused': {
+                    color: '#00BDD6',
+                  },
+                }}
+                value={formStore.PhoneNumber}
+                // error={Boolean(errors.PhoneNumber)}
+                // {...register('PhoneNumber', {
+                //   required: 'Enter Your PhoneNumber!',
+                // })}
+                onChange={handleFieldChange}
+                name="PhoneNumber"
+                id="outlined-basic"
+                label="Phone number"
+                variant="outlined"
+                className="w-full font-[16px] text-[#404044]"
+              />
+            </FormControl>
           </div>
         </div>
         <Button
           className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-[#00ADC3]"
           variant="contained"
           type="submit"
-          onClick={() => handleForwardProgressSetupStore(dispatch)}
+          // onClick={() => handleForwardProgressSetupStore(dispatch)}
         >
           CONTINUE
         </Button>

@@ -21,22 +21,74 @@ import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import moment from 'moment';
-
-import { IWorkingHours } from '@/services/workingHours.service/workingHours.interface';
-import { convertTo12h } from '@/helper/stringHelper';
-import { getWorkingHours } from '@/store/workingHours/workingHoursAction';
+import { Clear } from '@mui/icons-material';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const [showEditHours, setShowEditHours] = useState(false);
   const [startHour, setStartHour] = useState('');
   const [endHour, setEndHour] = useState('');
   const [dayStatus, setDayStatus] = useState(true);
-  const [selectedId, setSelectedId] = useState('');
+  const [selectedId, setSelectedId] = useState(0);
   const [showForm, setShowForm] = useState(true);
   const [forms, setForms] = useState([{ id: 0 }]);
-  const [listData, setListData] = useState<IWorkingHours[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [listData, setListData] = useState([
+    {
+      id: 1,
+      day: 'Sunday',
+      startTime: '10:00 AM',
+      endTime: '9:00 PM',
+      workTime: 'Closed',
+      status: false,
+    },
+    {
+      id: 2,
+      day: 'Monday',
+      startTime: '9:00 AM',
+      endTime: '9:00 PM',
+      workTime: '9:00 AM - 9:00 PM',
+      status: true,
+    },
+    {
+      id: 3,
+      day: 'Tuesday',
+      startTime: '9:00 AM',
+      endTime: '9:00 PM',
+      workTime: '9:00 AM - 9:00 PM',
+      status: true,
+    },
+    {
+      id: 4,
+      day: 'Wednesday',
+      startTime: '9:00 AM',
+      endTime: '9:00 PM',
+      workTime: '9:00 AM - 9:00 PM',
+      status: true,
+    },
+    {
+      id: 5,
+      day: 'Thursday',
+      startTime: '9:00 AM',
+      endTime: '9:00 PM',
+      workTime: '9:00 AM - 9:00 PM',
+      status: true,
+    },
+    {
+      id: 6,
+      day: 'Friday',
+      startTime: '9:00 AM',
+      endTime: '9:00 PM',
+      workTime: '9:00 AM - 9:00 PM',
+      status: true,
+    },
+    {
+      id: 7,
+      day: 'Saturday',
+      startTime: '9:00 AM',
+      endTime: '9:00 PM',
+      workTime: 'Closed',
+      status: true,
+    },
+  ]);
   const timeOptions = [
     '5:00 AM',
     '6:00 AM',
@@ -59,35 +111,6 @@ const StoreWorkingHoursSetup: NextPage = () => {
     '11:00 PM',
   ];
 
-  if (isLoading) {
-    var myHeaders = new Headers();
-    myHeaders.append(
-      'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hbmdvQGVucmljaGNvLnVzIiwidWlkIjoiMDllYTA5MGEtNTdmYS00NDIyLWEwNjgtYjU0NTAwNTkwZTQxIiwic3RvcmUiOiIiLCJleHAiOjE2ODcxNDQ4OTgsImlzcyI6IkVucmljaElNUyIsImF1ZCI6IkVucmljaElNU1VzZXIifQ.Cz6c7zb0eQ7BGlXxjOGxDPUNVwD1Fyh_Ge8j5Bt34JE'
-    );
-
-    var requestOptions: any = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow',
-    };
-
-    fetch('http://115.78.7.131:7200/store/store-hours', requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        const parsedResult: IWorkingHours[] = JSON.parse(result);
-        const updatedList = parsedResult.map((item) => ({
-          ...item,
-          StartHours: convertTo12h(item.StartHours ?? '09:00:00'),
-          EndHours: convertTo12h(item.EndHours ?? '21:00:00'),
-        }));
-
-        setListData(updatedList);
-      })
-      .catch((error) => console.log('error', error));
-    setIsLoading(false);
-  }
-
   const dispatch = useAppDispatch();
   const handleShowEditHours = () => {
     setShowEditHours(!showEditHours);
@@ -106,19 +129,14 @@ const StoreWorkingHoursSetup: NextPage = () => {
 
   const handleChangeStatus = (index: number) => () => {
     const updatedList = listData.map((item, i) =>
-      i === index ? { ...item, IsClosed: !item.IsClosed } : item
+      i === index ? { ...item, status: !item.status } : item
     );
     setListData(updatedList);
   };
   const onSaveEditHours = () => {
     const updatedList = listData.map((item) =>
-      item.Id === selectedId
-        ? {
-            ...item,
-            StartHours: startHour,
-            EndHours: endHour,
-            IsClosed: showForm,
-          }
+      item.id === selectedId
+        ? { ...item, startTime: startHour, endTime: endHour, status: dayStatus }
         : item
     );
     setListData(updatedList);
@@ -136,13 +154,15 @@ const StoreWorkingHoursSetup: NextPage = () => {
   };
 
   return (
-    <>
+    <LayoutStoreProfile>
       {!showEditHours ? (
         <>
-          <div className=" my-12 text-center">
+          <div className="  text-center">
             <div className="flex items-center justify-center ">
               <ArrowBackIcon
-                onClick={() => handlePreviousProgressSetupStore(dispatch)}
+                onClick={() => {
+                  handlePreviousProgressSetupStore(dispatch);
+                }}
                 className="cursor-pointer text-3xl"
               />
               <p className="mx-auto text-[32px] font-semibold text-text-title">
@@ -155,27 +175,27 @@ const StoreWorkingHoursSetup: NextPage = () => {
               you
             </p>
           </div>
-          <div className="flex w-[90%] flex-col justify-center gap-[12px] text-text-primary">
+          <div className="flex flex-col justify-center gap-[12px] text-text-primary">
             {listData.map((item, index) => (
-              <div key={item.Id}>
+              <div key={item.id}>
                 <div>
                   <div className="flex flex-row items-center justify-start">
                     <div>
                       <Switch
-                        checked={item.IsClosed}
+                        checked={item.status}
                         className="p-3"
                         onChange={handleChangeStatus(index)}
                       />
                     </div>
                     <div className="w-[70px] font-semibold leading-[140%]">
-                      {item.DayName}
+                      {item.day}
                     </div>
                     <div className="w-[70%] text-center leading-[140%]">
-                      {item.IsClosed
-                        ? `${item.StartHours} - ${item.EndHours}`
+                      {item.status
+                        ? `${item.startTime} - ${item.endTime}`
                         : 'Closed'}
                     </div>
-                    {item.IsClosed ? (
+                    {item.status ? (
                       <Image
                         src="/chevronrightfilled.svg"
                         width="20"
@@ -185,10 +205,10 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         className="hidden cursor-pointer overflow-hidden"
                         onClick={() => {
                           handleShowEditHours();
-                          setSelectedId(item.Id);
-                          setDayStatus(item.IsClosed);
-                          setStartHour(item.StartHours);
-                          setEndHour(item.EndHours);
+                          setSelectedId(item.id);
+                          setDayStatus(item.status);
+                          setStartHour(item.startTime);
+                          setEndHour(item.endTime);
                         }}
                       />
                     ) : (
@@ -202,7 +222,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
             <button
               onClick={() => handleForwardProgressSetupStore(dispatch)}
               type="button"
-              className="mt-8 box-border flex w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] py-[13px] text-[18px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
+              className="mt-8 box-border flex h-12 w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
             >
               CONTINUE
             </button>
@@ -210,16 +230,11 @@ const StoreWorkingHoursSetup: NextPage = () => {
         </>
       ) : (
         <>
-          <div className=" mt-12 w-[90%]">
+          <div>
             <div className="flex items-center justify-center ">
-              <Image
-                src="/closefilled.svg"
-                width="20"
-                height="20"
-                alt=""
-                objectFit="cover"
-                className="hidden cursor-pointer overflow-hidden"
+              <Clear
                 onClick={handleShowEditHours}
+                className="cursor-pointer text-3xl"
               />
               <p className="mx-auto text-center text-[32px] font-semibold text-text-title">
                 Edit business hours
@@ -231,7 +246,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                 <div>
                   <Switch
                     className="p-3"
-                    checked={showForm}
+                    checked
                     onChange={handleSwitchChange}
                   />
                 </div>
@@ -388,7 +403,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
 
               <button
                 type="button"
-                className="mt-8 box-border flex w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] py-[13px] text-[18px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
+                className="mt-8 box-border flex h-12 w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
                 onClick={onSaveEditHours}
               >
                 SAVE
@@ -397,7 +412,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
           </div>
         </>
       )}
-    </>
+    </LayoutStoreProfile>
   );
 };
 export default StoreWorkingHoursSetup;

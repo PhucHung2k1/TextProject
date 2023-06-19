@@ -13,10 +13,7 @@ export class Store {
     return response;
   };
 
-  public updateStore = async (
-    idStore: string,
-    body: any
-  ): Promise<IResponse> => {
+  public updateStore = async (idStore: any, body: any): Promise<IResponse> => {
     const response: IResponse = await apiPatch(
       `${UPDATE_STORE_PROFILE}${idStore}`,
       body

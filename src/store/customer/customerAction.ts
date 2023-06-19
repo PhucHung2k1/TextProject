@@ -38,10 +38,14 @@ export const invitationList = createAsyncThunk(
     const servicesCustomerAPI = new Customer();
 
     try {
-      const { data, status } = await servicesCustomerAPI.invitationList();
+      const { data, status, error } =
+        await servicesCustomerAPI.invitationList();
 
-      if ((status === 200 || status === 201) && data) {
+      if (status === 200 || status === 201) {
         dispatch(setInvitationList(data));
+      }
+      if (error) {
+        showToastMessage(dispatch, error?.data.extendData[0]?.Message, 'error');
       }
     } catch (err: any) {
       // showToastMessage(dispatch, err?.extendData[0]?.Message, 'error');
@@ -78,16 +82,20 @@ export const sendInvitation = createAsyncThunk(
 
 export const confirmInvitation = createAsyncThunk(
   'customer/confirmInvitation',
-  async (_body: IConfirmInvitationPayload) => {
+  async (_body: IConfirmInvitationPayload, { dispatch }) => {
     const servicesCustomerAPI = new Customer();
 
     try {
-      const { data, status } = await servicesCustomerAPI.confirmInvitation(
+      const { status, error } = await servicesCustomerAPI.confirmInvitation(
         _body
       );
 
-      if ((status === 200 || status === 201) && data) {
-        // dispatch(setCustomerProfile(data));
+      if (status === 200) {
+        dispatch(invitationList({}));
+        showToastMessage(dispatch, 'Join Store Success', 'success');
+      }
+      if (error) {
+        showToastMessage(dispatch, error?.data.message, 'error');
       }
     } catch (err: any) {
       // showToastMessage(dispatch, err?.extendData[0]?.Message, 'error');

@@ -8,6 +8,7 @@ import {
   handlePreviousProgressSetupStore,
 } from '@/components/StoreProfile/helper';
 import { LayoutStoreProfile } from '../LayoutStoreProfile';
+import { Typography } from '@mui/material';
 
 interface LayoutAddMemberProps {
   children: React.ReactNode;
@@ -75,8 +76,13 @@ const LayoutAddMember: React.FC<LayoutAddMemberProps> = ({
 
         {skip && (
           <div className="flex items-center gap-1">
-            <p> Invite later?</p>
-            <p className="font-bold text-mango-primary-blue">Skip</p>
+            <Typography> Invite later?</Typography>
+            <Typography
+              className="cursor-pointer font-bold text-mango-primary-blue hover:!underline"
+              onClick={() => handleForwardProgressSetupStore(dispatch)}
+            >
+              Skip
+            </Typography>
           </div>
         )}
       </div>

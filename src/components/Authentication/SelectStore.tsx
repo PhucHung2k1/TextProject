@@ -7,6 +7,7 @@ import type { IStoreCustomer } from '@/services/store.service/store.interface';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import { signOut } from 'next-auth/react';
 
 const SelectStore = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +15,7 @@ const SelectStore = () => {
     (state) => state.storeSlice.storeCustomer
   );
   const router = useRouter();
+  const accessToken = Cookies.get('auth-token');
 
   const [selectItemStore, setSelectItemStore] = useState<IStoreCustomer>();
 
@@ -25,6 +27,12 @@ const SelectStore = () => {
       router.push('/');
     }
   }, []);
+
+  useEffect(() => {
+    if (!accessToken) {
+      signOut();
+    }
+  }, [accessToken]);
 
   const handleSelectCustomer = () => {
     if (!selectItemStore) {

@@ -6,13 +6,14 @@ import {
   TextField,
 } from '@mui/material';
 
-import { useRouter } from 'next/router';
-
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { listTimeZone } from '@/utils/helper/listTimeZone';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '@/store/hook';
-import { handleForwardProgressSetupStore } from '@/components/StoreProfile/helper';
+import {
+  handleForwardProgressSetupStore,
+  handlePreviousProgressSetupStore,
+} from '@/components/StoreProfile/helper';
 
 interface IFormLocation {
   addressLine1: string;
@@ -25,7 +26,6 @@ interface IFormLocation {
 
 const AddYourLocation = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   const { handleSubmit, register } = useForm<IFormLocation>();
   const onSubmit = (values: IFormLocation) => {
@@ -33,11 +33,11 @@ const AddYourLocation = () => {
   };
 
   return (
-    <div className="w-[568px] rounded-md bg-white px-8 pb-8 pt-12">
+    <div>
       <div className=" text-center">
         <div className="flex items-center justify-center ">
           <ArrowBackIcon
-            onClick={() => router.back()}
+            onClick={() => handlePreviousProgressSetupStore(dispatch)}
             className="cursor-pointer text-3xl"
           />
 
