@@ -2,8 +2,9 @@ export interface IAllCustomerRole {
   Name: string;
   Active: boolean;
   IsSystemRole: boolean;
-  StoreId: string;
+  SystemName?: string;
   Permissions: any[];
   Id: string;
-  CreateDate: Date;
+  StoreId?: string;
+  CreateDate?: Date;
 }

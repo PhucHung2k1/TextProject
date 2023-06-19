@@ -17,12 +17,14 @@ const BorderLinearProgress = styled(LinearProgress)(() => ({
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 16,
-    backgroundColor: '#80DFEB',
+    background:
+      'linear-gradient(90deg, #80DFEB 85%, #FFFFFF86 100%, #00F0FF00 0%);',
   },
 }));
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 export const LinearProgressWithLabel = () => {
+  const totalSteps = 6;
   const progressSetupStore = useAppSelector(
     (state) => state.storeSlice.progressSetupStore
   );
@@ -30,11 +32,11 @@ export const LinearProgressWithLabel = () => {
     (state) => state.storeSlice.prevProgress
   );
   const [progress, setProgress] = useState<number>(
-    Math.round((100 / 6) * prevProgressSetupStore)
+    Math.round((100 / totalSteps) * prevProgressSetupStore)
   );
 
   useEffect(() => {
-    const percentProgress = Math.round((100 / 6) * progressSetupStore);
+    const percentProgress = Math.round((100 / totalSteps) * progressSetupStore);
 
     if (progress >= 0 && progress <= 100) {
       if (progressSetupStore < prevProgressSetupStore) {

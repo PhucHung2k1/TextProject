@@ -1,4 +1,4 @@
-export interface ICustomerProfile {
+export interface IPasswordCustomer {
   Customer: any;
   CustomerRoles: any[];
 }

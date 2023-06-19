@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { Component } from 'react';
+import type React from 'react';
 
 type ModalModel = {
   isShowModal: boolean;
   modalContent?: React.ReactNode;
   isShowModalMUI: boolean;
-  modalContentMUI?: Component;
+  modalContentMUI?: React.ReactNode;
 };
 
 const initialState = {

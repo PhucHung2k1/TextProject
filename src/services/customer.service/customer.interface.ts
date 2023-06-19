@@ -1,8 +1,17 @@
 export interface ICustomerProfile {
-  Customer: ICustomer;
-  CustomerRoles: any[];
+  FirstName: string;
+  LastName: string;
+  PhoneNumber: string;
+  Email: string;
+  IsVerified: boolean;
+  City: string;
+  StateProvince: string;
+  ZipPostalCode: string;
+  Country: string;
+  Id: string;
+  CreateDate: Date;
+  LastModifiedDate: Date;
 }
-
 export interface ICustomer {
   FirstName: string;
   LastName: string;
@@ -41,6 +50,7 @@ export interface IInvitationListData {
   IsAccepted: boolean;
   IsSentMail: boolean;
   CustomerRoleId: string;
+  CustomerRoleName?: string;
   ServiceAndProduct: string;
   PayStructure: string;
   JobTitle: string;

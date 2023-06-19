@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import type { NextPage } from 'next';
 import { useState } from 'react';
+import { Clear } from '@mui/icons-material';
 
 const EditBusinessHours: NextPage = () => {
   const [startHour, setStartHour] = useState('');
@@ -60,14 +61,10 @@ const EditBusinessHours: NextPage = () => {
         <div className="absolute left-[0px] top-[0px] h-4 w-60 rounded-t-xl [background:linear-gradient(90deg,_#80dfeb_68.23%,_rgba(255,_255,_255,_0.52)_99.99%,_rgba(0,_240,_255,_0))]" /> */}
         <div className=" mt-12 w-[90%]">
           <div className="flex items-center justify-center ">
-            <img
-              className="cursor-pointer text-3xl"
-              src="/closefilled.svg"
-              alt=""
-            />
+            <Clear className="cursor-pointer text-3xl" />
 
             <p className="mx-auto text-center text-[32px] font-semibold text-text-title">
-              Edit business hours
+              Edit business hoursasd
             </p>
           </div>
 

@@ -2,12 +2,12 @@ import {
   setDecreaseProgressSetupStore,
   setIncreaseProgressSetupStore,
   setPrevProgress,
+  setResetProgressSetupStore,
 } from '@/store/store/storeSlice';
 
 export const handlePreviousProgressSetupStore = (
   dispatch: (arg0: { payload: any; type: any }) => void
 ) => {
-  dispatch(setPrevProgress());
   dispatch(setDecreaseProgressSetupStore());
 };
 export const handleForwardProgressSetupStore = (
@@ -15,4 +15,9 @@ export const handleForwardProgressSetupStore = (
 ) => {
   dispatch(setPrevProgress());
   dispatch(setIncreaseProgressSetupStore());
+};
+export const handleResetProgressSetupStore = (
+  dispatch: (arg0: { payload: any; type: any }) => void
+) => {
+  dispatch(setResetProgressSetupStore());
 };
