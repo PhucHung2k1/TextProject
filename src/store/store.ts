@@ -9,6 +9,7 @@ import customerSlice from './customer/customerSlice';
 import accountSlice from './account/accountSlice';
 import storeSlice from './store/storeSlice';
 import commonSlice from './common/commonSlice';
+import workingHoursSlice from './workingHours/workingHoursSlice';
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     accountSlice,
     storeSlice,
     commonSlice,
+    workingHoursSlice
   },
 });
 

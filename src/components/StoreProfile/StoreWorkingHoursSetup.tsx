@@ -2,7 +2,7 @@ import {
   handleForwardProgressSetupStore,
   handlePreviousProgressSetupStore,
 } from '@/components/StoreProfile/helper';
-import { useAppDispatch } from '@/store/hook';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
 import {
   Switch,
   FormControl,
@@ -17,101 +17,57 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import moment from 'moment';
 import { Clear } from '@mui/icons-material';
+import { getWorkingHours } from '@/store/workingHours/workingHoursAction';
+import { IWorkingHours } from '@/services/workingHours.service/workingHours.interface';
+import { convertTo12h } from '@/helper/stringHelper';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const [showEditHours, setShowEditHours] = useState(false);
   const [startHour, setStartHour] = useState('');
   const [endHour, setEndHour] = useState('');
   const [dayStatus, setDayStatus] = useState(true);
-  const [selectedId, setSelectedId] = useState(0);
+  const [selectedId, setSelectedId] = useState('');
   const [showForm, setShowForm] = useState(true);
   const [forms, setForms] = useState([{ id: 0 }]);
-  const [listData, setListData] = useState([
-    {
-      id: 1,
-      day: 'Sunday',
-      startTime: '10:00 AM',
-      endTime: '9:00 PM',
-      workTime: 'Closed',
-      status: false,
-    },
-    {
-      id: 2,
-      day: 'Monday',
-      startTime: '9:00 AM',
-      endTime: '9:00 PM',
-      workTime: '9:00 AM - 9:00 PM',
-      status: true,
-    },
-    {
-      id: 3,
-      day: 'Tuesday',
-      startTime: '9:00 AM',
-      endTime: '9:00 PM',
-      workTime: '9:00 AM - 9:00 PM',
-      status: true,
-    },
-    {
-      id: 4,
-      day: 'Wednesday',
-      startTime: '9:00 AM',
-      endTime: '9:00 PM',
-      workTime: '9:00 AM - 9:00 PM',
-      status: true,
-    },
-    {
-      id: 5,
-      day: 'Thursday',
-      startTime: '9:00 AM',
-      endTime: '9:00 PM',
-      workTime: '9:00 AM - 9:00 PM',
-      status: true,
-    },
-    {
-      id: 6,
-      day: 'Friday',
-      startTime: '9:00 AM',
-      endTime: '9:00 PM',
-      workTime: '9:00 AM - 9:00 PM',
-      status: true,
-    },
-    {
-      id: 7,
-      day: 'Saturday',
-      startTime: '9:00 AM',
-      endTime: '9:00 PM',
-      workTime: 'Closed',
-      status: true,
-    },
-  ]);
+
+  const workingHours = useAppSelector(
+    (state) => state.workingHoursSlice.workingHours
+  );
+
+  const updatedList = workingHours.map((item) => ({
+    ...item,
+    StartHours: convertTo12h(item.StartHours ?? '09:00:00'),
+    EndHours: convertTo12h(item.EndHours ?? '21:00:00'),
+  }));
+  const [listData, setListData] = useState<IWorkingHours[]>(updatedList);
+  const dispatch = useAppDispatch();
   const timeOptions = [
-    '5:00 AM',
-    '6:00 AM',
-    '7:00 AM',
-    '8:00 AM',
-    '9:00 AM',
+    '05:00 AM',
+    '06:00 AM',
+    '07:00 AM',
+    '08:00 AM',
+    '09:00 AM',
     '10:00 AM',
     '11:00 AM',
     '12:00 AM',
-    '1:00 PM',
-    '2:00 PM',
-    '3:00 PM',
-    '4:00 PM',
-    '5:00 PM',
-    '6:00 PM',
-    '7:00 PM',
-    '8:00 PM',
-    '9:00 PM',
+    '01:00 PM',
+    '02:00 PM',
+    '03:00 PM',
+    '04:00 PM',
+    '05:00 PM',
+    '06:00 PM',
+    '07:00 PM',
+    '08:00 PM',
+    '09:00 PM',
     '10:00 PM',
     '11:00 PM',
   ];
 
-  const dispatch = useAppDispatch();
   const handleShowEditHours = () => {
     setShowEditHours(!showEditHours);
   };
@@ -129,14 +85,19 @@ const StoreWorkingHoursSetup: NextPage = () => {
 
   const handleChangeStatus = (index: number) => () => {
     const updatedList = listData.map((item, i) =>
-      i === index ? { ...item, status: !item.status } : item
+      i === index ? { ...item, IsClosed: !item.IsClosed } : item
     );
     setListData(updatedList);
   };
   const onSaveEditHours = () => {
     const updatedList = listData.map((item) =>
-      item.id === selectedId
-        ? { ...item, startTime: startHour, endTime: endHour, status: dayStatus }
+      item.Id === selectedId
+        ? {
+            ...item,
+            StartHours: startHour,
+            EndHours: endHour,
+            IsClosed: dayStatus,
+          }
         : item
     );
     setListData(updatedList);
@@ -153,6 +114,9 @@ const StoreWorkingHoursSetup: NextPage = () => {
     return `${diffHours}h ${diffMinutes}m`;
   };
 
+  useEffect(() => {
+    dispatch(getWorkingHours({}));
+  }, []);
   return (
     <LayoutStoreProfile>
       {!showEditHours ? (
@@ -175,27 +139,27 @@ const StoreWorkingHoursSetup: NextPage = () => {
               you
             </p>
           </div>
-          <div className="flex flex-col justify-center gap-[12px] text-text-primary">
+          <div className="mt-8 flex flex-col justify-center gap-[12px] text-text-primary">
             {listData.map((item, index) => (
-              <div key={item.id}>
+              <div key={item.Id}>
                 <div>
                   <div className="flex flex-row items-center justify-start">
                     <div>
                       <Switch
-                        checked={item.status}
+                        checked={item.IsClosed}
                         className="p-3"
                         onChange={handleChangeStatus(index)}
                       />
                     </div>
                     <div className="w-[70px] font-semibold leading-[140%]">
-                      {item.day}
+                      {item.DayName}
                     </div>
                     <div className="w-[70%] text-center leading-[140%]">
-                      {item.status
-                        ? `${item.startTime} - ${item.endTime}`
+                      {item.IsClosed
+                        ? `${item.StartHours} - ${item.EndHours}`
                         : 'Closed'}
                     </div>
-                    {item.status ? (
+                    {item.IsClosed ? (
                       <Image
                         src="/chevronrightfilled.svg"
                         width="20"
@@ -204,11 +168,11 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         objectFit="cover"
                         className="hidden cursor-pointer overflow-hidden"
                         onClick={() => {
+                          setSelectedId(item.Id);
+                          setDayStatus(item.IsClosed);
+                          setStartHour(item.StartHours);
+                          setEndHour(item.EndHours);
                           handleShowEditHours();
-                          setSelectedId(item.id);
-                          setDayStatus(item.status);
-                          setStartHour(item.startTime);
-                          setEndHour(item.endTime);
                         }}
                       />
                     ) : (
