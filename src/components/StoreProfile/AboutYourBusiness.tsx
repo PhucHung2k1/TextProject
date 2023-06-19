@@ -104,7 +104,11 @@ const AboutYourBusiness = () => {
         Id: storeCustomer?.Id || '',
       });
     }
-  }, [storeCustomer?.Name]);
+  }, [
+    storeCustomer?.Name,
+    storeCustomer?.PhoneNumber,
+    storeCustomer?.ProfilePictureUrl,
+  ]);
 
   return (
     <LayoutStoreProfile>
