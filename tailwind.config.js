@@ -32,6 +32,9 @@ module.exports = {
       8: '8px',
     },
     extend: {
+      boxShadow: {
+        'mango-shadow-1': 'inset 0px 0px 2px rgba(0, 0, 0, 0.16)',
+      },
       colors: {
         'mango-primary-blue': '#00BED6',
         'mango-text-black-1': '#262626',
@@ -41,12 +44,16 @@ module.exports = {
         'mango-text-gray-2': '#737277',
         'mango-gray-light-1': '#D5D7DA',
         'mango-gray-light-3': '#B0B2C6',
+        'mango-gray-light-2': '#F5F5F5',
+        'mango-gray-light-4': '#DEDEDE',
+        'mango-gray-light-5': '#F3F4F6',
         'mango-blue-light-1': '#E0F7FA',
+
         'text-title': '#1F1F23',
         'text-secondary': '#737277',
         'text-disable': '#C5C4C9',
         'text-primary-dark': '#00ADC3',
-        'mango-gray-light-2': '#F5F5F5',
+
         'icon-color': '#5C5D6A',
         'primary-dark': '#404044',
         'border-secondary': '#7E8091',
