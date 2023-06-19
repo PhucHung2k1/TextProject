@@ -161,7 +161,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                     </div>
                     {item.IsClosed ? (
                       <Image
-                        src="/chevronrightfilled.svg"
+                        src="/icons/chevronrightfilled.svg"
                         width="20"
                         height="20"
                         alt=""
@@ -285,9 +285,9 @@ const StoreWorkingHoursSetup: NextPage = () => {
                               <Grid
                                 className="items-center"
                                 container
-                                spacing={3}
+                                spacing={4}
                               >
-                                <Grid item xs={5}>
+                                <Grid item xs={4.5}>
                                   <FormControl fullWidth variant="outlined">
                                     <InputLabel color="primary" />
                                     <Select
@@ -310,7 +310,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 <Grid item xs={1}>
                                   <div className="box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
                                 </Grid>
-                                <Grid item xs={5}>
+                                <Grid item xs={4.5}>
                                   <FormControl fullWidth variant="outlined">
                                     <InputLabel color="primary" />
                                     <Select
