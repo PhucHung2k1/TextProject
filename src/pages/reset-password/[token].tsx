@@ -25,15 +25,18 @@ const ResetPassword = () => {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
+  const { asPath } = router;
 
-  const { token }: any = router.query;
-  const enCode = token ? encodeURIComponent(token) : '';
+  const url = 'reset-password/';
+  const { token } = router.query;
+
+  const token1 = asPath.slice(asPath.indexOf(url), -1).replace(url, '');
 
   const [showTokenExpired, setShowTokenExpired] = useState<boolean>(false);
 
   useEffect(() => {
     if (token) {
-      dispatch(validateForgotPasswordToken(enCode)).then((res: any) => {
+      dispatch(validateForgotPasswordToken(token1)).then((res: any) => {
         if (res?.error) {
           setShowTokenExpired(true);
         }
@@ -53,10 +56,14 @@ const ResetPassword = () => {
 
   const handleResetPassword = (values: any) => {
     const payload = {
-      token: enCode,
+      token: token1,
       password: values?.password,
       passwordConfirm: values?.confirmPassword,
     };
+    console.log(
+      '🚀 ~ file: [token].tsx:63 ~ handleResetPassword ~ payload:',
+      payload
+    );
     dispatch(changePasswordByToken(payload)).then((res: any) => {
       if (!res?.error) {
         router.push('/login');

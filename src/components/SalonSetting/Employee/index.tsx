@@ -2,6 +2,8 @@ import { Box, Tab, styled } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { useState } from 'react';
+import EmployeeList from './EmployeeList';
+import RolePermissionList from './RolePermission/ListRolePermission';
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -56,14 +58,13 @@ export const EmployeeSetting = () => {
       id: 0,
       label: 'EMPLOYEE LIST',
       key: 'employeeList',
-
-      children: <></>,
+      children: <EmployeeList />,
     },
     {
       id: 1,
       label: 'ROLE & PERMISSION',
       key: 'rolePermissions',
-      children: <></>,
+      children: <RolePermissionList />,
     },
 
     {
