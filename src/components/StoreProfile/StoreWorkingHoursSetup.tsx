@@ -294,7 +294,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
               {showForm && (
                 <>
                   <Grid className="items-center" container spacing={4}>
-                    <Grid item xs={5.5}>
+                    <Grid item xs={4.8}>
                       <div className="font-semibold leading-[140%]">Start</div>
                       <FormControl fullWidth variant="outlined">
                         <InputLabel color="primary" />
@@ -315,10 +315,10 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         <FormHelperText />
                       </FormControl>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={0.5}>
                       <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
                     </Grid>
-                    <Grid item xs={5.5}>
+                    <Grid item xs={4.8}>
                       <div className="font-semibold leading-[140%]">End</div>
                       <FormControl fullWidth variant="outlined">
                         <InputLabel color="primary" />
@@ -338,6 +338,15 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         </Select>
                         <FormHelperText />
                       </FormControl>
+                    </Grid>
+                    <Grid item xs={0.5}>
+                      <Button
+                        className="items-center justify-center"
+                        variant="text"
+                        startIcon={
+                          <DeleteOutlineIcon sx={{ color: '#C5C4C9' }} />
+                        }
+                      />
                     </Grid>
                   </Grid>
                   {listBreakHoursForShow.length > 0 ? (
@@ -360,7 +369,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                               container
                               spacing={4}
                             >
-                              <Grid item xs={4.5}>
+                              <Grid item xs={4.8}>
                                 <FormControl fullWidth variant="outlined">
                                   <InputLabel color="primary" />
                                   <Select
@@ -384,10 +393,10 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                   <FormHelperText />
                                 </FormControl>
                               </Grid>
-                              <Grid item xs={1}>
+                              <Grid item xs={0.5}>
                                 <div className="box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
                               </Grid>
-                              <Grid item xs={4.5}>
+                              <Grid item xs={4.8}>
                                 <FormControl fullWidth variant="outlined">
                                   <InputLabel color="primary" />
                                   <Select
@@ -411,7 +420,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                   <FormHelperText />
                                 </FormControl>
                               </Grid>
-                              <Grid item xs={1}>
+                              <Grid item xs={0.5}>
                                 <Button
                                   className="items-center justify-center"
                                   variant="text"
