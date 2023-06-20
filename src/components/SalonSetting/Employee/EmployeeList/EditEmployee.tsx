@@ -9,6 +9,7 @@ import { apiPostPhoto } from '@/utils/axios/instance';
 // eslint-disable-next-line import/no-cycle
 import { AntTab, StyledTabs } from '..';
 import EmployeeProfileTab from './EditEmployeeTab/EmployeeProfileTab';
+import RoleAndPermissionTab from './RoleAndPermissionTab/RoleAndPermissionTab';
 // import StoreWorkingHoursSetup from '@/components/StoreProfile/StoreWorkingHoursSetup';
 
 const itemsTab = [
@@ -22,7 +23,7 @@ const itemsTab = [
     id: 1,
     label: 'WORK SCHEDULE',
     key: 'rolePermissions',
-    children: <></>,
+    children: <RoleAndPermissionTab />,
   },
 
   {

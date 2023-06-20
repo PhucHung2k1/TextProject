@@ -278,7 +278,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                 <div>
                   <Switch
                     className="p-3"
-                    checked
+                    checked={showForm}
                     onChange={handleSwitchChange}
                   />
                 </div>
