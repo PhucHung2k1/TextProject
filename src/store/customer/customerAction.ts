@@ -2,7 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { setMessageToast, showToast } from '../toast/toastSlice';
 import { Customer } from '@/services/customer.service/customer.service';
-import { setDataCustomerProfile, setDataMyRole } from './customerSlice';
+import {
+  setDataCustomerProfile,
+  setDataMyRole,
+  setInvitationToken,
+  setIsInviteEmail,
+} from './customerSlice';
 import type {
   IConfirmInvitationPayload,
   ISendInvitationPayload,
@@ -121,6 +126,28 @@ export const getCustomerProfile = createAsyncThunk(
       dispatch(setMessageToast(err.extendData[0].Message));
       dispatch(showToast());
       // throw new Error(`Error signing in: ${err.message}`);
+    }
+  }
+);
+export const checkExistCustomerByToken = createAsyncThunk(
+  'account/checkExistCustomerByToken',
+  async (_body: any, { dispatch }) => {
+    const servicesCustomerAPI = new Customer();
+
+    try {
+      const { data, status, error } =
+        await servicesCustomerAPI.checkExistCustomerByToken(_body);
+
+      if (status === 200) {
+        dispatch(setIsInviteEmail(true));
+        dispatch(setInvitationToken(_body.Token));
+        return { data };
+      }
+      if (error) {
+        showToastMessage(dispatch, error?.data.message, 'error');
+      }
+    } catch (err: any) {
+      // console.log(err);
     }
   }
 );

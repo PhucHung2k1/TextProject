@@ -11,7 +11,7 @@ import debounce from 'lodash.debounce';
 import MapboxMap from '@/common/MapBox/MapBoxMap';
 import type { IMapBoxPlace } from '@/services/map.services/map.interface';
 import { MapServices } from '@/services/map.services/map.services';
-import { useAppDispatch } from '@/store/hook';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { Search } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -26,6 +26,7 @@ import {
 } from './helper';
 import { sxTextField } from '@/utils/helper/styles';
 import AddYourLocation from './AddYourLocation';
+import { updateLocationStoreProfile } from '@/store/store/storeAction';
 
 const ConfirmYourAddress = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,10 @@ const ConfirmYourAddress = () => {
   const [listPlace, setListPlace] = useState<IMapBoxPlace[]>([]);
 
   const [marker, setMarkers] = useState<LngLat>();
+  const storeCustomer = useAppSelector(
+    (state) => state.storeSlice.storeCustomer[0]
+  );
+  console.log('yourAddress', yourAddress);
 
   const handleSearchMap = debounce(
     async (value: string, event?: SyntheticEvent<Element, Event>) => {
@@ -48,6 +53,26 @@ const ConfirmYourAddress = () => {
     },
     800
   );
+  const handleUpdateAddress = () => {
+    dispatch(
+      updateLocationStoreProfile({
+        id: storeCustomer?.Id || '',
+        body: [
+          {
+            op: 'replace',
+            path: `/GeoLatitude`,
+            value: yourAddress?.center[0],
+          },
+          {
+            op: 'replace',
+            path: `/GeoLongitude`,
+            value: yourAddress?.center[1],
+          },
+        ],
+      })
+    );
+    handleForwardProgressSetupStore(dispatch);
+  };
 
   return (
     <LayoutStoreProfile>
@@ -132,9 +157,7 @@ const ConfirmYourAddress = () => {
               className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize "
               variant="contained"
               disabled={!yourAddress}
-              onClick={() => {
-                handleForwardProgressSetupStore(dispatch);
-              }}
+              onClick={handleUpdateAddress}
             >
               CONTINUE
             </Button>

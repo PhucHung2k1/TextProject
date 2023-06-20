@@ -1,29 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
-import { confirmInvitation } from '@/store/customer/customerAction';
 import { useAppDispatch } from '@/store/hook';
+import { checkExistCustomerByToken } from '@/store/customer/customerAction';
+import Cookies from 'js-cookie';
+import { showToastMessage } from '@/utils/helper/showToastMessage';
 
 const AcceptInviteJoinStore = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { asPath } = router;
+  const { token } = router.query;
+
+  const handleSignOut = () => {
+    Cookies.remove('auth-token');
+    Cookies.remove('refresh-token');
+    Cookies.remove('store-customer');
+    // signOut();
+  };
 
   const handleAcceptEmail = () => {
     const url = 'invites/';
-    const token = asPath.slice(asPath.indexOf(url), -1).replace(url, '');
-    dispatch(confirmInvitation({ Token: token })).then((res) => {
-      if (res.payload) {
-        if (
-          res.payload?.code === '40001' ||
-          res.payload?.message === 'Customer not exist'
-        ) {
+    const token1 = asPath.slice(asPath.indexOf(url), -1).replace(url, '');
+
+    dispatch(checkExistCustomerByToken({ Token: token1 })).then((res) => {
+      const resultData: any = res.payload;
+      if (resultData) {
+        handleSignOut();
+        if (resultData?.data) {
+          showToastMessage(dispatch, 'Login to confirm invite', 'success');
+          router.push('/login');
+        } else {
+          showToastMessage(dispatch, 'Customer not exist', 'error');
           router.push('/sign-up');
-        } else router.push('/login');
+        }
       }
     });
   };
+
+  useEffect(() => {
+    if (token) {
+      handleAcceptEmail();
+    }
+  }, [token]);
+
   return (
     <main className="flex h-screen w-full items-center justify-center bg-mango-gray-light-2">
       <Box>
