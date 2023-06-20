@@ -14,6 +14,8 @@ import {
   Select,
   MenuItem,
   Grid,
+  AvatarGroup,
+  Avatar,
 } from '@mui/material';
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
@@ -21,6 +23,8 @@ import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import CustomDrawer from '@/common/Drawer/Drawer';
+import AddForm from './FormLayout';
 
 const General = () => {
   const [filterPayStructures, setFilterPayStructures] = useState('');
@@ -33,6 +37,7 @@ const General = () => {
   };
   const employeeList = ['Employee 1', 'Employee 2'];
   const functionList = ['Function'];
+
   return (
     <div className="">
       <div className="mt-[36px] flex items-center justify-between">
@@ -62,7 +67,6 @@ const General = () => {
               id="outlined-adornment-weight"
               startAdornment={
                 <InputAdornment position="start">
-                  {' '}
                   <SearchIcon />
                 </InputAdornment>
               }
@@ -74,13 +78,19 @@ const General = () => {
             />
           </FormControl>
 
-          <Button
-            className="h-[48px] w-[188px] bg-[#00BDD6] text-[16px] font-bold text-[#ffff] hover:bg-[#00ADC3]"
-            variant="contained"
-            startIcon={<AddIcon />}
-          >
-            Add Role
-          </Button>
+          <CustomDrawer
+            anchor="right"
+            clickNode={
+              <Button
+                className="h-[48px] w-[188px] bg-[#00BDD6] text-[16px] font-bold text-[#ffff] hover:bg-[#00ADC3]"
+                variant="contained"
+                startIcon={<AddIcon />}
+              >
+                Add Role
+              </Button>
+            }
+            content={<AddForm />}
+          />
 
           {/* <Button
             className=" h-[48px] w-[35] border-[#B0B2C6] text-[16px] font-bold text-[#ffff] hover:bg-[#5C5D6A29]"
@@ -161,7 +171,7 @@ const General = () => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>{' '}
+            </FormControl>
           </div>
         </Grid>
       </div>
@@ -192,25 +202,46 @@ const General = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell component="th" scope="row">
-                Owner
-              </TableCell>
-              <TableCell component="th" scope="row">
-                2 users
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <div className="w-fit rounded-full bg-[#00BDD6] px-[10px] py-[7px] text-center text-[16px] text-[#ffff]">
-                  All functions{' '}
-                </div>
-              </TableCell>
-              <TableCell align="right">
-                <IconButton>
-                  <EditIcon fontSize="small" />
-                </IconButton>
-                <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
-                  <CloseIcon fontSize="small" className="text-[#DA2036] " />
-                </IconButton>
-              </TableCell>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  Owner
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  <p>2 users</p>
+                  <AvatarGroup total={24}>
+                    <Avatar
+                      className="border border-blue-400"
+                      alt="Remy Sharp"
+                      src="/assets/images/StoreProfile/image-welcome.svg"
+                    />
+                    <Avatar
+                      alt="Travis Howard"
+                      src="/assets/images/StoreProfile/image-welcome.svg"
+                    />
+                    <Avatar
+                      alt="Agnes Walker"
+                      src="/assets/images/StoreProfile/image-welcome.svg"
+                    />
+                    <Avatar
+                      alt="Trevor Henderson"
+                      src="/assets/images/StoreProfile/image-welcome.svg"
+                    />
+                  </AvatarGroup>
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  <div className="w-fit rounded-full bg-[#00BDD6] px-[10px] py-[7px] text-center text-[16px] text-[#ffff]">
+                    All functions
+                  </div>
+                </TableCell>
+                <TableCell align="right">
+                  <IconButton>
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
+                    <CloseIcon fontSize="small" className="text-[#DA2036] " />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
