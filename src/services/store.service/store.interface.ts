@@ -23,7 +23,6 @@ export interface IStoreCustomer {
   GeoLongitude: string;
   ProfilePictureUrl: string;
   Id: string;
-  ProfilePictureUrl: string;
   CreateBy: Date;
   CreateDate: Date;
   LastModifiedBy: Date;

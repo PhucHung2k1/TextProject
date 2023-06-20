@@ -75,7 +75,6 @@ const StoreWorkingHoursSetup: NextPage = () => {
     '9:00 PM',
     '10:00 PM',
     '11:00 PM',
-    ,
   ];
 
   const handleShowEditHours = () => {
@@ -155,7 +154,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
       const { DayName, BreakTimes } = item;
       BreakTimes.forEach((breakTime) => {
         listBreakHoursForUpdate.push({
-          DayName: DayName,
+          DayName,
           StartHours: breakTime.StartHours,
           EndHours: breakTime.EndHours,
         });
@@ -176,8 +175,8 @@ const StoreWorkingHoursSetup: NextPage = () => {
     setStartHour(item.StartHours);
     setEndHour(item.EndHours);
     const filteredBreakTimes = listData
-      .filter((workingHours) => workingHours.DayName === item.DayName)
-      .flatMap((workingHours) => workingHours.BreakTimes);
+      .filter((data) => data.DayName === item.DayName)
+      .flatMap((data) => data.BreakTimes);
     setListBreakHoursForShow(filteredBreakTimes);
     handleShowEditHours();
   };
@@ -208,9 +207,8 @@ const StoreWorkingHoursSetup: NextPage = () => {
             </p>
           </div>
           <div className="mt-8 flex flex-col justify-center gap-[12px] text-text-primary">
-            <div>cụ ngun ngu ngu ác</div>
             {listData.map((item, index) => (
-              <div key={index}>
+              <div key={`${item.DayName}`}>
                 <div>
                   <div className="flex flex-row items-center justify-start">
                     <div>
@@ -363,7 +361,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                     <>
                       {listBreakHoursForShow.map((form, index) => (
                         <>
-                          <div key={index}>
+                          <div key={`${Math.random()}`}>
                             <Grid
                               className="items-center"
                               container

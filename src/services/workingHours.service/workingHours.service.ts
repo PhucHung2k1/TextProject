@@ -1,7 +1,7 @@
 import type { IResponse } from '@/utils/axios/entities';
 import { catchAxiosError } from '@/utils/axios/error';
 import { apiGet, apiPost } from '@/utils/axios/instance';
-import { IWorkingHours } from './workingHours.interface';
+import type { IWorkingHours } from './workingHours.interface';
 // import { IStoreProfile } from "./store.interface"
 
 const GET_STORE_HOURS = '/store/store-hours';
@@ -13,12 +13,12 @@ export class WorkingHours {
     return response;
   };
 
-  public updateWorkingHours = async (data: IWorkingHours): Promise<IResponse> => {
+  public updateWorkingHours = async (
+    data: IWorkingHours
+  ): Promise<IResponse> => {
     const response: IResponse = await apiPost(GET_STORE_HOURS, data).catch(
       catchAxiosError
     );
     return response;
   };
-
 }
-

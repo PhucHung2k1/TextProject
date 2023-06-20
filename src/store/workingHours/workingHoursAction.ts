@@ -2,7 +2,6 @@ import { WorkingHours } from '@/services/workingHours.service/workingHours.servi
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setWorkingHours } from './workingHoursSlice';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
-import { Message } from '@mui/icons-material';
 
 // import { showToastMessage } from '@/utils/helper/showToastMessage';
 
@@ -34,10 +33,10 @@ export const updateWorkingHours = createAsyncThunk(
       const { data, status, error } =
         await servicesWorkingHours.updateWorkingHours(body);
 
-      if ((status === 200 || status === 201)) {
+      if (status === 200 || status === 201) {
         showToastMessage(dispatch, `Update success!`, 'success');
-        dispatch(getWorkingHours({}))
-        return
+        dispatch(getWorkingHours({}));
+        return data;
       }
       showToastMessage(dispatch, error?.message || 'Send failed', 'error');
     } catch (err: any) {
