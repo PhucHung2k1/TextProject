@@ -13,21 +13,26 @@ export interface IStoreProfile {
 }
 export interface IStoreCustomer {
   Name: string;
-  MailingAddress: any;
+  MailingAddress: string;
   Email: string;
-  State: any;
-  ZipCode: any;
+  State: string;
+  ZipCode: string;
   PhoneNumber: number;
-  TimeZone: any;
-  GeoLatitude: any;
-  GeoLongitude: any;
-  GoogleMapUrl: any;
+  TimeZone: string;
+  GeoLatitude: string;
+  GeoLongitude: string;
+  ProfilePictureUrl: string;
   Id: string;
   ProfilePictureUrl: string;
   CreateBy: Date;
   CreateDate: Date;
   LastModifiedBy: Date;
   LastModifiedDate: Date;
+  GoogleMapUrl: string;
+  City: string;
+  Address1: string;
+  Address2: string;
+
 }
 export interface IConfigStore {
   step: number;

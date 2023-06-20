@@ -11,6 +11,8 @@ const GET_CUSTOMER_PROFILE = 'customer/profile';
 const SEND_INVITATION = 'customer/send-invitation';
 const CONFIRM_INVITATION = 'customer/confirm-invitation';
 const INVITATION_LIST = 'customer/invitation-list';
+const CHECK_EXIST_CUSTOMER_BY_TOKEN =
+  'customer/check-exist-customer-by-inviation-token';
 export class Customer {
   public getMyRole = async (): Promise<IResponse> => {
     const response: IResponse = await apiGet(GET_MY_ROLE).catch(
@@ -48,6 +50,16 @@ export class Customer {
     const response: IResponse = await apiGet(GET_CUSTOMER_PROFILE).catch(
       catchAxiosError
     );
+    return response;
+  };
+
+  public checkExistCustomerByToken = async (
+    body: IConfirmInvitationPayload
+  ): Promise<IResponse> => {
+    const response: IResponse = await apiPost(
+      CHECK_EXIST_CUSTOMER_BY_TOKEN,
+      body
+    ).catch(catchAxiosError);
     return response;
   };
 }

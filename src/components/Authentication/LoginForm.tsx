@@ -17,7 +17,7 @@ import {
   setTypeAlertToast,
   showToast,
 } from '@/store/toast/toastSlice';
-import { useAppDispatch } from '@/store/hook';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { ErrorMessage } from '@hookform/error-message';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -26,16 +26,22 @@ import IconButton from '@mui/material/IconButton';
 import { useForm } from 'react-hook-form';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
 import { useRouter } from 'next/router';
+import { confirmInvitation } from '@/store/customer/customerAction';
 
 export default function LoginForm() {
   const router = useRouter();
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
-
+  const invitationToken = useAppSelector(
+    (state) => state.customerSlice.invitationToken
+  );
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+  const isInviteEmail = useAppSelector(
+    (state) => state.customerSlice.isInviteEmail
+  );
 
   // const {
   //   handleSubmit,
@@ -82,6 +88,8 @@ export default function LoginForm() {
               if (iAuthResponse.RefreshToken) {
                 Cookies.set('refresh-token', iAuthResponse.RefreshToken);
               }
+              isInviteEmail &&
+                dispatch(confirmInvitation({ Token: invitationToken }));
               dispatch(setTypeAlertToast('success'));
               dispatch(setMessageToast('Login Success!'));
               dispatch(showToast());
