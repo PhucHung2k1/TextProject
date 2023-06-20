@@ -25,7 +25,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/system';
 // eslint-disable-next-line import/no-cycle
-import EditEmployee from '../EmployeeList/EditEmployee';
+import EditEmployee from './EditEmployee';
 
 export interface IEmployee {
   id: number;

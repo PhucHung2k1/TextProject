@@ -1,16 +1,8 @@
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Switch,
-} from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Switch } from '@mui/material';
 import React, { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 
 interface Props {
@@ -22,14 +14,14 @@ export const ConfigRoleAndPermission = ({ typeConfig, configName }: Props) => {
   return (
     <div className="mb-2">
       <div
-        className={` flex justify-between items-center border ${
+        className={` flex items-center justify-between border ${
           showAll ? 'rounded-[5px] rounded-b-none' : 'rounded-[6px]'
-        } min-h-[64px] w-full justify-between !border-mango-text-gray-1 bg-white text-xl font-bold capitalize text-50 px-4`}
+        } min-h-[64px] w-full justify-between !border-mango-text-gray-1 bg-white px-4 text-xl font-bold capitalize text-50`}
       >
         <div>
           <FormControlLabel
             control={<Switch />}
-            label={<p className=" font-bold text-base">{configName}</p>}
+            label={<p className=" text-base font-bold">{configName}</p>}
           />
         </div>
 
@@ -43,7 +35,7 @@ export const ConfigRoleAndPermission = ({ typeConfig, configName }: Props) => {
             )
           }
           aria-valuetext={typeConfig}
-        ></Button>
+        />
       </div>
 
       {showAll && (
@@ -57,7 +49,7 @@ export const ConfigRoleAndPermission = ({ typeConfig, configName }: Props) => {
                   label="Label"
                 />
               }
-            ></TreeItem>
+            />
             <TreeItem
               nodeId="1"
               label={

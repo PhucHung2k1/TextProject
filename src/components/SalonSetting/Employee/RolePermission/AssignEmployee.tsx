@@ -39,7 +39,25 @@ const AssignEmployee = () => {
       },
     },
   }));
-  const itemsData = [
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedItems([]);
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      const allItemIds = items.map((item) => item.Id);
+      setSelectedItems(allItemIds);
+    }
+    setSelectAll(!selectAll);
+  };
+  const handleRowSelection = (rowId: number) => {
+    if (selectedItems.includes(rowId)) {
+      setSelectedItems(selectedItems.filter((id) => id !== rowId));
+    } else {
+      setSelectedItems([...selectedItems, rowId]);
+    }
+  };
+  const items = [
     {
       Id: 1,
       color: '#2D9DE3',

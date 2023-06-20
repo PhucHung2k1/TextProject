@@ -1,5 +1,12 @@
+import {
+  setInvitationToken,
+  setIsInviteEmail,
+} from '@/store/customer/customerSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import { Typography } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
 export interface LayoutAuthenProps {
   children: React.ReactNode;
@@ -7,6 +14,19 @@ export interface LayoutAuthenProps {
 }
 
 export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const isInviteEmail = useAppSelector(
+    (state) => state.customerSlice.isInviteEmail
+  );
+
+  useEffect(() => {
+    if (router.pathname !== '/login' && router.pathname !== '/sign-up') {
+      dispatch(setIsInviteEmail(false));
+      dispatch(setInvitationToken(''));
+    }
+  }, [router.pathname]);
+
   return (
     <div className="flex h-screen w-full items-center  justify-center bg-mango-gray-light-2  bg-cover bg-center bg-no-repeat ">
       <div className=" flex min-h-[30%] w-[28%] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-6 py-5">
@@ -26,6 +46,14 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
             {type === 'selectstore' && 'Select Store'}
           </h1>
         </div>
+        {isInviteEmail && (
+          <Typography className="w-[80%] text-center text-[14px] text-mango-text-gray-2">
+            {type === 'login' &&
+              'You have received an invitation from Queen Nails Salon. By logging in, you will join them'}
+            {type === 'signup' &&
+              'You have received an invitation to register from Queen Nails Salon. Create an account and enjoy your own Mango!'}
+          </Typography>
+        )}
 
         <div className="w-full flex-1 overflow-auto">{children}</div>
 
