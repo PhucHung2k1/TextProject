@@ -12,6 +12,7 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -448,27 +449,28 @@ const EmployeeList = () => {
               <TableBody className="text-base">
                 {filteredData.slice(startIndex, endIndex).map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell className="flex items-center gap-2 text-base text-primary-dark">
-                      <StyledBadge
-                        isActive={row.status === 'Active'}
-                        overlap="circular"
-                        key={row.id}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'right',
-                        }}
-                        variant="dot"
-                      >
-                        <Avatar
-                          src={row.image}
-                          style={{
-                            border: `2px solid ${row.color}`,
-                            background: '#DEDEE3',
+                    <TableCell className=" text-base text-primary-dark">
+                      <Stack direction="row" alignItems="center" spacing={2}>
+                        <StyledBadge
+                          isActive={row.status === 'Active'}
+                          overlap="circular"
+                          key={row.id}
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
                           }}
-                        />
-                      </StyledBadge>
-
-                      {row.employee}
+                          variant="dot"
+                        >
+                          <Avatar
+                            src={row.image}
+                            style={{
+                              border: `2px solid ${row.color}`,
+                              background: '#DEDEE3',
+                            }}
+                          />
+                        </StyledBadge>
+                        <div> {row.employee}</div>
+                      </Stack>
                     </TableCell>
                     <TableCell className="text-base text-primary-dark">
                       {row.jobTitle}
