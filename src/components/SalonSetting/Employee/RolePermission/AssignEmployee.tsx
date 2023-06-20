@@ -22,29 +22,28 @@ const AssignEmployee = () => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [isCheck, setIsCheck] = useState(true);
-  const StyledBadge = styled(Badge)<{ isActive: boolean }>(
-    ({ theme, isActive }) => ({
-      '& .MuiBadge-badge': {
-        backgroundColor: isActive ? '#69B000' : '#9B9BA0',
-        color: isActive ? '#69B000' : '#9B9BA0',
-        '&::after': {
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          borderRadius: '50%',
-          animation: 'ripple 1.2s infinite ease-in-out',
-          border: '1px solid currentColor',
-          content: '""',
-        },
+  const StyledBadge = styled(Badge)<{ isActive: boolean }>(({ isActive }) => ({
+    '& .MuiBadge-badge': {
+      backgroundColor: isActive ? '#69B000' : '#9B9BA0',
+      color: isActive ? '#69B000' : '#9B9BA0',
+      '&::after': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        borderRadius: '50%',
+        animation: 'ripple 1.2s infinite ease-in-out',
+        border: '1px solid currentColor',
+        content: '""',
       },
-    })
-  );
+    },
+  }));
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedItems([]);
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       const allItemIds = items.map((item) => item.Id);
       setSelectedItems(allItemIds);
     }
@@ -124,12 +123,12 @@ const AssignEmployee = () => {
     }
   `;
   return (
-    <div className="w-[796px] border h-[95vh]  mr-[0px] ml-auto">
-      <div className=" text-center pt-[24px] px-[32px]">
+    <div className="ml-auto mr-[0px] h-[95vh]  w-[796px] border">
+      <div className=" px-[32px] pt-[24px] text-center">
         <div className="flex items-center justify-center ">
           <ArrowBackIcon className="cursor-pointer text-3xl text-[#5C5D6A]" />
 
-          <p className="mx-auto text-[32px] text-[#1F1F23] font-semibold">
+          <p className="mx-auto text-[32px] font-semibold text-[#1F1F23]">
             Assign Employee
           </p>
         </div>
@@ -148,7 +147,7 @@ const AssignEmployee = () => {
           variant="outlined"
         >
           <OutlinedInput
-            className="h-[48px] w-full mt-[56px] bg-[#F3F4F6]"
+            className="mt-[56px] h-[48px] w-full bg-[#F3F4F6]"
             id="outlined-adornment-weight"
             startAdornment={
               <InputAdornment position="start">
@@ -172,10 +171,10 @@ const AssignEmployee = () => {
                   onChange={handleSelectAll}
                 />
               </TableCell>
-              <TableCell className="pb-[7px] pl-0 text-[#737277] text-[14px]">
+              <TableCell className="pb-[7px] pl-0 text-[14px] text-[#737277]">
                 Employee
               </TableCell>
-              <TableCell className="pb-[7px] pl-0  text-[#737277] text-[14px]">
+              <TableCell className="pb-[7px] pl-0  text-[14px] text-[#737277]">
                 Job Title
               </TableCell>
             </TableRow>
@@ -190,7 +189,7 @@ const AssignEmployee = () => {
                     onChange={() => handleRowSelection(item.Id)}
                   />
                 </TableCell>
-                <TableCell className="pl-0 w-[45%]">
+                <TableCell className="w-[45%] pl-0">
                   {' '}
                   <StyledBadge
                     isActive={item.isActive}
@@ -210,7 +209,7 @@ const AssignEmployee = () => {
                       }}
                     />
                   </StyledBadge>
-                  <span className="text-[16px] text-[#404044] pl-[8px]">
+                  <span className="pl-[8px] text-[16px] text-[#404044]">
                     {item.Name}
                   </span>
                 </TableCell>
@@ -222,17 +221,17 @@ const AssignEmployee = () => {
           </TableBody>
         </Table>
       </div>
-      <div className=" pb-[24px] pt-[4px] px-[32px] border-t border-[#DEDEE8] mt-5">
+      <div className=" mt-5 border-t border-[#DEDEE8] px-[32px] pb-[24px] pt-[4px]">
         <div className="flex justify-between ">
           <Button
             type="submit"
-            className="my-4 h-12 w-[354px] font-bold text-[#737277] text-[16px] capitalize border-mango-gray-light-3 hover:border-mango-gray-light-3 "
+            className="my-4 h-12 w-[354px] border-mango-gray-light-3 text-[16px] font-bold capitalize text-[#737277] hover:border-mango-gray-light-3 "
             variant="outlined"
           >
             CANCEL
           </Button>
           <Button
-            className="my-4 h-12 w-[354px] bg-mango-primary-blue font-bold text-[16px] capitalize hover:bg-[#00ADC3]"
+            className="my-4 h-12 w-[354px] bg-mango-primary-blue text-[16px] font-bold capitalize hover:bg-[#00ADC3]"
             variant="contained"
             type="submit"
             disabled={isCheck}
