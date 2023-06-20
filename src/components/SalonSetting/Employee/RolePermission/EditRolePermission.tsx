@@ -1,13 +1,11 @@
 import {
   Avatar,
   Badge,
-  Box,
   Button,
   Checkbox,
   FormControl,
   InputAdornment,
   OutlinedInput,
-  Tab,
   Table,
   TableBody,
   TableCell,
@@ -15,9 +13,6 @@ import {
   TableRow,
 } from '@mui/material';
 import * as React from 'react';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState, useEffect } from 'react';
@@ -27,47 +22,25 @@ const AssignEmployee = () => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [isCheck, setIsCheck] = useState(true);
-  const [value, setValue] = React.useState('1');
 
-  const StyledBadge = styled(Badge)<{ isActive: boolean }>(
-    ({ theme, isActive }) => ({
-      '& .MuiBadge-badge': {
-        backgroundColor: isActive ? '#69B000' : '#9B9BA0',
-        color: isActive ? '#69B000' : '#9B9BA0',
-        '&::after': {
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          borderRadius: '50%',
-          animation: 'ripple 1.2s infinite ease-in-out',
-          border: '1px solid currentColor',
-          content: '""',
-        },
+  const StyledBadge = styled(Badge)<{ isActive: boolean }>(({ isActive }) => ({
+    '& .MuiBadge-badge': {
+      backgroundColor: isActive ? '#69B000' : '#9B9BA0',
+      color: isActive ? '#69B000' : '#9B9BA0',
+      '&::after': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        borderRadius: '50%',
+        animation: 'ripple 1.2s infinite ease-in-out',
+        border: '1px solid currentColor',
+        content: '""',
       },
-    })
-  );
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
-  const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedItems([]);
-    } else {
-      const allItemIds = items.map((item) => item.Id);
-      setSelectedItems(allItemIds);
-    }
-    setSelectAll(!selectAll);
-  };
-  const handleRowSelection = (rowId: number) => {
-    if (selectedItems.includes(rowId)) {
-      setSelectedItems(selectedItems.filter((id) => id !== rowId));
-    } else {
-      setSelectedItems([...selectedItems, rowId]);
-    }
-  };
-  const items = [
+    },
+  }));
+  const itemsData = [
     {
       Id: 1,
       color: '#2D9DE3',
@@ -117,6 +90,24 @@ const AssignEmployee = () => {
       Job: 'Manager',
     },
   ];
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedItems([]);
+    } else {
+      const allItemIds = itemsData.map((item) => item.Id);
+      setSelectedItems(allItemIds);
+    }
+    setSelectAll(!selectAll);
+  };
+  const handleRowSelection = (rowId: number) => {
+    if (selectedItems.includes(rowId)) {
+      setSelectedItems(selectedItems.filter((id) => id !== rowId));
+    } else {
+      setSelectedItems([...selectedItems, rowId]);
+    }
+  };
+
   useEffect(() => {
     if (selectedItems.length === 0) {
       setIsCheck(true);
@@ -134,32 +125,10 @@ const AssignEmployee = () => {
     }
   `;
   return (
-    <div className="w-[796px] border h-[95vh]  mr-[0px] ml-auto">
-      <Box sx={{ width: '100%', typography: 'body1' }}>
-        <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Item One" value="1" />
-              <Tab label="Item Two" value="2" />
-              <Tab label="Item Three" value="3" />
-            </TabList>
-          </Box>
-          <TabPanel value="1">Item One</TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
-          <TabPanel value="3">Item Three</TabPanel>
-        </TabContext>
-      </Box>
-
-      <div className=" text-center pt-[24px] px-[32px]">
-        <div className="flex items-center justify-center ">
-          <ArrowBackIcon className="cursor-pointer text-3xl text-[#5C5D6A]" />
-
-          <p className="mx-auto text-[32px] text-[#1F1F23] font-semibold">
-            Edit Role & Permission
-          </p>
-        </div>
+    <div className="">
+      <div className="px-[32px]">
         <FormControl
-          className="w-full"
+          className="w-full "
           sx={{
             '& .MuiInputBase-root.Mui-focused': {
               '& > fieldset': {
@@ -173,7 +142,7 @@ const AssignEmployee = () => {
           variant="outlined"
         >
           <OutlinedInput
-            className="h-[48px] w-full mt-[56px] bg-[#F3F4F6]"
+            className="mt-[35px] h-[48px] w-full bg-[#F3F4F6]"
             id="outlined-adornment-weight"
             startAdornment={
               <InputAdornment position="start">
@@ -187,7 +156,7 @@ const AssignEmployee = () => {
             }}
           />
         </FormControl>
-        <Table className="mt-[30px]">
+        <Table className="mt-[30px] ">
           <TableHead>
             <TableRow>
               <TableCell className="pb-[7px]  text-[#737277]">
@@ -197,16 +166,16 @@ const AssignEmployee = () => {
                   onChange={handleSelectAll}
                 />
               </TableCell>
-              <TableCell className="pb-[7px] pl-0 text-[#737277] text-[14px]">
+              <TableCell className="pb-[7px] pl-0 text-[14px] text-[#737277]">
                 Employee
               </TableCell>
-              <TableCell className="pb-[7px] pl-0  text-[#737277] text-[14px]">
+              <TableCell className="pb-[7px] pl-0  text-[14px] text-[#737277]">
                 Job Title
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((item) => (
+            {itemsData.map((item) => (
               <TableRow key={item.Id}>
                 <TableCell className="w-[2%]">
                   <StyledCheckbox
@@ -215,7 +184,7 @@ const AssignEmployee = () => {
                     onChange={() => handleRowSelection(item.Id)}
                   />
                 </TableCell>
-                <TableCell className="pl-0 w-[45%]">
+                <TableCell className="w-[45%] pl-0">
                   {' '}
                   <StyledBadge
                     isActive={item.isActive}
@@ -235,7 +204,7 @@ const AssignEmployee = () => {
                       }}
                     />
                   </StyledBadge>
-                  <span className="text-[16px] text-[#404044] pl-[8px]">
+                  <span className="pl-[8px] text-[16px] text-[#404044]">
                     {item.Name}
                   </span>
                 </TableCell>
@@ -247,17 +216,17 @@ const AssignEmployee = () => {
           </TableBody>
         </Table>
       </div>
-      <div className=" pb-[24px] pt-[4px] px-[32px] border-t border-[#DEDEE8] mt-5">
+      <div className=" mt-5 border-t border-[#DEDEE8] px-[32px] pb-[24px] pt-[4px]">
         <div className="flex justify-between ">
           <Button
             type="submit"
-            className="my-4 h-12 w-[354px] font-bold text-[#737277] text-[16px] capitalize border-mango-gray-light-3 hover:border-mango-gray-light-3 "
+            className="my-4 h-12 w-[354px] border-mango-gray-light-3 text-[16px] font-bold capitalize text-[#737277] hover:border-mango-gray-light-3 "
             variant="outlined"
           >
             CANCEL
           </Button>
           <Button
-            className="my-4 h-12 w-[354px] bg-mango-primary-blue font-bold text-[16px] capitalize hover:bg-[#00ADC3]"
+            className="my-4 h-12 w-[354px] bg-mango-primary-blue text-[16px] font-bold capitalize hover:bg-[#00ADC3]"
             variant="contained"
             type="submit"
             disabled={isCheck}

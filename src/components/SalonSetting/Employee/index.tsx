@@ -5,7 +5,7 @@ import { useState } from 'react';
 import EmployeeList from './EmployeeList';
 import RolePermissionList from './RolePermission/ListRolePermission';
 // import AssignEmployee from './RolePermission/AssignEmployee';
-import EditRolePermission from './RolePermission/EditRolePermission';
+import EditRolePermission from './RolePermission/EditRolePermission/index';
 
 interface StyledTabsProps {
   children?: React.ReactNode;
