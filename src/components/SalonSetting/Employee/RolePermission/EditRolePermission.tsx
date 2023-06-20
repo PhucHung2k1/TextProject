@@ -12,7 +12,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-
+import * as React from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState, useEffect } from 'react';
@@ -22,6 +22,7 @@ const AssignEmployee = () => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [isCheck, setIsCheck] = useState(true);
+
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(({ isActive }) => ({
     '& .MuiBadge-badge': {
       backgroundColor: isActive ? '#69B000' : '#9B9BA0',
@@ -39,25 +40,7 @@ const AssignEmployee = () => {
       },
     },
   }));
-
-  const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedItems([]);
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      const allItemIds = items.map((item) => item.Id);
-      setSelectedItems(allItemIds);
-    }
-    setSelectAll(!selectAll);
-  };
-  const handleRowSelection = (rowId: number) => {
-    if (selectedItems.includes(rowId)) {
-      setSelectedItems(selectedItems.filter((id) => id !== rowId));
-    } else {
-      setSelectedItems([...selectedItems, rowId]);
-    }
-  };
-  const items = [
+  const itemsData = [
     {
       Id: 1,
       color: '#2D9DE3',
@@ -107,6 +90,7 @@ const AssignEmployee = () => {
       Job: 'Manager',
     },
   ];
+
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedItems([]);
@@ -141,17 +125,10 @@ const AssignEmployee = () => {
     }
   `;
   return (
-    <div className="ml-auto mr-[0px] h-[95vh]  w-[796px] border">
-      <div className=" px-[32px] pt-[24px] text-center">
-        <div className="flex items-center justify-center ">
-          <ArrowBackIcon className="cursor-pointer text-3xl text-[#5C5D6A]" />
-
-          <p className="mx-auto text-[32px] font-semibold text-[#1F1F23]">
-            Assign Employee
-          </p>
-        </div>
+    <div className="">
+      <div className="px-[32px]">
         <FormControl
-          className="w-full"
+          className="w-full "
           sx={{
             '& .MuiInputBase-root.Mui-focused': {
               '& > fieldset': {
@@ -165,7 +142,7 @@ const AssignEmployee = () => {
           variant="outlined"
         >
           <OutlinedInput
-            className="mt-[56px] h-[48px] w-full bg-[#F3F4F6]"
+            className="mt-[35px] h-[48px] w-full bg-[#F3F4F6]"
             id="outlined-adornment-weight"
             startAdornment={
               <InputAdornment position="start">
@@ -179,7 +156,7 @@ const AssignEmployee = () => {
             }}
           />
         </FormControl>
-        <Table className="mt-[30px]">
+        <Table className="mt-[30px] ">
           <TableHead>
             <TableRow>
               <TableCell className="pb-[7px]  text-[#737277]">
