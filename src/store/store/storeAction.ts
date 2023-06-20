@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Store } from '@/services/store.service/store.service';
 import { setStoreCustomer } from './storeSlice';
+import { showToastMessage } from '@/utils/helper/showToastMessage';
+import { handleForwardProgressSetupStore } from '@/components/StoreProfile/helper';
 // import { showToastMessage } from '@/utils/helper/showToastMessage';
 
 export const getStoreCustomer = createAsyncThunk(
@@ -36,6 +38,30 @@ export const updateStoreProfile = createAsyncThunk(
       throw new Error(error ? JSON.stringify(error) : 'Failed.');
     } catch (err: any) {
       throw new Error(`Error signing in: ${err.message}`);
+    }
+  }
+);
+interface IUpdateLocationPayload {
+  id: string;
+  body: any;
+}
+export const updateLocationStoreProfile = createAsyncThunk(
+  'store/updateLocationStoreProfile',
+  async ({ id, body }: IUpdateLocationPayload, { dispatch }) => {
+    const servicesStoreApi = new Store();
+
+    try {
+      const { status, error } = await servicesStoreApi.updateStore(id, body);
+
+      if (status === 200 || status === 201 || status === 204) {
+        showToastMessage(dispatch, 'Update successfully', 'success');
+        handleForwardProgressSetupStore(dispatch);
+      }
+      if (error) {
+        showToastMessage(dispatch, error?.data.message, 'error');
+      }
+    } catch (err: any) {
+      // console.log(err);
     }
   }
 );

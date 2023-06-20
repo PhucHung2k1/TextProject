@@ -21,11 +21,13 @@ type IInitialState = {
   dataMyRole: IMyRole[];
   dataCustomerProfile: ICustomerProfile;
   invitationToken: string;
+  isInviteEmail: boolean;
 };
 const initialState = {
   dataMyRole: [],
   dataCustomerProfile: {},
   invitationToken: '',
+  isInviteEmail: false,
 } as unknown as IInitialState;
 
 const customerSlice = createSlice({
@@ -41,8 +43,15 @@ const customerSlice = createSlice({
     setInvitationToken: (state, action) => {
       state.invitationToken = action.payload;
     },
+    setIsInviteEmail: (state, action) => {
+      state.isInviteEmail = action.payload;
+    },
   },
 });
-export const { setDataMyRole, setDataCustomerProfile, setInvitationToken } =
-  customerSlice.actions;
+export const {
+  setDataMyRole,
+  setDataCustomerProfile,
+  setInvitationToken,
+  setIsInviteEmail,
+} = customerSlice.actions;
 export default customerSlice.reducer;

@@ -7,13 +7,12 @@ import {
 } from '@mui/material';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { listTimeZone } from '@/utils/helper/listTimeZone';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '@/store/hook';
-import {
-  handleForwardProgressSetupStore,
-  handlePreviousProgressSetupStore,
-} from '@/components/StoreProfile/helper';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import { handlePreviousProgressSetupStore } from '@/components/StoreProfile/helper';
+import { useState } from 'react';
+import type { CountryPhone } from '@/services/common/common.interface';
+import { updateLocationStoreProfile } from '@/store/store/storeAction';
 
 interface IFormLocation {
   addressLine1: string;
@@ -28,8 +27,57 @@ const AddYourLocation = () => {
   const dispatch = useAppDispatch();
 
   const { handleSubmit, register } = useForm<IFormLocation>();
+  const storeCustomer = useAppSelector(
+    (state) => state.storeSlice.storeCustomer[0]
+  );
+  const listTimeZone = useAppSelector(
+    (state) => state.commonSlice.lookupData.TimeZone
+  );
+  const [valueTimeZone, setValueTimeZone] = useState<CountryPhone | null>(
+    listTimeZone.find((item) => item.Value === storeCustomer?.TimeZone) || null
+  );
   const onSubmit = (values: IFormLocation) => {
     console.log('values', values);
+
+    const payload = [
+      {
+        op: 'replace',
+        path: `/Address1`,
+        value: values.addressLine1,
+      },
+      {
+        op: 'replace',
+        path: `/Address2`,
+        value: values.addressLine2,
+      },
+      {
+        op: 'replace',
+        path: `/City`,
+        value: values.city,
+      },
+      {
+        op: 'replace',
+        path: `/State`,
+        value: values.state,
+      },
+      {
+        op: 'replace',
+        path: `/ZipCode`,
+        value: values.zipCode,
+      },
+      {
+        op: 'replace',
+        path: `/TimeZone`,
+        value: valueTimeZone?.Value,
+      },
+    ];
+
+    dispatch(
+      updateLocationStoreProfile({
+        id: storeCustomer?.Id || '',
+        body: payload,
+      })
+    );
   };
 
   return (
@@ -58,6 +106,7 @@ const AddYourLocation = () => {
               <TextField
                 label="Address line 1"
                 type="text"
+                defaultValue={storeCustomer?.Address1}
                 {...register('addressLine1', {})}
                 placeholder="Address line 1"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -72,6 +121,7 @@ const AddYourLocation = () => {
               <TextField
                 label="Address line 2"
                 type="text"
+                defaultValue={storeCustomer?.Address2}
                 {...register('addressLine2', {})}
                 placeholder="Address line 2"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -85,8 +135,9 @@ const AddYourLocation = () => {
             >
               <TextField
                 label="City"
-                name="city"
+                {...register('city', {})}
                 type="text"
+                defaultValue={storeCustomer?.City}
                 placeholder="City"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
               />
@@ -100,6 +151,7 @@ const AddYourLocation = () => {
               <TextField
                 label="State"
                 type="text"
+                defaultValue={storeCustomer?.State}
                 {...register('state', {})}
                 placeholder="State"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -115,6 +167,7 @@ const AddYourLocation = () => {
               <TextField
                 label="Zip code"
                 type="text"
+                defaultValue={storeCustomer?.ZipCode}
                 {...register('zipCode', {})}
                 placeholder="Zip code"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -127,7 +180,12 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <Autocomplete
-                options={listTimeZone.map((option) => option.text)}
+                getOptionLabel={(option) => option.Description}
+                options={listTimeZone}
+                value={valueTimeZone}
+                onChange={(_e, value) => {
+                  if (value) setValueTimeZone(value);
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -144,7 +202,6 @@ const AddYourLocation = () => {
           type="submit"
           className="my-4 h-12 w-full bg-mango-primary-blue font-bold"
           variant="contained"
-          onClick={() => handleForwardProgressSetupStore(dispatch)}
         >
           CONTINUE
         </Button>

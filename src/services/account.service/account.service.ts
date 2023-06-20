@@ -31,7 +31,6 @@ export class Account {
     const response: IResponse = await apiPost(SIGN_UP_VERIFY, data).catch(
       catchAxiosError
     );
-
     return response;
   };
 

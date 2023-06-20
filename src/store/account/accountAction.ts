@@ -12,7 +12,7 @@ export const signUp = createAsyncThunk(
     try {
       const { data, status, error } = await servicesAccountAPI.signUp(body);
 
-      if (status === 200 && data) {
+      if (status === 200) {
         dispatch(
           setInfoSignUp({
             email: data?.Customer?.Email || '',
@@ -21,8 +21,16 @@ export const signUp = createAsyncThunk(
         );
         return { data, status, message: 'Successfully' };
       }
-      return error;
-    } catch (err: any) {}
+      if (error) {
+        showToastMessage(
+          dispatch,
+          error?.data?.extendData[0]?.Message,
+          'error'
+        );
+      }
+    } catch (err: any) {
+      // console.log(err);
+    }
   }
 );
 
@@ -41,25 +49,28 @@ export const checkExistEmail = createAsyncThunk(
       }
 
       throw new Error(error ? JSON.stringify(error) : 'Failed.');
-    } catch (err: any) {}
+    } catch (err: any) {
+      // console.log(err);
+    }
   }
 );
 
 export const signUpVerify = createAsyncThunk(
   'account/signUpVerify',
-  async (body: ISignUpVerify) => {
+  async (body: ISignUpVerify, { dispatch }) => {
     const servicesAccountAPI = new Account();
     try {
       const { data, status, error } = await servicesAccountAPI.signUpVerify(
         body
       );
 
-      if (status === 200 && data) {
+      if (status === 200) {
         return { data, status, message: 'Successfully verified your email' };
       }
-
-      return error;
-    } catch (err: any) {}
+      if (error) showToastMessage(dispatch, error?.data.extendData[0], 'error');
+    } catch (err: any) {
+      // console.log(err);
+    }
   }
 );
 export const signUpSendVerify = createAsyncThunk(

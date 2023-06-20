@@ -83,23 +83,17 @@ export const EmployeeSetting = () => {
   ];
 
   return (
-    <>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <StyledTabs value={activeKey} onChange={handleChange}>
-            {items.map((item) => (
-              <AntTab key={item.key} label={item.label} />
-            ))}
-          </StyledTabs>
-        </Box>
-        {items.map((item) => {
-          return item.id === activeKey ? (
-            <div key={item.key}>{item.children}</div>
-          ) : (
-            <></>
-          );
-        })}
+    <Box className="h-full w-full">
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <StyledTabs value={activeKey} onChange={handleChange}>
+          {items.map((item) => (
+            <AntTab key={item.key} label={item.label} />
+          ))}
+        </StyledTabs>
       </Box>
-    </>
+      <Box className="overflow-auto">
+        {items.find((item) => item.id === activeKey)?.children}
+      </Box>
+    </Box>
   );
 };

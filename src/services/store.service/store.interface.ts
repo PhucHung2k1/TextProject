@@ -15,10 +15,20 @@ export interface IStoreCustomer {
   Name: string;
   Email: string;
   PhoneNumber: number;
+  TimeZone: string;
+  GeoLatitude: string;
+  GeoLongitude: string;
+  ProfilePictureUrl: string;
   Id: string;
   CreateDate: Date;
   LastModifiedDate: Date;
-  ProfilePictureUrl: string;
+  State: string;
+  ZipCode: string;
+  MailingAddress: string;
+  GoogleMapUrl: string;
+  City: string;
+  Address1: string;
+  Address2: string;
 }
 export interface IConfigStore {
   step: number;
