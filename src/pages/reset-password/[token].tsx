@@ -60,10 +60,7 @@ const ResetPassword = () => {
       password: values?.password,
       passwordConfirm: values?.confirmPassword,
     };
-    console.log(
-      '🚀 ~ file: [token].tsx:63 ~ handleResetPassword ~ payload:',
-      payload
-    );
+
     dispatch(changePasswordByToken(payload)).then((res: any) => {
       if (!res?.error) {
         router.push('/login');

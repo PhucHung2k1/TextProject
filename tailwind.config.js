@@ -48,12 +48,10 @@ module.exports = {
         'mango-gray-light-4': '#DEDEDE',
         'mango-gray-light-5': '#F3F4F6',
         'mango-blue-light-1': '#E0F7FA',
-
         'text-title': '#1F1F23',
         'text-secondary': '#737277',
         'text-disable': '#C5C4C9',
         'text-primary-dark': '#00ADC3',
-
         'icon-color': '#5C5D6A',
         'primary-dark': '#404044',
         'border-secondary': '#7E8091',
@@ -75,15 +73,24 @@ module.exports = {
           900: '#1a202c',
         },
         blue: {
+          50: '#E3F2FD',
           100: '#ebf8ff',
           200: '#bee3f8',
           300: '#90cdf4',
           400: '#63b3ed',
           500: '#4299e1',
           600: '#3182ce',
-          700: '#2b6cb0',
+          700: '#0057B2',
           800: '#2c5282',
           900: '#2a4365',
+        },
+        pink: {
+          50: '#FDE5ED',
+          700: '#CA2B60',
+        },
+        cyan: {
+          50: '#E0F7FA',
+          700: '#0098A9',
         },
         'background-paper-elevation-1': '#ecedee',
         'primary-states-hover': 'rgba(0, 189, 214, 0.08)',
