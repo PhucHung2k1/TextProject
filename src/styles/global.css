@@ -12,6 +12,11 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+th td {
+  font-family: 'Inter', sans-serif !important;
+
+}
+
 a {
   @apply text-blue-700;
 }
@@ -31,28 +36,39 @@ a:hover {
 .text-input-center .ant-input {
   text-align: center;
 }
+
 .hidden-scrollbar {
-  scrollbar-width: none; /* Ẩn thanh cuộn trên các trình duyệt hiện đại */
-  -ms-overflow-style: none; /* Ẩn thanh cuộn trên Internet Explorer/Edge */
+  scrollbar-width: none;
+  /* Ẩn thanh cuộn trên các trình duyệt hiện đại */
+  -ms-overflow-style: none;
+  /* Ẩn thanh cuộn trên Internet Explorer/Edge */
 }
 
 .hidden-scrollbar::-webkit-scrollbar {
-  display: none; /* Ẩn thanh cuộn trên trình duyệt Chrome/Safari */
+  display: none;
+  /* Ẩn thanh cuộn trên trình duyệt Chrome/Safari */
 }
+
 ::-webkit-scrollbar {
-  width: 5px; /* Chiều rộng thanh cuộn */
-  height: 10px; /* Chiều cao thanh cuộn */
+  width: 5px;
+  /* Chiều rộng thanh cuộn */
+  height: 10px;
+  /* Chiều cao thanh cuộn */
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #f1f1f1; /* Màu nền của thanh cuộn */
+  background-color: #f1f1f1;
+  /* Màu nền của thanh cuộn */
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #888; /* Màu của thanh kéo */
-  border-radius: 5px; /* Đường viền cong của thanh kéo */
+  background-color: #888;
+  /* Màu của thanh kéo */
+  border-radius: 5px;
+  /* Đường viền cong của thanh kéo */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Màu của thanh kéo khi di chuột qua */
+  background-color: #555;
+  /* Màu của thanh kéo khi di chuột qua */
 }

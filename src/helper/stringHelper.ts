@@ -5,4 +5,3 @@ export const convertTo12h = (timeString: string) => {
   const time = format(parsedTime, 'hh:mm b');
   return time;
 };
-

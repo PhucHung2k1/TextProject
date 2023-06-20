@@ -1,5 +1,4 @@
 import { Avatar, Box, Button, Typography } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import type { IInvitationListData } from '@/services/customer.service/customer.interface';
 
@@ -41,7 +40,7 @@ const InvitationListComponent = ({
                   </Typography>
                 </div>
               </div>
-              <div>
+              {/* <div>
                 <Button
                   variant="contained"
                   className={` gap-1 rounded px-3 py-1 text-sm !shadow-none ${
@@ -53,7 +52,7 @@ const InvitationListComponent = ({
                 >
                   Sent
                 </Button>
-              </div>
+              </div> */}
             </Box>
           );
         })}

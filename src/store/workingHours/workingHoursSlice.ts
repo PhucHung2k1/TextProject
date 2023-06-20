@@ -1,5 +1,5 @@
-import { IWorkingHours } from "@/services/workingHours.service/workingHours.interface";
-import { createSlice } from "@reduxjs/toolkit";
+import type { IWorkingHours } from '@/services/workingHours.service/workingHours.interface';
+import { createSlice } from '@reduxjs/toolkit';
 
 type IInitialState = {
   workingHours: IWorkingHours[];
@@ -15,12 +15,9 @@ const WorkingHoursSlice = createSlice({
     setWorkingHours: (state: any, action: any) => {
       state.workingHours = action.payload;
     },
-  }
-}
-)
+  },
+});
 
-export const {
-  setWorkingHours
-} = WorkingHoursSlice.actions;
+export const { setWorkingHours } = WorkingHoursSlice.actions;
 
 export default WorkingHoursSlice.reducer;

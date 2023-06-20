@@ -20,10 +20,12 @@ export interface Permission {
 type IInitialState = {
   dataMyRole: IMyRole[];
   dataCustomerProfile: ICustomerProfile;
+  invitationToken: string;
 };
 const initialState = {
   dataMyRole: [],
   dataCustomerProfile: {},
+  invitationToken: '',
 } as unknown as IInitialState;
 
 const customerSlice = createSlice({
@@ -36,7 +38,11 @@ const customerSlice = createSlice({
     setDataCustomerProfile: (state, action) => {
       state.dataCustomerProfile = action.payload;
     },
+    setInvitationToken: (state, action) => {
+      state.invitationToken = action.payload;
+    },
   },
 });
-export const { setDataMyRole, setDataCustomerProfile } = customerSlice.actions;
+export const { setDataMyRole, setDataCustomerProfile, setInvitationToken } =
+  customerSlice.actions;
 export default customerSlice.reducer;
