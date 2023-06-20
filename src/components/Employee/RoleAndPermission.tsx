@@ -9,9 +9,18 @@ import {
   InputLabel,
   FormHelperText,
   MenuItem,
+  Button,
 } from '@mui/material';
+import { useState } from 'react';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 
 const RoleAndPermission: NextPage = () => {
+  const [showFormAppointment, setShowFormAppointment] = useState(true);
+  const handleShowFormAppointment = () => {
+    setShowFormAppointment(!showFormAppointment);
+  };
+
   return (
     <div className="flex bg-white w-[796px] h-[800px]">
       <div className=" w-[732px] flex flex-col  text-xs text-text-secondary">
@@ -45,29 +54,260 @@ const RoleAndPermission: NextPage = () => {
             </Select>
             <FormHelperText />
           </FormControl>
-          <div className="mt-8 flex flex-row items-center  justify-start text-center">
+          <div className="ml-2 mt-8 flex flex-row items-center  justify-start text-center">
             <div>
               <Switch checked color="primary" size="medium" />
             </div>
             <div className="text-base leading-[140%]">Technician</div>
           </div>
           <div className="ml-4 flex items-center  justify-start text-center">
-            <Checkbox color="primary" defaultChecked size="medium" />
+            <Checkbox color="primary" defaultChecked size="medium" disabled />
             <div className="text-base leading-[140%]">Take Appoment</div>
           </div>
           <div className="ml-4 flex items-center  justify-start text-center">
-            <Checkbox color="primary" defaultChecked size="medium" />
+            <Checkbox color="primary" defaultChecked size="medium" disabled />
             <div className="text-base leading-[140%]">
               Available for Booking Online
             </div>
           </div>
           <div className="ml-4 flex items-center justify-start text-center">
-            <Checkbox color="primary" defaultChecked size="medium" />
+            <Checkbox color="primary" defaultChecked size="medium" disabled />
             <div className="text-base leading-[140%]">
               Allowed to make quick payment
             </div>
           </div>
           <div className="mt-8 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
+          <div className="mt-4 text-xl leading-[133.4%] font-semibold text-text-title">
+            Accessibility
+          </div>
+          <div className="mt-2 rounded-lg box-border w-[732px] h-[auto] border-[1px] border-solid border-border-light p-1">
+            <div className="ml-2 flex flex-row items-center  justify-between text-center">
+              <div className="flex flex-row">
+                <div>
+                  <Switch
+                    checked={showFormAppointment}
+                    color="primary"
+                    size="medium"
+                    onChange={handleShowFormAppointment}
+                  />
+                </div>
+                <div className="mt-2 text-lg leading-[130%] font-semibold text-text-primary">
+                  Appointment
+                </div>
+              </div>
+              <div>
+                {showFormAppointment ? (
+                  <>
+                    <Button
+                      className="items-center justify-center"
+                      variant="text"
+                      startIcon={<RemoveIcon sx={{ color: '#5C5D6A' }} />}
+                      onClick={handleShowFormAppointment}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      className="items-center justify-center"
+                      variant="text"
+                      startIcon={<AddIcon sx={{ color: '#00ADC3' }} />}
+                      onClick={handleShowFormAppointment}
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+            {showFormAppointment ? (
+              <>
+                <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
+                <div className="ml-4 flex items-center  justify-start text-center">
+                  <Checkbox
+                    color="primary"
+                    defaultChecked
+                    size="medium"
+                    disabled
+                  />
+                  <div className="text-base leading-[140%]">Take Appoment</div>
+                </div>
+                <div className="ml-4 flex items-center  justify-start text-center">
+                  <Checkbox
+                    color="primary"
+                    defaultChecked
+                    size="medium"
+                    disabled
+                  />
+                  <div className="text-base leading-[140%]">
+                    Available for Booking Online
+                  </div>
+                </div>
+                <div className="ml-4 flex items-center justify-start text-center">
+                  <Checkbox
+                    color="primary"
+                    value={false}
+                    size="medium"
+                    disabled
+                  />
+                  <div className="text-base leading-[140%]">
+                    Allowed to make quick payment
+                  </div>
+                </div>
+              </>
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="mt-2 rounded-lg box-border w-[732px] h-[auto] border-[1px] border-solid border-border-light p-1">
+            <div className="ml-2 flex flex-row items-center  justify-between text-center">
+              <div className="flex flex-row">
+                <div>
+                  <Switch
+                    checked={showFormAppointment}
+                    color="primary"
+                    size="medium"
+                    onChange={handleShowFormAppointment}
+                  />
+                </div>
+                <div className="mt-2 text-lg leading-[130%] font-semibold text-text-primary">
+                  Appointment
+                </div>
+              </div>
+              <div>
+                {showFormAppointment ? (
+                  <>
+                    <Button
+                      className="items-center justify-center"
+                      variant="text"
+                      startIcon={<RemoveIcon sx={{ color: '#5C5D6A' }} />}
+                      onClick={handleShowFormAppointment}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      className="items-center justify-center"
+                      variant="text"
+                      startIcon={<AddIcon sx={{ color: '#00ADC3' }} />}
+                      onClick={handleShowFormAppointment}
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+            {showFormAppointment ? (
+              <>
+                <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
+                <div className="ml-4 flex items-center  justify-start text-center">
+                  <Checkbox
+                    color="primary"
+                    defaultChecked
+                    size="medium"
+                    disabled
+                  />
+                  <div className="text-base leading-[140%]">Take Appoment</div>
+                </div>
+                <div className="ml-4 flex items-center  justify-start text-center">
+                  <Checkbox
+                    color="primary"
+                    defaultChecked
+                    size="medium"
+                    disabled
+                  />
+                  <div className="text-base leading-[140%]">
+                    Available for Booking Online
+                  </div>
+                </div>
+                <div className="ml-4 flex items-center justify-start text-center">
+                  <Checkbox
+                    color="primary"
+                    value={false}
+                    size="medium"
+                    disabled
+                  />
+                  <div className="text-base leading-[140%]">
+                    Allowed to make quick payment
+                  </div>
+                </div>
+              </>
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="mt-2 rounded-lg box-border w-[732px] h-[auto] border-[1px] border-solid border-border-light p-1">
+            <div className="ml-2 flex flex-row items-center  justify-between text-center">
+              <div className="flex flex-row">
+                <div>
+                  <Switch
+                    checked={showFormAppointment}
+                    color="primary"
+                    size="medium"
+                    onChange={handleShowFormAppointment}
+                  />
+                </div>
+                <div className="mt-2 text-lg leading-[130%] font-semibold text-text-primary">
+                  Appointment
+                </div>
+              </div>
+              <div>
+                {showFormAppointment ? (
+                  <>
+                    <Button
+                      className="items-center justify-center"
+                      variant="text"
+                      startIcon={<RemoveIcon sx={{ color: '#5C5D6A' }} />}
+                      onClick={handleShowFormAppointment}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      className="items-center justify-center"
+                      variant="text"
+                      startIcon={<AddIcon sx={{ color: '#00ADC3' }} />}
+                      onClick={handleShowFormAppointment}
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+            {showFormAppointment ? (
+              <>
+                <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
+                <div className="ml-4 flex items-center  justify-start text-center">
+                  <Checkbox
+                    color="primary"
+                    defaultChecked
+                    size="medium"
+                    disabled
+                  />
+                  <div className="text-base leading-[140%]">Take Appoment</div>
+                </div>
+                <div className="ml-4 flex items-center  justify-start text-center">
+                  <Checkbox
+                    color="primary"
+                    defaultChecked
+                    size="medium"
+                    disabled
+                  />
+                  <div className="text-base leading-[140%]">
+                    Available for Booking Online
+                  </div>
+                </div>
+                <div className="ml-4 flex items-center justify-start text-center">
+                  <Checkbox
+                    color="primary"
+                    value={false}
+                    size="medium"
+                    disabled
+                  />
+                  <div className="text-base leading-[140%]">
+                    Allowed to make quick payment
+                  </div>
+                </div>
+              </>
+            ) : (
+              ''
+            )}
+          </div>
         </div>
       </div>
     </div>
