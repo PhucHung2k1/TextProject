@@ -69,27 +69,36 @@ const AboutYourBusiness = () => {
   const submitForm = async () => {
     const storeAPI = new Store();
     try {
-      const patchData = [
-        {
+      const patchData = [];
+
+      if (formStore.Name !== storeCustomer?.Name) {
+        patchData.push({
           op: 'replace',
           path: '/Name',
-          value: formStore.Name ? formStore.Name : storeCustomer?.Name,
-        },
-        {
+          value: formStore.Name,
+        });
+      }
+      if (formStore.PhoneNumber !== storeCustomer?.PhoneNumber) {
+        patchData.push({
           op: 'replace',
           path: '/PhoneNumber',
-          value: formStore.PhoneNumber
-            ? formStore.PhoneNumber
-            : storeCustomer?.PhoneNumber,
-        },
-        {
+          value: formStore.PhoneNumber,
+        });
+      }
+      if (
+        avatarImage &&
+        avatarImage.OriginalPublishUrl !== storeCustomer?.ProfilePictureUrl
+      ) {
+        patchData.push({
           op: 'replace',
           path: '/ProfilePictureUrl',
-          value: avatarImage ? avatarImage.OriginalPublishUrl : avatarImage,
-        },
-      ];
+          value: avatarImage.OriginalPublishUrl,
+        });
+      }
+      if (patchData.length > 0) {
+        await storeAPI.updateStore(formStore.Id, patchData);
+      }
 
-      await storeAPI.updateStore(formStore.Id, patchData);
       handleForwardProgressSetupStore(dispatch);
     } catch (error) {}
   };
@@ -97,19 +106,19 @@ const AboutYourBusiness = () => {
   useEffect(() => {
     dispatch(getStoreCustomer({}));
     if (storeCustomer) {
-      setFormStore({
-        Name: storeCustomer?.Name || '',
-        PhoneNumber: storeCustomer?.PhoneNumber || '',
-        ProfilePictureUrl: storeCustomer?.ProfilePictureUrl || '',
-        Id: storeCustomer?.Id || '',
-      });
+      setFormStore((prevFormStore) => ({
+        ...prevFormStore,
+        Name: storeCustomer.Name || '',
+        PhoneNumber: storeCustomer.PhoneNumber || '',
+        ProfilePictureUrl: storeCustomer.ProfilePictureUrl || '',
+        Id: storeCustomer.Id || '',
+      }));
     }
   }, [
     storeCustomer?.Name,
     storeCustomer?.PhoneNumber,
     storeCustomer?.ProfilePictureUrl,
   ]);
-
   return (
     <LayoutStoreProfile>
       <p className="mb-[8px] mt-[16px] text-center text-[32px] font-semibold text-text-title">
