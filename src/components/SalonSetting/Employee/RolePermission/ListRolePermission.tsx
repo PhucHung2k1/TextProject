@@ -14,16 +14,11 @@ import {
   Select,
   MenuItem,
   Grid,
-
   AvatarGroup,
-  Avatar,
-
   Stack,
   Chip,
   Avatar,
-  AvatarGroup,
   styled,
-
 } from '@mui/material';
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
@@ -470,8 +465,8 @@ const ListRolePermission = () => {
                   </IconButton>
                 </TableCell>
               </TableRow>
+            </TableBody>
 
-            </TableHead>
             <TableBody>
               <TableRow>
                 <TableCell component="th" scope="row">
@@ -513,7 +508,6 @@ const ListRolePermission = () => {
                   </IconButton>
                 </TableCell>
               </TableRow>
-
             </TableBody>
           </Table>
         </TableContainer>
