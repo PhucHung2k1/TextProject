@@ -28,7 +28,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import Badge from '@mui/material/Badge';
 
-const General = () => {
+const ListRolePermission = () => {
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(
     ({ theme, isActive }) => ({
       '& .MuiBadge-badge': {
@@ -139,7 +139,7 @@ const General = () => {
   const functionList = ['Function'];
 
   return (
-    <div className="">
+    <div>
       <div className="mt-[36px] flex items-center justify-between">
         <Typography
           variant="h2"
@@ -187,12 +187,6 @@ const General = () => {
             Add Role
           </Button>
 
-          {/* <Button
-            className=" h-[48px] w-[35] border-[#B0B2C6] text-[16px] font-bold text-[#ffff] hover:bg-[#5C5D6A29]"
-            variant="outlined"
-          >
-            <MoreHorizIcon style={{ color: '#5C5D6A' }} />
-          </Button> */}
           <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded border border-mango-gray-light-3  hover:bg-[#5C5D6A29]">
             <MoreHorizIcon />
           </div>
@@ -470,4 +464,4 @@ const General = () => {
   );
 };
 
-export default General;
+export default ListRolePermission;
