@@ -14,10 +14,10 @@ import {
   Select,
   MenuItem,
   Grid,
+  AvatarGroup,
   Stack,
   Chip,
   Avatar,
-  AvatarGroup,
   styled,
 } from '@mui/material';
 import React, { useState } from 'react';
@@ -26,6 +26,10 @@ import AddIcon from '@mui/icons-material/Add';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+
+import CustomDrawer from '@/common/Drawer/Drawer';
+import AddForm from './FormLayout';
+
 import Badge from '@mui/material/Badge';
 
 const ListRolePermission = () => {
@@ -167,7 +171,6 @@ const ListRolePermission = () => {
               id="outlined-adornment-weight"
               startAdornment={
                 <InputAdornment position="start">
-                  {' '}
                   <SearchIcon />
                 </InputAdornment>
               }
@@ -179,13 +182,19 @@ const ListRolePermission = () => {
             />
           </FormControl>
 
-          <Button
-            className="h-[48px] w-[188px] bg-[#00BDD6] text-[16px] font-bold text-[#ffff] hover:bg-[#00ADC3]"
-            variant="contained"
-            startIcon={<AddIcon />}
-          >
-            Add Role
-          </Button>
+          <CustomDrawer
+            anchor="right"
+            clickNode={
+              <Button
+                className="h-[48px] w-[188px] bg-[#00BDD6] text-[16px] font-bold text-[#ffff] hover:bg-[#00ADC3]"
+                variant="contained"
+                startIcon={<AddIcon />}
+              >
+                Add Role
+              </Button>
+            }
+            content={<AddForm />}
+          />
 
           <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded border border-mango-gray-light-3  hover:bg-[#5C5D6A29]">
             <MoreHorizIcon />
@@ -260,7 +269,7 @@ const ListRolePermission = () => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>{' '}
+            </FormControl>
           </div>
         </Grid>
       </div>
@@ -448,6 +457,49 @@ const ListRolePermission = () => {
                   </div>
                 </TableCell>
                 <TableCell align="right" className="w-[10%] text-[16px]">
+                  <IconButton>
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
+                    <CloseIcon fontSize="small" className="text-[#DA2036] " />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+
+            <TableBody>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  Owner
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  <p>2 users</p>
+                  <AvatarGroup total={24}>
+                    <Avatar
+                      className="border border-blue-400"
+                      alt="Remy Sharp"
+                      src="/assets/images/StoreProfile/image-welcome.svg"
+                    />
+                    <Avatar
+                      alt="Travis Howard"
+                      src="/assets/images/StoreProfile/image-welcome.svg"
+                    />
+                    <Avatar
+                      alt="Agnes Walker"
+                      src="/assets/images/StoreProfile/image-welcome.svg"
+                    />
+                    <Avatar
+                      alt="Trevor Henderson"
+                      src="/assets/images/StoreProfile/image-welcome.svg"
+                    />
+                  </AvatarGroup>
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  <div className="w-fit rounded-full bg-[#00BDD6] px-[10px] py-[7px] text-center text-[16px] text-[#ffff]">
+                    All functions
+                  </div>
+                </TableCell>
+                <TableCell align="right">
                   <IconButton>
                     <EditIcon fontSize="small" />
                   </IconButton>
