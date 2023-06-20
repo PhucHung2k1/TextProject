@@ -22,48 +22,57 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import moment from 'moment';
 import { Clear } from '@mui/icons-material';
-import { getWorkingHours } from '@/store/workingHours/workingHoursAction';
-import type { IWorkingHours } from '@/services/workingHours.service/workingHours.interface';
-import { convertTo12h } from '@/helper/stringHelper';
+import {
+  getWorkingHours,
+  updateWorkingHours,
+} from '@/store/workingHours/workingHoursAction';
+import type {
+  IBreakTime,
+  IWorkingHours,
+} from '@/services/workingHours.service/workingHours.interface';
+import { convertTo12h, convertTo24h } from '@/helper/stringHelper';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const [showEditHours, setShowEditHours] = useState(false);
   const [startHour, setStartHour] = useState('');
   const [endHour, setEndHour] = useState('');
   const [dayStatus, setDayStatus] = useState(true);
-  const [selectedId, setSelectedId] = useState('');
+  const [selectedDay, setSelectedDay] = useState('');
   const [showForm, setShowForm] = useState(true);
-  const [forms, setForms] = useState([{ id: 0 }]);
 
   const workingHours = useAppSelector(
     (state) => state.workingHoursSlice.workingHours
   );
+  const [listData, setListData] = useState<IWorkingHours[]>(workingHours);
+  const [listBreakHoursForShow, setListBreakHoursForShow] = useState<
+    IBreakTime[]
+  >([]);
+  const listBreakHoursForUpdate: IBreakTime[] = [];
 
-  const fetchData = workingHours.map((item) => ({
-    ...item,
-    StartHours: convertTo12h(item.StartHours ?? '09:00:00'),
-    EndHours: convertTo12h(item.EndHours ?? '21:00:00'),
-  }));
-  const [listData, setListData] = useState<IWorkingHours[]>(fetchData);
   const dispatch = useAppDispatch();
   const timeOptions = [
-    '05:00 AM',
-    '06:00 AM',
-    '07:00 AM',
-    '08:00 AM',
-    '09:00 AM',
+    '12:00 AM',
+    '1:00 AM',
+    '2:00 AM',
+    '3:00 AM',
+    '4:00 AM',
+    '5:00 AM',
+    '6:00 AM',
+    '7:00 AM',
+    '8:00 AM',
+    '9:00 AM',
     '10:00 AM',
     '11:00 AM',
-    '12:00 AM',
-    '01:00 PM',
-    '02:00 PM',
-    '03:00 PM',
-    '04:00 PM',
-    '05:00 PM',
-    '06:00 PM',
-    '07:00 PM',
-    '08:00 PM',
-    '09:00 PM',
+    '12:00 PM',
+    '1:00 PM',
+    '2:00 PM',
+    '3:00 PM',
+    '4:00 PM',
+    '5:00 PM',
+    '6:00 PM',
+    '7:00 PM',
+    '8:00 PM',
+    '9:00 PM',
     '10:00 PM',
     '11:00 PM',
   ];
@@ -76,11 +85,36 @@ const StoreWorkingHoursSetup: NextPage = () => {
   };
 
   const addForm = () => {
-    const newFormId = forms.length + 1;
-    setForms([...forms, { id: newFormId }]);
+    const newBreak: IBreakTime = {
+      DayName: selectedDay,
+      StartHours: '09:00:00',
+      EndHours: '10:00:00',
+    };
+    setListBreakHoursForShow((prevList) => [...prevList, newBreak]);
   };
-  const removeForm = (formId: number) => {
-    setForms(forms.filter((form) => form.id !== formId));
+
+  const removeForm = (index: number) => {
+    const tempList = listBreakHoursForShow.filter(
+      (_, index1) => index1 !== index
+    );
+
+    setListBreakHoursForShow(tempList);
+    console.log(index, tempList);
+  };
+  console.log(listBreakHoursForShow);
+
+  const updateHoursBreak = (index: number, position: string, value: string) => {
+    if (position === 'start') {
+      const updatedHours = listBreakHoursForShow.map((item, i) =>
+        i === index ? { ...item, StartHours: value } : item
+      );
+      setListBreakHoursForShow(updatedHours);
+    } else {
+      const updatedHours = listBreakHoursForShow.map((item, i) =>
+        i === index ? { ...item, EndHours: value } : item
+      );
+      setListBreakHoursForShow(updatedHours);
+    }
   };
 
   const handleChangeStatus = (index: number) => () => {
@@ -91,12 +125,13 @@ const StoreWorkingHoursSetup: NextPage = () => {
   };
   const onSaveEditHours = () => {
     const updatedList = listData.map((item) =>
-      item.Id === selectedId
+      item.DayName === selectedDay
         ? {
             ...item,
             StartHours: startHour,
             EndHours: endHour,
             IsClosed: dayStatus,
+            BreakTimes: listBreakHoursForShow,
           }
         : item
     );
@@ -104,14 +139,46 @@ const StoreWorkingHoursSetup: NextPage = () => {
     handleShowEditHours();
   };
   const getDifferentHours = (start: string, end: string) => {
-    const momentTime1 = moment(start, 'hh:mm A');
-    const momentTime2 = moment(end, 'hh:mm A');
+    const momentTime1 = moment(start, 'HH:mm:ss');
+    const momentTime2 = moment(end, 'HH:mm:ss');
 
     const diffInMinutes = momentTime2.diff(momentTime1, 'minutes');
 
     const diffHours = Math.floor(diffInMinutes / 60);
     const diffMinutes = diffInMinutes % 60;
     return `${diffHours}h ${diffMinutes}m`;
+  };
+
+  const handleUpdateWorkingHuors = () => {
+    listData.forEach((item) => {
+      const { DayName, BreakTimes } = item;
+      BreakTimes.forEach((breakTime) => {
+        listBreakHoursForUpdate.push({
+          DayName,
+          StartHours: breakTime.StartHours,
+          EndHours: breakTime.EndHours,
+        });
+      });
+    });
+
+    const data = {
+      StoreHours: listData,
+      BreakTime: listBreakHoursForUpdate,
+    };
+
+    dispatch(updateWorkingHours(data));
+  };
+
+  const hanldeDayArrowClick = (item: IWorkingHours) => {
+    setSelectedDay(item.DayName);
+    setDayStatus(item.IsClosed);
+    setStartHour(item.StartHours);
+    setEndHour(item.EndHours);
+    const filteredBreakTimes = listData
+      .filter((data) => data.DayName === item.DayName)
+      .flatMap((data) => data.BreakTimes);
+    setListBreakHoursForShow(filteredBreakTimes);
+    handleShowEditHours();
   };
 
   useEffect(() => {
@@ -141,12 +208,12 @@ const StoreWorkingHoursSetup: NextPage = () => {
           </div>
           <div className="mt-8 flex flex-col justify-center gap-[12px] text-text-primary">
             {listData.map((item, index) => (
-              <div key={item.Id}>
+              <div key={`${item.DayName}`}>
                 <div>
                   <div className="flex flex-row items-center justify-start">
                     <div>
                       <Switch
-                        checked={item.IsClosed}
+                        checked={!item.IsClosed}
                         className="p-3"
                         onChange={handleChangeStatus(index)}
                       />
@@ -155,11 +222,13 @@ const StoreWorkingHoursSetup: NextPage = () => {
                       {item.DayName}
                     </div>
                     <div className="w-[70%] text-center leading-[140%]">
-                      {item.IsClosed
-                        ? `${item.StartHours} - ${item.EndHours}`
+                      {!item.IsClosed
+                        ? `${convertTo12h(item.StartHours)} - ${convertTo12h(
+                            item.EndHours
+                          )}`
                         : 'Closed'}
                     </div>
-                    {item.IsClosed ? (
+                    {!item.IsClosed ? (
                       <Image
                         src="/icons/chevronrightfilled.svg"
                         width="20"
@@ -168,11 +237,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         objectFit="cover"
                         className="hidden cursor-pointer overflow-hidden"
                         onClick={() => {
-                          setSelectedId(item.Id);
-                          setDayStatus(item.IsClosed);
-                          setStartHour(item.StartHours);
-                          setEndHour(item.EndHours);
-                          handleShowEditHours();
+                          hanldeDayArrowClick(item);
                         }}
                       />
                     ) : (
@@ -184,7 +249,10 @@ const StoreWorkingHoursSetup: NextPage = () => {
               </div>
             ))}
             <button
-              onClick={() => handleForwardProgressSetupStore(dispatch)}
+              onClick={() => {
+                handleUpdateWorkingHuors();
+                handleForwardProgressSetupStore(dispatch);
+              }}
               type="button"
               className="mt-8 box-border flex h-12 w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
             >
@@ -201,7 +269,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                 className="cursor-pointer text-3xl"
               />
               <p className="mx-auto text-center text-[32px] font-semibold text-text-title">
-                Edit business hours
+                Edit salon hours
               </p>
             </div>
 
@@ -215,7 +283,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                   />
                 </div>
                 <div className="w-[30%] font-semibold leading-[133.4%]">
-                  Every Monday
+                  Every {selectedDay}
                 </div>
                 <div className="leading-[140%] text-text-secondary">
                   {getDifferentHours(startHour, endHour)}
@@ -224,15 +292,17 @@ const StoreWorkingHoursSetup: NextPage = () => {
               {showForm && (
                 <>
                   <Grid className="items-center" container spacing={4}>
-                    <Grid item xs={5.5}>
+                    <Grid item xs={4.8}>
                       <div className="font-semibold leading-[140%]">Start</div>
                       <FormControl fullWidth variant="outlined">
                         <InputLabel color="primary" />
                         <Select
                           color="primary"
-                          defaultValue={startHour}
+                          value={convertTo12h(startHour)}
                           size="medium"
-                          onChange={(e) => setStartHour(e.target.value)}
+                          onChange={(e) =>
+                            setStartHour(convertTo24h(e.target.value))
+                          }
                         >
                           {timeOptions.map((item) => (
                             <MenuItem key={item} value={item}>
@@ -243,18 +313,20 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         <FormHelperText />
                       </FormControl>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={0.5}>
                       <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
                     </Grid>
-                    <Grid item xs={5.5}>
+                    <Grid item xs={4.8}>
                       <div className="font-semibold leading-[140%]">End</div>
                       <FormControl fullWidth variant="outlined">
                         <InputLabel color="primary" />
                         <Select
                           color="primary"
-                          defaultValue={endHour}
+                          value={convertTo12h(endHour)}
                           size="medium"
-                          onChange={(e) => setEndHour(e.target.value)}
+                          onChange={(e) =>
+                            setEndHour(convertTo24h(e.target.value))
+                          }
                         >
                           {timeOptions.map((item) => (
                             <MenuItem key={item} value={item}>
@@ -265,8 +337,17 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         <FormHelperText />
                       </FormControl>
                     </Grid>
+                    <Grid item xs={0.5}>
+                      <Button
+                        className="items-center justify-center"
+                        variant="text"
+                        startIcon={
+                          <DeleteOutlineIcon sx={{ color: '#C5C4C9' }} />
+                        }
+                      />
+                    </Grid>
                   </Grid>
-                  {forms.length > 1 ? (
+                  {listBreakHoursForShow.length > 0 ? (
                     <>
                       <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
                       <div className="font-semibold leading-[140%]">
@@ -276,77 +357,81 @@ const StoreWorkingHoursSetup: NextPage = () => {
                   ) : (
                     ''
                   )}
-                  {forms.length > 1 ? (
+                  {listBreakHoursForShow.length > 0 ? (
                     <>
-                      {forms.map((form) => (
+                      {listBreakHoursForShow.map((form, index) => (
                         <>
-                          {form.id > 0 ? (
-                            <div key={form.id}>
-                              <Grid
-                                className="items-center"
-                                container
-                                spacing={4}
-                              >
-                                <Grid item xs={4.5}>
-                                  <FormControl fullWidth variant="outlined">
-                                    <InputLabel color="primary" />
-                                    <Select
-                                      color="primary"
-                                      defaultValue="09:00 AM"
-                                      size="medium"
-                                      onChange={(e) =>
-                                        setStartHour(e.target.value)
-                                      }
-                                    >
-                                      {timeOptions.map((item) => (
-                                        <MenuItem key={item} value={item}>
-                                          {item}
-                                        </MenuItem>
-                                      ))}
-                                    </Select>
-                                    <FormHelperText />
-                                  </FormControl>
-                                </Grid>
-                                <Grid item xs={1}>
-                                  <div className="box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
-                                </Grid>
-                                <Grid item xs={4.5}>
-                                  <FormControl fullWidth variant="outlined">
-                                    <InputLabel color="primary" />
-                                    <Select
-                                      color="primary"
-                                      defaultValue="09:00 PM"
-                                      size="medium"
-                                      onChange={(e) =>
-                                        setEndHour(e.target.value)
-                                      }
-                                    >
-                                      {timeOptions.map((item) => (
-                                        <MenuItem key={item} value={item}>
-                                          {item}
-                                        </MenuItem>
-                                      ))}
-                                    </Select>
-                                    <FormHelperText />
-                                  </FormControl>
-                                </Grid>
-                                <Grid item xs={1}>
-                                  <Button
-                                    className="items-center justify-center"
-                                    variant="text"
-                                    startIcon={
-                                      <DeleteOutlineIcon
-                                        sx={{ color: '#F28500' }}
-                                      />
+                          <div key={`${Math.random()}`}>
+                            <Grid
+                              className="items-center"
+                              container
+                              spacing={4}
+                            >
+                              <Grid item xs={4.8}>
+                                <FormControl fullWidth variant="outlined">
+                                  <InputLabel color="primary" />
+                                  <Select
+                                    color="primary"
+                                    value={convertTo12h(form.StartHours)}
+                                    size="medium"
+                                    onChange={(e) =>
+                                      updateHoursBreak(
+                                        index,
+                                        'start',
+                                        convertTo24h(e.target.value)
+                                      )
                                     }
-                                    onClick={() => removeForm(form.id)}
-                                  />
-                                </Grid>
+                                  >
+                                    {timeOptions.map((item) => (
+                                      <MenuItem key={item} value={item}>
+                                        {item}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                  <FormHelperText />
+                                </FormControl>
                               </Grid>
-                            </div>
-                          ) : (
-                            ''
-                          )}
+                              <Grid item xs={0.5}>
+                                <div className="box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
+                              </Grid>
+                              <Grid item xs={4.8}>
+                                <FormControl fullWidth variant="outlined">
+                                  <InputLabel color="primary" />
+                                  <Select
+                                    color="primary"
+                                    value={convertTo12h(form.EndHours)}
+                                    size="medium"
+                                    onChange={(e) =>
+                                      updateHoursBreak(
+                                        index,
+                                        'end',
+                                        convertTo24h(e.target.value)
+                                      )
+                                    }
+                                  >
+                                    {timeOptions.map((item) => (
+                                      <MenuItem key={item} value={item}>
+                                        {item}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                  <FormHelperText />
+                                </FormControl>
+                              </Grid>
+                              <Grid item xs={0.5}>
+                                <Button
+                                  className="items-center justify-center"
+                                  variant="text"
+                                  startIcon={
+                                    <DeleteOutlineIcon
+                                      sx={{ color: '#F28500' }}
+                                    />
+                                  }
+                                  onClick={() => removeForm(index)}
+                                />
+                              </Grid>
+                            </Grid>
+                          </div>
                         </>
                       ))}
                     </>

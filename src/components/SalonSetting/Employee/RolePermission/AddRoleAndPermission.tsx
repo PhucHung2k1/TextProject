@@ -15,14 +15,14 @@ function AddRoleAndPermission() {
 
   return (
     <div className="w-full">
-      <div className="flex flex-row justify-between items-center mb-4">
+      <div className="mb-4 flex flex-row items-center justify-between">
         <TextField
           variant="outlined"
           placeholder="Role & Permission Name"
           InputProps={{
             style: { height: '48px' },
           }}
-          className=" w-8/12 mr-4"
+          className=" mr-4 w-8/12"
         />
 
         <FormControlLabel

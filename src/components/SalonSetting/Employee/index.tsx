@@ -2,9 +2,11 @@ import { Box, Tab, styled } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { useState } from 'react';
-import EmployeeList from './EmployeeList';
+// eslint-disable-next-line import/no-cycle
+import EmployeeList from './EmployeeList/EmployeeList';
 import RolePermissionList from './RolePermission/ListRolePermission';
 // import AssignEmployee from './RolePermission/AssignEmployee';
+import EditRolePermission from './RolePermission/EditRolePermission/index';
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -15,7 +17,7 @@ interface StyledTabProps {
   label: string;
 }
 
-const AntTab = styled((props: StyledTabProps) => (
+export const AntTab = styled((props: StyledTabProps) => (
   <Tab disableRipple {...props} />
 ))(() => ({
   fontWeight: 500,
@@ -27,7 +29,7 @@ const AntTab = styled((props: StyledTabProps) => (
   },
 }));
 
-const StyledTabs = styled((props: StyledTabsProps) => (
+export const StyledTabs = styled((props: StyledTabsProps) => (
   <Tabs
     {...props}
     // eslint-disable-next-line tailwindcss/no-custom-classname
@@ -72,7 +74,7 @@ export const EmployeeSetting = () => {
       id: 2,
       label: 'PAY STRUCTURE',
       key: 'payStructure',
-      children: <></>,
+      children: <EditRolePermission />,
     },
     {
       id: 3,
@@ -83,23 +85,17 @@ export const EmployeeSetting = () => {
   ];
 
   return (
-    <>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <StyledTabs value={activeKey} onChange={handleChange}>
-            {items.map((item) => (
-              <AntTab key={item.key} label={item.label} />
-            ))}
-          </StyledTabs>
-        </Box>
-        {items.map((item) => {
-          return item.id === activeKey ? (
-            <div key={item.key}>{item.children}</div>
-          ) : (
-            <></>
-          );
-        })}
+    <Box className="h-full w-full">
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <StyledTabs value={activeKey} onChange={handleChange}>
+          {items.map((item) => (
+            <AntTab key={item.key} label={item.label} />
+          ))}
+        </StyledTabs>
       </Box>
-    </>
+      <Box className="overflow-auto">
+        {items.find((item) => item.id === activeKey)?.children}
+      </Box>
+    </Box>
   );
 };

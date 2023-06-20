@@ -8,7 +8,7 @@ export interface LayoutHeaderProps {
 
 export default function LayoutHeader({ children }: LayoutHeaderProps) {
   return (
-    <main className="h-screen bg-mango-gray-light-2">
+    <div className="h-screen bg-mango-gray-light-2">
       <nav className="flex h-16 items-center bg-mango-primary-blue px-3">
         <Link href="/">
           <Image
@@ -21,7 +21,7 @@ export default function LayoutHeader({ children }: LayoutHeaderProps) {
           />
         </Link>
       </nav>
-      <main className="h-[calc(100vh-64px)]">{children}</main>
-    </main>
+      <div className="h-[calc(100vh-64px)]">{children}</div>
+    </div>
   );
 }

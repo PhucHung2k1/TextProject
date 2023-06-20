@@ -1,6 +1,6 @@
 import { checkExistEmail, signUp } from '@/store/account/accountAction';
 import Button from '@mui/material/Button';
-import { useAppDispatch } from '@/store/hook';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { emailRegex } from '@/utils/helper/regex';
 import { ErrorMessage } from '@hookform/error-message';
 import { Check, Error } from '@mui/icons-material';
@@ -28,9 +28,16 @@ interface IFormInput {
   email: number | string;
   password: string;
   confirmPassword: string;
+  inviteToken: string;
 }
 
 export default function SignUpForm() {
+  const isInviteEmail = useAppSelector(
+    (state) => state.customerSlice.isInviteEmail
+  );
+  const invitationToken = useAppSelector(
+    (state) => state.customerSlice.invitationToken
+  );
   const [emailState, setEmailState] = useState({
     emailName: '',
     emailStatus: 'idle', // existed , available
@@ -58,18 +65,19 @@ export default function SignUpForm() {
   } = useForm<IFormInput>();
 
   const onSubmit = async (values: IFormInput) => {
+    if (isInviteEmail) values.inviteToken = invitationToken;
     dispatch(signUp(values)).then((res) => {
-      const responseData = res.payload;
-      if (responseData?.status === 200) {
-        router.push(
-          {
+      const responseData: any = res.payload;
+
+      if (responseData) {
+        if (!isInviteEmail) {
+          router.push({
             pathname: '/verify-account',
             query: {
               email: values.email,
             },
-          },
-          '/verify-account/'
-        );
+          });
+        } else router.push('/login');
       }
     });
   };

@@ -88,9 +88,8 @@ const VerifyAccount = () => {
         customerId: infoSignUp?.customerId,
         otp: verifyNumber,
       };
-
       dispatch(signUpVerify(body)).then((res) => {
-        const responseData = res.payload;
+        const responseData: any = res.payload;
         if (responseData) {
           if (responseData?.status === 200) {
             showToastMessage(dispatch, responseData?.message, 'success');
