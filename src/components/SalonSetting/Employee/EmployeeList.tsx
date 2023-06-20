@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import {
+  Avatar,
+  Badge,
   Button,
+  Chip,
   FormControl,
   Grid,
   IconButton,
@@ -13,12 +15,14 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
 } from '@mui/material';
 import { Add, MoreHoriz, Search } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/system';
 
 interface IEmployee {
   id: number;
@@ -30,6 +34,7 @@ interface IEmployee {
   payStructure: string;
   serviceProduct: string;
   status: string;
+  color: string;
 }
 
 const arrRolePermission = [
@@ -50,50 +55,205 @@ const EmployeeList = () => {
   const data: IEmployee[] = [
     {
       id: 1,
-      image: '/assets/images/StoreProfile/image-welcome.svg',
-      employee: 'Maynard Cobb (May)',
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 1',
       jobTitle: 'Manager',
       phoneNumber: '123-456-7890',
       rolePermission: 'Technician',
       payStructure: 'Hourly',
       serviceProduct: 'Product',
       status: 'Active',
+      color: '#2D9DE3',
     },
     {
       id: 2,
-      image: '/assets/images/StoreProfile/image-welcome.svg',
-      employee: 'Lane Garraway (Lane)',
+      image: '/assets/images/RolePermission/7.svg',
+      employee: 'Lane Garraway (Lane) 2',
       jobTitle: 'Technician',
       phoneNumber: '123-456-7890',
       rolePermission: 'Therapist',
       payStructure: 'Commission - Guarantee',
       serviceProduct: 'Product',
       status: 'Inactive',
+      color: '#D03552',
     },
     {
       id: 3,
-      image: '/assets/images/StoreProfile/image-welcome.svg',
-      employee: 'Tabitha Ferguson (Tabi)',
+      image: '/assets/images/RolePermission/8.svg',
+      employee: 'Tabitha Ferguson (Tabi) 3',
       jobTitle: 'Part time',
       phoneNumber: '123-456-7890',
       rolePermission: 'Manager',
       payStructure: 'Commission',
       serviceProduct: 'Product',
       status: 'Inactive',
+      color: '#00AD93',
     },
     {
       id: 4,
-      image: '/assets/images/StoreProfile/image-welcome.svg',
-      employee: 'Samantha Robson (Sana)',
+      image: '/assets/images/RolePermission/8.svg',
+      employee: 'Samantha Robson (Sana) 4',
       jobTitle: 'Part time',
       phoneNumber: '123-456-7890',
       rolePermission: 'Reception',
       payStructure: 'Salary',
       serviceProduct: 'Product',
       status: 'Inactive',
+      color: '#7DB400',
+    },
+    {
+      id: 5,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 5',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 6,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 6',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 7,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 7',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 8,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 8',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 9,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 9',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 10,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 10',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 11,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 11',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 12,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 12',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 13,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 13',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 14,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 14',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
+    },
+    {
+      id: 15,
+      image: '/assets/images/RolePermission/4.svg',
+      employee: 'Maynard Cobb (May) 15',
+      jobTitle: 'Manager',
+      phoneNumber: '123-456-7890',
+      rolePermission: 'Technician',
+      payStructure: 'Hourly',
+      serviceProduct: 'Product',
+      status: 'Active',
+      color: '#2D9DE3',
     },
   ];
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
+
+  const startIndex = page * rowsPerPage;
+  const endIndex = Math.min(startIndex + rowsPerPage, data.length);
+
+  const handleChangePage = (
+    _event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   const [filterStatus, setFilterStatus] = useState('');
 
   const [filterPayStructures, setFilterPayStructures] = useState('');
@@ -121,6 +281,23 @@ const EmployeeList = () => {
         (filterStatus === 'Inactive' && row.status === 'Inactive') ||
         (filterStatus === '' && row.status))
   );
+  const StyledBadge = styled(Badge)<{ isActive: boolean }>(({ isActive }) => ({
+    '& .MuiBadge-badge': {
+      backgroundColor: isActive ? '#69B000' : '#9B9BA0',
+      color: isActive ? '#69B000' : '#9B9BA0',
+      '&::after': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        borderRadius: '50%',
+        animation: 'ripple 1.2s infinite ease-in-out',
+        border: '1px solid currentColor',
+        content: '""',
+      },
+    },
+  }));
 
   return (
     <>
@@ -226,63 +403,143 @@ const EmployeeList = () => {
             <Table>
               <TableHead>
                 <TableRow className=" uppercase">
-                  <TableCell style={{ fontSize: '20px' }}>Employee</TableCell>
-                  <TableCell className="text-base">Job Title</TableCell>
-                  <TableCell>Phone Number</TableCell>
-                  <TableCell>Role & Permission</TableCell>
-                  <TableCell>Pay Structure</TableCell>
-                  <TableCell>Service & Product</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell className="text-sm text-mango-text-gray-2">
+                    Employee
+                  </TableCell>
+                  <TableCell className="text-sm text-mango-text-gray-2">
+                    Job Title
+                  </TableCell>
+                  <TableCell className="text-sm text-mango-text-gray-2">
+                    Phone Number
+                  </TableCell>
+                  <TableCell className="text-sm text-mango-text-gray-2">
+                    Role & Permission
+                  </TableCell>
+                  <TableCell className="text-sm text-mango-text-gray-2">
+                    Pay Structure
+                  </TableCell>
+                  <TableCell className="text-sm text-mango-text-gray-2">
+                    Service & Product
+                  </TableCell>
+                  <TableCell className="text-sm text-mango-text-gray-2">
+                    Status
+                  </TableCell>
+                  <TableCell className="text-sm text-mango-text-gray-2">
+                    Action
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody className="text-base">
-                {filteredData.map((row) => (
+                {filteredData.slice(startIndex, endIndex).map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell className="flex items-center gap-2">
-                      <Image
-                        src={row.image}
-                        alt="img-welcome"
-                        width={40}
-                        height={40}
-                        objectFit="cover"
-                      />
+                    <TableCell className="flex items-center gap-2 text-base text-primary-dark">
+                      <StyledBadge
+                        isActive={row.status === 'Active'}
+                        overlap="circular"
+                        key={row.id}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'right',
+                        }}
+                        variant="dot"
+                      >
+                        <Avatar
+                          src={row.image}
+                          style={{
+                            border: `2px solid ${row.color}`,
+                            background: '#DEDEE3',
+                          }}
+                        />
+                      </StyledBadge>
 
                       {row.employee}
                     </TableCell>
-                    <TableCell>{row.jobTitle}</TableCell>
-                    <TableCell>{row.phoneNumber}</TableCell>
-                    <TableCell>{row.rolePermission}</TableCell>
-                    <TableCell>{row.payStructure}</TableCell>
-                    <TableCell>{row.serviceProduct}</TableCell>
+                    <TableCell className="text-base text-primary-dark">
+                      {row.jobTitle}
+                    </TableCell>
+                    <TableCell className="text-base text-primary-dark">
+                      {row.phoneNumber}
+                    </TableCell>
+                    <TableCell className="text-base text-primary-dark">
+                      <Chip
+                        className="   bg-blue-50 px-1 text-[16px]  text-blue-700"
+                        label={row.rolePermission}
+                        sx={{
+                          '& .css-6od3lo-MuiChip-label': {
+                            overflow: 'unset',
+                          },
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell className="text-base text-primary-dark">
+                      <Chip
+                        className="  bg-pink-50 px-1 text-[16px]  text-pink-500"
+                        label={row.payStructure}
+                        sx={{
+                          '& .css-6od3lo-MuiChip-label': {
+                            overflow: 'unset',
+                          },
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell className="text-base text-primary-dark">
+                      <Chip
+                        className="  bg-cyan-50 px-1 text-[16px]  text-cyan-700"
+                        label={row.serviceProduct}
+                        sx={{
+                          '& .css-6od3lo-MuiChip-label': {
+                            overflow: 'unset',
+                          },
+                        }}
+                      />
+                    </TableCell>
                     <TableCell>
                       {row.status === 'Active' ? (
-                        <div className="flex h-9 w-16 items-center justify-center rounded-full bg-green-light text-success-dark">
-                          {row.status}
-                        </div>
+                        <Chip
+                          className="   bg-green-light px-1 text-[16px]  text-success-dark"
+                          label={row.status}
+                          sx={{
+                            '& .css-6od3lo-MuiChip-label': {
+                              overflow: 'unset',
+                            },
+                          }}
+                        />
                       ) : (
-                        <div className="flex h-9 w-20 items-center justify-center rounded-full bg-gray-light text-tertiary">
-                          {row.status}
-                        </div>
+                        <Chip
+                          className="   bg-gray-light px-1 text-[16px]  text-tertiary"
+                          label={row.status}
+                          sx={{
+                            '& .css-6od3lo-MuiChip-label': {
+                              overflow: 'unset',
+                            },
+                          }}
+                        />
                       )}
                     </TableCell>
                     <TableCell>
-                      <IconButton
-                        onClick={() => {
-                          // eslint-disable-next-line no-console
-                          console.log(row);
-                        }}
-                      >
+                      <IconButton>
                         <EditIcon fontSize="small" />
                       </IconButton>
-                      <IconButton>
-                        <CloseIcon fontSize="small" />
+                      <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
+                        <CloseIcon
+                          fontSize="small"
+                          className="text-[#DA2036] "
+                        />
                       </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
+            <TablePagination
+              rowsPerPageOptions={[8, 15]}
+              component="div"
+              count={filteredData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </Grid>
         </Grid>
       </div>
