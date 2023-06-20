@@ -12,6 +12,10 @@ const StoreProfile = () => {
   const progressSetupStore = useAppSelector(
     (state) => state.storeSlice.progressSetupStore
   );
+  console.log(
+    '🚀 ~ file: index.tsx:15 ~ StoreProfile ~ progressSetupStore:',
+    progressSetupStore
+  );
 
   useEffect(() => {
     if (router.pathname === '/store-profile') {
