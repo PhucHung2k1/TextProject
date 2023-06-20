@@ -145,6 +145,7 @@ export const checkExistCustomerByToken = createAsyncThunk(
       }
       if (error) {
         showToastMessage(dispatch, error?.data.message, 'error');
+        return error;
       }
     } catch (err: any) {
       // console.log(err);

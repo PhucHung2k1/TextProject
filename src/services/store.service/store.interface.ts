@@ -31,7 +31,6 @@ export interface IStoreCustomer {
   City: string;
   Address1: string;
   Address2: string;
-
 }
 export interface IConfigStore {
   step: number;

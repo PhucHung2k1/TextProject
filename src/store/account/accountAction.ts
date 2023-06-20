@@ -27,6 +27,7 @@ export const signUp = createAsyncThunk(
           error?.data?.extendData[0]?.Message,
           'error'
         );
+        return error;
       }
     } catch (err: any) {
       // console.log(err);
@@ -67,7 +68,10 @@ export const signUpVerify = createAsyncThunk(
       if (status === 200) {
         return { data, status, message: 'Successfully verified your email' };
       }
-      if (error) showToastMessage(dispatch, error?.data.extendData[0], 'error');
+      if (error) {
+        showToastMessage(dispatch, error?.data.extendData[0], 'error');
+        return error;
+      }
     } catch (err: any) {
       // console.log(err);
     }
