@@ -1,6 +1,7 @@
 import { WorkingHours } from '@/services/workingHours.service/workingHours.service';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setWorkingHours } from './workingHoursSlice';
+import { showToastMessage } from '@/utils/helper/showToastMessage';
 
 // import { showToastMessage } from '@/utils/helper/showToastMessage';
 
@@ -18,6 +19,24 @@ export const getWorkingHours = createAsyncThunk(
       }
 
       throw new Error(error ? JSON.stringify(error) : 'Failed.');
+    } catch (err: any) {
+      // err
+    }
+  }
+);
+
+export const updateWorkingHours = createAsyncThunk(
+  '/store/updateWorkingHours',
+  async (body: any, { dispatch }) => {
+    const servicesWorkingHours = new WorkingHours();
+    try {
+      const { data, status, error } =
+        await servicesWorkingHours.updateWorkingHours(body);
+
+      if ((status === 200 || status === 201) && data) {
+        showToastMessage(dispatch, `Update success!`, 'success');
+      }
+      return error;
     } catch (err: any) {
       // err
     }
