@@ -88,9 +88,9 @@ const VerifyAccount = () => {
         customerId: infoSignUp?.customerId,
         otp: verifyNumber,
       };
-
+      // Missing Status and message on responseData || trongFEE
       dispatch(signUpVerify(body)).then((res) => {
-        const responseData = res.payload;
+        const responseData: any = res.payload;
         if (responseData) {
           if (responseData?.status === 200) {
             showToastMessage(dispatch, responseData?.message, 'success');
