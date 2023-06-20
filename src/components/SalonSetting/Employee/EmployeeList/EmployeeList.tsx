@@ -4,6 +4,7 @@ import {
   Badge,
   Button,
   Chip,
+  Drawer,
   FormControl,
   Grid,
   IconButton,
@@ -23,11 +24,13 @@ import { Add, MoreHoriz, Search } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/system';
+// eslint-disable-next-line import/no-cycle
+import EditEmployee from './EditEmployee';
 
-interface IEmployee {
+export interface IEmployee {
   id: number;
   employee: string;
-  image: string;
+  image?: any | string;
   jobTitle: string;
   phoneNumber: string;
   rolePermission: string;
@@ -237,7 +240,16 @@ const EmployeeList = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [selectedEmployee, setSelectedEmployee] = useState<IEmployee>();
+  const [open, setOpen] = React.useState(false);
 
+  const handleOpenDrawer = () => {
+    setOpen(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setOpen(false);
+  };
   const startIndex = page * rowsPerPage;
   const endIndex = Math.min(startIndex + rowsPerPage, data.length);
 
@@ -298,6 +310,10 @@ const EmployeeList = () => {
       },
     },
   }));
+  const handleEditEmployee = (item: IEmployee) => {
+    handleOpenDrawer();
+    setSelectedEmployee(item);
+  };
 
   return (
     <>
@@ -332,7 +348,7 @@ const EmployeeList = () => {
               >
                 Add Employee
               </Button>
-              <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded border border-mango-gray-light-3">
+              <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded border border-mango-gray-light-3 hover:bg-[#5C5D6A29]">
                 <MoreHoriz />
               </div>
             </div>
@@ -516,10 +532,11 @@ const EmployeeList = () => {
                         />
                       )}
                     </TableCell>
-                    <TableCell>
-                      <IconButton>
+                    <TableCell className="flex items-center">
+                      <IconButton onClick={() => handleEditEmployee(row)}>
                         <EditIcon fontSize="small" />
                       </IconButton>
+
                       <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
                         <CloseIcon
                           fontSize="small"
@@ -541,7 +558,14 @@ const EmployeeList = () => {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Grid>
-        </Grid>
+        </Grid>{' '}
+        <Drawer anchor="right" open={open} onClose={handleCloseDrawer}>
+          <EditEmployee
+            handleCloseDrawer={handleCloseDrawer}
+            selectedEmployee={selectedEmployee}
+          />
+          ;
+        </Drawer>
       </div>
     </>
   );
