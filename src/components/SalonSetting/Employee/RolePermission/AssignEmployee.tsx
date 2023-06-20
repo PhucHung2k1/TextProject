@@ -106,14 +106,6 @@ const AssignEmployee = () => {
       Name: 'Sophie Ogley (Sophia)',
       Job: 'Manager',
     },
-    {
-      Id: 7,
-      color: '#2D9DE3',
-      avatarThumb: '/assets/images/RolePermission/1.svg',
-      isActive: false,
-      Name: 'Samantha Robson (Sana)',
-      Job: 'Part time',
-    },
   ];
   useEffect(() => {
     if (selectedItems.length === 0) {
