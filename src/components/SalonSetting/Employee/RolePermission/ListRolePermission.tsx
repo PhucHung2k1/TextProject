@@ -1,458 +1,297 @@
-import React, { useState } from 'react';
 import {
-  Avatar,
-  Badge,
-  Button,
-  Chip,
-  Drawer,
-  FormControl,
-  Grid,
+  Typography,
   IconButton,
-  InputAdornment,
-  MenuItem,
+  Button,
+  FormControl,
   OutlinedInput,
-  Select,
+  InputAdornment,
+  TableContainer,
   Table,
-  TableBody,
-  TableCell,
   TableHead,
-  TablePagination,
   TableRow,
-  TextField,
+  TableCell,
+  TableBody,
+  Select,
+  MenuItem,
+  Grid,
+  Stack,
+  Chip,
+  Avatar,
+  AvatarGroup,
+  styled,
 } from '@mui/material';
-import { Add, MoreHoriz, Search } from '@mui/icons-material';
+import React, { useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/system';
-// eslint-disable-next-line import/no-cycle
-import EditEmployee from '../EmployeeList/EditEmployee';
+import Badge from '@mui/material/Badge';
 
-export interface IEmployee {
-  id: number;
-  employee: string;
-  image?: any | string;
-  jobTitle: string;
-  phoneNumber: string;
-  rolePermission: string;
-  payStructure: string;
-  serviceProduct: string;
-  status: string;
-  color: string;
-}
-
-const arrRolePermission = [
-  'Technician',
-  'Facial Care Technician',
-  'Therapist',
-  'Manager',
-  'Reception',
-];
-const arrPayStructures = [
-  'Commission',
-  'Commission - Guarantee',
-  'Salary',
-  'Hourly',
-];
-const arrStatus = ['Active', 'Inactive'];
-const EmployeeList = () => {
-  const data: IEmployee[] = [
+const ListRolePermission = () => {
+  const StyledBadge = styled(Badge)<{ isActive: boolean }>(
+    ({ theme, isActive }) => ({
+      '& .MuiBadge-badge': {
+        backgroundColor: isActive ? '#69B000' : '#9B9BA0',
+        color: isActive ? '#69B000' : '#9B9BA0',
+        boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+        '&::after': {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          borderRadius: '50%',
+          animation: 'ripple 1.2s infinite ease-in-out',
+          border: '1px solid currentColor',
+          content: '""',
+        },
+      },
+    })
+  );
+  const avatar = [
     {
-      id: 1,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 1',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
+      Id: 1,
       color: '#2D9DE3',
+      avatarThumb: '/assets/images/RolePermission/4.svg',
+      isActive: true,
     },
     {
-      id: 2,
-      image: '/assets/images/RolePermission/7.svg',
-      employee: 'Lane Garraway (Lane) 2',
-      jobTitle: 'Technician',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Therapist',
-      payStructure: 'Commission - Guarantee',
-      serviceProduct: 'Product',
-      status: 'Inactive',
-      color: '#D03552',
+      Id: 2,
+      color: '#9D46DE',
+      avatarThumb: '/assets/images/RolePermission/5.svg',
+      isActive: true,
     },
     {
-      id: 3,
-      image: '/assets/images/RolePermission/8.svg',
-      employee: 'Tabitha Ferguson (Tabi) 3',
-      jobTitle: 'Part time',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Manager',
-      payStructure: 'Commission',
-      serviceProduct: 'Product',
-      status: 'Inactive',
+      Id: 3,
       color: '#00AD93',
+      avatarThumb: '/assets/images/RolePermission/7.svg',
+      isActive: false,
     },
     {
-      id: 4,
-      image: '/assets/images/RolePermission/8.svg',
-      employee: 'Samantha Robson (Sana) 4',
-      jobTitle: 'Part time',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Reception',
-      payStructure: 'Salary',
-      serviceProduct: 'Product',
-      status: 'Inactive',
+      Id: 4,
+      color: '#00AD93',
+      avatarThumb: '/assets/images/RolePermission/8.svg',
+      isActive: true,
+    },
+    {
+      Id: 5,
+      color: '#00AD93',
+      avatarThumb: '/assets/images/RolePermission/9.svg',
+      isActive: false,
+    },
+    {
+      Id: 6,
       color: '#7DB400',
+      avatarThumb: '/assets/images/RolePermission/2.svg',
+      isActive: true,
     },
     {
-      id: 5,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 5',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
+      Id: 7,
       color: '#2D9DE3',
-    },
-    {
-      id: 6,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 6',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
-    },
-    {
-      id: 7,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 7',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
-    },
-    {
-      id: 8,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 8',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
-    },
-    {
-      id: 9,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 9',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
-    },
-    {
-      id: 10,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 10',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
-    },
-    {
-      id: 11,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 11',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
-    },
-    {
-      id: 12,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 12',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
-    },
-    {
-      id: 13,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 13',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
-    },
-    {
-      id: 14,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 14',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
-    },
-    {
-      id: 15,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 15',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: 'Technician',
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: 'Active',
-      color: '#2D9DE3',
+      avatarThumb: '/assets/images/RolePermission/1.svg',
+      isActive: false,
     },
   ];
-
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(8);
-  const [selectedEmployee, setSelectedEmployee] = useState<IEmployee>();
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpenDrawer = () => {
-    setOpen(true);
-  };
-
-  const handleCloseDrawer = () => {
-    setOpen(false);
-  };
-  const startIndex = page * rowsPerPage;
-  const endIndex = Math.min(startIndex + rowsPerPage, data.length);
-
-  const handleChangePage = (
-    _event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-  const [filterStatus, setFilterStatus] = useState('');
-
+  const accessibility = [
+    {
+      Id: 1,
+      Text: 'function 1',
+    },
+    {
+      Id: 2,
+      Text: 'function 2',
+    },
+    {
+      Id: 3,
+      Text: 'function 3',
+    },
+    {
+      Id: 4,
+      Text: 'function 4',
+    },
+    {
+      Id: 5,
+      Text: 'function 5',
+    },
+    {
+      Id: 6,
+      Text: 'function 6',
+    },
+    {
+      Id: 7,
+      Text: 'function 7',
+    },
+    {
+      Id: 8,
+      Text: 'function 8',
+    },
+  ];
   const [filterPayStructures, setFilterPayStructures] = useState('');
   const [filterRolePermission, setFilterRolePermission] = useState('');
   const handleFilterPayStructures = (event: any) => {
     setFilterPayStructures(event.target.value as string);
   };
-
-  const handleFilterStatus = (event: any) => {
-    setFilterStatus(event.target.value as string);
-  };
-
   const handleFilterRolePermissionChange = (event: any) => {
     setFilterRolePermission(event.target.value as string);
   };
-  const filteredData = data.filter(
-    (row) =>
-      row.rolePermission
-        .toLowerCase()
-        .includes(filterRolePermission.toLowerCase()) &&
-      row.payStructure
-        .toLowerCase()
-        .includes(filterPayStructures.toLowerCase()) &&
-      ((filterStatus === 'Active' && row.status === 'Active') ||
-        (filterStatus === 'Inactive' && row.status === 'Inactive') ||
-        (filterStatus === '' && row.status))
-  );
-  const StyledBadge = styled(Badge)<{ isActive: boolean }>(({ isActive }) => ({
-    '& .MuiBadge-badge': {
-      backgroundColor: isActive ? '#69B000' : '#9B9BA0',
-      color: isActive ? '#69B000' : '#9B9BA0',
-      '&::after': {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        borderRadius: '50%',
-        animation: 'ripple 1.2s infinite ease-in-out',
-        border: '1px solid currentColor',
-        content: '""',
-      },
-    },
-  }));
-  const handleEditEmployee = (item: IEmployee) => {
-    handleOpenDrawer();
-    setSelectedEmployee(item);
-  };
+  const employeeList = ['Employee 1', 'Employee 2'];
+  const functionList = ['Function'];
 
   return (
-    <>
-      <div className="mt-5">
-        <Grid container spacing={2}>
-          <Grid xs={6} item>
-            <p className="text-3xl font-semibold text-text-title">
-              Employee list
-            </p>
-          </Grid>
-          <Grid xs={6} item>
-            <div className="flex w-full items-center justify-end gap-6">
-              <TextField
-                variant="outlined"
-                placeholder="Search"
-                InputProps={{
-                  style: { height: '48px' },
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <IconButton>
-                        <Search />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <Button
-                variant="contained"
-                className="mb-1 h-12 bg-primary-main  text-white"
-                startIcon={<Add />}
-                sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
+    <div>
+      <div className="mt-[36px] flex items-center justify-between">
+        <Typography
+          variant="h2"
+          component="h2"
+          className="text-[32px] font-semibold text-[#1F1F23]"
+        >
+          Role & Permission
+        </Typography>
+        <div className="flex w-[500px] items-center justify-between">
+          <FormControl
+            sx={{
+              '& .MuiInputBase-root.Mui-focused': {
+                '& > fieldset': {
+                  borderColor: '#00BDD6',
+                },
+              },
+              '& label.Mui-focused': {
+                color: '#00BDD6',
+              },
+            }}
+            variant="outlined"
+          >
+            <OutlinedInput
+              className="h-[48px] w-[212px]"
+              id="outlined-adornment-weight"
+              startAdornment={
+                <InputAdornment position="start">
+                  {' '}
+                  <SearchIcon />
+                </InputAdornment>
+              }
+              aria-describedby="outlined-weight-helper-text"
+              inputProps={{
+                'aria-label': 'Password',
+                placeholder: 'search...',
+              }}
+            />
+          </FormControl>
+
+          <Button
+            className="h-[48px] w-[188px] bg-[#00BDD6] text-[16px] font-bold text-[#ffff] hover:bg-[#00ADC3]"
+            variant="contained"
+            startIcon={<AddIcon />}
+          >
+            Add Role
+          </Button>
+
+          <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded border border-mango-gray-light-3  hover:bg-[#5C5D6A29]">
+            <MoreHorizIcon />
+          </div>
+        </div>
+      </div>
+      <div className="h-[80px] w-full bg-[##F3F4F6] ">
+        <Grid xs={12} item>
+          <div className=" mt-[24px] flex h-[80px] w-full items-center gap-6 rounded-sm bg-[#F3F4F6] py-7 pl-[16px] pr-4 ">
+            <FormControl
+              variant="outlined"
+              size="small"
+              className="w-[15%]"
+              sx={{
+                '& .MuiInputBase-root.Mui-focused': {
+                  '& > fieldset': {
+                    borderColor: '#00BDD6',
+                  },
+                },
+                '& label.Mui-focused': {
+                  color: '#00BDD6',
+                },
+              }}
+            >
+              <Select
+                displayEmpty
+                value={filterRolePermission}
+                input={<OutlinedInput />}
+                inputProps={{ 'aria-label': 'Without label' }}
+                className="bg-white"
+                onChange={handleFilterRolePermissionChange}
               >
-                Add Employee
-              </Button>
-              <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded border border-mango-gray-light-3 hover:bg-[#5C5D6A29]">
-                <MoreHoriz />
-              </div>
-            </div>
-          </Grid>
-          <Grid xs={12} item>
-            <div className="flex h-20 w-full items-center gap-6 rounded-sm bg-bg-light px-4 py-7 ">
-              <FormControl variant="outlined" size="small" className="w-[15%]">
-                <Select
-                  displayEmpty
-                  value={filterRolePermission}
-                  input={<OutlinedInput />}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                  className="bg-white"
-                  onChange={handleFilterRolePermissionChange}
-                >
-                  <MenuItem value="">
-                    <p>All Role & Permission</p>
+                <MenuItem value="">
+                  <p>All Employee</p>
+                </MenuItem>
+                {employeeList.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
                   </MenuItem>
-                  {arrRolePermission.map((name) => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl variant="outlined" size="small" className="w-[15%]">
-                <Select
-                  displayEmpty
-                  value={filterPayStructures}
-                  input={<OutlinedInput />}
-                  onChange={handleFilterPayStructures}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                  className="bg-white"
-                >
-                  <MenuItem value="">
-                    <p>All Pay Structures</p>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="outlined"
+              size="small"
+              className="w-[15%]"
+              sx={{
+                '& .MuiInputBase-root.Mui-focused': {
+                  '& > fieldset': {
+                    borderColor: '#00BDD6',
+                  },
+                },
+                '& label.Mui-focused': {
+                  color: '#00BDD6',
+                },
+              }}
+            >
+              <Select
+                displayEmpty
+                value={filterPayStructures}
+                input={<OutlinedInput />}
+                onChange={handleFilterPayStructures}
+                inputProps={{ 'aria-label': 'Without label' }}
+                className="bg-white"
+              >
+                <MenuItem value="">
+                  <p>All Function</p>
+                </MenuItem>
+                {functionList.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
                   </MenuItem>
-                  {arrPayStructures.map((name) => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>{' '}
-              <FormControl variant="outlined" size="small" className="w-[15%]">
-                <Select
-                  displayEmpty
-                  value={filterStatus}
-                  input={<OutlinedInput />}
-                  label="Filter Employee"
-                  inputProps={{ 'aria-label': 'Without label' }}
-                  className="bg-white"
-                  onChange={handleFilterStatus}
-                >
-                  <MenuItem value="">
-                    <p>All Status</p>
-                  </MenuItem>
-                  {arrStatus.map((name) => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-          </Grid>
-          <Grid xs={12} item>
-            <Table>
-              <TableHead>
-                <TableRow className=" uppercase">
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Employee
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Job Title
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Phone Number
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Role & Permission
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Pay Structure
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Service & Product
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Status
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Action
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className="text-base">
-                {filteredData.slice(startIndex, endIndex).map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell className="flex items-center gap-2 text-base text-primary-dark">
+                ))}
+              </Select>
+            </FormControl>{' '}
+          </div>
+        </Grid>
+      </div>
+      <div>
+        <TableContainer className="mt-[35px]">
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow className=" text-[14px]">
+                <TableCell className="pb-[7px]  text-[#737277]">ROLE</TableCell>
+                <TableCell className="pb-[7px]  text-[#737277]" align="left">
+                  EMPLOYEE
+                </TableCell>
+                <TableCell className="pb-[7px]  text-[#737277]" align="left">
+                  ACCESSIBILITY
+                </TableCell>
+                <TableCell className="pb-[7px] text-[#737277]" align="left" />
+              </TableRow>
+            </TableHead>
+            <TableBody className="text-[16px]">
+              <TableRow className="align-top text-[16px]">
+                <TableCell component="td" scope="row" className="text-[16px]">
+                  Owner
+                </TableCell>
+                <TableCell component="td" scope="row" className="text-[16px]">
+                  2 users
+                  <AvatarGroup max={3} className="mt-[4px] justify-end">
+                    {avatar.slice(0, 2).map((avatarItem) => (
                       <StyledBadge
-                        isActive={row.status === 'Active'}
+                        isActive={avatarItem.isActive}
                         overlap="circular"
-                        key={row.id}
+                        key={avatarItem.Id}
                         anchorOrigin={{
                           vertical: 'bottom',
                           horizontal: 'right',
@@ -460,115 +299,169 @@ const EmployeeList = () => {
                         variant="dot"
                       >
                         <Avatar
-                          src={row.image}
+                          src={avatarItem.avatarThumb}
                           style={{
-                            border: `2px solid ${row.color}`,
+                            border: `2px solid ${avatarItem.color}`,
                             background: '#DEDEE3',
                           }}
                         />
                       </StyledBadge>
-
-                      {row.employee}
-                    </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      {row.jobTitle}
-                    </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      {row.phoneNumber}
-                    </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      <Chip
-                        className="   bg-blue-50 px-1 text-[16px]  text-blue-700"
-                        label={row.rolePermission}
-                        sx={{
-                          '& .css-6od3lo-MuiChip-label': {
-                            overflow: 'unset',
-                          },
+                    ))}
+                  </AvatarGroup>
+                </TableCell>
+                <TableCell component="td" scope="row">
+                  <Stack direction="row" spacing={2}>
+                    <Chip
+                      className="bg-[#00BDD6] px-[10px] py-[7px] text-[16px] font-normal text-white"
+                      label="All functions"
+                    />
+                  </Stack>
+                </TableCell>
+                <TableCell align="right" className="text-[16px]">
+                  <IconButton>
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
+                    <CloseIcon fontSize="small" className="text-[#DA2036] " />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+              <TableRow className="w-[100%] align-top text-[16px]">
+                <TableCell
+                  component="td"
+                  scope="row"
+                  className="w-[15%] text-[16px]"
+                >
+                  Manager
+                </TableCell>
+                <TableCell
+                  component="td"
+                  scope="row"
+                  className="w-[20%] text-[16px]"
+                >
+                  4 users
+                  <AvatarGroup className="mt-[4px] justify-end">
+                    {avatar.slice(0, 4).map((avatarItem) => (
+                      <StyledBadge
+                        isActive={avatarItem.isActive}
+                        overlap="circular"
+                        key={avatarItem.Id}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'right',
                         }}
-                      />
-                    </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      <Chip
-                        className="  bg-pink-50 px-1 text-[16px]  text-pink-500"
-                        label={row.payStructure}
-                        sx={{
-                          '& .css-6od3lo-MuiChip-label': {
-                            overflow: 'unset',
-                          },
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      <Chip
-                        className="  bg-cyan-50 px-1 text-[16px]  text-cyan-700"
-                        label={row.serviceProduct}
-                        sx={{
-                          '& .css-6od3lo-MuiChip-label': {
-                            overflow: 'unset',
-                          },
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      {row.status === 'Active' ? (
+                        variant="dot"
+                      >
+                        <Avatar
+                          src={avatarItem.avatarThumb}
+                          style={{
+                            border: `2px solid ${avatarItem.color}`,
+                            background: '#DEDEE3',
+                          }}
+                        />
+                      </StyledBadge>
+                    ))}
+                  </AvatarGroup>
+                </TableCell>
+                <TableCell component="td" scope="row" className="w-[50%]">
+                  {accessibility.length} functions
+                  <div>
+                    <Stack direction="row" flexWrap="wrap">
+                      {accessibility.map((item) => (
                         <Chip
-                          className="   bg-green-light px-1 text-[16px]  text-success-dark"
-                          label={row.status}
+                          key={item.Id}
+                          className="float-right mr-2 mt-2 w-[100px] overflow-visible bg-[#00BDD614] px-[10px] py-[7px] text-[16px] font-normal text-primary-dark"
+                          label={item.Text}
                           sx={{
                             '& .css-6od3lo-MuiChip-label': {
                               overflow: 'unset',
                             },
                           }}
                         />
-                      ) : (
+                      ))}
+                    </Stack>
+                  </div>
+                </TableCell>
+                <TableCell align="right" className="w-[10%] text-[16px]">
+                  <IconButton>
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
+                    <CloseIcon fontSize="small" className="text-[#DA2036] " />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+              <TableRow className="w-[100%] align-top text-[16px]">
+                <TableCell
+                  component="td"
+                  scope="row"
+                  className="w-[20%] text-[16px]"
+                >
+                  Technician
+                </TableCell>
+                <TableCell
+                  component="td"
+                  scope="row"
+                  className="w-[20%] text-[16px]"
+                >
+                  {avatar.length} users
+                  <AvatarGroup max={6} className="mt-[4px] justify-end">
+                    {avatar.map((avatarItem) => (
+                      <StyledBadge
+                        isActive={avatarItem.isActive}
+                        key={avatarItem.Id}
+                        overlap="circular"
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'right',
+                        }}
+                        variant="dot"
+                      >
+                        <Avatar
+                          src={avatarItem.avatarThumb}
+                          style={{
+                            border: `2px solid ${avatarItem.color}`,
+                            background: '#DEDEE3',
+                          }}
+                        />
+                      </StyledBadge>
+                    ))}
+                  </AvatarGroup>
+                </TableCell>
+                <TableCell component="td" scope="row" className="w-[50%]">
+                  6 functions
+                  <div>
+                    <Stack direction="row" flexWrap="wrap">
+                      {accessibility.slice(0, 6).map((item) => (
                         <Chip
-                          className="   bg-gray-light px-1 text-[16px]  text-tertiary"
-                          label={row.status}
+                          key={item.Id}
+                          className="float-right mr-2 mt-2 w-[100px] bg-[#00BDD614] px-[10px] py-[7px] text-[16px] font-normal text-primary-dark"
+                          label={item.Text}
                           sx={{
                             '& .css-6od3lo-MuiChip-label': {
                               overflow: 'unset',
                             },
                           }}
                         />
-                      )}
-                    </TableCell>
-                    <TableCell className="flex items-center">
-                      <IconButton onClick={() => handleEditEmployee(row)}>
-                        <EditIcon fontSize="small" />
-                      </IconButton>
-
-                      <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
-                        <CloseIcon
-                          fontSize="small"
-                          className="text-[#DA2036] "
-                        />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <TablePagination
-              rowsPerPageOptions={[8, 15]}
-              component="div"
-              count={filteredData.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Grid>
-        </Grid>{' '}
-        <Drawer anchor="right" open={open} onClose={handleCloseDrawer}>
-          <EditEmployee
-            handleCloseDrawer={handleCloseDrawer}
-            selectedEmployee={selectedEmployee}
-          />
-          ;
-        </Drawer>
+                      ))}
+                    </Stack>
+                  </div>
+                </TableCell>
+                <TableCell align="right" className="w-[10%] text-[16px]">
+                  <IconButton>
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
+                    <CloseIcon fontSize="small" className="text-[#DA2036] " />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
-    </>
+    </div>
   );
 };
 
-export default EmployeeList;
+export default ListRolePermission;

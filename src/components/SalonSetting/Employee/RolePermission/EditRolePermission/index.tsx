@@ -41,13 +41,13 @@ const EditRolePermission = () => {
             Edit Role & Permission
           </p>
         </div>
-        <div className="flex justify-between px-[32px] mt-[56px]">
+        <div className="mt-[56px] flex justify-between px-[32px]">
           <TextField
             id="outlined-basic"
             label="Role & Permission Name"
             variant="outlined"
             className="mb-2 w-[568px] "
-            value={'Technician'}
+            value="Technician"
             sx={{
               '& .MuiInputBase-root.Mui-focused': {
                 '& > fieldset': {
@@ -82,7 +82,7 @@ const EditRolePermission = () => {
             />
           </FormGroup>
         </div>
-        <FormGroup className="px-[32px] mt-[16px] mb-[50px]">
+        <FormGroup className="mb-[50px] mt-[16px] px-[32px]">
           <FormControlLabel
             control={<StyledCheckbox defaultChecked />}
             label="Take Appointment"

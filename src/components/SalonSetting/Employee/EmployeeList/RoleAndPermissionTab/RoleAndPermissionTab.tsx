@@ -1,7 +1,5 @@
 import type { NextPage } from 'next';
 import {
-  FormControlLabel,
-  Radio,
   Switch,
   Checkbox,
   FormControl,
@@ -11,33 +9,29 @@ import {
   MenuItem,
   Button,
 } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
-const RoleAndPermission: NextPage = () => {
+const RoleAndPermissionTab: NextPage = () => {
   const [showFormAppointment, setShowFormAppointment] = useState(true);
   const handleShowFormAppointment = () => {
     setShowFormAppointment(!showFormAppointment);
   };
 
   return (
-    <div className="flex bg-white w-[796px] h-[800px]">
-      <div className=" w-[732px] flex flex-col  text-xs text-text-secondary">
-        <div className="ml-8 mt-8 items-center justify-center w-[732px]">
+    <div className="flex h-[800px] w-[796px] bg-white">
+      <div className=" flex w-[732px] flex-col  text-xs text-text-secondary">
+        <div className="ml-8 mt-8 w-[732px] items-center justify-center">
           <FormControl fullWidth variant="outlined">
-            <InputLabel
-              shrink={true}
-              color="primary"
-              id="selectRoleAndPermission"
-            >
+            <InputLabel shrink color="primary" id="selectRoleAndPermission">
               Select Role & Permission
             </InputLabel>
             <Select
               labelId="selectRoleAndPermission"
               label="Select Role & Permission"
               displayEmpty
-              notched={true}
+              notched
               color="primary"
               value="Senior Technician"
               size="medium"
@@ -77,10 +71,10 @@ const RoleAndPermission: NextPage = () => {
             </div>
           </div>
           <div className="mt-8 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
-          <div className="mt-4 text-xl leading-[133.4%] font-semibold text-text-title">
+          <div className="mt-4 text-xl font-semibold leading-[133.4%] text-text-title">
             Accessibility
           </div>
-          <div className="mt-2 rounded-lg box-border w-[732px] h-[auto] border-[1px] border-solid border-border-light p-1">
+          <div className="mt-2 box-border h-[auto] w-[732px] rounded-lg border-[1px] border-solid border-border-light p-1">
             <div className="ml-2 flex flex-row items-center  justify-between text-center">
               <div className="flex flex-row">
                 <div>
@@ -91,7 +85,7 @@ const RoleAndPermission: NextPage = () => {
                     onChange={handleShowFormAppointment}
                   />
                 </div>
-                <div className="mt-2 text-lg leading-[130%] font-semibold text-text-primary">
+                <div className="mt-2 text-lg font-semibold leading-[130%] text-text-primary">
                   Appointment
                 </div>
               </div>
@@ -156,7 +150,7 @@ const RoleAndPermission: NextPage = () => {
               ''
             )}
           </div>
-          <div className="mt-2 rounded-lg box-border w-[732px] h-[auto] border-[1px] border-solid border-border-light p-1">
+          <div className="mt-2 box-border h-[auto] w-[732px] rounded-lg border-[1px] border-solid border-border-light p-1">
             <div className="ml-2 flex flex-row items-center  justify-between text-center">
               <div className="flex flex-row">
                 <div>
@@ -167,7 +161,7 @@ const RoleAndPermission: NextPage = () => {
                     onChange={handleShowFormAppointment}
                   />
                 </div>
-                <div className="mt-2 text-lg leading-[130%] font-semibold text-text-primary">
+                <div className="mt-2 text-lg font-semibold leading-[130%] text-text-primary">
                   Appointment
                 </div>
               </div>
@@ -232,7 +226,7 @@ const RoleAndPermission: NextPage = () => {
               ''
             )}
           </div>
-          <div className="mt-2 rounded-lg box-border w-[732px] h-[auto] border-[1px] border-solid border-border-light p-1">
+          <div className="mt-2 box-border h-[auto] w-[732px] rounded-lg border-[1px] border-solid border-border-light p-1">
             <div className="ml-2 flex flex-row items-center  justify-between text-center">
               <div className="flex flex-row">
                 <div>
@@ -243,7 +237,7 @@ const RoleAndPermission: NextPage = () => {
                     onChange={handleShowFormAppointment}
                   />
                 </div>
-                <div className="mt-2 text-lg leading-[130%] font-semibold text-text-primary">
+                <div className="mt-2 text-lg font-semibold leading-[130%] text-text-primary">
                   Appointment
                 </div>
               </div>
@@ -314,4 +308,4 @@ const RoleAndPermission: NextPage = () => {
   );
 };
 
-export default RoleAndPermission;
+export default RoleAndPermissionTab;
