@@ -2,7 +2,8 @@ import { Box, Tab, styled } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { useState } from 'react';
-import EmployeeList from './EmployeeList';
+// eslint-disable-next-line import/no-cycle
+import EmployeeList from './EmployeeList/EmployeeList';
 import RolePermissionList from './RolePermission/ListRolePermission';
 // import AssignEmployee from './RolePermission/AssignEmployee';
 
@@ -15,7 +16,7 @@ interface StyledTabProps {
   label: string;
 }
 
-const AntTab = styled((props: StyledTabProps) => (
+export const AntTab = styled((props: StyledTabProps) => (
   <Tab disableRipple {...props} />
 ))(() => ({
   fontWeight: 500,
@@ -27,7 +28,7 @@ const AntTab = styled((props: StyledTabProps) => (
   },
 }));
 
-const StyledTabs = styled((props: StyledTabsProps) => (
+export const StyledTabs = styled((props: StyledTabsProps) => (
   <Tabs
     {...props}
     // eslint-disable-next-line tailwindcss/no-custom-classname

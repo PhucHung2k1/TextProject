@@ -73,7 +73,7 @@ export const SalonSettingComponent = () => {
       <div
         className={`${
           isClosedSlideBar ? 'w-[288px]' : 'w-[100px]'
-        }  h-full bg-mango-gray-light-5 p-2 shadow-mango-shadow-1`}
+        }  min-h-[1200px] bg-mango-gray-light-5 p-2 shadow-mango-shadow-1`}
         style={{ transition: '0.3s ease-in' }}
       >
         <Button
