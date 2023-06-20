@@ -28,7 +28,6 @@ import {
 } from '@/store/workingHours/workingHoursAction';
 import type {
   IBreakTime,
-  IDraffBrackTime,
   IWorkingHours,
 } from '@/services/workingHours.service/workingHours.interface';
 import { convertTo12h, convertTo24h } from '@/helper/stringHelper';
@@ -45,8 +44,11 @@ const StoreWorkingHoursSetup: NextPage = () => {
     (state) => state.workingHoursSlice.workingHours
   );
   const [listData, setListData] = useState<IWorkingHours[]>(workingHours);
-  const [listBreakHours, setListBreakHours] = useState<IDraffBrackTime[]>([]);
-  const [lastId, setLastId] = useState(0);
+  const [listBreakHoursForShow, setListBreakHoursForShow] = useState<
+    IBreakTime[]
+  >([]);
+  const listBreakHoursForUpdate: IBreakTime[] = [];
+
   const dispatch = useAppDispatch();
   const timeOptions = [
     '12:00 AM',
@@ -83,44 +85,36 @@ const StoreWorkingHoursSetup: NextPage = () => {
     setShowForm(!showForm);
   };
 
-  const assignAutoIncrementIds = () => {
-    const updatedList = listBreakHours.map((item) => {
-      const newItem = { ...item, id: lastId + 1 };
-      setLastId(lastId + 1);
-      return newItem;
-    });
-    setListBreakHours(updatedList);
-  };
-
   const addForm = () => {
-    const newItem: IDraffBrackTime = {
-      Id: lastId + 1,
-      StartHours: '12:00:00',
-      EndHours: '13:00:00',
+    const newBreak: IBreakTime = {
+      DayName: selectedDay,
+      StartHours: '09:00:00',
+      EndHours: '10:00:00',
     };
+    setListBreakHoursForShow((prevList) => [...prevList, newBreak]);
+  };
 
-    setListBreakHours((prevList) => [...prevList, newItem]);
-    setLastId(lastId + 1); // Update the last assigned ID
-  };
-  const removeForm = (startHour: string, endHour: string) => {
-    setListBreakHours((prevList) =>
-      prevList.filter(
-        (item) => item.StartHours !== startHour && item.EndHours !== endHour
-      )
+  const removeForm = (index: number) => {
+    const tempList = listBreakHoursForShow.filter(
+      (_, index1) => index1 !== index
     );
+
+    setListBreakHoursForShow(tempList);
+    console.log(index, tempList);
   };
+  console.log(listBreakHoursForShow);
 
   const updateHoursBreak = (index: number, position: string, value: string) => {
     if (position === 'start') {
-      const updatedHours = listBreakHours.map((item, i) =>
+      const updatedHours = listBreakHoursForShow.map((item, i) =>
         i === index ? { ...item, StartHours: value } : item
       );
-      setListBreakHours(updatedHours);
+      setListBreakHoursForShow(updatedHours);
     } else {
-      const updatedHours = listBreakHours.map((item, i) =>
+      const updatedHours = listBreakHoursForShow.map((item, i) =>
         i === index ? { ...item, EndHours: value } : item
       );
-      setListBreakHours(updatedHours);
+      setListBreakHoursForShow(updatedHours);
     }
   };
 
@@ -138,7 +132,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
             StartHours: startHour,
             EndHours: endHour,
             IsClosed: dayStatus,
-            BreakTimes: listBreakHours,
+            BreakTimes: listBreakHoursForShow,
           }
         : item
     );
@@ -157,11 +151,35 @@ const StoreWorkingHoursSetup: NextPage = () => {
   };
 
   const handleUpdateWorkingHuors = () => {
+    listData.forEach((item) => {
+      const { DayName, BreakTimes } = item;
+      BreakTimes.forEach((breakTime) => {
+        listBreakHoursForUpdate.push({
+          DayName: DayName,
+          StartHours: breakTime.StartHours,
+          EndHours: breakTime.EndHours,
+        });
+      });
+    });
+
     const data = {
       StoreHours: listData,
-      BreakTime: listBreakHours,
+      BreakTime: listBreakHoursForUpdate,
     };
+
     dispatch(updateWorkingHours(data));
+  };
+
+  const hanldeDayArrowClick = (item: IWorkingHours) => {
+    setSelectedDay(item.DayName);
+    setDayStatus(item.IsClosed);
+    setStartHour(item.StartHours);
+    setEndHour(item.EndHours);
+    const filteredBreakTimes = listData
+      .filter((workingHours) => workingHours.DayName === item.DayName)
+      .flatMap((workingHours) => workingHours.BreakTimes);
+    setListBreakHoursForShow(filteredBreakTimes);
+    handleShowEditHours();
   };
 
   useEffect(() => {
@@ -190,6 +208,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
             </p>
           </div>
           <div className="mt-8 flex flex-col justify-center gap-[12px] text-text-primary">
+            <div>cụ ngun ngu ngu ác</div>
             {listData.map((item, index) => (
               <div key={index}>
                 <div>
@@ -220,19 +239,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         objectFit="cover"
                         className="hidden cursor-pointer overflow-hidden"
                         onClick={() => {
-                          setSelectedDay(item.DayName);
-                          setDayStatus(item.IsClosed);
-                          setStartHour(item.StartHours);
-                          setEndHour(item.EndHours);
-                          const filteredBreakTimes = listData
-                            .filter(
-                              (workingHours) =>
-                                workingHours.DayName === item.DayName
-                            )
-                            .flatMap((workingHours) => workingHours.BreakTimes);
-                          setListBreakHours(filteredBreakTimes);
-                          assignAutoIncrementIds();
-                          handleShowEditHours();
+                          hanldeDayArrowClick(item);
                         }}
                       />
                     ) : (
@@ -245,6 +252,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
             ))}
             <button
               onClick={() => {
+                handleUpdateWorkingHuors();
                 handleForwardProgressSetupStore(dispatch);
               }}
               type="button"
@@ -263,7 +271,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                 className="cursor-pointer text-3xl"
               />
               <p className="mx-auto text-center text-[32px] font-semibold text-text-title">
-                Edit business hours
+                Edit salon hours
               </p>
             </div>
 
@@ -292,7 +300,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         <InputLabel color="primary" />
                         <Select
                           color="primary"
-                          defaultValue={convertTo12h(startHour)}
+                          value={convertTo12h(startHour)}
                           size="medium"
                           onChange={(e) =>
                             setStartHour(convertTo24h(e.target.value))
@@ -316,7 +324,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         <InputLabel color="primary" />
                         <Select
                           color="primary"
-                          defaultValue={convertTo12h(endHour)}
+                          value={convertTo12h(endHour)}
                           size="medium"
                           onChange={(e) =>
                             setEndHour(convertTo24h(e.target.value))
@@ -332,7 +340,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                       </FormControl>
                     </Grid>
                   </Grid>
-                  {listBreakHours.length > 0 ? (
+                  {listBreakHoursForShow.length > 0 ? (
                     <>
                       <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
                       <div className="font-semibold leading-[140%]">
@@ -342,9 +350,9 @@ const StoreWorkingHoursSetup: NextPage = () => {
                   ) : (
                     ''
                   )}
-                  {listBreakHours.length > 0 ? (
+                  {listBreakHoursForShow.length > 0 ? (
                     <>
-                      {listBreakHours.map((form, index) => (
+                      {listBreakHoursForShow.map((form, index) => (
                         <>
                           <div key={index}>
                             <Grid
@@ -357,7 +365,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                   <InputLabel color="primary" />
                                   <Select
                                     color="primary"
-                                    defaultValue={convertTo12h(form.StartHours)}
+                                    value={convertTo12h(form.StartHours)}
                                     size="medium"
                                     onChange={(e) =>
                                       updateHoursBreak(
@@ -384,7 +392,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                   <InputLabel color="primary" />
                                   <Select
                                     color="primary"
-                                    defaultValue={convertTo12h(form.EndHours)}
+                                    value={convertTo12h(form.EndHours)}
                                     size="medium"
                                     onChange={(e) =>
                                       updateHoursBreak(
@@ -412,9 +420,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                       sx={{ color: '#F28500' }}
                                     />
                                   }
-                                  onClick={() =>
-                                    removeForm(form.StartHours, form.EndHours)
-                                  }
+                                  onClick={() => removeForm(index)}
                                 />
                               </Grid>
                             </Grid>

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { listStepConfigStore } from '../../components/StoreProfile/helper/listStepConfigStore';
+import { getWorkingHours } from '@/store/workingHours/workingHoursAction';
 
 const StoreProfile = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const StoreProfile = () => {
     if (router.pathname === '/store-profile') {
       dispatch(getAllRole({}));
       dispatch(lookupData({}));
+      dispatch(getWorkingHours({}));
     }
   }, [router.pathname]);
 

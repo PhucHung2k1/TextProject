@@ -7,7 +7,7 @@ export interface IWorkingHours {
 }
 
 export interface IBreakTime {
-  Id?: number;
+  DayName?: string;
   StartHours: string;
   EndHours: string;
 }
