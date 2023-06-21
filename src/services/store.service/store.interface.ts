@@ -31,6 +31,7 @@ export interface IStoreCustomer {
   City: string;
   Address1: string;
   Address2: string;
+  [key: string]: any; // add index signature
 }
 export interface IConfigStore {
   step: number;

@@ -20,7 +20,10 @@ import type { SyntheticEvent } from 'react';
 import { useEffect, useState } from 'react';
 import type { LngLat } from 'react-map-gl';
 
-import { handlePreviousProgressSetupStore } from './helper';
+import {
+  handleForwardProgressSetupStore,
+  handlePreviousProgressSetupStore,
+} from './helper';
 import { sxTextField } from '@/utils/helper/styles';
 import AddYourLocation from './AddYourLocation';
 import { updateLocationStoreProfile } from '@/store/store/storeAction';
@@ -58,23 +61,24 @@ const ConfirmYourAddress = () => {
   );
 
   const handleUpdateAddress = () => {
-    dispatch(
-      updateLocationStoreProfile({
-        id: curStoreCustomer?.Id || '',
-        body: [
-          {
-            op: 'replace',
-            path: `/GeoLongitude`,
-            value: marker?.lng,
-          },
-          {
-            op: 'replace',
-            path: `/GeoLatitude`,
-            value: marker?.lat,
-          },
-        ],
-      })
-    );
+    if (yourAddress) {
+      const payload = [];
+      const [lng, lat] = yourAddress.geometry.coordinates as [number, number];
+      const { GeoLatitude, GeoLongitude, Id } = curStoreCustomer ?? {};
+
+      if (lat <= 90 && lat >= -90 && lat !== Number(GeoLatitude)) {
+        payload.push({ op: 'replace', path: `/GeoLatitude`, value: lat });
+      }
+      if (lng <= 180 && lng >= -180 && lng !== Number(GeoLongitude)) {
+        payload.push({ op: 'replace', path: `/GeoLongitude`, value: lng });
+      }
+
+      if (payload.length > 0) {
+        dispatch(updateLocationStoreProfile({ id: Id || '', body: payload }));
+      }
+
+      handleForwardProgressSetupStore(dispatch);
+    }
   };
 
   useEffect(() => {
