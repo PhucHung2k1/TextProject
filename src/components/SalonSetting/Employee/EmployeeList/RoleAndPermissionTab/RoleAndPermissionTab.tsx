@@ -130,7 +130,9 @@ const RoleAndPermissionTab: NextPage = () => {
                     size="medium"
                     disabled
                   />
-                  <div className="text-base leading-[140%]">Take Appoment</div>
+                  <div className="text-base leading-[140%]">
+                    Access Appointment Book
+                  </div>
                 </div>
                 <div className="ml-4 flex items-center  justify-start text-center">
                   <Checkbox
@@ -140,7 +142,7 @@ const RoleAndPermissionTab: NextPage = () => {
                     disabled
                   />
                   <div className="text-base leading-[140%]">
-                    Available for Booking Online
+                    Manage Appointment
                   </div>
                 </div>
                 <div className="ml-4 flex items-center justify-start text-center">
@@ -151,7 +153,7 @@ const RoleAndPermissionTab: NextPage = () => {
                     disabled
                   />
                   <div className="text-base leading-[140%]">
-                    Allowed to make quick payment
+                    Manage Tech Request
                   </div>
                 </div>
               </>
