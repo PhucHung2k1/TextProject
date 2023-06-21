@@ -184,10 +184,6 @@ const AboutYourBusiness = () => {
             variant="outlined"
             className="mb-2 w-full"
             value={formStore.Name}
-            // error={Boolean(errors.Name)}
-            // {...register('Name', {
-            //   required: 'Enter Your Name!',
-            // })}
             name="Name"
             onChange={handleFieldChange}
             sx={{
@@ -267,7 +263,7 @@ const AboutYourBusiness = () => {
           </div>
         </div>
         <Button
-          className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-button-hover-cyan"
+          className="mt-12 h-12 w-full text-white  bg-mango-primary-blue font-bold capitalize hover:bg-button-hover-cyan text-base"
           variant="contained"
           type="submit"
           // onClick={() => handleForwardProgressSetupStore(dispatch)}

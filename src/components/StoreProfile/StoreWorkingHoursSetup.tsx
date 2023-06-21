@@ -31,6 +31,7 @@ import type {
   IWorkingHours,
 } from '@/services/workingHours.service/workingHours.interface';
 import { convertTo12h, convertTo24h } from '@/helper/stringHelper';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const [showEditHours, setShowEditHours] = useState(false);
@@ -149,7 +150,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
     return `${diffHours}h ${diffMinutes}m`;
   };
 
-  const handleUpdateWorkingHuors = () => {
+  const handleUpdateWorkingHours = () => {
     listData.forEach((item) => {
       const { DayName, BreakTimes } = item;
       BreakTimes.forEach((breakTime) => {
@@ -169,7 +170,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
     dispatch(updateWorkingHours(data));
   };
 
-  const hanldeDayArrowClick = (item: IWorkingHours) => {
+  const handleDayArrowClick = (item: IWorkingHours) => {
     setSelectedDay(item.DayName);
     setDayStatus(item.IsClosed);
     setStartHour(item.StartHours);
@@ -188,56 +189,59 @@ const StoreWorkingHoursSetup: NextPage = () => {
     <LayoutStoreProfile>
       {!showEditHours ? (
         <>
-          <div className="  text-center">
-            <div className="flex items-center justify-center ">
-              <ArrowBackIcon
-                onClick={() => {
-                  handlePreviousProgressSetupStore(dispatch);
-                }}
-                className="cursor-pointer text-3xl"
-              />
+          <div className="text-center">
+            <div
+              className="flex items-center justify-center mb-[8px]"
+              onClick={() => {
+                handlePreviousProgressSetupStore(dispatch);
+              }}
+            >
+              <ArrowBackIcon className="cursor-pointer text-3xl text-icon-color" />
               <p className="mx-auto text-[32px] font-semibold text-text-title">
                 Add your working hours
               </p>
             </div>
-
             <p className="text-[14px] text-mango-text-gray-2">
               Set up working time for clients to easily book an appointment with
               you
             </p>
           </div>
-          <div className="mt-8 flex flex-col justify-center gap-[12px] text-text-primary">
+          <div className="mt-[60px] flex flex-col justify-center text-text-primary">
             {listData.map((item, index) => (
-              <div key={`${item.DayName}`}>
-                <div>
-                  <div className="flex flex-row items-center justify-start">
-                    <div>
-                      <Switch
-                        checked={!item.IsClosed}
-                        className="p-3"
-                        onChange={handleChangeStatus(index)}
-                      />
-                    </div>
-                    <div className="w-[70px] font-semibold leading-[140%]">
-                      {item.DayName}
-                    </div>
-                    <div className="w-[70%] text-center leading-[140%]">
-                      {!item.IsClosed
-                        ? `${convertTo12h(item.StartHours)} - ${convertTo12h(
-                            item.EndHours
-                          )}`
-                        : 'Closed'}
-                    </div>
+              <div
+                className={`${
+                  index === listData.length - 1 ? '' : 'border-b'
+                } py-[10px]`}
+                key={`${item.DayName}`}
+              >
+                <div className="flex items-center justify-start">
+                  <div className="flex items-center justify-start w-[50%] gap-3">
+                    <Switch
+                      sx={{
+                        '& .MuiSwitch-switchBase.Mui-checked': {
+                          color: '#00BDD6',
+                        },
+                        '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track':
+                          {
+                            backgroundColor: '#00BDD6',
+                          },
+                      }}
+                      checked={!item.IsClosed}
+                      onChange={handleChangeStatus(index)}
+                    />
+                    <div className=" font-semibold">{item.DayName}</div>
+                  </div>
+                  <div className="w-[50%] text-left flex justify-between">
+                    {!item.IsClosed
+                      ? `${convertTo12h(item.StartHours)} - ${convertTo12h(
+                          item.EndHours
+                        )}`
+                      : 'Closed'}
                     {!item.IsClosed ? (
-                      <Image
-                        src="/icons/chevronrightfilled.svg"
-                        width="20"
-                        height="20"
-                        alt=""
-                        objectFit="cover"
-                        className="hidden cursor-pointer overflow-hidden"
+                      <KeyboardArrowRightIcon
+                        className="text-icon-color-2 cursor-pointer text-2xl"
                         onClick={() => {
-                          hanldeDayArrowClick(item);
+                          handleDayArrowClick(item);
                         }}
                       />
                     ) : (
@@ -245,20 +249,20 @@ const StoreWorkingHoursSetup: NextPage = () => {
                     )}
                   </div>
                 </div>
-                <div className="box-border h-px w-[100] border-t-[1px] border-solid border-line-light p-[5px]" />
               </div>
             ))}
-            <button
-              onClick={() => {
-                handleUpdateWorkingHuors();
-                handleForwardProgressSetupStore(dispatch);
-              }}
-              type="button"
-              className="mt-8 box-border flex h-12 w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
-            >
-              CONTINUE
-            </button>
           </div>
+          <Button
+            className="mt-12 h-12 w-full text-white  bg-mango-primary-blue font-bold capitalize hover:bg-button-hover-cyan text-base"
+            variant="contained"
+            type="submit"
+            onClick={() => {
+              handleUpdateWorkingHours();
+              handleForwardProgressSetupStore(dispatch);
+            }}
+          >
+            CONTINUE
+          </Button>
         </>
       ) : (
         <>
@@ -274,86 +278,97 @@ const StoreWorkingHoursSetup: NextPage = () => {
             </div>
 
             <div className="flex w-full flex-col gap-[12px] text-text-primary">
-              <div className="mt-8 flex flex-row items-center  justify-start text-center">
-                <div>
-                  <Switch
-                    className="p-3"
-                    checked={showForm}
-                    onChange={handleSwitchChange}
-                  />
-                </div>
-                <div className="w-[30%] font-semibold leading-[133.4%]">
+              <div className="mt-8 flex items-center  justify-start ">
+                <Switch
+                  sx={{
+                    '& .MuiSwitch-switchBase.Mui-checked': {
+                      color: '#00BDD6',
+                    },
+                    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+                      backgroundColor: '#00BDD6',
+                    },
+                  }}
+                  checked={showForm}
+                  onChange={handleSwitchChange}
+                />
+                <div className=" w-[30%] text-center text-[20px] font-semibold">
                   Every {selectedDay}
                 </div>
-                <div className="leading-[140%] text-text-secondary">
+                <div className=" text-text-secondary">
                   {getDifferentHours(startHour, endHour)}
                 </div>
               </div>
               {showForm && (
                 <>
-                  <Grid className="items-center" container spacing={4}>
-                    <Grid item xs={4.8}>
-                      <div className="font-semibold leading-[140%]">Start</div>
-                      <FormControl fullWidth variant="outlined">
-                        <InputLabel color="primary" />
-                        <Select
-                          color="primary"
-                          value={convertTo12h(startHour)}
-                          size="medium"
-                          onChange={(e) =>
-                            setStartHour(convertTo24h(e.target.value))
-                          }
-                        >
-                          {timeOptions.map((item) => (
-                            <MenuItem key={item} value={item}>
-                              {item}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                        <FormHelperText />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={0.5}>
-                      <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
-                    </Grid>
-                    <Grid item xs={4.8}>
-                      <div className="font-semibold leading-[140%]">End</div>
-                      <FormControl fullWidth variant="outlined">
-                        <InputLabel color="primary" />
-                        <Select
-                          color="primary"
-                          value={convertTo12h(endHour)}
-                          size="medium"
-                          onChange={(e) =>
-                            setEndHour(convertTo24h(e.target.value))
-                          }
-                        >
-                          {timeOptions.map((item) => (
-                            <MenuItem key={item} value={item}>
-                              {item}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                        <FormHelperText />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={0.5}>
-                      <Button
-                        className="items-center justify-center"
-                        variant="text"
-                        startIcon={
-                          <DeleteOutlineIcon sx={{ color: '#C5C4C9' }} />
+                  <div className="flex items-center justify-between">
+                    <FormControl>
+                      <FormHelperText className="m-0 text-[16px] text-primary-dark font-semibold pb-1">
+                        Start
+                      </FormHelperText>
+                      <Select
+                        labelId="demo-select-small-label"
+                        id="demo-select-small"
+                        value={convertTo12h(startHour)}
+                        className="w-[212px]"
+                        onChange={(e) =>
+                          setStartHour(convertTo24h(e.target.value))
                         }
-                      />
-                    </Grid>
-                  </Grid>
+                        MenuProps={{
+                          style: {
+                            maxHeight: 348,
+                          },
+                        }}
+                      >
+                        {timeOptions.map((item) => (
+                          <MenuItem
+                            style={{
+                              borderTop: '1px solid #f2f2f5',
+                              padding: '10px 16px ',
+                            }}
+                            key={item}
+                            value={item}
+                          >
+                            {item}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <div className="border border-solid border-line-light w-[14px] mx-[9px] mt-[30px]" />
+                    <FormControl>
+                      <FormHelperText className="m-0 text-[16px] text-primary-dark font-semibold pb-1">
+                        End
+                      </FormHelperText>
+                      <Select
+                        labelId="demo-select-small-label"
+                        id="demo-select-small"
+                        value={convertTo12h(endHour)}
+                        className="w-[212px]"
+                        onChange={(e) =>
+                          setEndHour(convertTo24h(e.target.value))
+                        }
+                      >
+                        {timeOptions.map((item) => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <div className="mt-[30px] cursor-no-drop ">
+                      <Button
+                        disabled
+                        sx={{
+                          minWidth: 'unset',
+                          width: 'fit-content',
+                        }}
+                      >
+                        <DeleteOutlineIcon className=" " />
+                      </Button>
+                    </div>
+                  </div>
+
                   {listBreakHoursForShow.length > 0 ? (
-                    <>
-                      <div className="mt-8 box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
-                      <div className="font-semibold leading-[140%]">
-                        Break Time
-                      </div>
-                    </>
+                    <div className="border border-solid border-line-light w-full my-[10px] " />
                   ) : (
                     ''
                   )}
@@ -361,76 +376,95 @@ const StoreWorkingHoursSetup: NextPage = () => {
                     <>
                       {listBreakHoursForShow.map((form, index) => (
                         <>
-                          <div key={`${Math.random()}`}>
-                            <Grid
-                              className="items-center"
-                              container
-                              spacing={4}
+                          <div
+                            key={`${Math.random()}`}
+                            className="flex items-center justify-between"
+                          >
+                            <FormControl>
+                              <FormHelperText
+                                className="m-0 text-[16px] text-primary-dark font-semibold pb-1 py-[10px] "
+                                style={{
+                                  display: index === 0 ? 'block' : 'none',
+                                }}
+                                // className=""
+                              >
+                                Break Time
+                              </FormHelperText>
+                              <Select
+                                labelId="demo-select-small-label"
+                                id="demo-select-small"
+                                className="w-[212px]"
+                                value={convertTo12h(form.StartHours)}
+                                size="medium"
+                                onChange={(e) =>
+                                  updateHoursBreak(
+                                    index,
+                                    'start',
+                                    convertTo24h(e.target.value)
+                                  )
+                                }
+                              >
+                                {timeOptions.map((item) => (
+                                  <MenuItem key={item} value={item}>
+                                    {item}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                            <div
+                              className={
+                                index === 0
+                                  ? ' border border-solid border-line-light w-[14px] mx-[9px] mt-[45px] ml-[5px]'
+                                  : 'border border-solid border-line-light w-[14px] mx-[9px]  ml-[5px]'
+                              }
+                            />
+
+                            <FormControl>
+                              <FormHelperText
+                                className="m-0 text-[16px] text-primary-dark font-semibold pb-1 py-[10px] "
+                                style={{
+                                  display: index === 0 ? 'block' : 'none',
+                                }}
+                              >
+                                &nbsp;
+                              </FormHelperText>
+                              <Select
+                                labelId="demo-select-small-label"
+                                id="demo-select-small"
+                                value={convertTo12h(form.EndHours)}
+                                className="w-[212px]"
+                                onChange={(e) =>
+                                  updateHoursBreak(
+                                    index,
+                                    'end',
+                                    convertTo24h(e.target.value)
+                                  )
+                                }
+                              >
+                                {timeOptions.map((item) => (
+                                  <MenuItem key={item} value={item}>
+                                    {item}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                            <div
+                              className={
+                                index === 0
+                                  ? 'mt-[45px]  ml-[5px]'
+                                  : ' ml-[5px]'
+                              }
                             >
-                              <Grid item xs={4.8}>
-                                <FormControl fullWidth variant="outlined">
-                                  <InputLabel color="primary" />
-                                  <Select
-                                    color="primary"
-                                    value={convertTo12h(form.StartHours)}
-                                    size="medium"
-                                    onChange={(e) =>
-                                      updateHoursBreak(
-                                        index,
-                                        'start',
-                                        convertTo24h(e.target.value)
-                                      )
-                                    }
-                                  >
-                                    {timeOptions.map((item) => (
-                                      <MenuItem key={item} value={item}>
-                                        {item}
-                                      </MenuItem>
-                                    ))}
-                                  </Select>
-                                  <FormHelperText />
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={0.5}>
-                                <div className="box-border h-px w-[70] border-t-[2px] border-solid border-line-light p-[5px]" />
-                              </Grid>
-                              <Grid item xs={4.8}>
-                                <FormControl fullWidth variant="outlined">
-                                  <InputLabel color="primary" />
-                                  <Select
-                                    color="primary"
-                                    value={convertTo12h(form.EndHours)}
-                                    size="medium"
-                                    onChange={(e) =>
-                                      updateHoursBreak(
-                                        index,
-                                        'end',
-                                        convertTo24h(e.target.value)
-                                      )
-                                    }
-                                  >
-                                    {timeOptions.map((item) => (
-                                      <MenuItem key={item} value={item}>
-                                        {item}
-                                      </MenuItem>
-                                    ))}
-                                  </Select>
-                                  <FormHelperText />
-                                </FormControl>
-                              </Grid>
-                              <Grid item xs={0.5}>
-                                <Button
-                                  className="items-center justify-center"
-                                  variant="text"
-                                  startIcon={
-                                    <DeleteOutlineIcon
-                                      sx={{ color: '#F28500' }}
-                                    />
-                                  }
-                                  onClick={() => removeForm(index)}
-                                />
-                              </Grid>
-                            </Grid>
+                              <Button
+                                sx={{
+                                  minWidth: 'unset',
+                                  width: 'fit-content',
+                                }}
+                                onClick={() => removeForm(index)}
+                              >
+                                <DeleteOutlineIcon className="text-icon-delete  text-right cursor-pointer" />
+                              </Button>
+                            </div>
                           </div>
                         </>
                       ))}
@@ -444,19 +478,23 @@ const StoreWorkingHoursSetup: NextPage = () => {
                     variant="text"
                     startIcon={<AddIcon sx={{ color: '#00bdd6' }} />}
                     onClick={addForm}
+                    sx={{
+                      minWidth: 'unset',
+                      width: 'fit-content',
+                    }}
                   >
                     Add Break
                   </Button>
                 </>
               )}
-
-              <button
-                type="button"
-                className="mt-8 box-border flex h-12 w-[100%] flex-col items-center justify-center overflow-hidden rounded bg-primary-main px-[22px] font-bold text-primary-contrast shadow-[0px_1px_5px_rgba(0,_0,_0,_0.12),_0px_2px_2px_rgba(0,_0,_0,_0.14),_0px_3px_1px_-2px_rgba(0,_0,_0,_0.2)]"
+              <Button
+                className="mt-12 h-12 w-full text-white  bg-mango-primary-blue font-bold capitalize hover:bg-button-hover-cyan text-base"
+                variant="contained"
+                type="submit"
                 onClick={onSaveEditHours}
               >
                 SAVE
-              </button>
+              </Button>
             </div>
           </div>
         </>

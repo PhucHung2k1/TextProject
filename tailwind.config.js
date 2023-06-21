@@ -54,6 +54,8 @@ module.exports = {
         'text-disable': '#C5C4C9',
         'text-primary-dark': '#00ADC3',
         'icon-color': '#5C5D6A',
+        'icon-color-2': '#7E8091',
+        'icon-delete': '#F28500',
         'primary-dark': '#404044',
         'border-secondary': '#7E8091',
         'border-light': '#CBCBDB',
