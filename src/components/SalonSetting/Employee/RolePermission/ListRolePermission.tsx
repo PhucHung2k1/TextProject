@@ -96,35 +96,43 @@ const ListRolePermission = () => {
   const accessibility = [
     {
       Id: 1,
-      Text: 'function 1',
+      Text: 'Appointment',
     },
     {
       Id: 2,
-      Text: 'function 2',
+      Text: 'Client Management',
     },
     {
       Id: 3,
-      Text: 'function 3',
+      Text: 'Create/ Charge',
     },
     {
       Id: 4,
-      Text: 'function 4',
+      Text: 'Ticket Management',
     },
     {
       Id: 5,
-      Text: 'function 5',
+      Text: 'Marketing',
     },
     {
       Id: 6,
-      Text: 'function 6',
+      Text: 'Salon Exchange',
     },
     {
       Id: 7,
-      Text: 'function 7',
+      Text: 'Salon Settings',
     },
     {
       Id: 8,
-      Text: 'function 8',
+      Text: 'Salon Center',
+    },
+    {
+      Id: 9,
+      Text: 'Need Help',
+    },
+    {
+      Id: 10,
+      Text: 'Tech Portal',
     },
   ];
   const [filterPayStructures, setFilterPayStructures] = useState('');
@@ -144,7 +152,7 @@ const ListRolePermission = () => {
         <Typography
           variant="h2"
           component="h2"
-          className="text-[32px] font-semibold text-[#1F1F23]"
+          className="text-[32px] font-semibold text-text-title"
         >
           Role & Permission
         </Typography>
@@ -180,7 +188,7 @@ const ListRolePermission = () => {
           </FormControl>
 
           <Button
-            className="h-[48px] w-[188px] bg-[#00BDD6] text-[16px] font-bold text-[#ffff] hover:bg-[#00ADC3]"
+            className="h-[48px] w-[188px] bg-primary-main text-[16px] font-bold text-white hover:bg-button-hover-cyan"
             variant="contained"
             startIcon={<AddIcon />}
           >
@@ -194,7 +202,7 @@ const ListRolePermission = () => {
       </div>
       <div className="h-[80px] w-full bg-[##F3F4F6] ">
         <Grid xs={12} item>
-          <div className=" mt-[24px] flex h-[80px] w-full items-center gap-6 rounded-sm bg-[#F3F4F6] py-7 pl-[16px] pr-4 ">
+          <div className=" mt-[24px] flex h-[80px] w-full items-center gap-6 rounded-sm bg-mango-gray-light-5 py-7 pl-[16px] pr-4 ">
             <FormControl
               variant="outlined"
               size="small"
@@ -269,22 +277,41 @@ const ListRolePermission = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow className=" text-[14px]">
-                <TableCell className="pb-[7px]  text-[#737277]">ROLE</TableCell>
-                <TableCell className="pb-[7px]  text-[#737277]" align="left">
+                <TableCell className="pb-[7px]  text-mango-text-gray-2">
+                  ROLE
+                </TableCell>
+                <TableCell
+                  className="pb-[7px]  text-mango-text-gray-2"
+                  align="left"
+                >
                   EMPLOYEE
                 </TableCell>
-                <TableCell className="pb-[7px]  text-[#737277]" align="left">
+                <TableCell
+                  className="pb-[7px]  text-mango-text-gray-2"
+                  align="left"
+                >
                   ACCESSIBILITY
                 </TableCell>
-                <TableCell className="pb-[7px] text-[#737277]" align="left" />
+                <TableCell
+                  className="pb-[7px] text-mango-text-gray-2"
+                  align="left"
+                />
               </TableRow>
             </TableHead>
             <TableBody className="text-[16px]">
               <TableRow className="align-top text-[16px]">
-                <TableCell component="td" scope="row" className="text-[16px]">
+                <TableCell
+                  component="td"
+                  scope="row"
+                  className="w-[15%] text-[16px]"
+                >
                   Owner
                 </TableCell>
-                <TableCell component="td" scope="row" className="text-[16px]">
+                <TableCell
+                  component="td"
+                  scope="row"
+                  className="w-[20%] text-base"
+                >
                   2 users
                   <AvatarGroup max={3} className="mt-[4px] justify-end">
                     {avatar.slice(0, 2).map((avatarItem) => (
@@ -309,15 +336,27 @@ const ListRolePermission = () => {
                     ))}
                   </AvatarGroup>
                 </TableCell>
-                <TableCell component="td" scope="row">
-                  <Stack direction="row" spacing={2}>
-                    <Chip
-                      className="bg-[#00BDD6] px-[10px] py-[7px] text-[16px] font-normal text-white"
-                      label="All functions"
-                    />
-                  </Stack>
+                <TableCell component="td" scope="row" className="w-[55%]">
+                  {' '}
+                  All functions
+                  <div>
+                    <Stack direction="row" flexWrap="wrap">
+                      {accessibility.map((item) => (
+                        <Chip
+                          key={item.Id}
+                          className="float-right mr-2 mt-2 bg-blue-50 px-[10px] py-[7px] text-[16px] font-normal text-blue-700"
+                          label={item.Text}
+                          sx={{
+                            '& .css-6od3lo-MuiChip-label': {
+                              overflow: 'unset',
+                            },
+                          }}
+                        />
+                      ))}
+                    </Stack>
+                  </div>
                 </TableCell>
-                <TableCell align="right" className="text-[16px]">
+                <TableCell align="right" className="text-[16px] w-[10%]">
                   <IconButton>
                     <EditIcon fontSize="small" />
                   </IconButton>
@@ -326,19 +365,11 @@ const ListRolePermission = () => {
                   </IconButton>
                 </TableCell>
               </TableRow>
-              <TableRow className="w-[100%] align-top text-[16px]">
-                <TableCell
-                  component="td"
-                  scope="row"
-                  className="w-[15%] text-[16px]"
-                >
+              <TableRow className=" align-top text-[16px]">
+                <TableCell component="td" scope="row" className="text-[16px]">
                   Manager
                 </TableCell>
-                <TableCell
-                  component="td"
-                  scope="row"
-                  className="w-[20%] text-[16px]"
-                >
+                <TableCell component="td" scope="row" className=" text-[16px]">
                   4 users
                   <AvatarGroup className="mt-[4px] justify-end">
                     {avatar.slice(0, 4).map((avatarItem) => (
@@ -363,14 +394,14 @@ const ListRolePermission = () => {
                     ))}
                   </AvatarGroup>
                 </TableCell>
-                <TableCell component="td" scope="row" className="w-[50%]">
-                  {accessibility.length} functions
+                <TableCell component="td" scope="row">
+                  8 functions
                   <div>
                     <Stack direction="row" flexWrap="wrap">
-                      {accessibility.map((item) => (
+                      {accessibility.slice(0, 8).map((item) => (
                         <Chip
                           key={item.Id}
-                          className="float-right mr-2 mt-2 w-[100px] overflow-visible bg-[#00BDD614] px-[10px] py-[7px] text-[16px] font-normal text-primary-dark"
+                          className="float-right mr-2 mt-2 overflow-visible bg-blue-50 px-[10px] py-[7px] text-[16px] font-normal text-blue-700"
                           label={item.Text}
                           sx={{
                             '& .css-6od3lo-MuiChip-label': {
@@ -382,7 +413,7 @@ const ListRolePermission = () => {
                     </Stack>
                   </div>
                 </TableCell>
-                <TableCell align="right" className="w-[10%] text-[16px]">
+                <TableCell align="right" className="text-[16px]">
                   <IconButton>
                     <EditIcon fontSize="small" />
                   </IconButton>
@@ -391,19 +422,11 @@ const ListRolePermission = () => {
                   </IconButton>
                 </TableCell>
               </TableRow>
-              <TableRow className="w-[100%] align-top text-[16px]">
-                <TableCell
-                  component="td"
-                  scope="row"
-                  className="w-[20%] text-[16px]"
-                >
+              <TableRow className=" align-top text-[16px]">
+                <TableCell component="td" scope="row" className=" text-[16px]">
                   Technician
                 </TableCell>
-                <TableCell
-                  component="td"
-                  scope="row"
-                  className="w-[20%] text-[16px]"
-                >
+                <TableCell component="td" scope="row" className=" text-[16px]">
                   {avatar.length} users
                   <AvatarGroup max={6} className="mt-[4px] justify-end">
                     {avatar.map((avatarItem) => (
@@ -428,14 +451,14 @@ const ListRolePermission = () => {
                     ))}
                   </AvatarGroup>
                 </TableCell>
-                <TableCell component="td" scope="row" className="w-[50%]">
+                <TableCell component="td" scope="row">
                   6 functions
                   <div>
                     <Stack direction="row" flexWrap="wrap">
                       {accessibility.slice(0, 6).map((item) => (
                         <Chip
                           key={item.Id}
-                          className="float-right mr-2 mt-2 w-[100px] bg-[#00BDD614] px-[10px] py-[7px] text-[16px] font-normal text-primary-dark"
+                          className="float-right mr-2 mt-2 bg-blue-50 px-[10px] py-[7px] text-[16px] font-normal text-blue-700"
                           label={item.Text}
                           sx={{
                             '& .css-6od3lo-MuiChip-label': {
@@ -447,7 +470,7 @@ const ListRolePermission = () => {
                     </Stack>
                   </div>
                 </TableCell>
-                <TableCell align="right" className="w-[10%] text-[16px]">
+                <TableCell align="right" className="text-[16px]">
                   <IconButton>
                     <EditIcon fontSize="small" />
                   </IconButton>
