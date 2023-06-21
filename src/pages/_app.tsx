@@ -12,12 +12,18 @@ import PrevLoader from '@/components/Loading/PrevLoader';
 import type { IMetaSEOProps } from '@/components/MetaSEO';
 import MetaSEO from '@/components/MetaSEO';
 import ModalMUIContainer from '@/components/Modal/ModalMUI';
+import { ThemeProvider, createTheme } from '@mui/material';
 
 NProgress.configure({
   showSpinner: false,
   easing: 'ease',
   speed: 500,
   trickleSpeed: 800,
+});
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Inter, sans-serif',
+  },
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
@@ -42,15 +48,17 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <Provider store={store}>
-      <MetaSEO {...configMetaSeoPostDetail} />
-      <SessionProvider session={pageProps.session}>
-        <main>
-          <Component {...pageProps} />
-          <PrevLoader />
-          <ModalMUIContainer />
-          <ToastContainer />
-        </main>
-      </SessionProvider>
+      <ThemeProvider theme={theme}>
+        <MetaSEO {...configMetaSeoPostDetail} />
+        <SessionProvider session={pageProps.session}>
+          <main>
+            <Component {...pageProps} />
+            <PrevLoader />
+            <ModalMUIContainer />
+            <ToastContainer />
+          </main>
+        </SessionProvider>
+      </ThemeProvider>
     </Provider>
   );
 };

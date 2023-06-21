@@ -67,7 +67,7 @@ const AddYourService = () => {
           label={
             <Box
               component="div"
-              className="text-[16px] font-medium text-[#404044]"
+              className="text-[16px] font-medium text-primary-dark"
             >
               Use Mango default category
             </Box>
@@ -87,7 +87,7 @@ const AddYourService = () => {
       </div>
       <div className="flex w-full flex-col items-center gap-5">
         <Button
-          className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-[#00ADC3]"
+          className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-button-hover-cyan"
           variant="contained"
           onClick={() => handleForwardProgressSetupStore(dispatch)}
         >

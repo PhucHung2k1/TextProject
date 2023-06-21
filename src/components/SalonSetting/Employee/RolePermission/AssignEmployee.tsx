@@ -127,9 +127,9 @@ const AssignEmployee = () => {
     <div className="ml-auto mr-[0px] h-[95vh]  w-[796px] border">
       <div className=" px-[32px] pt-[24px] text-center">
         <div className="flex items-center justify-center ">
-          <ArrowBackIcon className="cursor-pointer text-3xl text-[#5C5D6A]" />
+          <ArrowBackIcon className="cursor-pointer text-3xl text-icon-color" />
 
-          <p className="mx-auto text-[32px] font-semibold text-[#1F1F23]">
+          <p className="mx-auto text-[32px] font-semibold text-text-title">
             Assign Employee
           </p>
         </div>
@@ -148,7 +148,7 @@ const AssignEmployee = () => {
           variant="outlined"
         >
           <OutlinedInput
-            className="mt-[56px] h-[48px] w-full bg-[#F3F4F6]"
+            className="mt-[56px] h-[48px] w-full bg-mango-gray-light-5"
             id="outlined-adornment-weight"
             startAdornment={
               <InputAdornment position="start">
@@ -165,17 +165,17 @@ const AssignEmployee = () => {
         <Table className="mt-[30px]">
           <TableHead>
             <TableRow>
-              <TableCell className="pb-[7px]  text-[#737277]">
+              <TableCell className="pb-[7px]  text-mango-text-gray-2">
                 <StyledCheckbox
                   className="p-0"
                   checked={selectAll}
                   onChange={handleSelectAll}
                 />
               </TableCell>
-              <TableCell className="pb-[7px] pl-0 text-[14px] text-[#737277]">
+              <TableCell className="pb-[7px] pl-0 text-[14px] text-mango-text-gray-2">
                 Employee
               </TableCell>
-              <TableCell className="pb-[7px] pl-0  text-[14px] text-[#737277]">
+              <TableCell className="pb-[7px] pl-0  text-[14px] text-mango-text-gray-2">
                 Job Title
               </TableCell>
             </TableRow>
@@ -210,11 +210,11 @@ const AssignEmployee = () => {
                       }}
                     />
                   </StyledBadge>
-                  <span className="pl-[8px] text-[16px] text-[#404044]">
+                  <span className="pl-[8px] text-[16px] text-primary-dark">
                     {item.Name}
                   </span>
                 </TableCell>
-                <TableCell className="pl-0 text-[16px] text-[#404044]">
+                <TableCell className="pl-0 text-[16px] text-primary-dark">
                   {item.Job}
                 </TableCell>
               </TableRow>
@@ -222,17 +222,17 @@ const AssignEmployee = () => {
           </TableBody>
         </Table>
       </div>
-      <div className=" mt-5 border-t border-[#DEDEE8] px-[32px] pb-[24px] pt-[4px]">
+      <div className=" mt-5 border-t border-line-main px-[32px] pb-[24px] pt-[4px]">
         <div className="flex justify-between ">
           <Button
             type="submit"
-            className="my-4 h-12 w-[354px] border-mango-gray-light-3 text-[16px] font-bold capitalize text-[#737277] hover:border-mango-gray-light-3 "
+            className="my-4 h-12 w-[354px] border-mango-gray-light-3 text-[16px] font-bold capitalize text-mango-text-gray-2 hover:border-mango-gray-light-3 "
             variant="outlined"
           >
             CANCEL
           </Button>
           <Button
-            className="my-4 h-12 w-[354px] bg-mango-primary-blue text-[16px] font-bold capitalize hover:bg-[#00ADC3]"
+            className="my-4 h-12 w-[354px] bg-mango-primary-blue text-[16px] font-bold capitalize hover:bg-button-hover-cyan"
             variant="contained"
             type="submit"
             disabled={isCheck}

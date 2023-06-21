@@ -103,7 +103,7 @@ export const SalonSettingComponent = () => {
             // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
             className={`${
               item.selected
-                ? ' bg-[#00bdd6] bg-opacity-20 !text-primary-main '
+                ? ' bg-primary-main bg-opacity-20 !text-primary-main '
                 : ' text-mango-text-gray-2 hover:!bg-[#00BED630]'
             } ${
               isClosedSlideBar && 'justify-start'

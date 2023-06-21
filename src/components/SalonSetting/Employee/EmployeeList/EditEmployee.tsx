@@ -146,7 +146,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
                 type="file"
                 id="imageUpload"
               />
-              <div className="absolute bottom-0 right-0 mb-0 flex h-[59px] w-[59px] items-center justify-center rounded-full bg-[#00BDD6]">
+              <div className="absolute bottom-0 right-0 mb-0 flex h-[59px] w-[59px] items-center justify-center rounded-full bg-primary-main">
                 <Image
                   src="/assets/images/SetupStore/picture.svg"
                   alt="logo"
