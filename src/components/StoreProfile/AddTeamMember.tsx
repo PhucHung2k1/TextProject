@@ -1,30 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LayoutAddMember from './LayoutAddTeamMember/LayoutAddTeamMember';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Box, Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { AddYourEmployeeModal } from './LayoutAddTeamMember/AddTeamMemberModal';
-import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
 import InvitationListComponent from './LayoutAddTeamMember/InvitationListComponent';
 import { invitationList } from '@/store/customer/customerAction';
+import ModalCustomContainer from '../Modal/ModalCustom';
 
 const AddYourEmployee = () => {
   const dispatch = useAppDispatch();
-
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const invitationListData = useAppSelector(
     (state) => state.customerRoleSlice.invitationList
   );
   // .filter((item) => item.IsAccepted);
   const isEmptyInvitationList = invitationListData.length === 0;
   const handleAddEmployee = async () => {
-    dispatch(setModalContentMUI(<AddYourEmployeeModal />));
-    dispatch(showModalMUI());
+    setOpenModal(true);
+    // dispatch(setModalContentMUI(<AddYourEmployeeModal />));
+    // dispatch(showModalMUI());
   };
   useEffect(() => {
     dispatch(invitationList({}));
   }, []);
   return (
     <>
+      <ModalCustomContainer
+        onClose={() => setOpenModal(false)}
+        open={openModal}
+        modalContent={<AddYourEmployeeModal />}
+      />
+
       <LayoutAddMember
         icon="back"
         subTitle="Invite team member to join your salon"
@@ -47,7 +54,7 @@ const AddYourEmployee = () => {
                   <PersonAddIcon sx={{ mb: 0.5, height: 28, width: 22 }} />
                 }
               >
-                Add employee
+                Add team member
               </Button>
             ) : (
               <InvitationListComponent

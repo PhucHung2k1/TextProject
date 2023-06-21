@@ -40,19 +40,6 @@ const InvitationListComponent = ({
                   </Typography>
                 </div>
               </div>
-              {/* <div>
-                <Button
-                  variant="contained"
-                  className={` gap-1 rounded px-3 py-1 text-sm !shadow-none ${
-                    item.IsSentMail
-                      ? '!cursor-not-allowed !bg-bg-disable !text-text-disable'
-                      : 'cursor-pointer !bg-mango-primary-blue !text-white '
-                  }`}
-                  startIcon={item.IsSentMail && <CheckIcon fontSize="small" />}
-                >
-                  Sent
-                </Button>
-              </div> */}
             </Box>
           );
         })}
@@ -64,7 +51,7 @@ const InvitationListComponent = ({
         variant="text"
         className="text-base font-semibold text-primary-main "
       >
-        Add your employee
+        Add team member
       </Button>
     </Box>
   );

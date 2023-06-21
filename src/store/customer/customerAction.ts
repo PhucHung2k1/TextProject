@@ -12,7 +12,7 @@ import type {
   IConfirmInvitationPayload,
   ISendInvitationPayload,
 } from '@/services/customer.service/customer.interface';
-import { clearModalContentMUI, hideModalMUI } from '../modal/modalSlice';
+import { hideModalCustom } from '../modal/modalSlice';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
 import { setInvitationList } from '../customerRole/customerRoleSlice';
 
@@ -68,8 +68,8 @@ export const sendInvitation = createAsyncThunk(
 
       if (status === 200 || status === 201) {
         dispatch(invitationList({}));
-        dispatch(hideModalMUI());
-        dispatch(clearModalContentMUI());
+        dispatch(hideModalCustom());
+
         showToastMessage(
           dispatch,
           'Invitation sent successfully, Please check your email!',

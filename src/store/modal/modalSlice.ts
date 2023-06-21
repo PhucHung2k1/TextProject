@@ -6,6 +6,7 @@ type ModalModel = {
   modalContent?: React.ReactNode;
   isShowModalMUI: boolean;
   modalContentMUI?: React.ReactNode;
+  hideModalCustom: boolean;
 };
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   modalContent: null,
   isShowModalMUI: false,
   modalContentMUI: undefined,
+  hideModalCustom: false,
 } as ModalModel;
 
 const modalSlice = createSlice({
@@ -43,6 +45,12 @@ const modalSlice = createSlice({
     clearModalContentMUI: (state) => {
       state.modalContentMUI = undefined;
     },
+    hideModalCustom: (state) => {
+      state.hideModalCustom = true;
+    },
+    resetStatusModalCustom: (state) => {
+      state.hideModalCustom = false;
+    },
   },
 });
 
@@ -55,5 +63,7 @@ export const {
   hideModalMUI,
   setModalContentMUI,
   clearModalContentMUI,
+  hideModalCustom,
+  resetStatusModalCustom,
 } = modalSlice.actions;
 export default modalSlice.reducer;

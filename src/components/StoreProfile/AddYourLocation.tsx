@@ -9,7 +9,10 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
-import { handlePreviousProgressSetupStore } from '@/components/StoreProfile/helper';
+import {
+  handleForwardProgressSetupStore,
+  handlePreviousProgressSetupStore,
+} from '@/components/StoreProfile/helper';
 import { useState } from 'react';
 import type { CountryPhone } from '@/services/common/common.interface';
 import { updateLocationStoreProfile } from '@/store/store/storeAction';
@@ -23,7 +26,11 @@ interface IFormLocation {
   zipCode: string;
   timeZone: string;
 }
-
+interface Payload {
+  op: string;
+  path: string;
+  value: string;
+}
 const AddYourLocation = () => {
   const dispatch = useAppDispatch();
 
@@ -40,47 +47,31 @@ const AddYourLocation = () => {
       null
   );
   const onSubmit = (values: IFormLocation) => {
-    console.log('values', values);
-
-    const payload = [
-      {
-        op: 'replace',
-        path: `/Address1`,
-        value: values.addressLine1,
-      },
-      {
-        op: 'replace',
-        path: `/Address2`,
-        value: values.addressLine2,
-      },
-      {
-        op: 'replace',
-        path: `/City`,
-        value: values.city,
-      },
-      {
-        op: 'replace',
-        path: `/State`,
-        value: values.state,
-      },
-      {
-        op: 'replace',
-        path: `/ZipCode`,
-        value: values.zipCode,
-      },
-      {
-        op: 'replace',
-        path: `/TimeZone`,
-        value: valueTimeZone?.Value,
-      },
-    ];
-
-    dispatch(
-      updateLocationStoreProfile({
-        id: curStoreCustomer?.Id || '',
-        body: payload,
-      })
-    );
+    const payload: Payload[] = [];
+    const addPayload = (path: string, value: any) => {
+      if (value !== curStoreCustomer?.[path.substring(1)]) {
+        payload.push({
+          op: 'replace',
+          path,
+          value,
+        });
+      }
+    };
+    addPayload('/Address1', values.addressLine1);
+    addPayload('/Address2', values.addressLine2);
+    addPayload('/City', values.city);
+    addPayload('/State', values.state);
+    addPayload('/ZipCode', values.zipCode);
+    if (valueTimeZone?.Value) addPayload('/TimeZone', valueTimeZone?.Value);
+    if (payload.length > 0) {
+      dispatch(
+        updateLocationStoreProfile({
+          id: curStoreCustomer?.Id || '',
+          body: payload,
+        })
+      );
+    }
+    handleForwardProgressSetupStore(dispatch);
   };
 
   return (
