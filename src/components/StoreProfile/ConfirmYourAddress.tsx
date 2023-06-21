@@ -5,6 +5,7 @@ import {
   Button,
   InputAdornment,
   TextField,
+  Typography,
 } from '@mui/material';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
 import debounce from 'lodash.debounce';
@@ -15,37 +16,39 @@ import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { Search } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import mapboxgl from 'mapbox-gl';
 import type { SyntheticEvent } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { LngLat } from 'react-map-gl';
 
-import {
-  handleForwardProgressSetupStore,
-  handlePreviousProgressSetupStore,
-} from './helper';
+import { handlePreviousProgressSetupStore } from './helper';
 import { sxTextField } from '@/utils/helper/styles';
 import AddYourLocation from './AddYourLocation';
 import { updateLocationStoreProfile } from '@/store/store/storeAction';
+import mapboxgl from 'mapbox-gl';
+import Cookies from 'js-cookie';
 
 const ConfirmYourAddress = () => {
   const dispatch = useAppDispatch();
   const [showAddYourLocation, setShowAddYourLocation] =
     useState<boolean>(false);
+  const mapServices = new MapServices();
+
+  const [listPlace, setListPlace] = useState<IMapBoxPlace[]>([]);
+  const curStoreCustomerId = Cookies.get('store-customer');
+  const curStoreCustomer = useAppSelector(
+    (state) => state.storeSlice.storeCustomer
+  ).find((store) => store.Id === curStoreCustomerId);
+  const lngStore = Number(curStoreCustomer?.GeoLongitude);
+  const latStore = Number(curStoreCustomer?.GeoLatitude);
+
+  const [marker, setMarkers] = useState<LngLat>(
+    new mapboxgl.LngLat(lngStore, latStore)
+  );
 
   const [yourAddress, setYourAddress] = useState<IMapBoxPlace | null>(null);
-  const [listPlace, setListPlace] = useState<IMapBoxPlace[]>([]);
-
-  const [marker, setMarkers] = useState<LngLat>();
-  const storeCustomer = useAppSelector(
-    (state) => state.storeSlice.storeCustomer[0]
-  );
-  console.log('yourAddress', yourAddress);
-
   const handleSearchMap = debounce(
     async (value: string, event?: SyntheticEvent<Element, Event>) => {
       if (event) {
-        const mapServices = new MapServices();
         mapServices.findAddressAndPlaces(value).then((res) => {
           setListPlace(res);
         });
@@ -53,27 +56,42 @@ const ConfirmYourAddress = () => {
     },
     800
   );
+
   const handleUpdateAddress = () => {
     dispatch(
       updateLocationStoreProfile({
-        id: storeCustomer?.Id || '',
+        id: curStoreCustomer?.Id || '',
         body: [
           {
             op: 'replace',
-            path: `/GeoLatitude`,
-            value: yourAddress?.center[0],
+            path: `/GeoLongitude`,
+            value: marker?.lng,
           },
           {
             op: 'replace',
-            path: `/GeoLongitude`,
-            value: yourAddress?.center[1],
+            path: `/GeoLatitude`,
+            value: marker?.lat,
           },
         ],
       })
     );
-    handleForwardProgressSetupStore(dispatch);
   };
 
+  useEffect(() => {
+    const defaultYourAddress = mapServices.reverseGeocoding(lngStore, latStore);
+    defaultYourAddress.then((res) => {
+      const value = res[0];
+      if (
+        value &&
+        value.geometry &&
+        value.geometry.coordinates &&
+        typeof value.geometry.coordinates[0] === 'number' &&
+        typeof value.geometry.coordinates[1] === 'number'
+      ) {
+        setYourAddress(value);
+      }
+    });
+  }, []);
   return (
     <LayoutStoreProfile>
       {showAddYourLocation ? (
@@ -105,6 +123,7 @@ const ConfirmYourAddress = () => {
                     setYourAddress(value);
                     const [lng, lat] = value.geometry.coordinates;
                     const lngLat = new mapboxgl.LngLat(lng, lat);
+
                     setMarkers(lngLat);
                   }
                 }}
@@ -149,6 +168,12 @@ const ConfirmYourAddress = () => {
                 marker={marker || undefined}
                 onMapChangeMarker={(v: any) => {
                   setYourAddress(v as IMapBoxPlace);
+                  console.log('v', v);
+
+                  // const [lng, lat] = v.geometry.coordinates;
+                  // const lngLat = new mapboxgl.LngLat(lng, lat);
+
+                  // setMarkers(lngLat);
                 }}
               />
             </div>
@@ -156,20 +181,20 @@ const ConfirmYourAddress = () => {
             <Button
               className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize "
               variant="contained"
-              disabled={!yourAddress}
+              disabled={marker?.lat === 0 && marker?.lng === 0}
               onClick={handleUpdateAddress}
             >
               CONTINUE
             </Button>
-            <div className="mt-4 text-center ">
+            <div className="mt-4 flex items-center justify-center gap-1 text-center ">
               <span>Can&apos;t find your address? </span>
-              <Button
-                variant="text"
+              <Typography
+                variant="body1"
                 onClick={() => setShowAddYourLocation(true)}
-                className="font-bold capitalize text-mango-primary-blue hover:!bg-none"
+                className="cursor-pointer !bg-none font-bold capitalize text-mango-primary-blue hover:!bg-none hover:underline"
               >
                 Add your location
-              </Button>
+              </Typography>
             </div>
           </div>
         </Box>

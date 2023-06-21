@@ -6,7 +6,7 @@ import { useState } from 'react';
 import EmployeeList from './EmployeeList/EmployeeList';
 import RolePermissionList from './RolePermission/ListRolePermission';
 // import AssignEmployee from './RolePermission/AssignEmployee';
-import EditRolePermission from './RolePermission/EditRolePermission/index';
+import PayStructure from './PayStructure/PayStructure';
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -74,7 +74,7 @@ export const EmployeeSetting = () => {
       id: 2,
       label: 'PAY STRUCTURE',
       key: 'payStructure',
-      children: <EditRolePermission />,
+      children: <PayStructure />,
     },
     {
       id: 3,

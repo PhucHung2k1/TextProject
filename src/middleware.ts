@@ -3,4 +3,6 @@
 // eslint-disable-next-line no-restricted-exports
 export { default } from 'next-auth/middleware';
 
-export const config = { matcher: ['/', '/book', '/select-store'] };
+export const config = {
+  matcher: ['/', '/book', '/select-store', '/salon-setting', '/store-profile'],
+};
