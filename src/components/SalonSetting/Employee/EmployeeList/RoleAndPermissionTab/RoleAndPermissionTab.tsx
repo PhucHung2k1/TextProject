@@ -15,6 +15,15 @@ import AddIcon from '@mui/icons-material/Add';
 
 const RoleAndPermissionTab: NextPage = () => {
   const [showFormAppointment, setShowFormAppointment] = useState(true);
+  const [showClientManagerment, setClientManagerment] = useState(false);
+  const [showCreateAndcharge, setCreateAndcharge] = useState(false);
+
+  const handleShowCreateAndcharge = () => {
+    setCreateAndcharge(!showFormAppointment);
+  };
+  const handleShowClientManagerment = () => {
+    setClientManagerment(!showFormAppointment);
+  };
   const handleShowFormAppointment = () => {
     setShowFormAppointment(!showFormAppointment);
   };
@@ -158,21 +167,21 @@ const RoleAndPermissionTab: NextPage = () => {
                     checked={showFormAppointment}
                     color="primary"
                     size="medium"
-                    onChange={handleShowFormAppointment}
+                    onChange={handleShowClientManagerment}
                   />
                 </div>
                 <div className="mt-2 text-lg font-semibold leading-[130%] text-text-primary">
-                  Appointment
+                  Client Management
                 </div>
               </div>
               <div>
-                {showFormAppointment ? (
+                {showClientManagerment ? (
                   <>
                     <Button
                       className="items-center justify-center"
                       variant="text"
                       startIcon={<RemoveIcon sx={{ color: '#5C5D6A' }} />}
-                      onClick={handleShowFormAppointment}
+                      onClick={handleShowClientManagerment}
                     />
                   </>
                 ) : (
@@ -181,13 +190,13 @@ const RoleAndPermissionTab: NextPage = () => {
                       className="items-center justify-center"
                       variant="text"
                       startIcon={<AddIcon sx={{ color: '#00ADC3' }} />}
-                      onClick={handleShowFormAppointment}
+                      onClick={handleShowClientManagerment}
                     />
                   </>
                 )}
               </div>
             </div>
-            {showFormAppointment ? (
+            {showClientManagerment ? (
               <>
                 <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
                 <div className="ml-4 flex items-center  justify-start text-center">
@@ -234,11 +243,11 @@ const RoleAndPermissionTab: NextPage = () => {
                     checked={showFormAppointment}
                     color="primary"
                     size="medium"
-                    onChange={handleShowFormAppointment}
+                    onChange={handleShowCreateAndcharge}
                   />
                 </div>
                 <div className="mt-2 text-lg font-semibold leading-[130%] text-text-primary">
-                  Appointment
+                  Create / Charge
                 </div>
               </div>
               <div>
@@ -248,7 +257,7 @@ const RoleAndPermissionTab: NextPage = () => {
                       className="items-center justify-center"
                       variant="text"
                       startIcon={<RemoveIcon sx={{ color: '#5C5D6A' }} />}
-                      onClick={handleShowFormAppointment}
+                      onClick={handleShowCreateAndcharge}
                     />
                   </>
                 ) : (
@@ -257,7 +266,7 @@ const RoleAndPermissionTab: NextPage = () => {
                       className="items-center justify-center"
                       variant="text"
                       startIcon={<AddIcon sx={{ color: '#00ADC3' }} />}
-                      onClick={handleShowFormAppointment}
+                      onClick={handleShowCreateAndcharge}
                     />
                   </>
                 )}
