@@ -329,7 +329,7 @@ const EmployeeList = () => {
             <div className="flex w-full items-center justify-end gap-6">
               <TextField
                 variant="outlined"
-                placeholder="Search"
+                placeholder="Search..."
                 InputProps={{
                   style: { height: '48px' },
                   startAdornment: (
@@ -343,7 +343,7 @@ const EmployeeList = () => {
               />
               <Button
                 variant="contained"
-                className="mb-1 h-12 bg-primary-main  text-white"
+                className="mb-1 h-12 bg-primary-main  text-base font-bold text-white"
                 startIcon={<Add />}
                 sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
               >
@@ -534,17 +534,19 @@ const EmployeeList = () => {
                         />
                       )}
                     </TableCell>
-                    <TableCell className="flex items-center">
-                      <IconButton onClick={() => handleEditEmployee(row)}>
-                        <EditIcon fontSize="small" />
-                      </IconButton>
+                    <TableCell className="">
+                      <Stack direction="row" alignItems="center" spacing={0}>
+                        <IconButton onClick={() => handleEditEmployee(row)}>
+                          <EditIcon fontSize="small" />
+                        </IconButton>
 
-                      <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
-                        <CloseIcon
-                          fontSize="small"
-                          className="text-[#DA2036] "
-                        />
-                      </IconButton>
+                        <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
+                          <CloseIcon
+                            fontSize="small"
+                            className="text-[#DA2036] "
+                          />
+                        </IconButton>
+                      </Stack>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -566,7 +568,6 @@ const EmployeeList = () => {
             handleCloseDrawer={handleCloseDrawer}
             selectedEmployee={selectedEmployee}
           />
-          ;
         </Drawer>
       </div>
     </>
