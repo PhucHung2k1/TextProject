@@ -164,7 +164,7 @@ const RoleAndPermissionTab: NextPage = () => {
               <div className="flex flex-row">
                 <div>
                   <Switch
-                    checked={showFormAppointment}
+                    checked={showClientManagerment}
                     color="primary"
                     size="medium"
                     onChange={handleShowClientManagerment}
@@ -240,7 +240,7 @@ const RoleAndPermissionTab: NextPage = () => {
               <div className="flex flex-row">
                 <div>
                   <Switch
-                    checked={showFormAppointment}
+                    checked={showCreateAndcharge}
                     color="primary"
                     size="medium"
                     onChange={handleShowCreateAndcharge}
@@ -251,7 +251,7 @@ const RoleAndPermissionTab: NextPage = () => {
                 </div>
               </div>
               <div>
-                {showFormAppointment ? (
+                {showCreateAndcharge ? (
                   <>
                     <Button
                       className="items-center justify-center"
@@ -272,7 +272,7 @@ const RoleAndPermissionTab: NextPage = () => {
                 )}
               </div>
             </div>
-            {showFormAppointment ? (
+            {showCreateAndcharge ? (
               <>
                 <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
                 <div className="ml-4 flex items-center  justify-start text-center">
