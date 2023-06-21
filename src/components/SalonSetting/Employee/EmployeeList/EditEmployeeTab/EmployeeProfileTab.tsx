@@ -19,15 +19,14 @@ import {
   FormControl,
   TextField,
   debounce,
-  styled,
   Stack,
   InputAdornment,
   Box,
-  Divider,
   Button,
   CircularProgress,
   IconButton,
   MenuItem,
+  Divider,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -56,9 +55,6 @@ interface IFormInput {
   password: string;
   confirmPassword: string;
 }
-const UnderlineDiv = styled('div')({
-  borderBottom: ' 1px solid #DEDEE8',
-});
 
 const EmployeeProfileTab = () => {
   const {
@@ -142,7 +138,7 @@ const EmployeeProfileTab = () => {
   };
 
   return (
-    <div className="mb-[-50px] min-h-screen">
+    <div className=" min-h-screen">
       <form onSubmit={handleSubmit(onSubmit)} className="my-8" noValidate>
         <Grid container spacing={2}>
           {/* Employe Profile Head */}
@@ -212,9 +208,7 @@ const EmployeeProfileTab = () => {
             </FormControl>
           </Grid>
           <Grid xs={12} item>
-            <FormControl fullWidth className="mt-2">
-              <UnderlineDiv />
-            </FormControl>
+            <Divider />
           </Grid>
           {/* Color */}
           <Grid xs={12} item className="">
@@ -243,9 +237,7 @@ const EmployeeProfileTab = () => {
             </Stack>
           </Grid>
           <Grid xs={12} item>
-            <FormControl fullWidth className="mt-2">
-              <UnderlineDiv />
-            </FormControl>
+            <Divider />
           </Grid>
           {/* Address */}
           <Grid xs={12} item className="">
@@ -327,9 +319,7 @@ const EmployeeProfileTab = () => {
             </Stack>
           </Grid>
           <Grid xs={12} item>
-            <FormControl fullWidth className="mt-2">
-              <UnderlineDiv />
-            </FormControl>
+            <Divider />
           </Grid>
           {/* Contact Info */}
           <Grid xs={12} item className="">
@@ -460,9 +450,7 @@ const EmployeeProfileTab = () => {
           </Grid>
           {/* UnderLine */}
           <Grid xs={12} item>
-            <FormControl fullWidth className="mt-2">
-              <UnderlineDiv />
-            </FormControl>
+            <Divider />
           </Grid>
           {/* Security */}
           <Grid xs={12} item className="">
@@ -603,9 +591,7 @@ const EmployeeProfileTab = () => {
           </Grid>
           {/* Under line */}
           <Grid xs={12} item>
-            <FormControl fullWidth className="mt-2">
-              <UnderlineDiv />
-            </FormControl>
+            <Divider />
           </Grid>
           {/* Select date and tủn bonus */}
           <Grid xs={12} item>
@@ -639,9 +625,7 @@ const EmployeeProfileTab = () => {
             </Stack>
           </Grid>
           <Grid xs={12} item>
-            <FormControl fullWidth className="mt-2">
-              <UnderlineDiv />
-            </FormControl>
+            <Divider />
           </Grid>
           {/* Button bottom */}
           <Grid xs={12} item>

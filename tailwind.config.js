@@ -86,6 +86,7 @@ module.exports = {
         },
         pink: {
           50: '#FDE5ED',
+          600: '#E12F65',
           700: '#CA2B60',
         },
         cyan: {
@@ -106,6 +107,7 @@ module.exports = {
         'gray-light': 'rgba(92, 93, 106, 0.08)',
         'success-dark': '#1C7A00',
         tertiary: '#9B9BA0',
+        'disable-input': '#F2F2F2',
       },
     },
   },
