@@ -35,9 +35,9 @@ const EditRolePermission = () => {
     <div className="ml-auto mr-[0px] h-[95vh]  w-[796px] border">
       <div className="pt-[24px] text-center">
         <div className="flex items-center justify-center px-[32px] ">
-          <ArrowBackIcon className="cursor-pointer text-3xl text-[#5C5D6A]" />
+          <ArrowBackIcon className="cursor-pointer text-3xl text-icon-color" />
 
-          <p className="mx-auto text-[32px] font-semibold text-[#1F1F23]">
+          <p className="mx-auto text-[32px] font-semibold text-text-title">
             Edit Role & Permission
           </p>
         </div>
@@ -74,7 +74,7 @@ const EditRolePermission = () => {
               label={
                 <Box
                   component="div"
-                  className="text-[16px] font-medium text-[#404044]"
+                  className="text-[16px] font-medium text-primary-dark"
                 >
                   Technician
                 </Box>
@@ -113,7 +113,7 @@ const EditRolePermission = () => {
                 className="px-[32px]"
               >
                 <Tab
-                  className=" text-[14px] font-bold text-[#9B9BA0]"
+                  className=" text-[14px] font-bold text-mango-gray-light-6"
                   label="ASSIGN EMPLOYEE"
                   value="1"
                   sx={{
@@ -128,7 +128,7 @@ const EditRolePermission = () => {
                       color: '#00BDD6',
                     },
                   }}
-                  className=" text-[14px] font-bold text-[#9B9BA0] "
+                  className=" text-[14px] font-bold text-mango-gray-light-6 "
                   label="ACCESSIBILITY"
                   value="2"
                 />

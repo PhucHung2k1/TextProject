@@ -348,7 +348,7 @@ export const AddYourEmployeeModal = () => {
                           phoneNumberRegex.test(value) ||
                           'Invalid Phone Number!',
                       })}
-                      className="w-full font-[16px] text-[#404044]"
+                      className="w-full font-[16px] text-primary-dark"
                     />
                     <ErrorMessage
                       errors={errors}

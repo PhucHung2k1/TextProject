@@ -165,7 +165,7 @@ const AboutYourBusiness = () => {
             type="file"
             id="imageUpload"
           />
-          <div className="absolute bottom-0 right-0 mb-0 flex h-[59px] w-[59px] items-center justify-center rounded-full bg-[#00BDD6]">
+          <div className="absolute bottom-0 right-0 mb-0 flex h-[59px] w-[59px] items-center justify-center rounded-full bg-primary-main">
             <Image
               src="/assets/images/SetupStore/picture.svg"
               alt="logo"
@@ -184,10 +184,6 @@ const AboutYourBusiness = () => {
             variant="outlined"
             className="mb-2 w-full"
             value={formStore.Name}
-            // error={Boolean(errors.Name)}
-            // {...register('Name', {
-            //   required: 'Enter Your Name!',
-            // })}
             name="Name"
             onChange={handleFieldChange}
             sx={{
@@ -261,13 +257,13 @@ const AboutYourBusiness = () => {
                 id="outlined-basic"
                 label="Phone number"
                 variant="outlined"
-                className="w-full font-[16px] text-[#404044]"
+                className="w-full font-[16px] text-primary-dark"
               />
             </FormControl>
           </div>
         </div>
         <Button
-          className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize hover:bg-[#00ADC3]"
+          className="mt-12 h-12 w-full text-white  bg-mango-primary-blue font-bold capitalize hover:bg-button-hover-cyan text-base"
           variant="contained"
           type="submit"
           // onClick={() => handleForwardProgressSetupStore(dispatch)}
