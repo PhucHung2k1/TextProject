@@ -1,5 +1,5 @@
 import AboutYourBusiness from '@/components/StoreProfile/AboutYourBusiness';
-import AddYourEmployee from '@/components/StoreProfile/AddYourEmployee';
+import AddYourEmployee from '@/components/StoreProfile/AddTeamMember';
 import AddYourService from '@/components/StoreProfile/AddYourService';
 import ConfirmYourAddress from '@/components/StoreProfile/ConfirmYourAddress';
 import Congratulations from '@/components/StoreProfile/Congratulations';

@@ -16,23 +16,25 @@ import { apiPostPhoto } from '@/utils/axios/instance';
 import { Store } from '@/services/store.service/store.service';
 import type { IStoreProfile } from '@/services/store.service/store.interface';
 import { useForm } from 'react-hook-form';
+import Cookies from 'js-cookie';
 
 const POST_IMAGE = '/file/upload-picture';
 
 const AboutYourBusiness = () => {
   const dispatch = useAppDispatch();
 
-  const storeCustomer = useAppSelector(
-    (state) => state.storeSlice.storeCustomer[0]
-  );
+  const curStoreCustomerId = Cookies.get('store-customer');
+  const curStoreCustomer = useAppSelector(
+    (state) => state.storeSlice.storeCustomer
+  ).find((store) => store.Id === curStoreCustomerId);
 
   const [selectedImage, setSelectedImage] = useState<any>();
   const [avatarImage, setAvatarImage] = useState<any>();
   const [formStore, setFormStore] = useState({
-    Id: storeCustomer?.Id || '',
-    Name: storeCustomer?.Name || '',
-    PhoneNumber: storeCustomer?.PhoneNumber || '',
-    ProfilePictureUrl: storeCustomer?.ProfilePictureUrl || '',
+    Id: curStoreCustomer?.Id || '',
+    Name: curStoreCustomer?.Name || '',
+    PhoneNumber: curStoreCustomer?.PhoneNumber || '',
+    ProfilePictureUrl: curStoreCustomer?.ProfilePictureUrl || '',
   });
 
   const {
@@ -71,14 +73,14 @@ const AboutYourBusiness = () => {
     try {
       const patchData = [];
 
-      if (formStore.Name !== storeCustomer?.Name) {
+      if (formStore.Name !== curStoreCustomer?.Name) {
         patchData.push({
           op: 'replace',
           path: '/Name',
           value: formStore.Name,
         });
       }
-      if (formStore.PhoneNumber !== storeCustomer?.PhoneNumber) {
+      if (formStore.PhoneNumber !== curStoreCustomer?.PhoneNumber) {
         patchData.push({
           op: 'replace',
           path: '/PhoneNumber',
@@ -87,7 +89,7 @@ const AboutYourBusiness = () => {
       }
       if (
         avatarImage &&
-        avatarImage.OriginalPublishUrl !== storeCustomer?.ProfilePictureUrl
+        avatarImage.OriginalPublishUrl !== curStoreCustomer?.ProfilePictureUrl
       ) {
         patchData.push({
           op: 'replace',
@@ -105,19 +107,19 @@ const AboutYourBusiness = () => {
 
   useEffect(() => {
     dispatch(getStoreCustomer({}));
-    if (storeCustomer) {
+    if (curStoreCustomer) {
       setFormStore((prevFormStore) => ({
         ...prevFormStore,
-        Name: storeCustomer.Name || '',
-        PhoneNumber: storeCustomer.PhoneNumber || '',
-        ProfilePictureUrl: storeCustomer.ProfilePictureUrl || '',
-        Id: storeCustomer.Id || '',
+        Name: curStoreCustomer.Name || '',
+        PhoneNumber: curStoreCustomer.PhoneNumber || '',
+        ProfilePictureUrl: curStoreCustomer.ProfilePictureUrl || '',
+        Id: curStoreCustomer.Id || '',
       }));
     }
   }, [
-    storeCustomer?.Name,
-    storeCustomer?.PhoneNumber,
-    storeCustomer?.ProfilePictureUrl,
+    curStoreCustomer?.Name,
+    curStoreCustomer?.PhoneNumber,
+    curStoreCustomer?.ProfilePictureUrl,
   ]);
   return (
     <LayoutStoreProfile>

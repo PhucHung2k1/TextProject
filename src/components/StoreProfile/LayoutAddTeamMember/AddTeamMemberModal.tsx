@@ -12,6 +12,10 @@ import {
   TextField,
   Typography,
   debounce,
+  Chip,
+  Select,
+  OutlinedInput,
+  MenuItem,
 } from '@mui/material';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
@@ -20,13 +24,13 @@ import { clearModalContentMUI, hideModalMUI } from '@/store/modal/modalSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import type { ISendInvitationPayload } from '@/services/customer.service/customer.interface';
 import { Fragment, useState } from 'react';
-import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
 import { sendInvitation } from '@/store/customer/customerAction';
 import type { CountryPhone } from '@/services/common/common.interface';
 import { ErrorMessage } from '@hookform/error-message';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import { Clear, Check, Error } from '@mui/icons-material';
 import { sxTextField } from '@/utils/helper/styles';
+import { AddRolePermissionDrawer } from './AddRolePermissionDrawer';
 
 interface IFormInput {
   firstName: string;
@@ -40,7 +44,16 @@ interface IFormInput {
   payStructure: string;
   serviceAndProduct: string;
 }
+const arrRolePermission = ['Appointment', 'Salon Center', 'Create/ Charge'];
 
+const arrServiceProduct = [
+  'Artificial Nails',
+  'Artificial Nails Maintenance',
+  'Manicure',
+  'Pedicure',
+  'Extra',
+  'Natural Nails',
+];
 export const AddYourEmployeeModal = () => {
   const dispatch = useAppDispatch();
 
@@ -56,24 +69,29 @@ export const AddYourEmployeeModal = () => {
     emailName: '',
     emailStatus: 'idle', // existed , available
   });
-  const listRole = useAppSelector((state) => state.customerRoleSlice.listRole);
+  const listRole = useAppSelector(
+    (state) => state.customerRoleSlice.listRole
+  ).filter((_role, index) => index !== 0);
   const listPayStructure = useAppSelector(
-    (state) => state.commonSlice.lookupData.PayStructure
+    (state) => state.payStructureSlice.listPayStructure
   );
+
   const listServiceProduct = useAppSelector(
     (state) => state.commonSlice.lookupData.ProductType
   );
 
-  const [valueRole, setValueRole] = useState<IAllCustomerRole | null>(
-    listRole[0] || null
+  const [valueRole, setValueRole] = useState<string | null>(
+    listRole.find((role) => role.Name === 'Technician')?.Id || null
   );
 
   const [valueServiceProduct, setValueServiceProduct] =
     useState<CountryPhone | null>(listServiceProduct[0] || null);
 
-  const [valuePayStructure, setValuePayStructure] =
-    useState<CountryPhone | null>(listPayStructure[0] || null);
+  const [valuePayStructure, setValuePayStructure] = useState<string | null>(
+    listPayStructure[0]?.Id || null
+  );
 
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
       setEmailState((pre) => ({
@@ -110,8 +128,8 @@ export const AddYourEmployeeModal = () => {
       phoneNumber: values?.phoneNumber,
       email: values?.email,
       jobTitle: values?.jobTitle,
-      customerRoleId: valueRole?.Id || '',
-      payStructure: valuePayStructure?.Value || '',
+      customerRoleId: valueRole || '',
+      payStructure: valuePayStructure || '',
       serviceAndProduct: valueServiceProduct?.Value || '',
       isSendInvitation: true,
     };
@@ -136,12 +154,12 @@ export const AddYourEmployeeModal = () => {
                   className="cursor-pointer text-3xl"
                 />
                 <p className="mx-auto text-[32px] font-semibold">
-                  Add your employee
+                  Add team member
                 </p>
               </div>
 
               <p className="text-mango-text-gray-2">
-                You can send them an invitation to join now
+                Invite your team member to join your salon
               </p>
             </div>
 
@@ -398,43 +416,72 @@ export const AddYourEmployeeModal = () => {
                         fullWidth
                         className="text-sm font-normal !text-mango-text-black-1"
                       >
-                        <Autocomplete
-                          options={listRole}
-                          getOptionLabel={(option) => option?.Name}
+                        <Select
+                          displayEmpty
                           value={valueRole}
-                          onChange={(_event: any, newValue: any) => {
-                            setValueRole(newValue);
+                          sx={{
+                            '& .css-1sv0avo-MuiGrid-root': {
+                              display: 'none',
+                            },
                           }}
-                          renderOption={(props, option) => {
-                            return (
-                              <li
-                                {...props}
-                                className=" cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
-                              >
-                                <Grid container alignItems="center">
-                                  <Grid
-                                    item
-                                    sx={{ display: 'flex', width: 40 }}
-                                  >
-                                    <GroupOutlinedIcon />
-                                  </Grid>
-                                  <Grid item>
-                                    <Typography variant="body2" fontSize={16}>
-                                      {option.Name}
-                                    </Typography>
-                                  </Grid>
+                          input={<OutlinedInput />}
+                          inputProps={{ 'aria-label': 'Without label' }}
+                          className="bg-white"
+                          onChange={(e) => setValueRole(e.target.value)}
+                        >
+                          {listRole.map((name) => (
+                            <MenuItem
+                              key={name.Id}
+                              value={name.Id}
+                              className=" cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
+                            >
+                              <Grid container alignItems="center">
+                                <Grid item sx={{ display: 'flex', width: 40 }}>
+                                  <GroupOutlinedIcon />
                                 </Grid>
-                              </li>
-                            );
-                          }}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              {...register('customerRoleId', {})}
-                            />
-                          )}
-                        />
+                                <Grid item>
+                                  <Typography variant="body2" fontSize={16}>
+                                    {name.Name}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                            </MenuItem>
+                          ))}
+                          <Box className=" cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue">
+                            <Grid
+                              container
+                              alignItems="center"
+                              onClick={() => setOpenDrawer(true)}
+                            >
+                              <Grid item sx={{ display: 'flex', width: 40 }}>
+                                <GroupOutlinedIcon />
+                              </Grid>
+                              <Grid item>
+                                <Typography variant="body2" fontSize={16}>
+                                  Add new role
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                          </Box>
+                        </Select>
                       </FormControl>
+                      <Typography className="my-2 text-mango-text-gray-2">
+                        This role allows team members to access functions:
+                      </Typography>
+                      <Box className="flex-wrap">
+                        {arrRolePermission.map((role) => (
+                          <Chip
+                            key={role}
+                            className=" m-1  bg-blue-50 px-1 text-[16px]  text-blue-700"
+                            label={role}
+                            sx={{
+                              '& .css-6od3lo-MuiChip-label': {
+                                overflow: 'unset',
+                              },
+                            }}
+                          />
+                        ))}
+                      </Box>
                     </Grid>
                     <Grid xs={12} item className="relative">
                       <Divider
@@ -455,43 +502,85 @@ export const AddYourEmployeeModal = () => {
                         fullWidth
                         className="text-sm font-normal !text-mango-text-black-1"
                       >
-                        <Autocomplete
-                          options={listPayStructure}
-                          getOptionLabel={(option) => option.Name}
+                        <Select
+                          displayEmpty
                           value={valuePayStructure}
-                          onChange={(_event: any, newValue: any) => {
-                            setValuePayStructure(newValue);
+                          sx={{
+                            '& .css-1sv0avo-MuiGrid-root': {
+                              display: 'none',
+                            },
                           }}
-                          renderOption={(props, option) => {
-                            return (
-                              <li
-                                {...props}
-                                className="  cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
-                              >
-                                <Grid container alignItems="center">
-                                  <Grid
-                                    item
-                                    sx={{ display: 'flex', width: 40 }}
-                                  >
-                                    <GroupOutlinedIcon />
-                                  </Grid>
-                                  <Grid item>
-                                    <Typography variant="body2" fontSize={16}>
-                                      {option.Name}
-                                    </Typography>
-                                  </Grid>
+                          input={<OutlinedInput />}
+                          inputProps={{ 'aria-label': 'Without label' }}
+                          className="bg-white"
+                          onChange={(e) => setValuePayStructure(e.target.value)}
+                        >
+                          {listPayStructure.map((name) => (
+                            <MenuItem
+                              key={name.Id}
+                              value={name.Id}
+                              className=" cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue"
+                            >
+                              <Grid container alignItems="center">
+                                <Grid item sx={{ display: 'flex', width: 40 }}>
+                                  <GroupOutlinedIcon />
                                 </Grid>
-                              </li>
-                            );
-                          }}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              {...register('payStructure', {})}
-                            />
-                          )}
-                        />
+                                <Grid item>
+                                  <Typography variant="body2" fontSize={16}>
+                                    {name.Name}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                            </MenuItem>
+                          ))}
+                          <Box className=" cursor-pointer p-2 hover:!bg-mango-blue-light-1 hover:!font-bold hover:!text-mango-primary-blue">
+                            <Grid
+                              container
+                              alignItems="center"
+                              onClick={() => setOpenDrawer(true)}
+                            >
+                              <Grid item sx={{ display: 'flex', width: 40 }}>
+                                <GroupOutlinedIcon />
+                              </Grid>
+                              <Grid item>
+                                <Typography variant="body2" fontSize={16}>
+                                  Add pay structure
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                          </Box>
+                        </Select>
                       </FormControl>
+                      <Typography className="my-2 text-mango-text-gray-2">
+                        This pay structure is based on:
+                      </Typography>
+                      <Box className="flex-wrap">
+                        <Chip
+                          className=" m-1  bg-[#FDE5ED] px-1 text-[16px]  text-pink-500"
+                          label={
+                            listPayStructure.find(
+                              (item) => item.Id === valuePayStructure
+                            )?.Name
+                          }
+                          sx={{
+                            '& .css-6od3lo-MuiChip-label': {
+                              overflow: 'unset',
+                            },
+                          }}
+                        />
+                      </Box>
+                      <Box className="my-2 flex-wrap text-mango-text-gray-2">
+                        {listPayStructure
+                          .find((item) => item.Id === valuePayStructure)
+                          ?.Configurations.map((itemConfig) => (
+                            <Box key={itemConfig.Value} className="m-1 flex">
+                              <Typography>{itemConfig.Name}: </Typography>
+                              <Typography fontWeight="bold">
+                                {itemConfig.Value}
+                              </Typography>
+                            </Box>
+                          ))}
+                      </Box>
                     </Grid>
                     <Grid xs={12} item className="relative">
                       <Divider
@@ -548,6 +637,23 @@ export const AddYourEmployeeModal = () => {
                           )}
                         />
                       </FormControl>
+                      <Typography className="my-2 text-mango-text-gray-2">
+                        This role allows team members to assign:
+                      </Typography>
+                      <Box className="flex-wrap ">
+                        {arrServiceProduct.map((serviceProduct) => (
+                          <Chip
+                            key={serviceProduct}
+                            className="m-1 bg-[#E0F7FA] px-1 text-[16px]  text-[#0098A9]"
+                            label={serviceProduct}
+                            sx={{
+                              '& .css-6od3lo-MuiChip-label': {
+                                overflow: 'unset',
+                              },
+                            }}
+                          />
+                        ))}
+                      </Box>
                     </Grid>
                   </Grid>
                 </div>
@@ -568,6 +674,12 @@ export const AddYourEmployeeModal = () => {
                 </Grid>
               </Grid>
             </form>
+
+            {/* Drawer Role & Permission */}
+            <AddRolePermissionDrawer
+              openDrawer={openDrawer}
+              setOpenDrawer={setOpenDrawer}
+            />
           </div>
         </div>
       }
