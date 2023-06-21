@@ -13,6 +13,7 @@ import { handlePreviousProgressSetupStore } from '@/components/StoreProfile/help
 import { useState } from 'react';
 import type { CountryPhone } from '@/services/common/common.interface';
 import { updateLocationStoreProfile } from '@/store/store/storeAction';
+import Cookies from 'js-cookie';
 
 interface IFormLocation {
   addressLine1: string;
@@ -27,14 +28,16 @@ const AddYourLocation = () => {
   const dispatch = useAppDispatch();
 
   const { handleSubmit, register } = useForm<IFormLocation>();
-  const storeCustomer = useAppSelector(
-    (state) => state.storeSlice.storeCustomer[0]
-  );
+  const curStoreCustomerId = Cookies.get('store-customer');
+  const curStoreCustomer = useAppSelector(
+    (state) => state.storeSlice.storeCustomer
+  ).find((store) => store.Id === curStoreCustomerId);
   const listTimeZone = useAppSelector(
     (state) => state.commonSlice.lookupData.TimeZone
   );
   const [valueTimeZone, setValueTimeZone] = useState<CountryPhone | null>(
-    listTimeZone.find((item) => item.Value === storeCustomer?.TimeZone) || null
+    listTimeZone.find((item) => item.Value === curStoreCustomer?.TimeZone) ||
+      null
   );
   const onSubmit = (values: IFormLocation) => {
     console.log('values', values);
@@ -74,7 +77,7 @@ const AddYourLocation = () => {
 
     dispatch(
       updateLocationStoreProfile({
-        id: storeCustomer?.Id || '',
+        id: curStoreCustomer?.Id || '',
         body: payload,
       })
     );
@@ -106,7 +109,7 @@ const AddYourLocation = () => {
               <TextField
                 label="Address line 1"
                 type="text"
-                defaultValue={storeCustomer?.Address1}
+                defaultValue={curStoreCustomer?.Address1}
                 {...register('addressLine1', {})}
                 placeholder="Address line 1"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -121,7 +124,7 @@ const AddYourLocation = () => {
               <TextField
                 label="Address line 2"
                 type="text"
-                defaultValue={storeCustomer?.Address2}
+                defaultValue={curStoreCustomer?.Address2}
                 {...register('addressLine2', {})}
                 placeholder="Address line 2"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -137,7 +140,7 @@ const AddYourLocation = () => {
                 label="City"
                 {...register('city', {})}
                 type="text"
-                defaultValue={storeCustomer?.City}
+                defaultValue={curStoreCustomer?.City}
                 placeholder="City"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
               />
@@ -151,7 +154,7 @@ const AddYourLocation = () => {
               <TextField
                 label="State"
                 type="text"
-                defaultValue={storeCustomer?.State}
+                defaultValue={curStoreCustomer?.State}
                 {...register('state', {})}
                 placeholder="State"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -167,7 +170,7 @@ const AddYourLocation = () => {
               <TextField
                 label="Zip code"
                 type="text"
-                defaultValue={storeCustomer?.ZipCode}
+                defaultValue={curStoreCustomer?.ZipCode}
                 {...register('zipCode', {})}
                 placeholder="Zip code"
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"

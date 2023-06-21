@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import LayoutAddMember from './LayoutAddEmployee/LayoutAddEmployee';
+import LayoutAddMember from './LayoutAddTeamMember/LayoutAddTeamMember';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Box, Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
-import { AddYourEmployeeModal } from './LayoutAddEmployee/AddYourEmployeeModal';
+import { AddYourEmployeeModal } from './LayoutAddTeamMember/AddTeamMemberModal';
 import { setModalContentMUI, showModalMUI } from '@/store/modal/modalSlice';
-import InvitationListComponent from './LayoutAddEmployee/InvitationListComponent';
+import InvitationListComponent from './LayoutAddTeamMember/InvitationListComponent';
 import { invitationList } from '@/store/customer/customerAction';
 
 const AddYourEmployee = () => {
@@ -27,8 +27,8 @@ const AddYourEmployee = () => {
     <>
       <LayoutAddMember
         icon="back"
-        subTitle="Invite employees to join your salon"
-        title="Add your employee"
+        subTitle="Invite team member to join your salon"
+        title="Add team member"
         skip={isEmptyInvitationList}
         disableBtn={isEmptyInvitationList}
       >

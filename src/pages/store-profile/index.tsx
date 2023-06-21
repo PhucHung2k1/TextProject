@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { listStepConfigStore } from '../../components/StoreProfile/helper/listStepConfigStore';
 import { getWorkingHours } from '@/store/workingHours/workingHoursAction';
+import { getListPayStructure } from '@/store/payStructure/payStructureAction';
 
 const StoreProfile = () => {
   const dispatch = useAppDispatch();
@@ -12,15 +13,12 @@ const StoreProfile = () => {
   const progressSetupStore = useAppSelector(
     (state) => state.storeSlice.progressSetupStore
   );
-  console.log(
-    '🚀 ~ file: index.tsx:15 ~ StoreProfile ~ progressSetupStore:',
-    progressSetupStore
-  );
 
   useEffect(() => {
     if (router.pathname === '/store-profile') {
       dispatch(getAllRole({}));
       dispatch(lookupData({}));
+      dispatch(getListPayStructure({}));
       dispatch(getWorkingHours({}));
     }
   }, [router.pathname]);

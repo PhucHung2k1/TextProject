@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Store } from '@/services/store.service/store.service';
 import { setStoreCustomer } from './storeSlice';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
+import { handleForwardProgressSetupStore } from '@/components/StoreProfile/helper';
 // import { showToastMessage } from '@/utils/helper/showToastMessage';
 
 export const getStoreCustomer = createAsyncThunk(
@@ -54,6 +55,7 @@ export const updateLocationStoreProfile = createAsyncThunk(
 
       if (status === 200 || status === 201 || status === 204) {
         showToastMessage(dispatch, 'Update successfully', 'success');
+        handleForwardProgressSetupStore(dispatch);
       }
       if (error) {
         showToastMessage(dispatch, error?.data.message, 'error');
