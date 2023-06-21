@@ -19,10 +19,10 @@ const RoleAndPermissionTab: NextPage = () => {
   const [showCreateAndcharge, setCreateAndcharge] = useState(false);
 
   const handleShowCreateAndcharge = () => {
-    setCreateAndcharge(!showFormAppointment);
+    setCreateAndcharge(!showCreateAndcharge);
   };
   const handleShowClientManagerment = () => {
-    setClientManagerment(!showFormAppointment);
+    setClientManagerment(!showClientManagerment);
   };
   const handleShowFormAppointment = () => {
     setShowFormAppointment(!showFormAppointment);
