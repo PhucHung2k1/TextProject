@@ -38,13 +38,12 @@ const ConfirmYourAddress = () => {
   const curStoreCustomer = useAppSelector(
     (state) => state.storeSlice.storeCustomer
   ).find((store) => store.Id === curStoreCustomerId);
-  // const lngStore = Number(curStoreCustomer?.GeoLongitude);
-  // const latStore = Number(curStoreCustomer?.GeoLatitude);
-  // const [defaultMarker, setDefaultMarker] = useState<number[]>([
-  //   lngStore,
-  //   latStore,
-  // ]);
-  const [marker, setMarkers] = useState<LngLat>();
+  const lngStore = Number(curStoreCustomer?.GeoLongitude);
+  const latStore = Number(curStoreCustomer?.GeoLatitude);
+
+  const [marker, setMarkers] = useState<LngLat>(
+    new mapboxgl.LngLat(lngStore, latStore)
+  );
 
   const [yourAddress, setYourAddress] = useState<IMapBoxPlace | null>(null);
   const handleSearchMap = debounce(
@@ -79,22 +78,19 @@ const ConfirmYourAddress = () => {
   };
 
   useEffect(() => {
-    // const defaultYourAddress = mapServices.reverseGeocoding(lngStore, latStore);
-    // defaultYourAddress.then((res) => {
-    //   const value = res[0];
-    //   if (
-    //     value &&
-    //     value.geometry &&
-    //     value.geometry.coordinates &&
-    //     typeof value.geometry.coordinates[0] === 'number' &&
-    //     typeof value.geometry.coordinates[1] === 'number'
-    //   ) {
-    //     setYourAddress(value);
-    //     const [lng, lat] = value.geometry.coordinates;
-    //     const lngLat = new mapboxgl.LngLat(lng, lat);
-    //     setMarkers(lngLat);
-    //   }
-    // });
+    const defaultYourAddress = mapServices.reverseGeocoding(lngStore, latStore);
+    defaultYourAddress.then((res) => {
+      const value = res[0];
+      if (
+        value &&
+        value.geometry &&
+        value.geometry.coordinates &&
+        typeof value.geometry.coordinates[0] === 'number' &&
+        typeof value.geometry.coordinates[1] === 'number'
+      ) {
+        setYourAddress(value);
+      }
+    });
   }, []);
   return (
     <LayoutStoreProfile>
@@ -172,10 +168,12 @@ const ConfirmYourAddress = () => {
                 marker={marker || undefined}
                 onMapChangeMarker={(v: any) => {
                   setYourAddress(v as IMapBoxPlace);
-                  const [lng, lat] = v.geometry.coordinates;
-                  const lngLat = new mapboxgl.LngLat(lng, lat);
+                  console.log('v', v);
 
-                  setMarkers(lngLat);
+                  // const [lng, lat] = v.geometry.coordinates;
+                  // const lngLat = new mapboxgl.LngLat(lng, lat);
+
+                  // setMarkers(lngLat);
                 }}
               />
             </div>
