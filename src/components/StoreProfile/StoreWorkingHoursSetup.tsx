@@ -346,9 +346,21 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         onChange={(e) =>
                           setEndHour(convertTo24h(e.target.value))
                         }
+                        MenuProps={{
+                          style: {
+                            maxHeight: 348,
+                          },
+                        }}
                       >
                         {timeOptions.map((item) => (
-                          <MenuItem key={item} value={item}>
+                          <MenuItem
+                            key={item}
+                            value={item}
+                            style={{
+                              borderTop: '1px solid #f2f2f5',
+                              padding: '10px 16px ',
+                            }}
+                          >
                             {item}
                           </MenuItem>
                         ))}
@@ -403,9 +415,21 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                     convertTo24h(e.target.value)
                                   )
                                 }
+                                MenuProps={{
+                                  style: {
+                                    maxHeight: 348,
+                                  },
+                                }}
                               >
                                 {timeOptions.map((item) => (
-                                  <MenuItem key={item} value={item}>
+                                  <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={{
+                                      borderTop: '1px solid #f2f2f5',
+                                      padding: '10px 16px ',
+                                    }}
+                                  >
                                     {item}
                                   </MenuItem>
                                 ))}
@@ -440,9 +464,21 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                     convertTo24h(e.target.value)
                                   )
                                 }
+                                MenuProps={{
+                                  style: {
+                                    maxHeight: 348,
+                                  },
+                                }}
                               >
                                 {timeOptions.map((item) => (
-                                  <MenuItem key={item} value={item}>
+                                  <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={{
+                                      borderTop: '1px solid #f2f2f5',
+                                      padding: '10px 16px ',
+                                    }}
+                                  >
                                     {item}
                                   </MenuItem>
                                 ))}
