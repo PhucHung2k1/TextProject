@@ -263,7 +263,7 @@ const AboutYourBusiness = () => {
           </div>
         </div>
         <Button
-          className="mt-12 h-12 w-full text-white  bg-mango-primary-blue font-bold capitalize hover:bg-button-hover-cyan text-base"
+          className="mt-12 h-12 w-full bg-mango-primary-blue  text-base font-bold capitalize text-white hover:bg-button-hover-cyan"
           variant="contained"
           type="submit"
           // onClick={() => handleForwardProgressSetupStore(dispatch)}
