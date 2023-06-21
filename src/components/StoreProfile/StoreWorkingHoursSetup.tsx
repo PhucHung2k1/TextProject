@@ -436,8 +436,8 @@ const StoreWorkingHoursSetup: NextPage = () => {
                             <div
                               className={
                                 index === 0
-                                  ? ' mx-[9px] ml-[5px] mt-[45px] w-[14px] border border-solid border-line-light'
-                                  : 'mx-[9px] ml-[5px] w-[14px] border border-solid  border-line-light'
+                                  ? ' mx-[9px]  mt-[45px] w-[14px] border border-solid border-line-light'
+                                  : 'mx-[9px]  w-[14px] border border-solid  border-line-light'
                               }
                             />
 
@@ -482,13 +482,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 ))}
                               </Select>
                             </FormControl>
-                            <div
-                              className={
-                                index === 0
-                                  ? 'ml-[5px]  mt-[45px]'
-                                  : ' ml-[5px]'
-                              }
-                            >
+                            <div className={index === 0 ? '  mt-[45px]' : ' '}>
                               <Button
                                 sx={{
                                   minWidth: 'unset',
