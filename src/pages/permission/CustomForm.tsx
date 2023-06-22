@@ -166,7 +166,6 @@
 
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import InputLabel from '@mui/material/InputLabel';
@@ -178,6 +177,8 @@ import Button from '@mui/material/Button';
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { sxTextField, sxSelect } from '@/utils/helper/styles';
+import TextField from '@mui/material/TextField';
 
 export default function CustomForm() {
   const [age, setAge] = useState('');
@@ -217,6 +218,7 @@ export default function CustomForm() {
             </Grid>
             <Grid item xs={12} sm={10}>
               <TextField
+                sx={sxTextField}
                 required
                 id="title"
                 name="title"
@@ -260,6 +262,7 @@ export default function CustomForm() {
             </Grid>
             <Grid item xs={12} sm={10}>
               <TextField
+                sx={sxTextField}
                 required
                 id="artist"
                 name="artist"
@@ -288,13 +291,7 @@ export default function CustomForm() {
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
                 <Select
-                  sx={{
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#00BDD6',
-                      color: 'red',
-                    },
-                    color: '#404044',
-                  }}
+                  sx={{ sxSelect }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={age}
@@ -323,6 +320,7 @@ export default function CustomForm() {
             </Grid>
             <Grid item xs={12} sm={4}>
               <TextField
+                sx={sxTextField}
                 required
                 id="author"
                 name="author"
@@ -356,13 +354,7 @@ export default function CustomForm() {
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
                 <Select
-                  sx={{
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#00BDD6',
-                      color: 'red',
-                    },
-                    color: '#404044',
-                  }}
+                  sx={{ sxSelect }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={age}

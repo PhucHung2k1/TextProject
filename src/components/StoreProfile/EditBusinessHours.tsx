@@ -13,6 +13,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import { Clear } from '@mui/icons-material';
+import { sxSelect } from '@/utils/helper/styles';
 
 const EditBusinessHours: NextPage = () => {
   const [startHour, setStartHour] = useState('');
@@ -64,7 +65,7 @@ const EditBusinessHours: NextPage = () => {
             <Clear className="cursor-pointer text-3xl" />
 
             <p className="mx-auto text-center text-[32px] font-semibold text-text-title">
-              Edit business hoursasd
+              Edit business hour
             </p>
           </div>
 
@@ -90,12 +91,7 @@ const EditBusinessHours: NextPage = () => {
                     <FormControl fullWidth variant="outlined">
                       <InputLabel color="primary" />
                       <Select
-                        sx={{
-                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#00BDD6',
-                          },
-                          color: '#404044',
-                        }}
+                        sx={{ sxSelect }}
                         color="primary"
                         defaultValue="09:00 AM"
                         size="medium"
@@ -118,12 +114,7 @@ const EditBusinessHours: NextPage = () => {
                     <FormControl fullWidth variant="outlined">
                       <InputLabel color="primary" />
                       <Select
-                        sx={{
-                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#00BDD6',
-                          },
-                          color: '#404044',
-                        }}
+                        sx={{ sxSelect }}
                         color="primary"
                         defaultValue="09:00 PM"
                         size="medium"
@@ -164,13 +155,7 @@ const EditBusinessHours: NextPage = () => {
                                 <FormControl fullWidth variant="outlined">
                                   <InputLabel color="primary" />
                                   <Select
-                                    sx={{
-                                      '&.Mui-focused .MuiOutlinedInput-notchedOutline':
-                                        {
-                                          borderColor: '#00BDD6',
-                                        },
-                                      color: '#404044',
-                                    }}
+                                    sx={{ sxSelect }}
                                     color="primary"
                                     defaultValue="09:00 AM"
                                     size="medium"
@@ -194,13 +179,7 @@ const EditBusinessHours: NextPage = () => {
                                 <FormControl fullWidth variant="outlined">
                                   <InputLabel color="primary" />
                                   <Select
-                                    sx={{
-                                      '&.Mui-focused .MuiOutlinedInput-notchedOutline':
-                                        {
-                                          borderColor: '#00BDD6',
-                                        },
-                                      color: '#404044',
-                                    }}
+                                    sx={{ sxSelect }}
                                     color="primary"
                                     defaultValue="09:00 PM"
                                     size="medium"

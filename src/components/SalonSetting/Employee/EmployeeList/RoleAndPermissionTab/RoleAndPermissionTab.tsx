@@ -12,6 +12,7 @@ import {
 import React, { useState } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { sxSelect } from '@/utils/helper/styles';
 
 const RoleAndPermissionTab: NextPage = () => {
   const [showFormAppointment, setShowFormAppointment] = useState(true);
@@ -28,12 +29,7 @@ const RoleAndPermissionTab: NextPage = () => {
               Select Role & Permission
             </InputLabel>
             <Select
-              sx={{
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#00BDD6',
-                },
-                color: '#404044',
-              }}
+              sx={{ sxSelect }}
               labelId="selectRoleAndPermission"
               label="Select Role & Permission"
               displayEmpty

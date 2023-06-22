@@ -27,6 +27,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import Badge from '@mui/material/Badge';
+import { sxSelect } from '@/utils/helper/styles';
 
 const ListRolePermission = () => {
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(
@@ -219,12 +220,7 @@ const ListRolePermission = () => {
               }}
             >
               <Select
-                sx={{
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#00BDD6',
-                  },
-                  color: '#404044',
-                }}
+                sx={{ sxSelect }}
                 displayEmpty
                 value={filterRolePermission}
                 input={<OutlinedInput />}
@@ -258,12 +254,7 @@ const ListRolePermission = () => {
               }}
             >
               <Select
-                sx={{
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#00BDD6',
-                  },
-                  color: '#404044',
-                }}
+                sx={{ sxSelect }}
                 displayEmpty
                 value={filterPayStructures}
                 input={<OutlinedInput />}

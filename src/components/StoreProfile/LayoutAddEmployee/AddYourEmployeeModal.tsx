@@ -240,6 +240,7 @@ export const AddYourEmployeeModal = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
+                      sx={sxTextField}
                       label="Job Title"
                       type="text"
                       placeholder="Job title"
@@ -429,6 +430,7 @@ export const AddYourEmployeeModal = () => {
                           }}
                           renderInput={(params) => (
                             <TextField
+                              sx={sxTextField}
                               {...params}
                               {...register('customerRoleId', {})}
                             />
@@ -486,6 +488,7 @@ export const AddYourEmployeeModal = () => {
                           }}
                           renderInput={(params) => (
                             <TextField
+                              sx={sxTextField}
                               {...params}
                               {...register('payStructure', {})}
                             />
@@ -542,6 +545,7 @@ export const AddYourEmployeeModal = () => {
                           }}
                           renderInput={(params) => (
                             <TextField
+                              sx={sxTextField}
                               {...params}
                               {...register('serviceAndProduct', {})}
                             />

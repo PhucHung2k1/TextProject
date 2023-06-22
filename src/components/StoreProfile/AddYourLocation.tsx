@@ -13,6 +13,7 @@ import { handlePreviousProgressSetupStore } from '@/components/StoreProfile/help
 import { useState } from 'react';
 import type { CountryPhone } from '@/services/common/common.interface';
 import { updateLocationStoreProfile } from '@/store/store/storeAction';
+import { sxTextField } from '@/utils/helper/styles';
 
 interface IFormLocation {
   addressLine1: string;
@@ -104,6 +105,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Address line 1"
                 type="text"
                 defaultValue={storeCustomer?.Address1}
@@ -119,6 +121,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Address line 2"
                 type="text"
                 defaultValue={storeCustomer?.Address2}
@@ -134,6 +137,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="City"
                 {...register('city', {})}
                 type="text"
@@ -149,6 +153,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="State"
                 type="text"
                 defaultValue={storeCustomer?.State}
@@ -165,6 +170,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Zip code"
                 type="text"
                 defaultValue={storeCustomer?.ZipCode}
@@ -188,6 +194,7 @@ const AddYourLocation = () => {
                 }}
                 renderInput={(params) => (
                   <TextField
+                    sx={sxTextField}
                     {...params}
                     {...register('timeZone', {})}
                     label="Time Zone"
