@@ -35,6 +35,7 @@ import { getAllRole } from '@/store/customerRole/customerRoleAction';
 import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
 import ModalCustomContainer from '@/components/Modal/ModalCustom';
 import { ModalDeleteRole } from './ModalDeleteRole';
+import EditRolePermission from './EditRolePermission';
 
 interface PermissionItem {
   Name: string;
@@ -533,7 +534,12 @@ const ListRolePermission = () => {
                             align="right"
                             className="w-[10%] text-[16px]"
                           >
-                            <IconButton>
+                            <IconButton
+                              onClick={
+                                () => console.log(123)
+                                //<EditRolePermission idRole={item.Id}/>
+                              }
+                            >
                               <EditIcon fontSize="small" />
                             </IconButton>
                             <IconButton
