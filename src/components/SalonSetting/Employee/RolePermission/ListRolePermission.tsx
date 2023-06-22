@@ -105,6 +105,7 @@ const ListRolePermission = () => {
     setPage(0);
   };
   const [selectedItem, setSelectedItem] = useState<IAllCustomerRole>();
+  const [selectedListEmp, setSelectedListEmp] = useState<string[]>([]);
   const listEmployee = listRole.reduce((acc: any, role: IAllCustomerRole) => {
     return [...acc, ...role.Employees];
   }, []);
@@ -116,7 +117,10 @@ const ListRolePermission = () => {
   const [filterEmployee, setFiterEmployee] = useState('');
   const [open, setOpen] = React.useState(false);
 
-  const handleOpenDrawer = () => {
+  const handleOpenDrawer = (item: IAllCustomerRole) => {
+    setSelectedItem(item);
+    const listEmp = item.Employees.map((emp) => emp.Id);
+    setSelectedListEmp(listEmp);
     setOpen(true);
   };
 
@@ -543,7 +547,7 @@ const ListRolePermission = () => {
                             align="right"
                             className="w-[10%] text-[16px]"
                           >
-                            <IconButton onClick={handleOpenDrawer}>
+                            <IconButton onClick={() => handleOpenDrawer(item)}>
                               <EditIcon fontSize="small" />
                             </IconButton>
                             <IconButton
@@ -573,6 +577,7 @@ const ListRolePermission = () => {
             <Drawer anchor="right" open={open} onClose={handleCloseDrawer}>
               <EditRolePermission
                 idRole={selectedItem?.Id}
+                selected={selectedListEmp}
                 handleCloseDrawer={handleCloseDrawer}
               />
             </Drawer>

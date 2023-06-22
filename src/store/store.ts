@@ -12,6 +12,7 @@ import commonSlice from './common/commonSlice';
 import workingHoursSlice from './workingHours/workingHoursSlice';
 import payStructureSlice from './payStructure/payStructureSlice';
 import employeeSlice from './employee/employeeSlice';
+
 export const store = configureStore({
   reducer: {
     toastSlice,

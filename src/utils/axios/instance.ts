@@ -111,8 +111,16 @@ export const apiPatch = async <T = any>(
   return response;
 };
 
-export const apiDelete = async <T = any>(url: string): Promise<IResponse> => {
-  const response = await axiosService.delete<T>(url);
+export const apiDelete = async <T = any>(
+  url: string,
+  payload: any
+): Promise<IResponse> => {
+  const response = await axiosService.delete<T>(url, {
+    data: payload,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   return response;
 };
 
