@@ -22,6 +22,7 @@ import {
   styled,
   Tooltip,
   TablePagination,
+  Drawer,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
@@ -113,7 +114,15 @@ const ListRolePermission = () => {
   const dispatch = useAppDispatch();
   const [filterFunction, setfilterFunction] = useState('');
   const [filterEmployee, setFiterEmployee] = useState('');
+  const [open, setOpen] = React.useState(false);
 
+  const handleOpenDrawer = () => {
+    setOpen(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setOpen(false);
+  };
   const handlefilterFunction = (event: any) => {
     setfilterFunction(event.target.value as string);
   };
@@ -534,12 +543,7 @@ const ListRolePermission = () => {
                             align="right"
                             className="w-[10%] text-[16px]"
                           >
-                            <IconButton
-                              onClick={
-                                () => console.log(123)
-                                //<EditRolePermission idRole={item.Id}/>
-                              }
-                            >
+                            <IconButton onClick={handleOpenDrawer}>
                               <EditIcon fontSize="small" />
                             </IconButton>
                             <IconButton
@@ -566,6 +570,12 @@ const ListRolePermission = () => {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            <Drawer anchor="right" open={open} onClose={handleCloseDrawer}>
+              <EditRolePermission
+                idRole={selectedItem?.Id}
+                handleCloseDrawer={handleCloseDrawer}
+              />
+            </Drawer>
           </TableContainer>
         </div>
       </div>

@@ -21,14 +21,14 @@ import {
   getEmployeeList,
   updateRoleMultipeEmployee,
 } from '@/store/employee/employeeAction';
-import { IEmployee } from '@/services/employee.service/employee.interface';
-import { update } from 'lodash';
+import type { IEmployee } from '@/services/employee.service/employee.interface';
 
 interface Props {
-  idRole: string;
+  idRole: any;
+  handleCloseDrawer: any;
 }
 
-const AssignEmployee = ({ idRole }: Props) => {
+const AssignEmployee = ({ idRole, handleCloseDrawer }: Props) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [isCheck, setIsCheck] = useState(true);
