@@ -27,6 +27,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import Badge from '@mui/material/Badge';
+import { useAppDispatch } from '@/store/hook';
+import { showDrawerRolePermission } from '@/store/common/commonSlice';
 
 const ListRolePermission = () => {
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(
@@ -135,6 +137,7 @@ const ListRolePermission = () => {
       Text: 'Tech Portal',
     },
   ];
+  const dispatch = useAppDispatch();
   const [filterPayStructures, setFilterPayStructures] = useState('');
   const [filterRolePermission, setFilterRolePermission] = useState('');
   const handleFilterPayStructures = (event: any) => {
@@ -191,7 +194,7 @@ const ListRolePermission = () => {
             className="h-[48px] w-[188px] bg-primary-main text-[16px] font-bold text-white hover:bg-button-hover-cyan"
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={() => {}}
+            onClick={() => dispatch(showDrawerRolePermission())}
           >
             Add Role
           </Button>

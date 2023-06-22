@@ -1,19 +1,33 @@
 import { ConfigRoleAndPermission } from '@/common/ConfigRoleAndPermission/ConfigRoleAndPermission';
-import { useAppSelector } from '@/store/hook';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { arrCategory } from './listCategory';
-import { useState } from 'react';
-import type { IAddRemoveMultiRole } from '@/services/customerRole.service/customerRole.interface';
+import { useEffect, useState } from 'react';
+import { setAddRemoveMultiRoleIds } from '@/store/customerRole/customerRoleSlice';
 
 const SetAccessibility = () => {
-  const [listPermission, setListPermission] = useState<IAddRemoveMultiRole>({
-    AddedPermissions: [],
-    RemovedPermissions: [],
-  });
+  const dispatch = useAppDispatch();
+  const [listAddedPermissions, setListAddedPermissions] = useState<string[]>(
+    []
+  );
+  const [listRemovedPermissions, setListRemovedPermissions] = useState<
+    string[]
+  >([]);
 
   const permissionAll = useAppSelector(
     (state) => state.permissionSlice.permissionAll
   );
-  console.log('listPermission', listPermission);
+
+  useEffect(() => {
+    dispatch(
+      setAddRemoveMultiRoleIds({
+        AddedPermissions: listAddedPermissions,
+        RemovedPermissions: listRemovedPermissions,
+      })
+    );
+  }, [
+    JSON.stringify(listAddedPermissions),
+    JSON.stringify(listRemovedPermissions),
+  ]);
 
   return (
     <div className=" w-full overflow-auto pt-8">
@@ -22,8 +36,9 @@ const SetAccessibility = () => {
           <ConfigRoleAndPermission
             key={category.name}
             configName={category.title}
-            permissionAll={permissionAll[category.name]}
-            setListPermission={setListPermission}
+            permissionAllByName={permissionAll[category.name]}
+            setListAddedPermissions={setListAddedPermissions}
+            setListRemovedPermissions={setListRemovedPermissions}
           />
         );
       })}

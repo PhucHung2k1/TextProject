@@ -4,6 +4,7 @@ import {
   setListRole,
   setListPermissionCustomById,
   setAddNewRoleId,
+  setDetailRoleById,
 } from './customerRoleSlice';
 import { setMessageToast, showToast } from '../toast/toastSlice';
 import type { IAddRemoveMultiRole } from '@/services/customerRole.service/customerRole.interface';
@@ -108,6 +109,22 @@ export const addRemoveMultiRole = createAsyncThunk(
       }
 
       throw new Error(error ? JSON.stringify(error) : 'Failed.');
+    } catch (err: any) {
+      // throw new Error(`Error signing in: ${err.message}`);
+    }
+  }
+);
+export const getRoleDetailById = createAsyncThunk(
+  'role/getRoleDetailById',
+  async (id: string, { dispatch }) => {
+    const servicesCustomerRoleAPI = new CustomerRole();
+
+    try {
+      const { status, data } = await servicesCustomerRoleAPI.getById(id);
+
+      if (status === 200 || status === 201 || status === 204) {
+        dispatch(setDetailRoleById(data));
+      }
     } catch (err: any) {
       // throw new Error(`Error signing in: ${err.message}`);
     }
