@@ -1,4 +1,4 @@
-import { IEmployee } from '@/services/employee.service/employee.interface';
+import type { IEmployee } from '@/services/employee.service/employee.interface';
 import { createSlice } from '@reduxjs/toolkit';
 
 type IInitialState = {

@@ -18,17 +18,18 @@ import { useState, useEffect } from 'react';
 import { styled } from '@mui/system';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import {
+  deleteRoleMultipeEmployee,
   getEmployeeList,
   updateRoleMultipeEmployee,
 } from '@/store/employee/employeeAction';
-import { IEmployee } from '@/services/employee.service/employee.interface';
-import { update } from 'lodash';
+import type { IEmployee } from '@/services/employee.service/employee.interface';
 
 interface Props {
-  idRole: string;
+  idRole: any;
+  selected: string[];
 }
 
-const AssignEmployee = ({ idRole }: Props) => {
+const AssignEmployee = ({ idRole, selected }: Props) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [isCheck, setIsCheck] = useState(true);
@@ -36,6 +37,7 @@ const AssignEmployee = ({ idRole }: Props) => {
   const employeesList = useAppSelector(
     (state) => state.employeeSlice.employees
   );
+
   const [listData, setListData] = useState<IEmployee[]>(employeesList);
   const dispatch = useAppDispatch();
 
@@ -79,13 +81,34 @@ const AssignEmployee = ({ idRole }: Props) => {
       roleId: idRole,
       data: selectedItems,
     };
-    console.log(saveData);
+    const listRemove = listData.filter(
+      (item) => !selectedItems.includes(item.CustomerId)
+    );
+    const listRemoveCusId = listRemove.map((item) => item.Id);
+    const removeEmpId = selected.filter((item) =>
+      listRemoveCusId.includes(item)
+    );
+    const removeCus = listData.filter((item) => removeEmpId.includes(item.Id));
+    const removeCusId = removeCus.map((item) => item.CustomerId);
+    const removeData = {
+      roleId: idRole,
+      data: removeCusId,
+    };
     dispatch(updateRoleMultipeEmployee(saveData));
+    dispatch(deleteRoleMultipeEmployee(removeData));
   };
 
   useEffect(() => {
-    dispatch(getEmployeeList({}));
+    dispatch(getEmployeeList({})).then((res: any) => {
+      setListData(res.payload);
+      const selectCustomer = listData.filter((item) =>
+        selected.includes(item.Id)
+      );
+      const selectCustomerId = selectCustomer.map((item) => item.CustomerId);
+      setSelectedItems(selectCustomerId);
+    });
   }, []);
+
   useEffect(() => {
     if (selectedItems.length === 0) {
       setIsCheck(true);
@@ -187,7 +210,7 @@ const AssignEmployee = ({ idRole }: Props) => {
                   </StyledBadge>
                   <span className="pl-[8px] text-[16px] text-primary-dark">
                     {`${item.FirstName} ${item.LastName} ${
-                      item.NickName != '' ? `(${item.NickName})` : ''
+                      item.NickName !== '' ? `(${item.NickName})` : ''
                     }`}
                   </span>
                 </TableCell>
