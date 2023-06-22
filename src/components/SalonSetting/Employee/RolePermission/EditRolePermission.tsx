@@ -16,11 +16,28 @@ import * as React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState, useEffect } from 'react';
 import { styled } from '@mui/system';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import {
+  getEmployeeList,
+  updateRoleMultipeEmployee,
+} from '@/store/employee/employeeAction';
+import { IEmployee } from '@/services/employee.service/employee.interface';
+import { update } from 'lodash';
 
-const AssignEmployee = () => {
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+interface Props {
+  idRole: string;
+}
+
+const AssignEmployee = ({ idRole }: Props) => {
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [isCheck, setIsCheck] = useState(true);
+
+  const employeesList = useAppSelector(
+    (state) => state.employeeSlice.employees
+  );
+  const [listData, setListData] = useState<IEmployee[]>(employeesList);
+  const dispatch = useAppDispatch();
 
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(({ isActive }) => ({
     '& .MuiBadge-badge': {
@@ -39,67 +56,17 @@ const AssignEmployee = () => {
       },
     },
   }));
-  const itemsData = [
-    {
-      Id: 1,
-      color: '#2D9DE3',
-      avatarThumb: '/assets/images/RolePermission/4.svg',
-      isActive: true,
-      Name: 'Lane Garraway (Lane)',
-      Job: 'Technician',
-    },
-    {
-      Id: 2,
-      color: '#D03552',
-      avatarThumb: '/assets/images/RolePermission/5.svg',
-      isActive: true,
-      Name: 'Darell Wade (Dara)',
-      Job: 'Technician',
-    },
-    {
-      Id: 3,
-      color: '#00AD93',
-      avatarThumb: '/assets/images/RolePermission/7.svg',
-      isActive: false,
-      Name: 'Maynard Cobb (May)',
-      Job: 'Technician',
-    },
-    {
-      Id: 4,
-      color: '#7DB400',
-      avatarThumb: '/assets/images/RolePermission/8.svg',
-      isActive: true,
-      Name: 'Hazel Jensen (Jen)',
-      Job: 'Technician',
-    },
-    {
-      Id: 5,
-      color: '#9D46DE',
-      avatarThumb: '/assets/images/RolePermission/9.svg',
-      isActive: false,
-      Name: 'Tabitha Ferguson (Tabi)',
-      Job: 'Technician',
-    },
-    {
-      Id: 6,
-      color: '#E77A16',
-      avatarThumb: '/assets/images/RolePermission/2.svg',
-      isActive: true,
-      Name: 'Sophie Ogley (Sophia)',
-      Job: 'Manager',
-    },
-  ];
 
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedItems([]);
     } else {
-      const allItemIds = itemsData.map((item) => item.Id);
+      const allItemIds = listData.map((item) => item.CustomerId);
       setSelectedItems(allItemIds);
     }
     setSelectAll(!selectAll);
   };
-  const handleRowSelection = (rowId: number) => {
+  const handleRowSelection = (rowId: string) => {
     if (selectedItems.includes(rowId)) {
       setSelectedItems(selectedItems.filter((id) => id !== rowId));
     } else {
@@ -107,6 +74,18 @@ const AssignEmployee = () => {
     }
   };
 
+  const handleOnSave = () => {
+    const saveData = {
+      roleId: idRole,
+      data: selectedItems,
+    };
+    console.log(saveData);
+    dispatch(updateRoleMultipeEmployee(saveData));
+  };
+
+  useEffect(() => {
+    dispatch(getEmployeeList({}));
+  }, []);
   useEffect(() => {
     if (selectedItems.length === 0) {
       setIsCheck(true);
@@ -174,21 +153,21 @@ const AssignEmployee = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {itemsData.map((item) => (
-              <TableRow key={item.Id}>
+            {listData.map((item) => (
+              <TableRow key={item.CustomerId}>
                 <TableCell className="w-[2%]">
                   <StyledCheckbox
                     className="p-0"
-                    checked={selectedItems.includes(item.Id)}
-                    onChange={() => handleRowSelection(item.Id)}
+                    checked={selectedItems.includes(item.CustomerId)}
+                    onChange={() => handleRowSelection(item.CustomerId)}
                   />
                 </TableCell>
                 <TableCell className="w-[45%] pl-0">
                   {' '}
                   <StyledBadge
-                    isActive={item.isActive}
+                    isActive={item.IsWorking ?? false}
                     overlap="circular"
-                    key={item.Id}
+                    key={item.CustomerId}
                     anchorOrigin={{
                       vertical: 'bottom',
                       horizontal: 'right',
@@ -196,19 +175,24 @@ const AssignEmployee = () => {
                     variant="dot"
                   >
                     <Avatar
-                      src={item.avatarThumb}
+                      src={
+                        item.ProfilePictureUrl ??
+                        '/assets/images/RolePermission/4.svg'
+                      }
                       style={{
-                        border: `2px solid ${item.color}`,
+                        border: `2px solid  ${'#2596be'}`,
                         background: '#DEDEE3',
                       }}
                     />
                   </StyledBadge>
                   <span className="pl-[8px] text-[16px] text-primary-dark">
-                    {item.Name}
+                    {`${item.FirstName} ${item.LastName} ${
+                      item.NickName != '' ? `(${item.NickName})` : ''
+                    }`}
                   </span>
                 </TableCell>
                 <TableCell className="pl-0 text-[16px] text-primary-dark">
-                  {item.Job}
+                  {item.JobTitle}
                 </TableCell>
               </TableRow>
             ))}
@@ -229,6 +213,7 @@ const AssignEmployee = () => {
             variant="contained"
             type="submit"
             disabled={isCheck}
+            onClick={handleOnSave}
           >
             Save
           </Button>

@@ -1,0 +1,34 @@
+export interface IEmployee {
+  CustomerId: string;
+  StoreId: string;
+  FirstName: string;
+  LastName: string;
+  Phone: string;
+  Email: string;
+  UserType: string | null;
+  JobTitle: string;
+  NickName: string;
+  Address: string | null;
+  City: string | null;
+  State: string | null;
+  ZipCode: string | null;
+  Country: string | null;
+  SocialSecurity: string | null;
+  StartDate: string;
+  Status: boolean | null;
+  PassCode: string | null;
+  IsWorking: boolean | null;
+  ProfilePictureUrl: string | null;
+  IsOfficialStaff: boolean | null;
+  AllowBookingOnline: string | null;
+  IsAllowRating: boolean | null;
+  InvitationDate: string | null;
+  InvitationToken: string | null;
+  InvitationIsAccepted: string | null;
+  InvitationIsSent: string | null;
+  Id: string;
+  CreateBy: string | null;
+  CreateDate: Date;
+  LastModifiedBy: string | null;
+  LastModifiedDate: string | null;
+}
