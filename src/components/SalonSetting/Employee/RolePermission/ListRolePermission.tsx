@@ -1,39 +1,39 @@
 // binhnttttt
+import ModalCustomContainer from '@/components/Modal/ModalCustom';
+import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
+import { getAllRole } from '@/store/customerRole/customerRoleAction';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import SearchIcon from '@mui/icons-material/Search';
 import {
-  Typography,
-  IconButton,
-  Button,
-  FormControl,
-  OutlinedInput,
-  InputAdornment,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Select,
-  MenuItem,
-  Grid,
-  Stack,
-  Chip,
   Avatar,
   AvatarGroup,
-  styled,
-  Tooltip,
+  Button,
+  Chip,
+  FormControl,
+  Grid,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
   TablePagination,
+  TableRow,
+  Tooltip,
+  Typography,
+  styled,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/Add';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
 import Badge from '@mui/material/Badge';
-import { useAppDispatch, useAppSelector } from '@/store/hook';
-import { getAllRole } from '@/store/customerRole/customerRoleAction';
-import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
-import ModalCustomContainer from '@/components/Modal/ModalCustom';
+import React, { useEffect, useState } from 'react';
 import { ModalDeleteRole } from './ModalDeleteRole';
 
 interface PermissionItem {

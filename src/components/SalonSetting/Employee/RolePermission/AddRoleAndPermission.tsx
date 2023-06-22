@@ -6,6 +6,7 @@ import {
   TextField,
 } from '@mui/material';
 import React from 'react';
+import { sxTextField } from '@/utils/helper/styles';
 
 function AddRoleAndPermission() {
   const [enableForTechnican, setEnableForTechnican] = React.useState(false);
@@ -17,6 +18,7 @@ function AddRoleAndPermission() {
     <div className="w-full">
       <div className="mb-4 flex flex-row items-center justify-between">
         <TextField
+          sx={sxTextField}
           variant="outlined"
           placeholder="Role & Permission Name"
           InputProps={{

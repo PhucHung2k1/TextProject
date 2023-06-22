@@ -14,6 +14,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditAssignEmloyee from '../EditRolePermission';
+import { sxTextField } from '@/utils/helper/styles';
 
 const EditRolePermission = () => {
   const [value, setValue] = React.useState('1');
@@ -48,16 +49,7 @@ const EditRolePermission = () => {
             variant="outlined"
             className="mb-2 w-[568px] "
             value="Technician"
-            sx={{
-              '& .MuiInputBase-root.Mui-focused': {
-                '& > fieldset': {
-                  borderColor: '#00BDD6',
-                },
-              },
-              '& label.Mui-focused': {
-                color: '#00BDD6',
-              },
-            }}
+            sx={sxTextField}
           />
           <FormGroup>
             <FormControlLabel

@@ -27,6 +27,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/system';
 // eslint-disable-next-line import/no-cycle
 import EditEmployee from './EditEmployee';
+import { sxTextField, sxSelect } from '@/utils/helper/styles';
 
 export interface IEmployee {
   id: number;
@@ -328,6 +329,7 @@ const EmployeeList = () => {
           <Grid xs={6} item>
             <div className="flex w-full items-center justify-end gap-6">
               <TextField
+                sx={sxTextField}
                 variant="outlined"
                 placeholder="Search..."
                 InputProps={{
@@ -358,6 +360,7 @@ const EmployeeList = () => {
             <div className="flex h-20 w-full items-center gap-6 rounded-sm bg-bg-light px-4 py-7 ">
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={{ sxSelect }}
                   displayEmpty
                   value={filterRolePermission}
                   input={<OutlinedInput />}
@@ -377,6 +380,7 @@ const EmployeeList = () => {
               </FormControl>
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={{ sxSelect }}
                   displayEmpty
                   value={filterPayStructures}
                   input={<OutlinedInput />}
@@ -396,6 +400,7 @@ const EmployeeList = () => {
               </FormControl>{' '}
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={{ sxSelect }}
                   displayEmpty
                   value={filterStatus}
                   input={<OutlinedInput />}
