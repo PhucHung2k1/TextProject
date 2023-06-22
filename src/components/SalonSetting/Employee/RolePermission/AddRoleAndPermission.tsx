@@ -6,13 +6,14 @@ import {
   Switch,
   TextField,
 } from '@mui/material';
-import React from 'react';
+import { useState } from 'react';
 
-function AddRoleAndPermission() {
-  const [enableForTechnician, setEnableForTechnician] = React.useState(false);
-  // function handleClick() {
-  //   setLoading(true);
-  // }
+interface Props {
+  roleName: string;
+  setRoleName: Function;
+}
+function AddRoleAndPermission({ roleName, setRoleName }: Props) {
+  const [enableForTechnician, setEnableForTechnician] = useState(true);
 
   return (
     <>
@@ -38,7 +39,9 @@ function AddRoleAndPermission() {
           InputProps={{
             style: { height: '48px' },
           }}
+          value={roleName}
           className=" mr-4 w-9/12"
+          onChange={(e) => setRoleName(e.target.value)}
         />
 
         <FormControlLabel

@@ -4,19 +4,16 @@ import * as React from 'react';
 
 interface Props {
   openDrawer: boolean;
-  setOpenDrawer: Function;
+  onClose: Function;
   content?: React.ReactNode;
 }
-export const DrawerCustom = ({ openDrawer, setOpenDrawer, content }: Props) => {
-  const handleCloseDrawer = () => {
-    setOpenDrawer(false);
-  };
+export const DrawerCustom = ({ openDrawer, onClose, content }: Props) => {
   return (
     <Drawer
       anchor="right"
       className="z-[9999]"
       open={openDrawer}
-      onClose={handleCloseDrawer}
+      onClose={() => onClose()}
     >
       {content && content}
     </Drawer>

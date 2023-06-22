@@ -188,6 +188,7 @@ const ConfirmYourAddress = () => {
             <Button
               className="mt-12 h-12 w-full bg-mango-primary-blue font-bold capitalize "
               variant="contained"
+              sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
               disabled={marker?.lat === 0 && marker?.lng === 0}
               onClick={handleUpdateAddress}
             >

@@ -8,3 +8,7 @@ export interface IAllCustomerRole {
   StoreId?: string;
   CreateDate?: Date;
 }
+export interface IAddRemoveMultiRole {
+  AddedPermissions: string[];
+  RemovedPermissions: string[];
+}

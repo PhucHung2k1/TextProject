@@ -9,13 +9,28 @@ import type { IPermissionChild } from '@/services/permission.services/permission
 interface Props {
   configName: string;
   permissionAll: IPermissionChild[];
+  setListPermission: Function;
 }
 export const ConfigRoleAndPermission = ({
   configName,
   permissionAll,
+  setListPermission,
 }: Props) => {
+  // const listPermissionCustomByIdRedux = useAppSelector(
+  //   (state) => state.customerRoleSlice.listPermissionCustomById
+  // );
   const [showAll, setShowAll] = useState<boolean>(false);
-
+  const handleCheckBox = (value: boolean, id: string) => {
+    const removePermission: string[] = [];
+    const addPermission: string[] = [];
+    if (value) {
+      addPermission.push(id);
+    } else removePermission.push(id);
+    setListPermission({
+      AddedPermissions: addPermission,
+      RemovedPermissions: removePermission,
+    });
+  };
   return (
     <div className="mb-2">
       <div
@@ -63,7 +78,17 @@ export const ConfigRoleAndPermission = ({
                           color: '#404044',
                         },
                       }}
-                      control={<Checkbox defaultChecked color="default" />}
+                      control={
+                        <Checkbox
+                          color="default"
+                          // checked={listPermissionCustomByIdRedux.some(
+                          //   (permission) => permission.Id === item.Id
+                          // )}
+                          onChange={(e) =>
+                            handleCheckBox(e.target.checked, item.Id)
+                          }
+                        />
+                      }
                       label={item.Name}
                     />
                   }

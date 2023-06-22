@@ -1,10 +1,15 @@
-import type { IInvitationListData } from '@/services/customer.service/customer.interface';
+import type {
+  IInvitationListData,
+  IListRoleCustomById as IListPermissionCustomById,
+} from '@/services/customer.service/customer.interface';
 import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
 import { createSlice } from '@reduxjs/toolkit';
 
 type IInitialState = {
   listRole: IAllCustomerRole[];
   invitationList: IInvitationListData[];
+  listPermissionCustomById: IListPermissionCustomById[];
+  addNewRoleId: string;
 };
 const initialState = {
   listRole: [
@@ -18,6 +23,8 @@ const initialState = {
     },
   ],
   invitationList: [],
+  listPermissionCustomById: [],
+  addNewRoleId: '',
 } as IInitialState;
 
 const customerRoleSlice = createSlice({
@@ -30,7 +37,18 @@ const customerRoleSlice = createSlice({
     setInvitationList: (state, action) => {
       state.invitationList = action.payload;
     },
+    setListPermissionCustomById: (state, action) => {
+      state.listPermissionCustomById = action.payload;
+    },
+    setAddNewRoleId: (state, action) => {
+      state.addNewRoleId = action.payload;
+    },
   },
 });
-export const { setListRole, setInvitationList } = customerRoleSlice.actions;
+export const {
+  setListRole,
+  setInvitationList,
+  setListPermissionCustomById,
+  setAddNewRoleId,
+} = customerRoleSlice.actions;
 export default customerRoleSlice.reducer;

@@ -13,6 +13,7 @@ import type { IMetaSEOProps } from '@/components/MetaSEO';
 import MetaSEO from '@/components/MetaSEO';
 import ModalMUIContainer from '@/components/Modal/ModalMUI';
 import { ThemeProvider, createTheme } from '@mui/material';
+import DrawerRolePermission from '@/components/SalonSetting/Employee/RolePermission/LayoutDrawer.tsx/DrawerRolePermission';
 
 NProgress.configure({
   showSpinner: false,
@@ -56,6 +57,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             <PrevLoader />
             <ModalMUIContainer />
             <ToastContainer />
+            <DrawerRolePermission />
           </main>
         </SessionProvider>
       </ThemeProvider>

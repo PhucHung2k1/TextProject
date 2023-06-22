@@ -21,7 +21,6 @@ export const AntTab = styled((props: StyledTabProps) => (
   <Tab disableRipple {...props} />
 ))(() => ({
   fontWeight: 500,
-
   color: '#9B9BA00',
   '&.Mui-selected': {
     color: '#00BED6',

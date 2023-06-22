@@ -15,7 +15,7 @@ interface Props {
   steps: any;
 }
 
-export const LayoutDrawer = ({
+const LayoutDrawer = ({
   iconHeader,
   titleHeader,
   content,
@@ -70,3 +70,4 @@ export const LayoutDrawer = ({
     </Box>
   );
 };
+export default LayoutDrawer;

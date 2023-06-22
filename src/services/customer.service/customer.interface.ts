@@ -57,3 +57,13 @@ export interface IInvitationListData {
   Id: string;
   CreateDate: Date;
 }
+export interface IListRoleCustomById {
+  Name: string;
+  SystemName: string;
+  Category: string;
+  Id: string;
+  CreateBy: null;
+  CreateDate: Date;
+  LastModifiedBy: null;
+  LastModifiedDate: null;
+}
