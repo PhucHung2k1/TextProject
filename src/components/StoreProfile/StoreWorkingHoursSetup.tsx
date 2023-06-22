@@ -6,15 +6,13 @@ import { useAppDispatch, useAppSelector } from '@/store/hook';
 import {
   Switch,
   FormControl,
-  InputLabel,
   MenuItem,
   FormHelperText,
   Select,
-  Grid,
+  Box,
   Button,
 } from '@mui/material';
 import type { NextPage } from 'next';
-import Image from 'next/image';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { LayoutStoreProfile } from './LayoutStoreProfile';
 import { useEffect, useState } from 'react';
@@ -190,8 +188,8 @@ const StoreWorkingHoursSetup: NextPage = () => {
       {!showEditHours ? (
         <>
           <div className="text-center">
-            <div
-              className="flex items-center justify-center mb-[8px]"
+            <Box
+              className="mb-[8px] flex items-center justify-center"
               onClick={() => {
                 handlePreviousProgressSetupStore(dispatch);
               }}
@@ -200,7 +198,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
               <p className="mx-auto text-[32px] font-semibold text-text-title">
                 Add your working hours
               </p>
-            </div>
+            </Box>
             <p className="text-[14px] text-mango-text-gray-2">
               Set up working time for clients to easily book an appointment with
               you
@@ -215,7 +213,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                 key={`${item.DayName}`}
               >
                 <div className="flex items-center justify-start">
-                  <div className="flex items-center justify-start w-[50%] gap-3">
+                  <div className="flex w-[50%] items-center justify-start gap-3">
                     <Switch
                       sx={{
                         '& .MuiSwitch-switchBase.Mui-checked': {
@@ -231,7 +229,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                     />
                     <div className=" font-semibold">{item.DayName}</div>
                   </div>
-                  <div className="w-[50%] text-left flex justify-between">
+                  <div className="flex w-[50%] justify-between text-left">
                     {!item.IsClosed
                       ? `${convertTo12h(item.StartHours)} - ${convertTo12h(
                           item.EndHours
@@ -239,7 +237,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                       : 'Closed'}
                     {!item.IsClosed ? (
                       <KeyboardArrowRightIcon
-                        className="text-icon-color-2 cursor-pointer text-2xl"
+                        className="cursor-pointer text-2xl text-icon-color-2"
                         onClick={() => {
                           handleDayArrowClick(item);
                         }}
@@ -253,7 +251,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
             ))}
           </div>
           <Button
-            className="mt-12 h-12 w-full text-white  bg-mango-primary-blue font-bold capitalize hover:bg-button-hover-cyan text-base"
+            className="mt-12 h-12 w-full bg-mango-primary-blue  text-base font-bold capitalize text-white hover:bg-button-hover-cyan"
             variant="contained"
             type="submit"
             onClick={() => {
@@ -302,7 +300,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                 <>
                   <div className="flex items-center justify-between">
                     <FormControl>
-                      <FormHelperText className="m-0 text-[16px] text-primary-dark font-semibold pb-1">
+                      <FormHelperText className="m-0 pb-1 text-[16px] font-semibold text-primary-dark">
                         Start
                       </FormHelperText>
                       <Select
@@ -333,9 +331,9 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         ))}
                       </Select>
                     </FormControl>
-                    <div className="border border-solid border-line-light w-[14px] mx-[9px] mt-[30px]" />
+                    <div className="mx-[9px] mt-[30px] w-[14px] border border-solid border-line-light" />
                     <FormControl>
-                      <FormHelperText className="m-0 text-[16px] text-primary-dark font-semibold pb-1">
+                      <FormHelperText className="m-0 pb-1 text-[16px] font-semibold text-primary-dark">
                         End
                       </FormHelperText>
                       <Select
@@ -346,9 +344,21 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         onChange={(e) =>
                           setEndHour(convertTo24h(e.target.value))
                         }
+                        MenuProps={{
+                          style: {
+                            maxHeight: 348,
+                          },
+                        }}
                       >
                         {timeOptions.map((item) => (
-                          <MenuItem key={item} value={item}>
+                          <MenuItem
+                            key={item}
+                            value={item}
+                            style={{
+                              borderTop: '1px solid #f2f2f5',
+                              padding: '10px 16px ',
+                            }}
+                          >
                             {item}
                           </MenuItem>
                         ))}
@@ -368,7 +378,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                   </div>
 
                   {listBreakHoursForShow.length > 0 ? (
-                    <div className="border border-solid border-line-light w-full my-[10px] " />
+                    <div className="my-[10px] w-full border border-solid border-line-light " />
                   ) : (
                     ''
                   )}
@@ -382,7 +392,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                           >
                             <FormControl>
                               <FormHelperText
-                                className="m-0 text-[16px] text-primary-dark font-semibold pb-1 py-[10px] "
+                                className="m-0 py-[10px] pb-1 text-[16px] font-semibold text-primary-dark "
                                 style={{
                                   display: index === 0 ? 'block' : 'none',
                                 }}
@@ -403,9 +413,21 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                     convertTo24h(e.target.value)
                                   )
                                 }
+                                MenuProps={{
+                                  style: {
+                                    maxHeight: 348,
+                                  },
+                                }}
                               >
                                 {timeOptions.map((item) => (
-                                  <MenuItem key={item} value={item}>
+                                  <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={{
+                                      borderTop: '1px solid #f2f2f5',
+                                      padding: '10px 16px ',
+                                    }}
+                                  >
                                     {item}
                                   </MenuItem>
                                 ))}
@@ -414,14 +436,14 @@ const StoreWorkingHoursSetup: NextPage = () => {
                             <div
                               className={
                                 index === 0
-                                  ? ' border border-solid border-line-light w-[14px] mx-[9px] mt-[45px] ml-[5px]'
-                                  : 'border border-solid border-line-light w-[14px] mx-[9px]  ml-[5px]'
+                                  ? ' mx-[9px] ml-[5px] mt-[45px] w-[14px] border border-solid border-line-light'
+                                  : 'mx-[9px] ml-[5px] w-[14px] border border-solid  border-line-light'
                               }
                             />
 
                             <FormControl>
                               <FormHelperText
-                                className="m-0 text-[16px] text-primary-dark font-semibold pb-1 py-[10px] "
+                                className="m-0 py-[10px] pb-1 text-[16px] font-semibold text-primary-dark "
                                 style={{
                                   display: index === 0 ? 'block' : 'none',
                                 }}
@@ -440,9 +462,21 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                     convertTo24h(e.target.value)
                                   )
                                 }
+                                MenuProps={{
+                                  style: {
+                                    maxHeight: 348,
+                                  },
+                                }}
                               >
                                 {timeOptions.map((item) => (
-                                  <MenuItem key={item} value={item}>
+                                  <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={{
+                                      borderTop: '1px solid #f2f2f5',
+                                      padding: '10px 16px ',
+                                    }}
+                                  >
                                     {item}
                                   </MenuItem>
                                 ))}
@@ -451,7 +485,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                             <div
                               className={
                                 index === 0
-                                  ? 'mt-[45px]  ml-[5px]'
+                                  ? 'ml-[5px]  mt-[45px]'
                                   : ' ml-[5px]'
                               }
                             >
@@ -462,7 +496,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 }}
                                 onClick={() => removeForm(index)}
                               >
-                                <DeleteOutlineIcon className="text-icon-delete  text-right cursor-pointer" />
+                                <DeleteOutlineIcon className="cursor-pointer  text-right text-icon-delete" />
                               </Button>
                             </div>
                           </div>
@@ -488,7 +522,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                 </>
               )}
               <Button
-                className="mt-12 h-12 w-full text-white  bg-mango-primary-blue font-bold capitalize hover:bg-button-hover-cyan text-base"
+                className="mt-12 h-12 w-full bg-mango-primary-blue  text-base font-bold capitalize text-white hover:bg-button-hover-cyan"
                 variant="contained"
                 type="submit"
                 onClick={onSaveEditHours}
