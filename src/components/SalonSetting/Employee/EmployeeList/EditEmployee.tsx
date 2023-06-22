@@ -68,7 +68,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
   const [selectedImage, setSelectedImage] = useState<any>();
   const [avatarImage, setAvatarImage] = useState<any>();
   // eslint-disable-next-line no-console
-  console.log('🚀 ~ file: EditEmployee.tsx:68 ~ avatarImage:', avatarImage);
+  console.log(avatarImage);
 
   const handleChange = (event: any) => {
     setChecked(event.target.checked);

@@ -159,37 +159,26 @@ const arrEmployee = ['A', 'B', 'C', 'D'];
 const PayStructure = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
-  // Filter State
   const [filterPayType, setFilterPayType] = useState('');
-
   const [filterEmployee, setFilterEmployee] = useState('');
-
-  // Selected Employee
   const [selectedEmployee, setSelectedEmployee] = useState<IPayStructure>();
-  console.log(
-    '🚀 ~ file: PayStructure.tsx:169 ~ PayStructure ~ selectedEmployee:',
-    selectedEmployee
-  );
+  // eslint-disable-next-line no-console
+  console.log(selectedEmployee);
   const [openAddDrawer, setOpenAddDrawer] = React.useState(false);
-  // Open and close drawer add paystructure
   const handleOpenAddDrawer = () => {
     setOpenAddDrawer(true);
   };
   const handleCloseAddDrawer = () => {
     setOpenAddDrawer(false);
   };
-  // Handle Filter
   const handleFilterPayType = (event: any) => {
     setFilterPayType(event.target.value as string);
   };
-
   const handleFilterEmployee = (event: any) => {
     setFilterEmployee(event.target.value as string);
   };
   const startIndex = page * rowsPerPage;
   const endIndex = Math.min(startIndex + rowsPerPage, data.length);
-
-  // Filter data list
   const filteredData = data.filter((row) => {
     if (filterPayType !== '' && filterEmployee !== '') {
       return (
@@ -217,22 +206,18 @@ const PayStructure = () => {
     }
     return true;
   });
-  // Open and clos drawer
-
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(({ isActive }) => ({
     '& .MuiBadge-badge': {
       backgroundColor: isActive ? '#69B000' : '#9B9BA0',

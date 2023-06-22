@@ -24,7 +24,7 @@ import { emailRegex, phoneNumberRegex } from '@/utils/helper/regex';
 import { hideModalCustom } from '@/store/modal/modalSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import type { ISendInvitationPayload } from '@/services/customer.service/customer.interface';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { sendInvitation } from '@/store/customer/customerAction';
 import type { CountryPhone } from '@/services/common/common.interface';
 import { ErrorMessage } from '@hookform/error-message';
