@@ -9,7 +9,7 @@ interface StyledTabsProps {
   value: number;
   onChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
-const StyledTabs = styled((props: StyledTabsProps) => (
+export const StyledTabs = styled((props: StyledTabsProps) => (
   <Tabs
     {...props}
     // eslint-disable-next-line tailwindcss/no-custom-classname

@@ -32,3 +32,7 @@ export interface IAllCustomerRole {
   CreateDate?: Date;
   Employees: Employee[];
 }
+export interface IAddRemoveMultiRole {
+  AddedPermissions: string[];
+  RemovedPermissions: string[];
+}

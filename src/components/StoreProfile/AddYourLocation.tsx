@@ -201,6 +201,7 @@ const AddYourLocation = () => {
 
         <Button
           type="submit"
+          sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
           className="my-4 h-12 w-full bg-mango-primary-blue font-bold"
           variant="contained"
         >

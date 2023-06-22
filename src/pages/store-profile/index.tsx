@@ -15,13 +15,21 @@ const StoreProfile = () => {
   );
 
   useEffect(() => {
-    if (router.pathname === '/store-profile') {
-      dispatch(getAllRole({}));
-      dispatch(lookupData({}));
-      dispatch(getListPayStructure({}));
-      dispatch(getWorkingHours({}));
+    let mounted = true;
+
+    if (mounted) {
+      if (router.pathname === '/store-profile') {
+        dispatch(getAllRole({}));
+        dispatch(lookupData({}));
+        dispatch(getListPayStructure({}));
+        dispatch(getWorkingHours({}));
+      }
     }
-  }, [router.pathname]);
+    // cleanup side effects before unmounting
+    return () => {
+      mounted = false;
+    };
+  }, [router]);
 
   return (
     <main className="flex h-screen items-center justify-center bg-mango-gray-light-2">
