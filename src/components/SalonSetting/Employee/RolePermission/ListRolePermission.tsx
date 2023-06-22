@@ -59,6 +59,32 @@ interface Employee {
   LastModifiedBy: any;
   LastModifiedDate: any;
 }
+const StyledChip = styled(Chip)({
+  position: 'relative',
+});
+
+const StyledDeleteIconButton = styled(IconButton)({
+  position: 'absolute',
+  top: -10,
+  right: -15,
+  padding: 0,
+  width: '25px',
+  height: '25px',
+  borderRadius: '50%',
+  visibility: 'hidden',
+  '&.MuiIconButton-root': {
+    backgroundColor: '#FFEBEF',
+    '&:hover': {
+      backgroundColor: '#FFEBEF',
+    },
+  },
+});
+
+const StyledCloseIcon = styled(CloseIcon)({
+  fontSize: '18px',
+  color: '#DA2036',
+  marginTop: '-11px',
+});
 const ListRolePermission = () => {
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(
     ({ theme, isActive }) => ({
@@ -88,6 +114,18 @@ const ListRolePermission = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const startIndex = page * rowsPerPage;
   const endIndex = Math.min(startIndex + rowsPerPage, listRole.length);
+  const [hoveredChipId, setHoveredChipId] = useState<string | null>(null);
+  const [maxAvatars, setMaxAvatars] = useState<{ [key: string]: number }>({});
+
+  const handleMouseIn = (chipId: string) => {
+    setHoveredChipId(chipId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredChipId(null);
+  };
+
+  const handleDelete = () => {};
 
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement> | null,
@@ -475,8 +513,17 @@ const ListRolePermission = () => {
                             {item.Employees.length < 2 ? ' user' : ' users'}
                             {item.Employees.length > 0 && (
                               <AvatarGroup
-                                max={5}
+                                max={maxAvatars[item.Id] || 5}
                                 className="mt-[4px] justify-end"
+                                onClick={() => {
+                                  setMaxAvatars((prevMaxAvatars) => ({
+                                    ...prevMaxAvatars,
+                                    [item.Id]:
+                                      prevMaxAvatars[item.Id] === 5
+                                        ? item.Employees.length
+                                        : 5,
+                                  }));
+                                }}
                               >
                                 {item.Employees.map((avatarItem) => (
                                   <Tooltip
@@ -515,13 +562,35 @@ const ListRolePermission = () => {
                             <div>
                               <Stack direction="row" flexWrap="wrap">
                                 {item.Permissions.map((itemPermission) => (
-                                  <Chip
+                                  <StyledChip
                                     key={itemPermission.Id}
                                     className="float-right mr-2 mt-2 bg-blue-50 px-[10px] py-[7px] text-[16px] font-normal text-blue-700"
                                     label={itemPermission.Category}
+                                    onDelete={handleDelete}
+                                    onMouseEnter={() =>
+                                      handleMouseIn(itemPermission.Id)
+                                    }
+                                    onMouseLeave={handleMouseLeave}
+                                    deleteIcon={
+                                      <StyledDeleteIconButton
+                                        // onClick={() => handleDelete(itemPermission.Id)}
+                                        className={
+                                          hoveredChipId === itemPermission.Id
+                                            ? 'visible'
+                                            : 'hidden'
+                                        }
+                                      >
+                                        <StyledCloseIcon />
+                                      </StyledDeleteIconButton>
+                                    }
                                     sx={{
-                                      '& .css-6od3lo-MuiChip-label': {
-                                        overflow: 'unset',
+                                      '&:hover': {
+                                        // backgroundColor: '#f5f5f5',
+                                      },
+                                      '& .MuiChip-deleteIcon': {
+                                        display: hoveredChipId
+                                          ? 'block'
+                                          : 'none',
                                       },
                                     }}
                                   />
