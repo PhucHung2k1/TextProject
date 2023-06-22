@@ -537,7 +537,7 @@ const ListRolePermission = () => {
                             <IconButton
                               onClick={
                                 () => console.log(123)
-                                //<EditRolePermission idRole="74384bf0-d8f9-45b2-a3ee-d16eb29ab476"/>
+                                //<EditRolePermission idRole={item.Id}/>
                               }
                             >
                               <EditIcon fontSize="small" />
