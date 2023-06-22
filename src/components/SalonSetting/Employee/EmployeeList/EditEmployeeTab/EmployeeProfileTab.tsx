@@ -87,10 +87,7 @@ const EmployeeProfileTab = () => {
 
   const onSubmit = async (values: IFormInput) => {
     // eslint-disable-next-line no-console
-    console.log(
-      '🚀 ~ file: EmployeeProfileTab.tsx:61 ~ onSubmit ~ values:',
-      values
-    );
+    console.log(values);
   };
   const handleChangeTechPortal = (
     event: React.ChangeEvent<{ value: unknown }>

@@ -15,6 +15,7 @@ const initialState = {
       SystemName: '',
       Permissions: [],
       Id: '',
+      Employees: [],
     },
   ],
   invitationList: [],

@@ -2,6 +2,7 @@ import { CustomerRole } from '@/services/customerRole.service/customerRole.servi
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setListRole } from './customerRoleSlice';
 import { setMessageToast, showToast } from '../toast/toastSlice';
+import { showToastMessage } from '@/utils/helper/showToastMessage';
 
 export const getAllRole = createAsyncThunk(
   'account/getAllRole',
@@ -55,6 +56,7 @@ export const deleteRole = createAsyncThunk(
 
       if (status === 200 || status === 201 || status === 204) {
         dispatch(getAllRole({}));
+        showToastMessage(dispatch, 'Delete Role Successfully!', 'success');
       }
 
       throw new Error(error ? JSON.stringify(error) : 'Failed.');
