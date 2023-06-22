@@ -28,6 +28,12 @@ const RoleAndPermissionTab: NextPage = () => {
               Select Role & Permission
             </InputLabel>
             <Select
+              sx={{
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#00BDD6',
+                },
+                color: '#404044',
+              }}
               labelId="selectRoleAndPermission"
               label="Select Role & Permission"
               displayEmpty

@@ -289,7 +289,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                   checked={showForm}
                   onChange={handleSwitchChange}
                 />
-                <div className=" w-[30%] text-center text-[20px] font-semibold">
+                <div className=" px-5 text-center text-[20px] font-semibold">
                   Every {selectedDay}
                 </div>
                 <div className=" text-text-secondary">
@@ -304,6 +304,12 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         Start
                       </FormHelperText>
                       <Select
+                        sx={{
+                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#00BDD6',
+                          },
+                          color: '#404044',
+                        }}
                         labelId="demo-select-small-label"
                         id="demo-select-small"
                         value={convertTo12h(startHour)}
@@ -337,6 +343,12 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         End
                       </FormHelperText>
                       <Select
+                        sx={{
+                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#00BDD6',
+                          },
+                          color: '#404044',
+                        }}
                         labelId="demo-select-small-label"
                         id="demo-select-small"
                         value={convertTo12h(endHour)}
@@ -401,6 +413,13 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 Break Time
                               </FormHelperText>
                               <Select
+                                sx={{
+                                  '&.Mui-focused .MuiOutlinedInput-notchedOutline':
+                                    {
+                                      borderColor: '#00BDD6',
+                                    },
+                                  color: '#404044',
+                                }}
                                 labelId="demo-select-small-label"
                                 id="demo-select-small"
                                 className="w-[212px]"
@@ -451,6 +470,13 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 &nbsp;
                               </FormHelperText>
                               <Select
+                                sx={{
+                                  '&.Mui-focused .MuiOutlinedInput-notchedOutline':
+                                    {
+                                      borderColor: '#00BDD6',
+                                    },
+                                  color: '#404044',
+                                }}
                                 labelId="demo-select-small-label"
                                 id="demo-select-small"
                                 value={convertTo12h(form.EndHours)}

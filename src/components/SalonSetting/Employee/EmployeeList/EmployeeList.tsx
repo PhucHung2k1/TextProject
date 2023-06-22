@@ -358,6 +358,12 @@ const EmployeeList = () => {
             <div className="flex h-20 w-full items-center gap-6 rounded-sm bg-bg-light px-4 py-7 ">
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={{
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#00BDD6',
+                    },
+                    color: '#404044',
+                  }}
                   displayEmpty
                   value={filterRolePermission}
                   input={<OutlinedInput />}
@@ -377,6 +383,12 @@ const EmployeeList = () => {
               </FormControl>
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={{
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#00BDD6',
+                    },
+                    color: '#404044',
+                  }}
                   displayEmpty
                   value={filterPayStructures}
                   input={<OutlinedInput />}
@@ -396,6 +408,12 @@ const EmployeeList = () => {
               </FormControl>{' '}
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={{
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#00BDD6',
+                    },
+                    color: '#404044',
+                  }}
                   displayEmpty
                   value={filterStatus}
                   input={<OutlinedInput />}

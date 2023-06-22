@@ -219,6 +219,12 @@ const ListRolePermission = () => {
               }}
             >
               <Select
+                sx={{
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#00BDD6',
+                  },
+                  color: '#404044',
+                }}
                 displayEmpty
                 value={filterRolePermission}
                 input={<OutlinedInput />}
@@ -252,6 +258,12 @@ const ListRolePermission = () => {
               }}
             >
               <Select
+                sx={{
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#00BDD6',
+                  },
+                  color: '#404044',
+                }}
                 displayEmpty
                 value={filterPayStructures}
                 input={<OutlinedInput />}

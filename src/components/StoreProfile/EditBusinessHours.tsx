@@ -90,6 +90,12 @@ const EditBusinessHours: NextPage = () => {
                     <FormControl fullWidth variant="outlined">
                       <InputLabel color="primary" />
                       <Select
+                        sx={{
+                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#00BDD6',
+                          },
+                          color: '#404044',
+                        }}
                         color="primary"
                         defaultValue="09:00 AM"
                         size="medium"
@@ -112,6 +118,12 @@ const EditBusinessHours: NextPage = () => {
                     <FormControl fullWidth variant="outlined">
                       <InputLabel color="primary" />
                       <Select
+                        sx={{
+                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#00BDD6',
+                          },
+                          color: '#404044',
+                        }}
                         color="primary"
                         defaultValue="09:00 PM"
                         size="medium"
@@ -152,6 +164,13 @@ const EditBusinessHours: NextPage = () => {
                                 <FormControl fullWidth variant="outlined">
                                   <InputLabel color="primary" />
                                   <Select
+                                    sx={{
+                                      '&.Mui-focused .MuiOutlinedInput-notchedOutline':
+                                        {
+                                          borderColor: '#00BDD6',
+                                        },
+                                      color: '#404044',
+                                    }}
                                     color="primary"
                                     defaultValue="09:00 AM"
                                     size="medium"
@@ -175,6 +194,13 @@ const EditBusinessHours: NextPage = () => {
                                 <FormControl fullWidth variant="outlined">
                                   <InputLabel color="primary" />
                                   <Select
+                                    sx={{
+                                      '&.Mui-focused .MuiOutlinedInput-notchedOutline':
+                                        {
+                                          borderColor: '#00BDD6',
+                                        },
+                                      color: '#404044',
+                                    }}
                                     color="primary"
                                     defaultValue="09:00 PM"
                                     size="medium"

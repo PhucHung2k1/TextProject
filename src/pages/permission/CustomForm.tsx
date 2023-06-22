@@ -288,6 +288,13 @@ export default function CustomForm() {
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
                 <Select
+                  sx={{
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#00BDD6',
+                      color: 'red',
+                    },
+                    color: '#404044',
+                  }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={age}
@@ -349,6 +356,13 @@ export default function CustomForm() {
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
                 <Select
+                  sx={{
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#00BDD6',
+                      color: 'red',
+                    },
+                    color: '#404044',
+                  }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={age}

@@ -8,7 +8,7 @@ import {
   handlePreviousProgressSetupStore,
 } from '@/components/StoreProfile/helper';
 import { LayoutStoreProfile } from '../LayoutStoreProfile';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 interface LayoutAddMemberProps {
   children: React.ReactNode;
@@ -31,21 +31,25 @@ const LayoutAddMember: React.FC<LayoutAddMemberProps> = ({
   const dispatch = useAppDispatch();
   return (
     <LayoutStoreProfile>
-      <div className=" text-center">
-        <div className="flex items-center justify-center ">
+      <div className="text-center">
+        <Box className="mb-[8px] flex items-center justify-center">
           {icon === 'back' ? (
             <ArrowBackIcon
               fontSize="large"
-              className="text-icon-color"
+              className="cursor-pointer text-3xl text-icon-color"
               onClick={() => handlePreviousProgressSetupStore(dispatch)}
             />
           ) : (
-            <CloseIcon fontSize="large" className="text-icon-color" />
+            <CloseIcon
+              fontSize="large"
+              className="cursor-pointer text-3xl text-icon-color"
+            />
           )}
-
-          <p className="mx-auto text-[32px] font-semibold">{title}</p>
-        </div>
-        <p className="text-mango-text-gray-2"> {subTitle}</p>
+          <p className="mx-auto text-[32px] font-semibold text-text-title">
+            {title}
+          </p>
+        </Box>
+        <p className="text-[14px] text-mango-text-gray-2">{subTitle}</p>
       </div>
 
       <div className="w-full flex-1 ">{children}</div>
@@ -56,7 +60,7 @@ const LayoutAddMember: React.FC<LayoutAddMemberProps> = ({
             variant="contained"
             fullWidth
             disabled
-            className="h-12 w-full bg-bg-disable text-base font-semibold text-text-disable"
+            className="mt-7 h-12 w-full bg-mango-primary-blue  text-base font-bold capitalize text-white hover:bg-button-hover-cyan"
             sx={{ '&:hover': { backgroundColor: '#5c5d6a1f' } }}
           >
             CONTINUE
@@ -67,7 +71,7 @@ const LayoutAddMember: React.FC<LayoutAddMemberProps> = ({
             variant="contained"
             fullWidth
             onClick={() => handleForwardProgressSetupStore(dispatch)}
-            className="h-12 w-full bg-primary-main text-base font-semibold text-white"
+            className="mt-7 h-12 w-full bg-mango-primary-blue  text-base font-bold capitalize text-white hover:bg-button-hover-cyan"
             sx={{ '&:hover': { backgroundColor: '#00bdd6' } }}
           >
             CONTINUE

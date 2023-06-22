@@ -62,7 +62,7 @@ const InvitationListComponent = ({
         onClick={() => handleAddEmployee()}
         startIcon={<AddIcon fontSize="medium" />}
         variant="text"
-        className="text-base font-semibold text-primary-main "
+        className="text-base font-semibold text-primary-main mt-[5px]"
       >
         Add your employee
       </Button>
