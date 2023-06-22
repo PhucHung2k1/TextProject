@@ -36,6 +36,7 @@ import type { IAllCustomerRole } from '@/services/customerRole.service/customerR
 import ModalCustomContainer from '@/components/Modal/ModalCustom';
 import { ModalDeleteRole } from './ModalDeleteRole';
 import EditRolePermission from './EditRolePermission';
+import { showDrawerRolePermission } from '@/store/common/commonSlice';
 
 interface PermissionItem {
   Name: string;
@@ -229,6 +230,7 @@ const ListRolePermission = () => {
               className="h-[48px] w-[188px] bg-primary-main text-[16px] font-bold text-white hover:bg-button-hover-cyan"
               variant="contained"
               startIcon={<AddIcon />}
+              onClick={() => dispatch(showDrawerRolePermission())}
             >
               Add Role
             </Button>

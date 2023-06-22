@@ -447,6 +447,7 @@ export const AddYourEmployeeModal = () => {
                                 SalonCenters: true,
                                 NeedHelps: true,
                                 TechPortals: true,
+                                SalonSettings: true,
                               })
                             );
                             dispatch(showDrawerRolePermission());
