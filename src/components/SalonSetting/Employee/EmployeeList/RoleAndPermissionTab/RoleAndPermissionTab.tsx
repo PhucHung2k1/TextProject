@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import type { NextPage } from 'next';
 import {
   Switch,
@@ -14,16 +15,8 @@ import {
 import React, { useState } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import permission from '@/pages/permission';
 
 const RoleAndPermissionTab: NextPage = () => {
-  const hanldePrimaryStatus = (index: number) => {
-    const updatedStatus = listData.map((item, i) =>
-      i === index ? { ...item, IsChecked: !item.IsChecked } : item
-    );
-    setListData(updatedStatus);
-  };
-
   const [listData, setListData] = useState([
     {
       Name: 'Appointment',
@@ -63,10 +56,17 @@ const RoleAndPermissionTab: NextPage = () => {
     },
   ]);
 
+  const hanldePrimaryStatus = (index: number) => {
+    const updatedStatus = listData.map((item, i) =>
+      i === index ? { ...item, IsChecked: !item.IsChecked } : item
+    );
+    setListData(updatedStatus);
+  };
+
   return (
     <div className=" flex w-[732px] bg-white">
-      <div className=" w-[100%] flex-col justify-center items-center  text-xs text-text-secondary">
-        <div className="ml-8 mr-8 mt-8 w-[full] items-center justify-center">
+      <div className=" w-[100%] flex-col items-center justify-center  text-xs text-text-secondary">
+        <div className="mt-8 w-[full] items-center justify-center">
           <FormControl fullWidth variant="outlined">
             <InputLabel shrink color="primary" id="selectRoleAndPermission">
               Select Role & Permission
@@ -120,7 +120,10 @@ const RoleAndPermissionTab: NextPage = () => {
               Accessibility
             </div>
             {listData.map((item, index) => (
-              <div className="mt-2 box-border h-[auto] w-[full] ] rounded-lg border-[1px] border-solid border-border-light p-1">
+              <div
+                key={index}
+                className=" mt-2 box-border h-[auto] w-[full] rounded-lg border-[1px] border-solid border-border-light p-1"
+              >
                 <div className="ml-2 flex flex-row items-center  justify-between text-center">
                   <div className="flex flex-row">
                     <div>
@@ -164,8 +167,11 @@ const RoleAndPermissionTab: NextPage = () => {
                 {item.IsChecked ? (
                   <>
                     <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
-                    {item.Permissions.map((permiss) => (
-                      <div className="ml-4 flex items-center  justify-start text-center">
+                    {item.Permissions.map((permiss, index1) => (
+                      <div
+                        key={`permiss_${index1}`}
+                        className="ml-4 flex items-center  justify-start text-center"
+                      >
                         <Checkbox
                           color="primary"
                           checked={permiss.IsChecked}

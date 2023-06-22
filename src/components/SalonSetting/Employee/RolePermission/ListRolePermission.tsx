@@ -356,7 +356,7 @@ const ListRolePermission = () => {
                     </Stack>
                   </div>
                 </TableCell>
-                <TableCell align="right" className="text-[16px] w-[10%]">
+                <TableCell align="right" className="w-[10%] text-[16px]">
                   <IconButton>
                     <EditIcon fontSize="small" />
                   </IconButton>
