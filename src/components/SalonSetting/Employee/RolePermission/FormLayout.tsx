@@ -1,7 +1,6 @@
 import { Button, IconButton } from '@mui/material';
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import SetAccessibility from './SetAccessibility';
 
 function AddForm() {
   return (
@@ -16,9 +15,7 @@ function AddForm() {
         <div />
       </div>
       {/* <AddRoleAndPermission /> */}
-      <div className=" overflow-y-auto">
-        <SetAccessibility />
-      </div>
+      <div className=" overflow-y-auto">{/* <SetAccessibility /> */}</div>
 
       <div className="sticky bottom-0 right-0 z-[999] flex h-20 w-full flex-row items-center justify-around border-t border-gray-200 bg-white">
         <Button className=" px-20 py-2" variant="outlined">

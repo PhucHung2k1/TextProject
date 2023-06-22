@@ -191,6 +191,7 @@ const ListRolePermission = () => {
             className="h-[48px] w-[188px] bg-primary-main text-[16px] font-bold text-white hover:bg-button-hover-cyan"
             variant="contained"
             startIcon={<AddIcon />}
+            onClick={() => {}}
           >
             Add Role
           </Button>

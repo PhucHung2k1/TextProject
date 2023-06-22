@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 type IInitialState = {
   lookupData: ILookupData;
+  openDrawerRolePermission: boolean;
 };
 const initialState = {
   lookupData: {
@@ -11,6 +12,7 @@ const initialState = {
     TimeZone: [{ Description: '', Name: '', Value: '' }],
     PayStructure: [{ Description: '', Name: '', Value: '' }],
   },
+  openDrawerRolePermission: false,
 } as IInitialState;
 
 const commonSlice = createSlice({
@@ -20,7 +22,17 @@ const commonSlice = createSlice({
     setLookupData(state, action) {
       state.lookupData = action.payload;
     },
+    showDrawerRolePermission(state) {
+      state.openDrawerRolePermission = true;
+    },
+    hideDrawerRolePermission(state) {
+      state.openDrawerRolePermission = false;
+    },
   },
 });
-export const { setLookupData } = commonSlice.actions;
+export const {
+  setLookupData,
+  hideDrawerRolePermission,
+  showDrawerRolePermission,
+} = commonSlice.actions;
 export default commonSlice.reducer;

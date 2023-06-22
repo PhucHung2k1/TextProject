@@ -1,28 +1,25 @@
 import { ConfigRoleAndPermission } from '@/common/ConfigRoleAndPermission/ConfigRoleAndPermission';
-import React from 'react';
+import { useAppSelector } from '@/store/hook';
+import { arrCategory } from './listCategory';
 
-function SetAccessibility() {
+const SetAccessibility = () => {
+  const permissionAll = useAppSelector(
+    (state) => state.permissionSlice.permissionAll
+  );
+
   return (
-    <div>
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
-      <ConfigRoleAndPermission typeConfig="aaaa" configName="adasd" />
+    <div className=" w-full overflow-auto pt-8">
+      {arrCategory.map((category) => {
+        return (
+          <ConfigRoleAndPermission
+            key={category.name}
+            configName={category.title}
+            permissionAll={permissionAll[category.name]}
+          />
+        );
+      })}
     </div>
   );
-}
+};
 
 export default SetAccessibility;

@@ -53,6 +53,7 @@ export const updateLocationStoreProfile = createAsyncThunk(
       const { status, error } = await servicesStoreApi.updateStore(id, body);
 
       if (status === 200 || status === 201 || status === 204) {
+        dispatch(getStoreCustomer({}));
         showToastMessage(dispatch, 'Update successfully', 'success');
       }
       if (error) {

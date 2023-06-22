@@ -31,7 +31,8 @@ import { ErrorMessage } from '@hookform/error-message';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import { Clear, Check, Error } from '@mui/icons-material';
 import { sxTextField } from '@/utils/helper/styles';
-import { AddRolePermissionDrawer } from './AddRolePermissionDrawer';
+import { getAllPermission } from '@/store/permission/permissionAction';
+import { showDrawerRolePermission } from '@/store/common/commonSlice';
 
 interface IFormInput {
   firstName: string;
@@ -144,7 +145,6 @@ export const AddYourEmployeeModal = () => {
     listPayStructure[0]?.Id || null
   );
 
-  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
       setEmailState((pre) => ({
@@ -434,7 +434,23 @@ export const AddYourEmployeeModal = () => {
                         <Grid
                           container
                           alignItems="center"
-                          onClick={() => setOpenDrawer(true)}
+                          onClick={() => {
+                            dispatch(
+                              getAllPermission({
+                                Appointments: true,
+                                Marketings: true,
+                                ClientManagements: true,
+                                CreateCharges: true,
+                                TicketManagers: true,
+                                GiftCards: true,
+                                SalonExchanges: true,
+                                SalonCenters: true,
+                                NeedHelps: true,
+                                TechPortals: true,
+                              })
+                            );
+                            dispatch(showDrawerRolePermission());
+                          }}
                         >
                           <Grid item sx={{ display: 'flex', width: 40 }}>
                             <GroupOutlinedIcon />
@@ -517,7 +533,7 @@ export const AddYourEmployeeModal = () => {
                         <Grid
                           container
                           alignItems="center"
-                          onClick={() => setOpenDrawer(true)}
+                          onClick={() => dispatch(showDrawerRolePermission())}
                         >
                           <Grid item sx={{ display: 'flex', width: 40 }}>
                             <GroupOutlinedIcon />
@@ -646,12 +662,6 @@ export const AddYourEmployeeModal = () => {
             </Grid>
           </Grid>
         </form>
-
-        {/* Drawer Role & Permission */}
-        <AddRolePermissionDrawer
-          openDrawer={openDrawer}
-          setOpenDrawer={setOpenDrawer}
-        />
       </div>
     </div>
   );

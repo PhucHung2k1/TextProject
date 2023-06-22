@@ -45,7 +45,10 @@ const ConfirmYourAddress = () => {
   const latStore = Number(curStoreCustomer?.GeoLatitude);
 
   const [marker, setMarkers] = useState<LngLat>(
-    new mapboxgl.LngLat(lngStore, latStore)
+    new mapboxgl.LngLat(
+      lngStore <= 180 && lngStore >= -180 ? lngStore : 0,
+      latStore <= 90 && latStore >= -90 ? latStore : 0
+    )
   );
 
   const [yourAddress, setYourAddress] = useState<IMapBoxPlace | null>(null);

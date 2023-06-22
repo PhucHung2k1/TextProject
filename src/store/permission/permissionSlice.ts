@@ -1,6 +1,9 @@
 import type { ICustomer } from '@/services/customer.service/customer.interface';
 import { createSlice } from '@reduxjs/toolkit';
-import type { PermissionItem } from '@/services/permission.services/permission.interface';
+import type {
+  IPermissionData,
+  PermissionItem,
+} from '@/services/permission.services/permission.interface';
 
 export interface CusDataState {
   listCustomer: ICustomer[];
@@ -10,7 +13,7 @@ export interface CusDataState {
   errorMessage: string | any;
   activeTab: number;
   permissionList: PermissionItem[];
-  permissionAll: PermissionItem[];
+  permissionAll: IPermissionData;
 }
 const initialState: CusDataState = {
   listCustomer: [],
@@ -21,10 +24,21 @@ const initialState: CusDataState = {
 
   activeTab: 1000,
   permissionList: [],
-  permissionAll: [],
+  permissionAll: {
+    Appointments: [],
+    ClientManagements: [],
+    CreateCharges: [],
+    Marketings: [],
+    NeedHelps: [],
+    SalonCenters: [],
+    SalonExchanges: [],
+    SalonSettings: [],
+    TechPortals: [],
+    TicketManagers: [],
+  },
 };
 
-const cusSlice = createSlice({
+const permissionSlice = createSlice({
   name: 'permission',
   initialState,
   reducers: {
@@ -53,5 +67,5 @@ export const {
   setActiveTab,
   setPermissionList,
   setPermissionAll,
-} = cusSlice.actions;
-export default cusSlice.reducer;
+} = permissionSlice.actions;
+export default permissionSlice.reducer;

@@ -77,8 +77,11 @@ export const apiLogin = async (
   return response;
 };
 
-export const apiGet = async <T = any>(url: string): Promise<IResponse> => {
-  const response = await axiosService.get<T>(url);
+export const apiGet = async <T = any>(
+  url: string,
+  payload?: any
+): Promise<IResponse> => {
+  const response = await axiosService.get<T>(url, { data: payload });
 
   return response;
 };
