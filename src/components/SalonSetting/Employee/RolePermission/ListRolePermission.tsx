@@ -1,3 +1,4 @@
+// binhnttttt
 import {
   Typography,
   IconButton,
@@ -19,6 +20,8 @@ import {
   Avatar,
   AvatarGroup,
   styled,
+  Tooltip,
+  TablePagination,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
@@ -80,18 +83,34 @@ const ListRolePermission = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const listRole = useAppSelector((state) => state.customerRoleSlice.listRole);
-  const [selectedItem, setSelectedItem] = useState<IAllCustomerRole>();
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const startIndex = page * rowsPerPage;
+  const endIndex = Math.min(startIndex + rowsPerPage, listRole.length);
+
+  const handleChangePage = (
+    _event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  const [selectedItem, setSelectedItem] = useState<IAllCustomerRole>();
   const listEmployee = listRole.reduce((acc: any, role: IAllCustomerRole) => {
     return [...acc, ...role.Employees];
   }, []);
   const listFunction = listRole.reduce((acc: any, role: IAllCustomerRole) => {
     return [...acc, ...role.Permissions];
   }, []);
-
   const dispatch = useAppDispatch();
   const [filterFunction, setfilterFunction] = useState('');
-
   const [filterEmployee, setFiterEmployee] = useState('');
 
   const handlefilterFunction = (event: any) => {
@@ -101,26 +120,38 @@ const ListRolePermission = () => {
     setFiterEmployee(event.target.value as string);
   };
 
-  const filteredData = listRole.filter(
-    (row) =>
-      row.Employees.some(
-        (employee) =>
-          filterEmployee !== '' &&
-          employee.Id.toLowerCase().includes(filterEmployee.toLowerCase())
-      )
-    // row.Permissions.some(
-    //   (item: PermissionItem) =>
-    //     filterFunction !== '' &&
-    //     item.Id.toLowerCase().includes(filterFunction.toLowerCase())
-    // )
-  );
+  const handleFilterData = () => {
+    let filteredData = listRole;
+
+    if (filterEmployee !== '') {
+      filteredData = filteredData.filter((row) => {
+        const filteredEmployees = row.Employees.filter(
+          (employee) => employee.Id === filterEmployee
+        );
+
+        return filteredEmployees.length > 0;
+      });
+    }
+
+    if (filterFunction !== '') {
+      filteredData = filteredData.filter((row) => {
+        const hasSelectedPermission = row.Permissions.some(
+          (permission) => permission.Id === filterFunction
+        );
+
+        return hasSelectedPermission;
+      });
+    }
+
+    return filteredData;
+  };
+  const dataFilterd = handleFilterData();
 
   useEffect(() => {
     dispatch(getAllRole({}));
   }, []);
 
   const handleDeleteRole = (item: any) => {
-    console.log(item);
     setSelectedItem(item);
     setOpenModal(true);
   };
@@ -140,6 +171,7 @@ const ListRolePermission = () => {
           />
         }
       />
+
       <div className="min-h-screen">
         <div className="mt-[36px] flex items-center justify-between">
           <Typography
@@ -292,8 +324,8 @@ const ListRolePermission = () => {
                 </TableRow>
               </TableHead>
               <TableBody className="text-[16px]">
-                {filterEmployee !== ''
-                  ? filteredData.map((item) => {
+                {filterEmployee !== '' || filterFunction !== ''
+                  ? dataFilterd.slice(startIndex, endIndex).map((item) => {
                       return (
                         <TableRow
                           className="align-top text-[16px]"
@@ -311,45 +343,70 @@ const ListRolePermission = () => {
                             scope="row"
                             className="w-[20%] text-base"
                           >
-                            {
-                              item.Employees.filter(
-                                (itemFilter) => itemFilter.Id === filterEmployee
-                              ).length
-                            }
-                            {item.Employees.filter(
-                              (itemFilter) => itemFilter.Id === filterEmployee
-                            ).length < 2
-                              ? ' user'
-                              : ' users'}
-
+                            {filterEmployee !== ''
+                              ? item.Employees.filter(
+                                  (filter) => filter.Id === filterEmployee
+                                ).length
+                              : item.Employees.length}
+                            {item.Employees.length < 2 ? ' user' : ' users'}
                             {item.Employees.length > 0 && (
                               <AvatarGroup
                                 max={5}
                                 className="mt-[4px] justify-end"
                               >
-                                {item.Employees.filter(
-                                  (itemFilter) =>
-                                    itemFilter.Id === filterEmployee
-                                ).map((avatarItem) => (
-                                  <StyledBadge
-                                    isActive={avatarItem.Status}
-                                    overlap="circular"
-                                    key={avatarItem.Id}
-                                    anchorOrigin={{
-                                      vertical: 'bottom',
-                                      horizontal: 'right',
-                                    }}
-                                    variant="dot"
-                                  >
-                                    <Avatar
-                                      src={avatarItem.ProfilePictureUrl}
-                                      style={{
-                                        border: `2px solid #9B9BA0`,
-                                        background: '#DEDEE3',
-                                      }}
-                                    />
-                                  </StyledBadge>
-                                ))}
+                                {filterEmployee !== ''
+                                  ? item.Employees.filter(
+                                      (avt) => avt.Id === filterEmployee
+                                    ).map((avatarItem) => (
+                                      <Tooltip
+                                        title={`${avatarItem.FirstName} ${avatarItem.LastName}`}
+                                        key={avatarItem.Id}
+                                      >
+                                        <StyledBadge
+                                          isActive={avatarItem.Status}
+                                          overlap="circular"
+                                          key={avatarItem.Id}
+                                          anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                          }}
+                                          variant="dot"
+                                        >
+                                          <Avatar
+                                            src={avatarItem.ProfilePictureUrl}
+                                            style={{
+                                              border: `2px solid #9B9BA0`,
+                                              background: '#DEDEE3',
+                                            }}
+                                          />
+                                        </StyledBadge>
+                                      </Tooltip>
+                                    ))
+                                  : item.Employees.map((avatarItem) => (
+                                      <Tooltip
+                                        title={`${avatarItem.FirstName} ${avatarItem.LastName}`}
+                                        key={avatarItem.Id}
+                                      >
+                                        <StyledBadge
+                                          isActive={avatarItem.Status}
+                                          overlap="circular"
+                                          key={avatarItem.Id}
+                                          anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                          }}
+                                          variant="dot"
+                                        >
+                                          <Avatar
+                                            src={avatarItem.ProfilePictureUrl}
+                                            style={{
+                                              border: `2px solid #9B9BA0`,
+                                              background: '#DEDEE3',
+                                            }}
+                                          />
+                                        </StyledBadge>
+                                      </Tooltip>
+                                    ))}
                               </AvatarGroup>
                             )}
                           </TableCell>
@@ -396,7 +453,7 @@ const ListRolePermission = () => {
                         </TableRow>
                       );
                     })
-                  : listRole.map((item) => {
+                  : listRole.slice(startIndex, endIndex).map((item) => {
                       return (
                         <TableRow
                           className="align-top text-[16px]"
@@ -422,24 +479,29 @@ const ListRolePermission = () => {
                                 className="mt-[4px] justify-end"
                               >
                                 {item.Employees.map((avatarItem) => (
-                                  <StyledBadge
-                                    isActive={avatarItem.Status}
-                                    overlap="circular"
+                                  <Tooltip
+                                    title={`${avatarItem.FirstName} ${avatarItem.LastName}`}
                                     key={avatarItem.Id}
-                                    anchorOrigin={{
-                                      vertical: 'bottom',
-                                      horizontal: 'right',
-                                    }}
-                                    variant="dot"
                                   >
-                                    <Avatar
-                                      src={avatarItem.ProfilePictureUrl}
-                                      style={{
-                                        border: `2px solid #9B9BA0`,
-                                        background: '#DEDEE3',
+                                    <StyledBadge
+                                      isActive={avatarItem.Status}
+                                      overlap="circular"
+                                      key={avatarItem.Id}
+                                      anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'right',
                                       }}
-                                    />
-                                  </StyledBadge>
+                                      variant="dot"
+                                    >
+                                      <Avatar
+                                        src={avatarItem.ProfilePictureUrl}
+                                        style={{
+                                          border: `2px solid #9B9BA0`,
+                                          background: '#DEDEE3',
+                                        }}
+                                      />
+                                    </StyledBadge>
+                                  </Tooltip>
                                 ))}
                               </AvatarGroup>
                             )}
@@ -489,6 +551,15 @@ const ListRolePermission = () => {
                     })}
               </TableBody>
             </Table>
+            <TablePagination
+              rowsPerPageOptions={[10, 15]}
+              component="div"
+              count={listRole.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </TableContainer>
         </div>
       </div>
