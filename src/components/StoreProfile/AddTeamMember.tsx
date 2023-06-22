@@ -1,12 +1,12 @@
-import { invitationList } from '@/store/customer/customerAction';
-import { useAppDispatch, useAppSelector } from '@/store/hook';
-import AddIcon from '@mui/icons-material/Add';
+import React, { useEffect, useState } from 'react';
+import LayoutAddMember from './LayoutAddTeamMember/LayoutAddTeamMember';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Box, Button } from '@mui/material';
-import { useEffect, useState } from 'react';
-import ModalCustomContainer from '../Modal/ModalCustom';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { AddYourEmployeeModal } from './LayoutAddTeamMember/AddTeamMemberModal';
 import InvitationListComponent from './LayoutAddTeamMember/InvitationListComponent';
-import LayoutAddMember from './LayoutAddTeamMember/LayoutAddTeamMember';
+import { invitationList } from '@/store/customer/customerAction';
+import ModalCustomContainer from '../Modal/ModalCustom';
 
 const AddYourEmployee = () => {
   const dispatch = useAppDispatch();
@@ -49,8 +49,10 @@ const AddYourEmployee = () => {
               <Button
                 variant="text"
                 onClick={handleAddEmployee}
-                className="justify-start font-semibold text-primary-main"
-                startIcon={<AddIcon sx={{ color: '#00bdd6' }} />}
+                className="h-40 w-full  gap-2 text-base font-bold !text-blue-gray-900 "
+                startIcon={
+                  <PersonAddIcon sx={{ mb: 0.5, height: 28, width: 22 }} />
+                }
               >
                 Add team member
               </Button>

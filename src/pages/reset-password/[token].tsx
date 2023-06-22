@@ -14,7 +14,6 @@ import {
   changePasswordByToken,
   validateForgotPasswordToken,
 } from '@/store/passwordCustomer/passwordCustomerAction';
-import { sxTextField } from '@/utils/helper/styles';
 
 const ResetPassword = () => {
   const {
@@ -103,7 +102,6 @@ const ResetPassword = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
-                      sx={sxTextField}
                       label="Enter new password"
                       type={showPassword ? 'text' : 'password'}
                       required
@@ -147,7 +145,6 @@ const ResetPassword = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
-                      sx={sxTextField}
                       label="Confirm new password"
                       type={showCfPassword ? 'text' : 'password'}
                       required

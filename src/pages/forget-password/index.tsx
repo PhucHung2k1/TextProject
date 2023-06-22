@@ -16,7 +16,6 @@ import { ErrorMessage } from '@hookform/error-message';
 import SendIcon from '@mui/icons-material/Send';
 import GetYourPasswordSucess from '@/components/Authentication/GetYourPasswordSucess';
 import { forgotPassword } from '@/store/passwordCustomer/passwordCustomerAction';
-import { sxTextField } from '@/utils/helper/styles';
 
 const ForgotPassword = () => {
   const {
@@ -116,7 +115,6 @@ const ForgotPassword = () => {
                       label="Email Address"
                       type="email"
                       required
-                      sx={sxTextField}
                       error={Boolean(errors.email)}
                       {...register('email', {
                         required: 'Enter Your Email!',

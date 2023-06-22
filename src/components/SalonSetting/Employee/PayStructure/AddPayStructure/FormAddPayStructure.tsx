@@ -76,7 +76,10 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
   };
   const onSubmit = async (values: IFormInput) => {
     // eslint-disable-next-line no-console
-    console.log(values);
+    console.log(
+      '🚀 ~ file: EmployeeProfileTab.tsx:61 ~ onSubmit ~ values:',
+      values
+    );
   };
   const handleChangeTechPortal = (
     event: React.ChangeEvent<{ value: unknown }>

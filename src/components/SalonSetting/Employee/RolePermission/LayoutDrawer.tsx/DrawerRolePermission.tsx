@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddRoleAndPermission from '../AddRoleAndPermission';
 import SetAccessibility from '../SetAccessibility';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -10,13 +10,24 @@ import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { hideDrawerRolePermission } from '@/store/common/commonSlice';
 import LayoutDrawer from '.';
 import EditRolePermissions from '../EditRolePermissions';
-import { addNewRole } from '@/store/customerRole/customerRoleAction';
+import {
+  addNewRole,
+  addRemoveMultiRole,
+  getListRoleCustomById,
+} from '@/store/customerRole/customerRoleAction';
+import { getEmployeeList } from '@/store/employee/employeeAction';
 
 const DrawerRolePermission = () => {
   const [roleName, setRoleName] = useState('');
   const dispatch = useAppDispatch();
   const openDrawerRolePermission = useAppSelector(
     (state) => state.commonSlice.openDrawerRolePermission
+  );
+  const idAddNewRole = useAppSelector(
+    (state) => state.customerRoleSlice.addNewRoleId
+  );
+  const listPermissionAddRemove = useAppSelector(
+    (state) => state.customerRoleSlice.addRemoveMultiRoleIds
   );
   const [activeStep, setActiveStep] = useState<number>(0);
   const [skipped, setSkipped] = useState(new Set<number>());
@@ -43,7 +54,7 @@ const DrawerRolePermission = () => {
         <ArrowBackIcon className="cursor-pointer text-3xl text-icon-color" />
       ),
       titleHeader: 'Edit & Permission',
-      component: <EditRolePermissions roleName={roleName} />,
+      component: <EditRolePermissions />,
     },
   ];
   const curStep = steps.find((item) => item.step === activeStep);
@@ -64,6 +75,19 @@ const DrawerRolePermission = () => {
     if (activeStep === 0) {
       roleName.length > 0 && dispatch(addNewRole({ name: roleName }));
     }
+    if (activeStep === 1) {
+      dispatch(
+        addRemoveMultiRole({
+          id: idAddNewRole,
+          body: listPermissionAddRemove,
+        })
+      );
+      dispatch(getListRoleCustomById(idAddNewRole));
+    }
+    if (activeStep === 2) {
+      dispatch(hideDrawerRolePermission());
+      dispatch(getEmployeeList({}));
+    }
     // if(activeStep==steps)
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
@@ -72,7 +96,12 @@ const DrawerRolePermission = () => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
+  useEffect(() => {
+    if (openDrawerRolePermission) {
+      setActiveStep(0);
+      setRoleName('');
+    }
+  }, [openDrawerRolePermission]);
   return (
     <DrawerCustom
       onClose={handleCloseDrawer}

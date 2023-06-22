@@ -30,7 +30,6 @@ import type {
 } from '@/services/workingHours.service/workingHours.interface';
 import { convertTo12h, convertTo24h } from '@/helper/stringHelper';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { sxSelect } from '@/utils/helper/styles';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const [showEditHours, setShowEditHours] = useState(false);
@@ -290,7 +289,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                   checked={showForm}
                   onChange={handleSwitchChange}
                 />
-                <div className=" px-5 text-center text-[20px] font-semibold">
+                <div className=" w-[30%] text-center text-[20px] font-semibold">
                   Every {selectedDay}
                 </div>
                 <div className=" text-text-secondary">
@@ -305,7 +304,6 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         Start
                       </FormHelperText>
                       <Select
-                        sx={{ sxSelect }}
                         labelId="demo-select-small-label"
                         id="demo-select-small"
                         value={convertTo12h(startHour)}
@@ -339,7 +337,6 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         End
                       </FormHelperText>
                       <Select
-                        sx={{ sxSelect }}
                         labelId="demo-select-small-label"
                         id="demo-select-small"
                         value={convertTo12h(endHour)}
@@ -404,7 +401,6 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 Break Time
                               </FormHelperText>
                               <Select
-                                sx={{ sxSelect }}
                                 labelId="demo-select-small-label"
                                 id="demo-select-small"
                                 className="w-[212px]"
@@ -440,8 +436,8 @@ const StoreWorkingHoursSetup: NextPage = () => {
                             <div
                               className={
                                 index === 0
-                                  ? ' mx-[9px]  mt-[45px] w-[14px] border border-solid border-line-light'
-                                  : 'mx-[9px]  w-[14px] border border-solid  border-line-light'
+                                  ? ' mx-[9px] ml-[5px] mt-[45px] w-[14px] border border-solid border-line-light'
+                                  : 'mx-[9px] ml-[5px] w-[14px] border border-solid  border-line-light'
                               }
                             />
 
@@ -455,7 +451,6 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 &nbsp;
                               </FormHelperText>
                               <Select
-                                sx={{ sxSelect }}
                                 labelId="demo-select-small-label"
                                 id="demo-select-small"
                                 value={convertTo12h(form.EndHours)}
@@ -487,7 +482,13 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 ))}
                               </Select>
                             </FormControl>
-                            <div className={index === 0 ? '  mt-[45px]' : ' '}>
+                            <div
+                              className={
+                                index === 0
+                                  ? 'ml-[5px]  mt-[45px]'
+                                  : ' ml-[5px]'
+                              }
+                            >
                               <Button
                                 sx={{
                                   minWidth: 'unset',

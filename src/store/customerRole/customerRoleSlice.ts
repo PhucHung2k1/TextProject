@@ -2,7 +2,11 @@ import type {
   IInvitationListData,
   IListRoleCustomById as IListPermissionCustomById,
 } from '@/services/customer.service/customer.interface';
-import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
+import type {
+  IAddRemoveMultiRole,
+  IAllCustomerRole,
+  IDetailRoleById,
+} from '@/services/customerRole.service/customerRole.interface';
 import { createSlice } from '@reduxjs/toolkit';
 
 type IInitialState = {
@@ -10,6 +14,8 @@ type IInitialState = {
   invitationList: IInvitationListData[];
   listPermissionCustomById: IListPermissionCustomById[];
   addNewRoleId: string;
+  addRemoveMultiRoleIds: IAddRemoveMultiRole; //
+  detailRoleById: IDetailRoleById;
 };
 const initialState = {
   listRole: [
@@ -20,12 +26,29 @@ const initialState = {
       SystemName: '',
       Permissions: [],
       Id: '',
-      Employees: [],
     },
   ],
   invitationList: [],
   listPermissionCustomById: [],
   addNewRoleId: '',
+  addRemoveMultiRoleIds: {
+    AddedPermissions: [],
+    RemovedPermissions: [],
+  },
+  detailRoleById: {
+    Name: '',
+    Active: true,
+    IsSystemRole: false,
+    SystemName: null,
+    StoreId: '',
+    Type: null,
+    Permissions: [],
+    Id: '',
+    CreateBy: null,
+    CreateDate: '',
+    LastModifiedBy: null,
+    LastModifiedDate: null,
+  },
 } as IInitialState;
 
 const customerRoleSlice = createSlice({
@@ -44,6 +67,12 @@ const customerRoleSlice = createSlice({
     setAddNewRoleId: (state, action) => {
       state.addNewRoleId = action.payload;
     },
+    setAddRemoveMultiRoleIds: (state, action) => {
+      state.addRemoveMultiRoleIds = action.payload;
+    },
+    setDetailRoleById: (state, action) => {
+      state.detailRoleById = action.payload;
+    },
   },
 });
 export const {
@@ -51,5 +80,7 @@ export const {
   setInvitationList,
   setListPermissionCustomById,
   setAddNewRoleId,
+  setAddRemoveMultiRoleIds,
+  setDetailRoleById,
 } = customerRoleSlice.actions;
 export default customerRoleSlice.reducer;

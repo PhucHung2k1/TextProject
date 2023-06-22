@@ -30,7 +30,6 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { sxTextField } from '@/utils/helper/styles';
 
 const listColors = [
   '#FFFFFF',
@@ -88,7 +87,10 @@ const EmployeeProfileTab = () => {
 
   const onSubmit = async (values: IFormInput) => {
     // eslint-disable-next-line no-console
-    console.log(values);
+    console.log(
+      '🚀 ~ file: EmployeeProfileTab.tsx:61 ~ onSubmit ~ values:',
+      values
+    );
   };
   const handleChangeTechPortal = (
     event: React.ChangeEvent<{ value: unknown }>
@@ -146,7 +148,6 @@ const EmployeeProfileTab = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
-                sx={sxTextField}
                 label="First Name"
                 type="text"
                 error={Boolean(errors.firstName)}
@@ -160,7 +161,6 @@ const EmployeeProfileTab = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
-                sx={sxTextField}
                 label="Last Name"
                 type="text"
                 required
@@ -187,7 +187,6 @@ const EmployeeProfileTab = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
-                sx={sxTextField}
                 label="Nick Name"
                 type="text"
                 {...register('nickName', {})}
@@ -201,7 +200,6 @@ const EmployeeProfileTab = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
-                sx={sxTextField}
                 label="Job Title"
                 type="text"
                 {...register('jobTitle', {})}
@@ -254,7 +252,6 @@ const EmployeeProfileTab = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
-                      sx={sxTextField}
                       label="Address line 1"
                       type="text"
                       {...register('address1', {})}
@@ -268,7 +265,6 @@ const EmployeeProfileTab = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
-                      sx={sxTextField}
                       label="Address line 2"
                       type="text"
                       {...register('address2', {})}
@@ -283,7 +279,6 @@ const EmployeeProfileTab = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
-                      sx={sxTextField}
                       label="City"
                       type="text"
                       {...register('address2', {})}
@@ -298,7 +293,6 @@ const EmployeeProfileTab = () => {
                       className="text-sm font-normal !text-mango-text-black-1"
                     >
                       <TextField
-                        sx={sxTextField}
                         label="State"
                         type="text"
                         error={Boolean(errors.firstName)}
@@ -312,7 +306,6 @@ const EmployeeProfileTab = () => {
                       className="text-sm font-normal !text-mango-text-black-1"
                     >
                       <TextField
-                        sx={sxTextField}
                         label="Zip code"
                         type="text"
                         error={Boolean(errors.lastName)}
@@ -347,7 +340,6 @@ const EmployeeProfileTab = () => {
                           className="text-sm font-normal !text-mango-text-black-1"
                         >
                           <TextField
-                            sx={sxTextField}
                             label="Email address"
                             type="text"
                             required
@@ -403,6 +395,8 @@ const EmployeeProfileTab = () => {
                         className="text-sm font-normal !text-mango-text-black-1"
                       >
                         <TextField
+                          disabled
+                          className=" bg-[#F2F2F2]"
                           sx={{
                             '& .MuiInputBase-input.Mui-disabled': {
                               WebkitTextFillColor: '#404044',
@@ -410,8 +404,6 @@ const EmployeeProfileTab = () => {
                               fontSize: '16px',
                             },
                           }}
-                          disabled
-                          className=" bg-[#F2F2F2]"
                           id="input-with-icon-textfield"
                           label="Prefix"
                           defaultValue="(+1)"
@@ -445,7 +437,6 @@ const EmployeeProfileTab = () => {
                       className="text-sm font-normal !text-mango-text-black-1"
                     >
                       <TextField
-                        sx={sxTextField}
                         label="Phone number"
                         type="text"
                         {...register('address2', {})}
@@ -475,7 +466,6 @@ const EmployeeProfileTab = () => {
                       className="text-sm font-normal !text-mango-text-black-1"
                     >
                       <TextField
-                        sx={sxTextField}
                         label="Password"
                         type={showPassword ? 'text' : 'password'}
                         error={Boolean(errors.password)}
@@ -524,7 +514,6 @@ const EmployeeProfileTab = () => {
                         className="text-sm font-normal !text-mango-text-black-1"
                       >
                         <TextField
-                          sx={sxTextField}
                           label="Portal Touch ID"
                           type={showPortalID ? 'text' : 'password'}
                           error={Boolean(errors.password)}
@@ -567,7 +556,6 @@ const EmployeeProfileTab = () => {
                     </Grid>
                     <Grid xs={3.5} item>
                       <TextField
-                        sx={sxTextField}
                         select
                         value={valueTechPortal}
                         onChange={handleChangeTechPortal}
@@ -619,7 +607,6 @@ const EmployeeProfileTab = () => {
                   className="text-sm font-normal !text-mango-text-black-1"
                 >
                   <TextField
-                    sx={sxTextField}
                     label="Turn Bonus"
                     type="text"
                     error={Boolean(errors.lastName)}

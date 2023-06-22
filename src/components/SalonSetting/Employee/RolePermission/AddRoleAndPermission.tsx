@@ -1,4 +1,3 @@
-import { sxTextField } from '@/utils/helper/styles';
 import {
   Checkbox,
   FormControlLabel,
@@ -24,10 +23,19 @@ function AddRoleAndPermission({ roleName, setRoleName }: Props) {
         className="mb-4 flex flex-row items-center justify-between"
       >
         <TextField
-          sx={sxTextField}
           variant="outlined"
           label="Role & Permission Name"
           placeholder="Role & Permission Name"
+          sx={{
+            '& .MuiInputBase-root.Mui-focused': {
+              '& > fieldset': {
+                borderColor: '#00BDD6',
+              },
+            },
+            '& label.Mui-focused': {
+              color: '#00BDD6',
+            },
+          }}
           InputProps={{
             style: { height: '48px' },
           }}

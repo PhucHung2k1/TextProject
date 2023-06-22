@@ -10,8 +10,7 @@ export const getEmployeeList = createAsyncThunk(
   async (_body: any, { dispatch }) => {
     const servicesEmployees = new EmployeeService();
     try {
-      const { data, status, error } =
-        await servicesEmployees.getEmployeeList();
+      const { data, status, error } = await servicesEmployees.getEmployeeList();
 
       if ((status === 200 || status === 201) && data) {
         dispatch(setEmployee(data));
@@ -31,9 +30,12 @@ export const updateRoleMultipeEmployee = createAsyncThunk(
     const servicesEmployees = new EmployeeService();
     try {
       const { data, status, error } =
-        await servicesEmployees.updateRoleMultipleEmployee(body.roleId, body.data);
+        await servicesEmployees.updateRoleMultipleEmployee(
+          body.roleId,
+          body.data
+        );
 
-      if ((status === 200 || status === 201)) {
+      if (status === 200 || status === 201) {
         showToastMessage(dispatch, `Update success!`, 'success');
         dispatch(getEmployeeList({}));
         return data;
@@ -44,4 +46,3 @@ export const updateRoleMultipeEmployee = createAsyncThunk(
     }
   }
 );
-

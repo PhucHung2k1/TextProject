@@ -5,17 +5,24 @@ import { useState } from 'react';
 import AddRoleAndPermission from './AddRoleAndPermission';
 import { AntTab, StyledTabs } from '..';
 import SetAccessibility from './SetAccessibility';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import {
+  getListRoleCustomById,
+  getRoleDetailById,
+} from '@/store/customerRole/customerRoleAction';
 
-interface Props {
-  roleName: string;
-}
-const EditRolePermissions = ({ roleName }: Props) => {
+const EditRolePermissions = () => {
   const [activeKey, setActiveKey] = useState<number>(0);
-
+  const dispatch = useAppDispatch();
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setActiveKey(newValue);
   };
-
+  const addNewRoleId = useAppSelector(
+    (state) => state.customerRoleSlice.addNewRoleId
+  );
+  const detailRoleById = useAppSelector(
+    (state) => state.customerRoleSlice.detailRoleById
+  );
   const items = [
     // {
     //   id: 0,
@@ -31,10 +38,16 @@ const EditRolePermissions = ({ roleName }: Props) => {
       children: <SetAccessibility />,
     },
   ];
-
+  React.useEffect(() => {
+    dispatch(getRoleDetailById(addNewRoleId));
+    dispatch(getListRoleCustomById(addNewRoleId));
+  }, []);
   return (
     <>
-      <AddRoleAndPermission roleName={roleName} setRoleName={() => {}} />
+      <AddRoleAndPermission
+        roleName={detailRoleById.Name}
+        setRoleName={() => {}}
+      />
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <StyledTabs value={activeKey} onChange={handleChange}>

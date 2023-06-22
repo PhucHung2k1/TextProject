@@ -5,31 +5,45 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
 import type { IPermissionChild } from '@/services/permission.services/permission.interface';
+import { useAppSelector } from '@/store/hook';
 
 interface Props {
   configName: string;
-  permissionAll: IPermissionChild[];
-  setListPermission: Function;
+  permissionAllByName: IPermissionChild[];
+  setListAddedPermissions: Function;
+  setListRemovedPermissions: Function;
 }
 export const ConfigRoleAndPermission = ({
   configName,
-  permissionAll,
-  setListPermission,
+  permissionAllByName,
+  setListAddedPermissions,
+  setListRemovedPermissions,
 }: Props) => {
-  // const listPermissionCustomByIdRedux = useAppSelector(
-  //   (state) => state.customerRoleSlice.listPermissionCustomById
-  // );
+  const listPermissionCustomByIdRedux = useAppSelector(
+    (state) => state.customerRoleSlice.listPermissionCustomById
+  );
+
   const [showAll, setShowAll] = useState<boolean>(false);
   const handleCheckBox = (value: boolean, id: string) => {
-    const removePermission: string[] = [];
-    const addPermission: string[] = [];
-    if (value) {
-      addPermission.push(id);
-    } else removePermission.push(id);
-    setListPermission({
-      AddedPermissions: addPermission,
-      RemovedPermissions: removePermission,
-    });
+    const checkExist = listPermissionCustomByIdRedux.some(
+      (item) => item.Id === id
+    );
+
+    if (!checkExist) {
+      if (value) {
+        setListAddedPermissions((prev: any) => [...prev, id]);
+      } else {
+        setListAddedPermissions((prev: any) =>
+          prev.filter((item: string) => item !== id)
+        );
+      }
+    } else if (value) {
+      setListRemovedPermissions((prev: any) => [...prev, id]);
+    } else {
+      setListRemovedPermissions((prev: any) =>
+        prev.filter((item: string) => item !== id)
+      );
+    }
   };
   return (
     <div className="mb-2">
@@ -62,38 +76,43 @@ export const ConfigRoleAndPermission = ({
       {showAll && (
         <div className=" h-auto w-full rounded-b-[6px] border border-t-0 !border-mango-text-gray-1 bg-white">
           <TreeView>
-            {Array.isArray(permissionAll) &&
-              permissionAll?.map((item) => (
-                <TreeItem
-                  key={item.Id}
-                  nodeId={item.Id}
-                  label={
-                    <FormControlLabel
-                      sx={{
-                        '&.MuiCheckbox-root': {
-                          color: '#404044',
-                          background: '#404044',
-                        },
-                        '&.Mui-checked': {
-                          color: '#404044',
-                        },
-                      }}
-                      control={
-                        <Checkbox
-                          color="default"
-                          // checked={listPermissionCustomByIdRedux.some(
-                          //   (permission) => permission.Id === item.Id
-                          // )}
-                          onChange={(e) =>
-                            handleCheckBox(e.target.checked, item.Id)
-                          }
-                        />
-                      }
-                      label={item.Name}
-                    />
-                  }
-                />
-              ))}
+            {Array.isArray(permissionAllByName) &&
+              permissionAllByName?.map((item) => {
+                const checked = listPermissionCustomByIdRedux.some(
+                  (permission) => permission.Id === item.Id
+                );
+
+                return (
+                  <TreeItem
+                    key={item.Id}
+                    nodeId={item.Id}
+                    label={
+                      <FormControlLabel
+                        sx={{
+                          '&.MuiCheckbox-root': {
+                            color: '#404044',
+                            background: '#404044',
+                          },
+                          '&.Mui-checked': {
+                            color: '#404044',
+                          },
+                        }}
+                        control={
+                          <Checkbox
+                            color="default"
+                            defaultChecked={checked}
+                            // checked={checked}
+                            onChange={(e) =>
+                              handleCheckBox(e.target.checked, item.Id)
+                            }
+                          />
+                        }
+                        label={item.Name}
+                      />
+                    }
+                  />
+                );
+              })}
           </TreeView>
         </div>
       )}
