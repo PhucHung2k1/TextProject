@@ -14,6 +14,7 @@ export interface IGetPermissionPayload {
   SalonCenters: boolean;
   NeedHelps: boolean;
   TechPortals: boolean;
+  SalonSettings: boolean;
 }
 
 export class PermissionService {
