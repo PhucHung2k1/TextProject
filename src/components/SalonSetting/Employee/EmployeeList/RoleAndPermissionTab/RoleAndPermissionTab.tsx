@@ -8,30 +8,65 @@ import {
   FormHelperText,
   MenuItem,
   Button,
+  Grid,
+  Stack,
 } from '@mui/material';
 import React, { useState } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import permission from '@/pages/permission';
 
 const RoleAndPermissionTab: NextPage = () => {
-  const [showFormAppointment, setShowFormAppointment] = useState(true);
-  const [showClientManagerment, setClientManagerment] = useState(false);
-  const [showCreateAndcharge, setCreateAndcharge] = useState(false);
+  const hanldePrimaryStatus = (index: number) => {
+    const updatedStatus = listData.map((item, i) =>
+      i === index ? { ...item, IsChecked: !item.IsChecked } : item
+    );
+    setListData(updatedStatus);
+  };
 
-  const handleShowCreateAndcharge = () => {
-    setCreateAndcharge(!showCreateAndcharge);
-  };
-  const handleShowClientManagerment = () => {
-    setClientManagerment(!showClientManagerment);
-  };
-  const handleShowFormAppointment = () => {
-    setShowFormAppointment(!showFormAppointment);
-  };
+  const [listData, setListData] = useState([
+    {
+      Name: 'Appointment',
+      IsChecked: true,
+      Permissions: [
+        {
+          Name: 'Access Appointment Book',
+          IsChecked: true,
+        },
+        {
+          Name: 'Manage Appointment',
+          IsChecked: true,
+        },
+        {
+          Name: 'Manage Tech Request',
+          IsChecked: false,
+        },
+      ],
+    },
+    {
+      Name: 'Client Management',
+      IsChecked: false,
+      Permissions: [
+        {
+          Name: 'Access Appointment Book',
+          IsChecked: true,
+        },
+        {
+          Name: 'Manage Appointment',
+          IsChecked: true,
+        },
+        {
+          Name: 'Manage Tech Request',
+          IsChecked: false,
+        },
+      ],
+    },
+  ]);
 
   return (
-    <div className="flex h-[800px] w-[796px] bg-white">
-      <div className=" flex w-[732px] flex-col  text-xs text-text-secondary">
-        <div className="ml-8 mt-8 w-[732px] items-center justify-center">
+    <div className=" flex w-[732px] bg-white">
+      <div className=" w-[100%] flex-col justify-center items-center  text-xs text-text-secondary">
+        <div className="ml-8 mr-8 mt-8 w-[full] items-center justify-center">
           <FormControl fullWidth variant="outlined">
             <InputLabel shrink color="primary" id="selectRoleAndPermission">
               Select Role & Permission
@@ -80,238 +115,87 @@ const RoleAndPermissionTab: NextPage = () => {
             </div>
           </div>
           <div className="mt-8 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
-          <div className="mt-4 text-xl font-semibold leading-[133.4%] text-text-title">
-            Accessibility
-          </div>
-          <div className="mt-2 box-border h-[auto] w-[732px] rounded-lg border-[1px] border-solid border-border-light p-1">
-            <div className="ml-2 flex flex-row items-center  justify-between text-center">
-              <div className="flex flex-row">
-                <div>
-                  <Switch
-                    checked={showFormAppointment}
-                    color="primary"
-                    size="medium"
-                    onChange={handleShowFormAppointment}
-                  />
+          <div className="mb-8">
+            <div className="mt-4 text-xl font-semibold leading-[133.4%] text-text-title">
+              Accessibility
+            </div>
+            {listData.map((item, index) => (
+              <div className="mt-2 box-border h-[auto] w-[full] ] rounded-lg border-[1px] border-solid border-border-light p-1">
+                <div className="ml-2 flex flex-row items-center  justify-between text-center">
+                  <div className="flex flex-row">
+                    <div>
+                      <Switch
+                        checked={item.IsChecked}
+                        color="primary"
+                        size="medium"
+                        onChange={() => hanldePrimaryStatus(index)}
+                      />
+                    </div>
+                    <div className="mt-2 text-lg font-semibold leading-[130%] text-text-primary">
+                      {item.Name}
+                    </div>
+                  </div>
+                  <div>
+                    {item.IsChecked ? (
+                      <>
+                        <Button
+                          className="items-center justify-center"
+                          variant="text"
+                          startIcon={
+                            <RemoveIcon className="h-8 w-8 rounded bg-mango-gray-light-1 text-mango-text-gray-2" />
+                          }
+                          onClick={() => hanldePrimaryStatus(index)}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          className="items-center justify-center"
+                          variant="text"
+                          startIcon={
+                            <AddIcon className="h-8 w-8 rounded border border-mango-primary-blue bg-mango-primary-blue text-white" />
+                          }
+                          onClick={() => hanldePrimaryStatus(index)}
+                        />
+                      </>
+                    )}
+                  </div>
                 </div>
-                <div className="mt-2 text-lg font-semibold leading-[130%] text-text-primary">
-                  Appointment
-                </div>
-              </div>
-              <div>
-                {showFormAppointment ? (
+                {item.IsChecked ? (
                   <>
-                    <Button
-                      className="items-center justify-center"
-                      variant="text"
-                      startIcon={<RemoveIcon sx={{ color: '#5C5D6A' }} />}
-                      onClick={handleShowFormAppointment}
-                    />
+                    <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
+                    {item.Permissions.map((permiss) => (
+                      <div className="ml-4 flex items-center  justify-start text-center">
+                        <Checkbox
+                          color="primary"
+                          checked={permiss.IsChecked}
+                          size="medium"
+                          disabled
+                        />
+                        <div className="text-base leading-[140%]">
+                          {permiss.Name}
+                        </div>
+                      </div>
+                    ))}
                   </>
                 ) : (
-                  <>
-                    <Button
-                      className="items-center justify-center"
-                      variant="text"
-                      startIcon={<AddIcon sx={{ color: '#00ADC3' }} />}
-                      onClick={handleShowFormAppointment}
-                    />
-                  </>
+                  ''
                 )}
               </div>
-            </div>
-            {showFormAppointment ? (
-              <>
-                <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
-                <div className="ml-4 flex items-center  justify-start text-center">
-                  <Checkbox
-                    color="primary"
-                    defaultChecked
-                    size="medium"
-                    disabled
-                  />
-                  <div className="text-base leading-[140%]">
-                    Access Appointment Book
-                  </div>
+            ))}
+
+            <Stack className="mt-8" direction="row" spacing={2}>
+              <Grid xs={6} item>
+                <div className="flex h-12 w-full cursor-pointer items-center justify-center rounded-[4px] border border-border-secondary bg-white px-3 text-base font-semibold uppercase  text-text-secondary">
+                  Cancel
                 </div>
-                <div className="ml-4 flex items-center  justify-start text-center">
-                  <Checkbox
-                    color="primary"
-                    defaultChecked
-                    size="medium"
-                    disabled
-                  />
-                  <div className="text-base leading-[140%]">
-                    Manage Appointment
-                  </div>
+              </Grid>
+              <Grid xs={6} item>
+                <div className="flex h-12 w-full cursor-pointer items-center justify-center rounded-[4px] bg-primary-main text-base  font-semibold uppercase text-white">
+                  Save
                 </div>
-                <div className="ml-4 flex items-center justify-start text-center">
-                  <Checkbox
-                    color="primary"
-                    value={false}
-                    size="medium"
-                    disabled
-                  />
-                  <div className="text-base leading-[140%]">
-                    Manage Tech Request
-                  </div>
-                </div>
-              </>
-            ) : (
-              ''
-            )}
-          </div>
-          <div className="mt-2 box-border h-[auto] w-[732px] rounded-lg border-[1px] border-solid border-border-light p-1">
-            <div className="ml-2 flex flex-row items-center  justify-between text-center">
-              <div className="flex flex-row">
-                <div>
-                  <Switch
-                    checked={showClientManagerment}
-                    color="primary"
-                    size="medium"
-                    onChange={handleShowClientManagerment}
-                  />
-                </div>
-                <div className="mt-2 text-lg font-semibold leading-[130%] text-text-primary">
-                  Client Management
-                </div>
-              </div>
-              <div>
-                {showClientManagerment ? (
-                  <>
-                    <Button
-                      className="items-center justify-center"
-                      variant="text"
-                      startIcon={<RemoveIcon sx={{ color: '#5C5D6A' }} />}
-                      onClick={handleShowClientManagerment}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      className="items-center justify-center"
-                      variant="text"
-                      startIcon={<AddIcon sx={{ color: '#00ADC3' }} />}
-                      onClick={handleShowClientManagerment}
-                    />
-                  </>
-                )}
-              </div>
-            </div>
-            {showClientManagerment ? (
-              <>
-                <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
-                <div className="ml-4 flex items-center  justify-start text-center">
-                  <Checkbox
-                    color="primary"
-                    defaultChecked
-                    size="medium"
-                    disabled
-                  />
-                  <div className="text-base leading-[140%]">Take Appoment</div>
-                </div>
-                <div className="ml-4 flex items-center  justify-start text-center">
-                  <Checkbox
-                    color="primary"
-                    defaultChecked
-                    size="medium"
-                    disabled
-                  />
-                  <div className="text-base leading-[140%]">
-                    Available for Booking Online
-                  </div>
-                </div>
-                <div className="ml-4 flex items-center justify-start text-center">
-                  <Checkbox
-                    color="primary"
-                    value={false}
-                    size="medium"
-                    disabled
-                  />
-                  <div className="text-base leading-[140%]">
-                    Allowed to make quick payment
-                  </div>
-                </div>
-              </>
-            ) : (
-              ''
-            )}
-          </div>
-          <div className="mt-2 box-border h-[auto] w-[732px] rounded-lg border-[1px] border-solid border-border-light p-1">
-            <div className="ml-2 flex flex-row items-center  justify-between text-center">
-              <div className="flex flex-row">
-                <div>
-                  <Switch
-                    checked={showCreateAndcharge}
-                    color="primary"
-                    size="medium"
-                    onChange={handleShowCreateAndcharge}
-                  />
-                </div>
-                <div className="mt-2 text-lg font-semibold leading-[130%] text-text-primary">
-                  Create / Charge
-                </div>
-              </div>
-              <div>
-                {showCreateAndcharge ? (
-                  <>
-                    <Button
-                      className="items-center justify-center"
-                      variant="text"
-                      startIcon={<RemoveIcon sx={{ color: '#5C5D6A' }} />}
-                      onClick={handleShowCreateAndcharge}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      className="items-center justify-center"
-                      variant="text"
-                      startIcon={<AddIcon sx={{ color: '#00ADC3' }} />}
-                      onClick={handleShowCreateAndcharge}
-                    />
-                  </>
-                )}
-              </div>
-            </div>
-            {showCreateAndcharge ? (
-              <>
-                <div className="mt-2 box-border h-[2px] w-[full] border-t-[2px] border-solid border-line-light p-[5px]" />
-                <div className="ml-4 flex items-center  justify-start text-center">
-                  <Checkbox
-                    color="primary"
-                    defaultChecked
-                    size="medium"
-                    disabled
-                  />
-                  <div className="text-base leading-[140%]">Take Appoment</div>
-                </div>
-                <div className="ml-4 flex items-center  justify-start text-center">
-                  <Checkbox
-                    color="primary"
-                    defaultChecked
-                    size="medium"
-                    disabled
-                  />
-                  <div className="text-base leading-[140%]">
-                    Available for Booking Online
-                  </div>
-                </div>
-                <div className="ml-4 flex items-center justify-start text-center">
-                  <Checkbox
-                    color="primary"
-                    value={false}
-                    size="medium"
-                    disabled
-                  />
-                  <div className="text-base leading-[140%]">
-                    Allowed to make quick payment
-                  </div>
-                </div>
-              </>
-            ) : (
-              ''
-            )}
+              </Grid>
+            </Stack>
           </div>
         </div>
       </div>
