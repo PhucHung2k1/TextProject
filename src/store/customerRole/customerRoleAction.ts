@@ -8,6 +8,7 @@ import {
 } from './customerRoleSlice';
 import { setMessageToast, showToast } from '../toast/toastSlice';
 import type { IAddRemoveMultiRole } from '@/services/customerRole.service/customerRole.interface';
+import { showToastMessage } from '@/utils/helper/showToastMessage';
 
 export const getAllRole = createAsyncThunk(
   'account/getAllRole',
@@ -83,6 +84,7 @@ export const deleteRole = createAsyncThunk(
 
       if (status === 200 || status === 201 || status === 204) {
         dispatch(getAllRole({}));
+        showToastMessage(dispatch, 'Delelte Successful!', 'success');
       }
 
       throw new Error(error ? JSON.stringify(error) : 'Failed.');
