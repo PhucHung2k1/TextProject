@@ -68,9 +68,10 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
   const [checked, setChecked] = React.useState(false);
   const [activeKey, setActiveKey] = useState<number>(0);
   const [selectedImage, setSelectedImage] = useState<any>();
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [avatarImage, setAvatarImage] = useState<any>();
   // eslint-disable-next-line no-console
-  console.log('🚀 ~ file: EditEmployee.tsx:68 ~ avatarImage:', avatarImage);
+  // console.log('🚀 ~ file: EditEmployee.tsx:68 ~ avatarImage:', avatarImage);
 
   const handleChange = (event: any) => {
     setChecked(event.target.checked);
@@ -115,7 +116,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
       <Grid xs={12} item>
         <form className=" mt-6 flex flex-wrap justify-center gap-2" noValidate>
           <div className="relative flex w-full flex-col items-center justify-center">
-            <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full border border-{#CBCBDB}">
+            <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full border border-border-light">
               {selectedImage ? (
                 <Image
                   src={URL?.createObjectURL(selectedImage)}
