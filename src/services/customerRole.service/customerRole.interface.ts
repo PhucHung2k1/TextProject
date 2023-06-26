@@ -43,14 +43,30 @@ export interface IDetailRoleById {
   IsSystemRole: boolean;
   SystemName: null;
   StoreId: string;
-  Type: null;
+  Type: string;
+  IsTechnician: boolean;
+  TakeAppointment: boolean;
+  AvailableBookingOnline: boolean;
+  AllowQuickPayment: boolean;
   Permissions: any[];
   Id: string;
   CreateBy: null;
-  CreateDate: Date | string;
+  CreateDate: Date;
   LastModifiedBy: null;
   LastModifiedDate: null;
-  AllowQuickPayment: any;
-  TakeAppointment: any;
-  AvailableBookingOnline: any;
+  [key: string]: any;
+}
+export interface IAddRemoveMultiRoleEmployeeData {
+  AddedEmployeeIds: string[];
+  RemovedEmployeeIds: string[];
+}
+
+export interface IAddRemoveMultiRoleEmployee {
+  roleId: string;
+  data: IAddRemoveMultiRoleEmployeeData;
+}
+export interface IPatchPayloadData {
+  op: string;
+  path: string;
+  value: string;
 }

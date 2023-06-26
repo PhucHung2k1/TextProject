@@ -22,10 +22,18 @@ function AddRoleAndPermission({
   setStateAddRole,
 }: Props) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStateAddRole({
-      ...stateAddRole,
-      [event.target.name]: event.target.checked,
-    });
+    if (event.target.name === 'isTechnician') {
+      setStateAddRole({
+        ...stateAddRole,
+        isTechnician: event.target.checked,
+        takeAppointment: false,
+        availableBookingOnline: false,
+      });
+    } else
+      setStateAddRole({
+        ...stateAddRole,
+        [event.target.name]: event.target.checked,
+      });
   };
 
   return (
@@ -52,6 +60,7 @@ function AddRoleAndPermission({
           sx={sxSwitchBlue}
           control={
             <Switch
+              defaultChecked={stateAddRole.isTechnician}
               onChange={handleChange}
               name="isTechnician"
               color="primary"
@@ -66,7 +75,12 @@ function AddRoleAndPermission({
           {stateAddRole.isTechnician && (
             <>
               <FormControlLabel
-                control={<Checkbox defaultChecked color="default" />}
+                control={
+                  <Checkbox
+                    defaultChecked={stateAddRole.takeAppointment}
+                    color="default"
+                  />
+                }
                 label="Take Appointment"
                 name="takeAppointment"
               />
@@ -74,6 +88,7 @@ function AddRoleAndPermission({
                 control={
                   <Checkbox
                     color="default"
+                    defaultChecked={stateAddRole.availableBookingOnline}
                     name="availableBookingOnline"
                     onChange={handleChange}
                   />
@@ -86,6 +101,7 @@ function AddRoleAndPermission({
             control={
               <Checkbox
                 color="default"
+                defaultChecked={stateAddRole.allowQuickPayment}
                 name="allowQuickPayment"
                 onChange={handleChange}
               />

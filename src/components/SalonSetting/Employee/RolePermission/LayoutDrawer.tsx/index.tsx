@@ -13,10 +13,11 @@ interface Props {
   content: ReactNode;
   handleBack: Function;
   handleNext: Function;
-  activeStep: number;
-  steps: ISteps[];
+  activeStep?: number;
+  steps?: ISteps[];
   handleCloseDrawer: Function;
   disable: boolean;
+  showProgress?: boolean;
 }
 
 const LayoutDrawer = ({
@@ -25,10 +26,11 @@ const LayoutDrawer = ({
   content,
   handleBack,
   handleNext,
-  activeStep,
-  steps,
+  activeStep = -1,
+  steps = [],
   handleCloseDrawer,
   disable,
+  showProgress = true,
 }: Props) => {
   const heightHeader = { number: 72, className: 'h-[72px]' };
   const heightFooter = { number: 92, className: 'h-[92px]' };
@@ -43,7 +45,7 @@ const LayoutDrawer = ({
       <Box
         className={`${heightHeader.className} flex items-center justify-center bg-white p-8 text-3xl font-semibold text-text-title`}
       >
-        <ProgressComponent progress={progress} />
+        {showProgress && <ProgressComponent progress={progress} />}
         <Box
           onClick={() => handleBack()}
           className=" mr-auto cursor-pointer text-icon-color"

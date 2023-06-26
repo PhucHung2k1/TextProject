@@ -13,9 +13,11 @@ import LayoutDrawer from '.';
 import {
   addNewRole,
   addRemoveMultiRole,
+  addRemoveMultiRoleEmployee,
   getListRoleCustomById,
 } from '@/store/customerRole/customerRoleAction';
-import AssignEmployee from '../EditRolePermission';
+import AssignEmployees from '../EditRolePermission/AssignEmployeesTab';
+import { useRouter } from 'next/router';
 
 export interface ISteps {
   step: number;
@@ -30,10 +32,10 @@ export interface IStateAddRole {
   availableBookingOnline: boolean;
 }
 const DrawerRolePermission = () => {
+  const route = useRouter();
   const [roleName, setRoleName] = useState('');
   const [stateAddRole, setStateAddRole] = useState<IStateAddRole>({
     isTechnician: false,
-
     allowQuickPayment: false,
     takeAppointment: true,
     availableBookingOnline: false,
@@ -51,6 +53,12 @@ const DrawerRolePermission = () => {
   );
   const [activeStep, setActiveStep] = useState<number>(0);
   const [skipped, setSkipped] = useState(new Set<number>());
+  const listAddRemoveRolePermission = useAppSelector(
+    (state) => state.customerRoleSlice.addRemoveMultiRoleEmployee
+  );
+  const handleCloseDrawer = () => {
+    dispatch(hideDrawerRolePermission());
+  };
   const steps: ISteps[] = [
     {
       step: 0,
@@ -73,33 +81,35 @@ const DrawerRolePermission = () => {
       titleHeader: 'Set Accessibility',
       component: <SetAccessibility />,
     },
-    {
+  ];
+  if (route.pathname !== '/store-profile')
+    steps.push({
       step: 2,
       iconHeader: (
         <ArrowBackIcon className="cursor-pointer text-3xl text-icon-color" />
       ),
       titleHeader: 'Assign Employee',
-      component: <AssignEmployee idRole={idAddNewRole} selected={[]} />,
-    },
-  ];
+      component: <AssignEmployees idRole={idAddNewRole} />,
+    });
   const curStep = steps.find((item) => item.step === activeStep);
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
 
-  const handleCloseDrawer = () => {
-    dispatch(hideDrawerRolePermission());
-  };
-  const handleNext = () => {
-    let newSkipped = skipped;
+  const handleNext = async () => {
+    const newSkipped = skipped;
 
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-    if (activeStep === 0) {
-      roleName.length > 0 &&
-        dispatch(
+    const removeActiveStepFromSkipped = () => {
+      if (isStepSkipped(activeStep)) {
+        newSkipped.delete(activeStep);
+      }
+    };
+
+    const handleStep0 = async () => {
+      if (activeStep !== 0) return;
+      if (roleName.length === 0) return;
+      try {
+        const res = await dispatch(
           addNewRole({
             name: roleName,
             allowQuickPayment: stateAddRole.allowQuickPayment,
@@ -107,33 +117,68 @@ const DrawerRolePermission = () => {
             isTechnician: stateAddRole.isTechnician,
             takeAppointment: stateAddRole.takeAppointment,
           })
-        ).then((res) => {
-          const result = res.payload;
-          if (result?.status === 200 || result?.status === 201) {
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            setSkipped(newSkipped);
-          }
-        });
-    }
-    if (activeStep === 1) {
-      dispatch(
-        addRemoveMultiRole({
-          id: idAddNewRole,
-          body: listPermissionAddRemove,
-        })
-      ).then((res) => {
+        );
         const result = res.payload;
         if (result?.status === 200 || result?.status === 201) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
           setSkipped(newSkipped);
         }
-      });
-      dispatch(getListRoleCustomById(idAddNewRole));
-    }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-    if (activeStep > steps.length - 1) {
-      dispatch(hideDrawerRolePermission());
-    }
+    const handleStep1 = async () => {
+      if (activeStep !== 1) return;
+      try {
+        const res = await dispatch(
+          addRemoveMultiRole({
+            id: idAddNewRole,
+            body: listPermissionAddRemove,
+          })
+        );
+        const result = res.payload;
+        if (result?.status === 200 || result?.status === 201) {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          setSkipped(newSkipped);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+      dispatch(getListRoleCustomById(idAddNewRole));
+    };
+
+    const handleStep2 = async () => {
+      if (activeStep !== 2) return;
+      const { AddedEmployeeIds, RemovedEmployeeIds } =
+        listAddRemoveRolePermission.data;
+      if (AddedEmployeeIds.length === 0 && RemovedEmployeeIds.length === 0)
+        return;
+      try {
+        const res = await dispatch(
+          addRemoveMultiRoleEmployee(listAddRemoveRolePermission)
+        );
+        const result = res.payload;
+        if (result?.status === 200 || result?.status === 201) {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          setSkipped(newSkipped);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const handleLastStep = () => {
+      if (activeStep >= steps.length - 1) {
+        dispatch(hideDrawerRolePermission());
+      }
+    };
+
+    removeActiveStepFromSkipped();
+    await handleStep0();
+    await handleStep1();
+    await handleStep2();
+    handleLastStep();
   };
 
   const handleBack = () => {

@@ -14,7 +14,6 @@ import {
   Select,
   MenuItem,
   Grid,
-  Stack,
   Chip,
   Avatar,
   AvatarGroup,
@@ -22,6 +21,7 @@ import {
   Tooltip,
   TablePagination,
   Drawer,
+  Stack,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
@@ -106,7 +106,7 @@ const ListRolePermission = () => {
     setPage(0);
   };
   const [selectedItem, setSelectedItem] = useState<IAllCustomerRole>();
-  const [selectedListEmp, setSelectedListEmp] = useState<string[]>([]);
+
   const listEmployee = listRole.reduce((acc: any, role: IAllCustomerRole) => {
     return [...acc, ...role.Employees];
   }, []);
@@ -120,8 +120,7 @@ const ListRolePermission = () => {
 
   const handleOpenDrawer = (item: IAllCustomerRole) => {
     setSelectedItem(item);
-    const listEmp = item.Employees.map((emp) => emp.Id);
-    setSelectedListEmp(listEmp);
+
     setOpen(true);
   };
 
@@ -342,6 +341,13 @@ const ListRolePermission = () => {
               <TableBody className="text-[16px]">
                 {filterEmployee !== '' || filterFunction !== ''
                   ? dataFilterd.slice(startIndex, endIndex).map((item) => {
+                      const uniqueCategories = [
+                        ...new Set(
+                          item.Permissions.map(
+                            (itemPermission) => itemPermission.Category
+                          )
+                        ),
+                      ];
                       return (
                         <TableRow
                           className="align-top text-[16px]"
@@ -431,14 +437,14 @@ const ListRolePermission = () => {
                             scope="row"
                             className="w-[55%]"
                           >
-                            {item.Permissions.length} functions
+                            {uniqueCategories.length} functions
                             <div>
                               <Stack direction="row" flexWrap="wrap">
-                                {item.Permissions.map((itemPermission) => (
+                                {uniqueCategories.map((itemPermission) => (
                                   <Chip
-                                    key={itemPermission.Id}
+                                    key={itemPermission}
                                     className="float-right mr-2 mt-2 bg-blue-50 px-[10px] py-[7px] text-[16px] font-normal text-blue-700"
-                                    label={itemPermission.Category}
+                                    label={itemPermission}
                                     sx={{
                                       '& .css-6od3lo-MuiChip-label': {
                                         overflow: 'unset',
@@ -470,6 +476,13 @@ const ListRolePermission = () => {
                       );
                     })
                   : listRole.slice(startIndex, endIndex).map((item) => {
+                      const uniqueCategories = [
+                        ...new Set(
+                          item.Permissions.map(
+                            (itemPermission) => itemPermission.Category
+                          )
+                        ),
+                      ];
                       return (
                         <TableRow
                           className="align-top text-[16px]"
@@ -527,14 +540,14 @@ const ListRolePermission = () => {
                             scope="row"
                             className="w-[55%]"
                           >
-                            {item.Permissions.length} functions
+                            {uniqueCategories.length} functions
                             <div>
                               <Stack direction="row" flexWrap="wrap">
-                                {item.Permissions.map((itemPermission) => (
+                                {uniqueCategories.map((itemPermission) => (
                                   <Chip
-                                    key={itemPermission.Id}
+                                    key={itemPermission}
                                     className="float-right mr-2 mt-2 bg-blue-50 px-[10px] py-[7px] text-[16px] font-normal text-blue-700"
-                                    label={itemPermission.Category}
+                                    label={itemPermission}
                                     sx={{
                                       '& .css-6od3lo-MuiChip-label': {
                                         overflow: 'unset',
@@ -579,7 +592,6 @@ const ListRolePermission = () => {
             <Drawer anchor="right" open={open} onClose={handleCloseDrawer}>
               <EditRolePermission
                 idRole={selectedItem?.Id}
-                selected={selectedListEmp}
                 handleCloseDrawer={handleCloseDrawer}
                 selectedItem={selectedItem}
               />

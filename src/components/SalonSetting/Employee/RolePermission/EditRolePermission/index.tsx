@@ -1,35 +1,35 @@
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  Switch,
-  TextField,
-  styled,
-} from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 // eslint-disable-next-line import/no-cycle
 import { AntTab, StyledTabs } from '../..';
-import EditRolePermissionTab from './EditRolePermissionTab';
-import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
-import AccessbilityTab from './AccessbilityTab';
+
+import type {
+  IAllCustomerRole,
+  IPatchPayloadData,
+} from '@/services/customerRole.service/customerRole.interface';
 import {
+  addRemoveMultiRole,
+  addRemoveMultiRoleEmployee,
   getListRoleCustomById,
   getRoleDetailById,
+  updateRole,
 } from '@/store/customerRole/customerRoleAction';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
+import AssignEmployees from './AssignEmployeesTab';
+import AddRoleAndPermission from '../AddRoleAndPermission';
+import type { IStateAddRole } from '../LayoutDrawer.tsx/DrawerRolePermission';
+import SetAccessibility from '../SetAccessibility';
+import LayoutDrawer from '../LayoutDrawer.tsx';
 
 interface EditRolePermissionProps {
   idRole: any;
-  selected: string[];
+
   handleCloseDrawer: any;
   selectedItem: IAllCustomerRole | undefined;
 }
 const EditRolePermission: React.FC<EditRolePermissionProps> = ({
   idRole,
-  selected,
   handleCloseDrawer,
   selectedItem,
 }) => {
@@ -37,23 +37,16 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
     {
       id: 0,
       label: 'Assign Employee ',
-      key: 'assignemployee',
-      children: (
-        <EditRolePermissionTab
-          idRole={idRole}
-          selected={selected}
-          handleCloseDrawer={handleCloseDrawer}
-        />
-      ),
+      key: 'assignEmployee',
+      children: <AssignEmployees idRole={idRole} />,
     },
     {
       id: 1,
-      label: 'Accessbility',
-      key: 'accessbility',
-      children: <AccessbilityTab handleCloseDrawer={handleCloseDrawer} />,
+      label: 'Accessability',
+      key: 'accessability',
+      children: <SetAccessibility />,
     },
   ];
-  const [roleName, setRoleName] = React.useState(selectedItem?.Name);
 
   const detailRoleById = useAppSelector(
     (state) => state.customerRoleSlice.detailRoleById
@@ -61,34 +54,23 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
 
   const dispatch = useAppDispatch();
   const [activeKey, setActiveKey] = React.useState<number>(0);
-  const [checkboxValues, setCheckboxValues] = useState({
+  const [roleName, setRoleName] = useState(selectedItem?.Name || '');
+  const [stateAddRole, setStateAddRole] = useState<IStateAddRole>({
+    isTechnician: detailRoleById.IsTechnician,
+    allowQuickPayment: detailRoleById.AllowQuickPayment,
     takeAppointment: detailRoleById.TakeAppointment,
-    bookingOnline: detailRoleById.AvailableBookingOnline,
-    quickPayment: detailRoleById.AllowQuickPayment,
+    availableBookingOnline: detailRoleById.AvailableBookingOnline,
   });
 
-  const handleCheckboxChange = (event: any) => {
-    const { name, checked } = event.target;
-    setCheckboxValues((prevValues) => ({
-      ...prevValues,
-      [name]: checked,
-    }));
-  };
-
+  const listAddRemoveRolePermission = useAppSelector(
+    (state) => state.customerRoleSlice.addRemoveMultiRoleEmployee
+  );
+  const listPermissionAddRemove = useAppSelector(
+    (state) => state.customerRoleSlice.addRemoveMultiRoleIds
+  );
   const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setActiveKey(newValue);
   };
-
-  const [enableForTechnician, setEnableForTechnician] = React.useState(true);
-  const StyledCheckbox = styled(Checkbox)`
-    &.MuiCheckbox-root {
-      color: #404044;
-    }
-
-    &.Mui-checked {
-      color: #404044;
-    }
-  `;
 
   useEffect(() => {
     if (selectedItem?.Id) {
@@ -96,118 +78,83 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
       dispatch(getListRoleCustomById(selectedItem && selectedItem?.Id));
     }
   }, [selectedItem?.Id]);
+  const handleOnSave = () => {
+    const payload: IPatchPayloadData[] = [];
+    const addPayload = (path: string, value: any) => {
+      if (value !== detailRoleById?.[path.substring(1)]) {
+        payload.push({
+          op: 'replace',
+          path,
+          value,
+        });
+      }
+    };
+    addPayload('/Name', roleName);
+    addPayload('/allowQuickPayment', stateAddRole.allowQuickPayment);
+    addPayload('/availableBookingOnline', stateAddRole.availableBookingOnline);
+    addPayload('/isTechnician', stateAddRole.isTechnician);
+    addPayload('/takeAppointment', stateAddRole.takeAppointment);
+    if (payload.length > 0) {
+      dispatch(updateRole({ id: detailRoleById.Id, data: payload }));
+    }
+    if (
+      listPermissionAddRemove.AddedPermissions.length > 0 ||
+      listPermissionAddRemove.RemovedPermissions.length > 0
+    ) {
+      dispatch(
+        addRemoveMultiRole({
+          id: idRole,
+          body: listPermissionAddRemove,
+        })
+      );
+    }
+    if (
+      listAddRemoveRolePermission.data.AddedEmployeeIds.length > 0 ||
+      listAddRemoveRolePermission.data.RemovedEmployeeIds.length > 0
+    ) {
+      dispatch(addRemoveMultiRoleEmployee(listAddRemoveRolePermission));
+    }
+  };
 
   return (
-    <Grid container spacing={2} className=" w-[796px] bg-white p-8">
-      <Grid xs={12} item>
-        <div className="relative flex items-center justify-center text-3xl font-semibold text-text-title">
-          <p>Edit Role & Permission</p>
-          <Box
-            onClick={handleCloseDrawer}
-            className="absolute left-[-10px]  cursor-pointer text-icon-color"
-          >
-            <CloseIcon fontSize="large" />
-          </Box>
-        </div>
-      </Grid>
-      <Grid xs={12} item className="flex flex-row items-center justify-between">
-        <TextField
-          variant="outlined"
-          label="Role & Permission Name"
-          sx={{
-            '& .MuiInputBase-root.Mui-focused': {
-              '& > fieldset': {
-                borderColor: '#00BDD6',
-              },
-            },
-            '& label.Mui-focused': {
-              color: '#00BDD6',
-            },
-          }}
-          InputProps={{
-            style: { height: '48px' },
-          }}
-          value={roleName}
-          className=" mr-4 w-9/12"
-          onChange={(e) => setRoleName(e.target.value)}
-        />
+    <LayoutDrawer
+      disable={false}
+      showProgress={false}
+      content={
+        <>
+          <AddRoleAndPermission
+            roleName={roleName}
+            setRoleName={setRoleName}
+            setStateAddRole={setStateAddRole}
+            stateAddRole={stateAddRole}
+          />
 
-        <FormControlLabel
-          sx={{
-            display: 'block',
-            '& .MuiSwitch-switchBase.Mui-checked': {
-              color: '#00BDD6',
-            },
-            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-              backgroundColor: '#00BDD6',
-            },
-          }}
-          control={
-            <Switch
-              checked={enableForTechnician}
-              onChange={() => setEnableForTechnician(!enableForTechnician)}
-              name="isEnableTechnician"
-              color="primary"
-            />
-          }
-          label={selectedItem?.Name}
-        />
-      </Grid>
-      <Grid xs={12} item>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <StyledCheckbox
-                checked={checkboxValues.takeAppointment}
-                onChange={handleCheckboxChange}
-                name="takeAppointment"
-              />
-            }
-            label="Take Appointment"
-          />
-          <FormControlLabel
-            disabled={!enableForTechnician}
-            control={
-              <StyledCheckbox
-                checked={checkboxValues.bookingOnline}
-                onChange={handleCheckboxChange}
-                name="bookingOnline"
-              />
-            }
-            label="Available for Booking Online"
-          />
-          <FormControlLabel
-            control={
-              <StyledCheckbox
-                checked={checkboxValues.quickPayment}
-                onChange={handleCheckboxChange}
-                name="quickPayment"
-              />
-            }
-            disabled={!enableForTechnician}
-            label="Allowed to make quick payment"
-          />
-        </FormGroup>
-      </Grid>
-      <Grid xs={12} item>
-        <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <StyledTabs value={activeKey} onChange={handleChangeTab}>
-              {itemsTab.map((item) => (
-                <AntTab key={item.key} label={item.label} />
-              ))}
-            </StyledTabs>
-          </Box>
-          {itemsTab.map((item) => {
-            return item.id === activeKey ? (
-              <div key={item.key}>{item.children}</div>
-            ) : (
-              <></>
-            );
-          })}
-        </Box>
-      </Grid>
-    </Grid>
+          <Grid xs={12} item>
+            <Box sx={{ width: '100%' }}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <StyledTabs value={activeKey} onChange={handleChangeTab}>
+                  {itemsTab.map((item) => (
+                    <AntTab key={item.key} label={item.label} />
+                  ))}
+                </StyledTabs>
+              </Box>
+              {itemsTab.map((item) => {
+                return item.id === activeKey ? (
+                  <div key={item.key}>{item.children}</div>
+                ) : (
+                  <></>
+                );
+              })}
+            </Box>
+          </Grid>
+        </>
+      }
+      handleBack={handleCloseDrawer}
+      handleCloseDrawer={handleCloseDrawer}
+      handleNext={handleOnSave}
+      iconHeader={<CloseIcon fontSize="large" />}
+      titleHeader="Edit Role & Permission"
+    />
   );
 };
 

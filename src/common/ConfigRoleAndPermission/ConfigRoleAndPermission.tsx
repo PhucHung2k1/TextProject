@@ -25,23 +25,23 @@ export const ConfigRoleAndPermission = ({
 
   const [showAll, setShowAll] = useState<boolean>(false);
   const handleCheckBox = (value: boolean, id: string) => {
-    const checkExist = listPermissionCustomByIdRedux.some(
+    const isSelected = listPermissionCustomByIdRedux.some(
       (item) => item.Id === id
     );
 
-    if (!checkExist) {
+    if (!isSelected) {
       if (value) {
-        setListAddedPermissions((prev: any) => [...prev, id]);
+        setListAddedPermissions((prevList: string[]) => [...prevList, id]);
       } else {
-        setListAddedPermissions((prev: any) =>
-          prev.filter((item: string) => item !== id)
+        setListAddedPermissions((prevList: string[]) =>
+          prevList.filter((item: string) => item !== id)
         );
       }
-    } else if (value) {
-      setListRemovedPermissions((prev: any) => [...prev, id]);
+    } else if (!value) {
+      setListRemovedPermissions((prevList: string[]) => [...prevList, id]);
     } else {
-      setListRemovedPermissions((prev: any) =>
-        prev.filter((item: string) => item !== id)
+      setListRemovedPermissions((prevList: string[]) =>
+        prevList.filter((item: string) => item !== id)
       );
     }
   };

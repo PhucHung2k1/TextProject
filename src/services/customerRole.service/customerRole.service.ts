@@ -1,11 +1,16 @@
 import type { IResponse } from '@/utils/axios/entities';
 import { catchAxiosError } from '@/utils/axios/error';
 import { apiDelete, apiGet, apiPatch, apiPost } from '@/utils/axios/instance';
-import type { IAddRemoveMultiRole } from './customerRole.interface';
+import type {
+  IAddRemoveMultiRole,
+  IAddRemoveMultiRoleEmployeeData,
+  IPatchPayloadData,
+} from './customerRole.interface';
 
 const GET_ALL_ROLE = 'role/all';
 const URL_ROLE = 'role';
 const URL_ADD_REMOVE_ROLE = '/add-or-remove-permission';
+const URL_ADD_REMOVE_EMPLOYEE_BY_ROLE = '/add-or-remove-employees';
 
 export class CustomerRole {
   public getAllRole = async (): Promise<IResponse> => {
@@ -22,9 +27,9 @@ export class CustomerRole {
     return response;
   };
 
-  public updateCustomerRole = async (
+  public updateRole = async (
     id: string,
-    body: any
+    body: IPatchPayloadData[]
   ): Promise<IResponse> => {
     const response: IResponse = await apiPatch(`${URL_ROLE}/${id}`, body).catch(
       catchAxiosError
@@ -59,6 +64,17 @@ export class CustomerRole {
   ): Promise<IResponse> => {
     const response: IResponse = await apiPost(
       `${URL_ROLE}/${id}${URL_ADD_REMOVE_ROLE}`,
+      body
+    ).catch(catchAxiosError);
+    return response;
+  };
+
+  public addRemoveMultiRoleEmployee = async (
+    id: string,
+    body: IAddRemoveMultiRoleEmployeeData
+  ): Promise<IResponse> => {
+    const response: IResponse = await apiPost(
+      `${URL_ROLE}/${id}${URL_ADD_REMOVE_EMPLOYEE_BY_ROLE}`,
       body
     ).catch(catchAxiosError);
     return response;

@@ -3,14 +3,9 @@ import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { useEffect, useState } from 'react';
 import { setAddRemoveMultiRoleIds } from '@/store/customerRole/customerRoleSlice';
 import { arrCategory } from '../listCategory';
-import { Button, Grid, Stack, Divider } from '@mui/material';
+import { Grid } from '@mui/material';
 
-interface AccessbilityTabProps {
-  handleCloseDrawer: any;
-}
-const AccessbilityTab: React.FC<AccessbilityTabProps> = ({
-  handleCloseDrawer,
-}) => {
+const AccessabilityTab = () => {
   const dispatch = useAppDispatch();
 
   const [listAddedPermissions, setListAddedPermissions] = useState<string[]>(
@@ -51,34 +46,8 @@ const AccessbilityTab: React.FC<AccessbilityTabProps> = ({
           );
         })}
       </Grid>
-      <Grid xs={12} item>
-        <Divider />
-      </Grid>
-      <Grid xs={12} item className="mt-4">
-        <Stack direction="row" spacing={2}>
-          <Grid xs={6} item>
-            <Button
-              type="submit"
-              className="h-12 w-[354px] border-mango-gray-light-3 text-[16px] font-bold capitalize text-mango-text-gray-2 hover:border-mango-gray-light-3 "
-              variant="outlined"
-              onClick={handleCloseDrawer}
-            >
-              CANCEL
-            </Button>
-          </Grid>
-          <Grid xs={6} item>
-            <Button
-              className="flex h-12 w-full cursor-pointer items-center justify-center rounded-[4px] bg-primary-main text-base  font-semibold  uppercase text-white hover:bg-primary-main"
-              variant="contained"
-              type="submit"
-            >
-              Save
-            </Button>
-          </Grid>
-        </Stack>
-      </Grid>
     </Grid>
   );
 };
 
-export default AccessbilityTab;
+export default AccessabilityTab;

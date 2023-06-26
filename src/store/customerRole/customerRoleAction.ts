@@ -7,8 +7,13 @@ import {
   setDetailRoleById,
 } from './customerRoleSlice';
 import { setMessageToast, showToast } from '../toast/toastSlice';
-import type { IAddRemoveMultiRole } from '@/services/customerRole.service/customerRole.interface';
+import type {
+  IAddRemoveMultiRole,
+  IAddRemoveMultiRoleEmployee,
+  IPatchPayloadData,
+} from '@/services/customerRole.service/customerRole.interface';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
+import { getEmployeeList } from '../employee/employeeAction';
 
 export const getAllRole = createAsyncThunk(
   'account/getAllRole',
@@ -23,6 +28,36 @@ export const getAllRole = createAsyncThunk(
         dispatch(setListRole(data));
       }
 
+      throw new Error(error ? JSON.stringify(error) : 'Failed.');
+    } catch (err: any) {
+      dispatch(setMessageToast(err.extendData[0].Message));
+      dispatch(showToast());
+      // throw new Error(`Error signing in: ${err.message}`);
+    }
+  }
+);
+export interface IUpdateRole {
+  id: string;
+  data: IPatchPayloadData[];
+}
+export const updateRole = createAsyncThunk(
+  'account/getAllRole',
+  async (_body: IUpdateRole, { dispatch }) => {
+    const servicesCustomerRoleAPI = new CustomerRole();
+
+    try {
+      const { status, error } = await servicesCustomerRoleAPI.updateRole(
+        _body.id,
+        _body.data
+      );
+
+      if (status === 200 || status === 201) {
+        showToastMessage(dispatch, 'Successfully', 'success');
+        dispatch(getAllRole({}));
+      }
+      if (error) {
+        showToastMessage(dispatch, error?.data?.extendData[0].Message, 'error');
+      }
       throw new Error(error ? JSON.stringify(error) : 'Failed.');
     } catch (err: any) {
       dispatch(setMessageToast(err.extendData[0].Message));
@@ -120,6 +155,7 @@ export const addRemoveMultiRole = createAsyncThunk(
 
       if (status === 200 || status === 201 || status === 204) {
         dispatch(getAllRole({}));
+        dispatch(getListRoleCustomById(id));
         return { data, status, message: 'Successfully' };
       }
       return error;
@@ -141,6 +177,27 @@ export const getRoleDetailById = createAsyncThunk(
       }
     } catch (err: any) {
       // throw new Error(`Error signing in: ${err.message}`);
+    }
+  }
+);
+
+export const addRemoveMultiRoleEmployee = createAsyncThunk(
+  '/role/addRemoveMultiRoleEmployee',
+  async (body: IAddRemoveMultiRoleEmployee, { dispatch }) => {
+    const servicesRole = new CustomerRole();
+    try {
+      const { data, status, error } =
+        await servicesRole.addRemoveMultiRoleEmployee(body.roleId, body.data);
+
+      if (status === 200 || status === 201) {
+        showToastMessage(dispatch, `Update success!`, 'success');
+        dispatch(getAllRole({}));
+        dispatch(getEmployeeList({}));
+        return data;
+      }
+      showToastMessage(dispatch, error?.message || 'Send failed', 'error');
+    } catch (err: any) {
+      // err
     }
   }
 );
