@@ -6,6 +6,7 @@ import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
 import type { IPermissionChild } from '@/services/permission.services/permission.interface';
 import { useAppSelector } from '@/store/hook';
+import { sxCheckBox } from '@/utils/helper/styles';
 
 interface Props {
   configName: string;
@@ -100,6 +101,7 @@ export const ConfigRoleAndPermission = ({
                         control={
                           <Checkbox
                             color="default"
+                            sx={sxCheckBox}
                             defaultChecked={checked}
                             // checked={checked}
                             onChange={(e) =>

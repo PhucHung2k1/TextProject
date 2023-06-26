@@ -178,7 +178,7 @@ import Button from '@mui/material/Button';
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { sxSelect, sxTextField } from '@/utils/helper/styles';
+import { sxCheckBox, sxSelect, sxTextField } from '@/utils/helper/styles';
 
 export default function CustomForm() {
   const [age, setAge] = useState('');
@@ -403,7 +403,7 @@ export default function CustomForm() {
         </FormGroup> */}
                 <FormControlLabel
                   value="tuesday"
-                  control={<Checkbox />}
+                  control={<Checkbox sx={sxCheckBox} />}
                   label="Tuesday"
                   labelPlacement="bottom"
                 />

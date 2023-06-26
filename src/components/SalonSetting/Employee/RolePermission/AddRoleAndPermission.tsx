@@ -1,4 +1,4 @@
-import { sxTextField } from '@/utils/helper/styles';
+import { sxCheckBox, sxTextField } from '@/utils/helper/styles';
 import {
   Checkbox,
   FormControlLabel,
@@ -60,16 +60,16 @@ function AddRoleAndPermission({ roleName, setRoleName }: Props) {
       <Grid xs={12} item>
         <FormGroup>
           <FormControlLabel
-            control={<Checkbox defaultChecked />}
+            control={<Checkbox sx={sxCheckBox} defaultChecked />}
             label="Allowed to make quick payment"
           />
           <FormControlLabel
             disabled={!enableForTechnician}
-            control={<Checkbox />}
+            control={<Checkbox sx={sxCheckBox} />}
             label="Available for Booking Online"
           />
           <FormControlLabel
-            control={<Checkbox />}
+            control={<Checkbox sx={sxCheckBox} />}
             disabled={!enableForTechnician}
             label="Allowed to make quick payment"
           />
