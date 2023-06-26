@@ -50,4 +50,7 @@ export interface IDetailRoleById {
   CreateDate: Date | string;
   LastModifiedBy: null;
   LastModifiedDate: null;
+  AllowQuickPayment: any;
+  TakeAppointment: any;
+  AvailableBookingOnline: any;
 }
