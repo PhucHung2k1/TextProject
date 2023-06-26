@@ -14,7 +14,7 @@ import {
   addNewRole,
   addRemoveMultiRole,
   addRemoveMultiRoleEmployee,
-  getListRoleCustomById,
+  getListPermissionCustomById,
 } from '@/store/customerRole/customerRoleAction';
 import AssignEmployees from '../EditRolePermission/AssignEmployeesTab';
 import { useRouter } from 'next/router';
@@ -145,7 +145,7 @@ const DrawerRolePermission = () => {
       } catch (error) {
         console.error(error);
       }
-      dispatch(getListRoleCustomById(idAddNewRole));
+      dispatch(getListPermissionCustomById(idAddNewRole));
     };
 
     const handleStep2 = async () => {

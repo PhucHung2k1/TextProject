@@ -4,15 +4,10 @@ import CloseIcon from '@mui/icons-material/Close';
 // eslint-disable-next-line import/no-cycle
 import { AntTab, StyledTabs } from '../..';
 
-import type {
-  IAllCustomerRole,
-  IPatchPayloadData,
-} from '@/services/customerRole.service/customerRole.interface';
+import type { IPatchPayloadData } from '@/services/customerRole.service/customerRole.interface';
 import {
   addRemoveMultiRole,
   addRemoveMultiRoleEmployee,
-  getListRoleCustomById,
-  getRoleDetailById,
   updateRole,
 } from '@/store/customerRole/customerRoleAction';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
@@ -26,12 +21,10 @@ interface EditRolePermissionProps {
   idRole: any;
 
   handleCloseDrawer: any;
-  selectedItem: IAllCustomerRole | undefined;
 }
 const EditRolePermission: React.FC<EditRolePermissionProps> = ({
   idRole,
   handleCloseDrawer,
-  selectedItem,
 }) => {
   const itemsTab = [
     {
@@ -54,12 +47,12 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
 
   const dispatch = useAppDispatch();
   const [activeKey, setActiveKey] = React.useState<number>(0);
-  const [roleName, setRoleName] = useState(selectedItem?.Name || '');
+  const [roleName, setRoleName] = useState(detailRoleById?.Name || '');
   const [stateAddRole, setStateAddRole] = useState<IStateAddRole>({
-    isTechnician: detailRoleById.IsTechnician,
-    allowQuickPayment: detailRoleById.AllowQuickPayment,
-    takeAppointment: detailRoleById.TakeAppointment,
-    availableBookingOnline: detailRoleById.AvailableBookingOnline,
+    isTechnician: detailRoleById?.IsTechnician,
+    allowQuickPayment: detailRoleById?.AllowQuickPayment,
+    takeAppointment: detailRoleById?.TakeAppointment,
+    availableBookingOnline: detailRoleById?.AvailableBookingOnline,
   });
 
   const listAddRemoveRolePermission = useAppSelector(
@@ -71,15 +64,19 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
   const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setActiveKey(newValue);
   };
-
   useEffect(() => {
-    if (selectedItem?.Id) {
-      dispatch(getRoleDetailById(selectedItem && selectedItem?.Id));
-      dispatch(getListRoleCustomById(selectedItem && selectedItem?.Id));
-    }
-  }, [selectedItem?.Id]);
+    setRoleName(detailRoleById.Name);
+    setStateAddRole({
+      isTechnician: detailRoleById?.IsTechnician,
+      allowQuickPayment: detailRoleById?.AllowQuickPayment,
+      takeAppointment: detailRoleById?.TakeAppointment,
+      availableBookingOnline: detailRoleById?.AvailableBookingOnline,
+    });
+  }, [detailRoleById]);
+
   const handleOnSave = () => {
     const payload: IPatchPayloadData[] = [];
+
     const addPayload = (path: string, value: any) => {
       if (value !== detailRoleById?.[path.substring(1)]) {
         payload.push({

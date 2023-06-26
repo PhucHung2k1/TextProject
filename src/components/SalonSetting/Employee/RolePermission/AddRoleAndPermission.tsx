@@ -60,7 +60,7 @@ function AddRoleAndPermission({
           sx={sxSwitchBlue}
           control={
             <Switch
-              defaultChecked={stateAddRole.isTechnician}
+              checked={stateAddRole.isTechnician}
               onChange={handleChange}
               name="isTechnician"
               color="primary"
@@ -77,8 +77,9 @@ function AddRoleAndPermission({
               <FormControlLabel
                 control={
                   <Checkbox
-                    defaultChecked={stateAddRole.takeAppointment}
+                    checked={stateAddRole.takeAppointment}
                     color="default"
+                    onChange={handleChange}
                   />
                 }
                 label="Take Appointment"
@@ -88,7 +89,7 @@ function AddRoleAndPermission({
                 control={
                   <Checkbox
                     color="default"
-                    defaultChecked={stateAddRole.availableBookingOnline}
+                    checked={stateAddRole.availableBookingOnline}
                     name="availableBookingOnline"
                     onChange={handleChange}
                   />
@@ -101,7 +102,7 @@ function AddRoleAndPermission({
             control={
               <Checkbox
                 color="default"
-                defaultChecked={stateAddRole.allowQuickPayment}
+                checked={stateAddRole.allowQuickPayment}
                 name="allowQuickPayment"
                 onChange={handleChange}
               />

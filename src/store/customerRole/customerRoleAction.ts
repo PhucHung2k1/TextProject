@@ -66,14 +66,14 @@ export const updateRole = createAsyncThunk(
     }
   }
 );
-export const getListRoleCustomById = createAsyncThunk(
+export const getListPermissionCustomById = createAsyncThunk(
   'role/getListRoleCustomById',
   async (id: string, { dispatch }) => {
     const servicesCustomerRoleAPI = new CustomerRole();
 
     try {
       const { status, data } =
-        await servicesCustomerRoleAPI.getListRoleCustomById(id);
+        await servicesCustomerRoleAPI.getListPermissionCustomById(id);
 
       if (status === 200 || status === 201 || status === 204) {
         dispatch(setListPermissionCustomById(data));
@@ -103,7 +103,7 @@ export const addNewRole = createAsyncThunk(
 
       if (status === 200 || status === 201) {
         dispatch(setAddNewRoleId(data?.Id));
-        dispatch(getListRoleCustomById(data?.Id));
+        dispatch(getListPermissionCustomById(data?.Id));
         dispatch(getAllRole({}));
         return { data, status, message: 'Successfully' };
       }
@@ -155,7 +155,7 @@ export const addRemoveMultiRole = createAsyncThunk(
 
       if (status === 200 || status === 201 || status === 204) {
         dispatch(getAllRole({}));
-        dispatch(getListRoleCustomById(id));
+        dispatch(getListPermissionCustomById(id));
         return { data, status, message: 'Successfully' };
       }
       return error;

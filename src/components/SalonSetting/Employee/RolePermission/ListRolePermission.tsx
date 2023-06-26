@@ -31,7 +31,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import Badge from '@mui/material/Badge';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
-import { getAllRole } from '@/store/customerRole/customerRoleAction';
+import {
+  getAllRole,
+  getListPermissionCustomById,
+  getRoleDetailById,
+} from '@/store/customerRole/customerRoleAction';
 import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
 import ModalCustomContainer from '@/components/Modal/ModalCustom';
 import { ModalDeleteRole } from './ModalDeleteRole';
@@ -120,7 +124,8 @@ const ListRolePermission = () => {
 
   const handleOpenDrawer = (item: IAllCustomerRole) => {
     setSelectedItem(item);
-
+    dispatch(getRoleDetailById(item.Id));
+    dispatch(getListPermissionCustomById(item.Id));
     setOpen(true);
   };
 
@@ -593,7 +598,6 @@ const ListRolePermission = () => {
               <EditRolePermission
                 idRole={selectedItem?.Id}
                 handleCloseDrawer={handleCloseDrawer}
-                selectedItem={selectedItem}
               />
             </Drawer>
           </TableContainer>

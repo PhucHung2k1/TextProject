@@ -51,7 +51,9 @@ export class CustomerRole {
     return response;
   };
 
-  public getListRoleCustomById = async (id: string): Promise<IResponse> => {
+  public getListPermissionCustomById = async (
+    id: string
+  ): Promise<IResponse> => {
     const response: IResponse = await apiGet(
       `${URL_ROLE}/${id}/permissions`
     ).catch(catchAxiosError);
