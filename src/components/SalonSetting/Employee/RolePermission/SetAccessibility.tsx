@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { arrCategory } from './listCategory';
 import { useEffect, useState } from 'react';
 import { setAddRemoveMultiRoleIds } from '@/store/customerRole/customerRoleSlice';
+import { Box } from '@mui/material';
 
 const SetAccessibility = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ const SetAccessibility = () => {
   ]);
 
   return (
-    <div className=" w-full overflow-auto pt-8">
+    <Box className="h-full w-full overflow-auto ">
       {arrCategory.map((category) => {
         return (
           <ConfigRoleAndPermission
@@ -42,7 +43,7 @@ const SetAccessibility = () => {
           />
         );
       })}
-    </div>
+    </Box>
   );
 };
 

@@ -8,6 +8,7 @@ import {
 } from './customerRoleSlice';
 import { setMessageToast, showToast } from '../toast/toastSlice';
 import type { IAddRemoveMultiRole } from '@/services/customerRole.service/customerRole.interface';
+import { showToastMessage } from '@/utils/helper/showToastMessage';
 
 export const getAllRole = createAsyncThunk(
   'account/getAllRole',
@@ -50,6 +51,11 @@ export const getListRoleCustomById = createAsyncThunk(
 
 interface IAddNewRolePayload {
   name: string;
+  active?: boolean;
+  isTechnician: boolean;
+  takeAppointment: boolean;
+  availableBookingOnline: boolean;
+  allowQuickPayment: boolean;
 }
 export const addNewRole = createAsyncThunk(
   'account/addNewRole',
@@ -61,12 +67,19 @@ export const addNewRole = createAsyncThunk(
         await servicesCustomerRoleAPI.createCustomerRole(body);
 
       if (status === 200 || status === 201) {
-        dispatch(setAddNewRoleId(data));
-        dispatch(getListRoleCustomById(data));
+        dispatch(setAddNewRoleId(data?.Id));
+        dispatch(getListRoleCustomById(data?.Id));
         dispatch(getAllRole({}));
+        return { data, status, message: 'Successfully' };
       }
-
-      throw new Error(error ? JSON.stringify(error) : 'Failed.');
+      if (error) {
+        showToastMessage(
+          dispatch,
+          error?.data?.extendData[0]?.Message,
+          'error'
+        );
+        return error;
+      }
     } catch (err: any) {
       // throw new Error(`Error signing in: ${err.message}`);
     }
@@ -101,14 +114,14 @@ export const addRemoveMultiRole = createAsyncThunk(
     const servicesCustomerRoleAPI = new CustomerRole();
 
     try {
-      const { status, error } =
+      const { data, status, error } =
         await servicesCustomerRoleAPI.addRemoveMultiRole(id, body);
 
       if (status === 200 || status === 201 || status === 204) {
         dispatch(getAllRole({}));
+        return { data, status, message: 'Successfully' };
       }
-
-      throw new Error(error ? JSON.stringify(error) : 'Failed.');
+      return error;
     } catch (err: any) {
       // throw new Error(`Error signing in: ${err.message}`);
     }
