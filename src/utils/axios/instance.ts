@@ -116,7 +116,7 @@ export const apiPatch = async <T = any>(
 
 export const apiDelete = async <T = any>(
   url: string,
-  payload: any
+  payload?: any
 ): Promise<IResponse> => {
   const response = await axiosService.delete<T>(url, {
     data: payload,

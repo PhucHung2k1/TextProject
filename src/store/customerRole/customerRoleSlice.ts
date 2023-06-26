@@ -49,7 +49,7 @@ const initialState = {
     LastModifiedBy: null,
     LastModifiedDate: null,
   },
-} as IInitialState;
+} as unknown as IInitialState;
 
 const customerRoleSlice = createSlice({
   name: 'customerRole',

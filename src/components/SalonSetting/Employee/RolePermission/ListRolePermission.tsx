@@ -35,8 +35,9 @@ import { getAllRole } from '@/store/customerRole/customerRoleAction';
 import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
 import ModalCustomContainer from '@/components/Modal/ModalCustom';
 import { ModalDeleteRole } from './ModalDeleteRole';
-import EditRolePermission from './EditRolePermission';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
+// eslint-disable-next-line import/no-cycle
+import EditRolePermission from './EditRolePermission';
 
 interface PermissionItem {
   Name: string;
@@ -579,6 +580,8 @@ const ListRolePermission = () => {
               <EditRolePermission
                 idRole={selectedItem?.Id}
                 selected={selectedListEmp}
+                handleCloseDrawer={handleCloseDrawer}
+                selectedItem={selectedItem}
               />
             </Drawer>
           </TableContainer>

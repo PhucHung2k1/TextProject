@@ -96,6 +96,7 @@ export const deleteRole = createAsyncThunk(
 
       if (status === 200 || status === 201 || status === 204) {
         dispatch(getAllRole({}));
+        showToastMessage(dispatch, 'Delelte Successful!', 'success');
       }
 
       throw new Error(error ? JSON.stringify(error) : 'Failed.');

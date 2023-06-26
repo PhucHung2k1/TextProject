@@ -17,7 +17,7 @@ export const ModalDeleteRole: React.FC<ModalDeleteRoleProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   return (
-    <div className="flex h-auto w-[568px] flex-col items-center justify-center gap-5 rounded-2xl bg-white p-5 shadow-md ">
+    <div className="flex h-auto w-[568px] flex-col items-center justify-center gap-5 rounded bg-white p-5 shadow-md ">
       <div className="text-xl font-bold text-text-title">Remove role?</div>
       <div className="text-base text-primary-dark">
         Would you like to remove "{item.Name}" role and permission?
