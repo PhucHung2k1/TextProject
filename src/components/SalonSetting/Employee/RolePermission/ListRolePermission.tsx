@@ -11,7 +11,6 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Select,
   MenuItem,
   Grid,
   Chip,
@@ -22,6 +21,7 @@ import {
   TablePagination,
   Drawer,
   Stack,
+  Select,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
@@ -42,6 +42,7 @@ import { ModalDeleteRole } from './ModalDeleteRole';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
 // eslint-disable-next-line import/no-cycle
 import EditRolePermission from './EditRolePermission';
+import { sxSelect } from '@/utils/helper/styles';
 
 interface PermissionItem {
   Name: string;
@@ -264,6 +265,7 @@ const ListRolePermission = () => {
                 }}
               >
                 <Select
+                  sx={sxSelect}
                   displayEmpty
                   value={filterEmployee}
                   input={<OutlinedInput />}
@@ -297,6 +299,7 @@ const ListRolePermission = () => {
                 }}
               >
                 <Select
+                  sx={sxSelect}
                   displayEmpty
                   value={filterFunction}
                   input={<OutlinedInput />}

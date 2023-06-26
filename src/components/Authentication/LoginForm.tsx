@@ -27,6 +27,7 @@ import { useForm } from 'react-hook-form';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
 import { useRouter } from 'next/router';
 import { confirmInvitation } from '@/store/customer/customerAction';
+import { sxCheckBox, sxTextField } from '@/utils/helper/styles';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -103,10 +104,7 @@ export default function LoginForm() {
 
   return (
     <div>
-      <form
-        className="container mx-auto mb-10 mt-8 flex w-full max-w-2xl flex-col items-center justify-start gap-5"
-        onSubmit={handleSubmit(handleSignIn)}
-      >
+      <form className="px-[32px]" onSubmit={handleSubmit(handleSignIn)}>
         <Grid container spacing={2}>
           <Grid xs={12} item>
             <FormControl
@@ -114,6 +112,7 @@ export default function LoginForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Email Address"
                 type="text"
                 error={Boolean(errors.username)}
@@ -139,6 +138,7 @@ export default function LoginForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
                 error={Boolean(errors.password)}
@@ -173,11 +173,12 @@ export default function LoginForm() {
           </Grid>
         </Grid>
 
-        <div className="flex w-full items-center justify-between">
+        <div className="flex w-full items-center justify-between mt-[10px]">
           <FormControlLabel
             control={
               <Checkbox
                 checked={rememberMe}
+                sx={sxCheckBox}
                 onChange={(_, v) => {
                   setRememberMe(v);
                 }}
@@ -187,7 +188,7 @@ export default function LoginForm() {
           />
           <Link
             href="/forget-password"
-            className="cursor-pointer  font-medium text-mango-primary-blue"
+            className="cursor-pointer font-medium text-mango-primary-blue"
           >
             <div className="cursor-pointer text-text-primary-dark ">
               Forget Password?
@@ -197,14 +198,14 @@ export default function LoginForm() {
 
         <Button
           variant="contained"
-          className="mt-3 h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
+          className="mt-[23px] h-[48px] w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
           type="submit"
           sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
         >
           LOGIN
         </Button>
-        <div className="flex cursor-pointer items-center justify-center gap-1">
-          <div>Don't have an account?</div>
+        <div className="flex cursor-pointer items-center justify-center  mt-[20px] mb-[120px]">
+          <div>Don't have an account?&ensp; </div>
           <Link href="/sign-up">
             <div className="font-bold text-mango-primary-blue">
               Create new account

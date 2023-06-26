@@ -21,6 +21,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import { sxCheckBox, sxTextField } from '@/utils/helper/styles';
 
 interface IFormInput {
   firstName: string;
@@ -137,7 +138,11 @@ export default function SignUpForm() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="my-8" noValidate>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="my-8 px-[32px]"
+        noValidate
+      >
         <Grid container spacing={2}>
           <Grid xs={6} item>
             <FormControl
@@ -145,23 +150,10 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="First Name"
-                required
                 type="text"
-                error={Boolean(errors.firstName)}
-                {...register('firstName', {
-                  required: 'Enter Your First Name!',
-                })}
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-              />
-              <ErrorMessage
-                errors={errors}
-                name="firstName"
-                render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
-                    <span className="font-medium">{message}</span>
-                  </div>
-                )}
               />
             </FormControl>
           </Grid>
@@ -171,6 +163,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Last Name"
                 type="text"
                 required
@@ -184,7 +177,10 @@ export default function SignUpForm() {
                 errors={errors}
                 name="lastName"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="mt-1 ml-2 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -197,6 +193,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Email Address"
                 type="email"
                 required
@@ -223,7 +220,10 @@ export default function SignUpForm() {
                 errors={errors}
                 name="email"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="mt-1 ml-2 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -236,6 +236,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
                 error={Boolean(errors.password)}
@@ -261,7 +262,10 @@ export default function SignUpForm() {
                 errors={errors}
                 name="password"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="mt-1 ml-2 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -275,6 +279,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Confirm Password"
                 type={showCfPassword ? 'text' : 'password'}
                 required
@@ -301,7 +306,10 @@ export default function SignUpForm() {
                 errors={errors}
                 name="confirmPassword"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="mt-1 ml-2 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -312,6 +320,7 @@ export default function SignUpForm() {
             <FormControlLabel
               control={
                 <Checkbox
+                  sx={sxCheckBox}
                   checked={agreePolicy}
                   onChange={(_, v) => {
                     setAgreePolicy(v);
@@ -321,11 +330,11 @@ export default function SignUpForm() {
               label=""
             />
 
-            <div className="ml-[-10px] flex">
+            <div className=" flex">
               <p className="text-text-secondary">
                 I agree to the{' '}
-                <span className="text-[#1F87E5]">Privacy Policy </span>
-                and <span className="text-[#1F87E5]">Terms of Use</span>
+                <span className="text-[#00BDD6]">Privacy Policy </span>
+                and <span className="text-[#00BDD6]">Terms of Use</span>
               </p>
             </div>
           </Grid>
@@ -347,7 +356,7 @@ export default function SignUpForm() {
           <Grid xs={12} item>
             <FormControl
               fullWidth
-              className="flex cursor-pointer flex-row items-center justify-center gap-1"
+              className="flex cursor-pointer flex-row items-center justify-center gap-1 mb-[50px]"
             >
               <div>Had an account?</div>
               <Link href="/login">

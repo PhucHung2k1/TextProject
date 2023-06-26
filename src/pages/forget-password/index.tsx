@@ -16,6 +16,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import SendIcon from '@mui/icons-material/Send';
 import GetYourPasswordSucess from '@/components/Authentication/GetYourPasswordSucess';
 import { forgotPassword } from '@/store/passwordCustomer/passwordCustomerAction';
+import { sxTextField } from '@/utils/helper/styles';
 
 const ForgotPassword = () => {
   const {
@@ -112,6 +113,7 @@ const ForgotPassword = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
+                      sx={sxTextField}
                       label="Email Address"
                       type="email"
                       required

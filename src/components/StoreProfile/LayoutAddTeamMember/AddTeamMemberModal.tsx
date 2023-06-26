@@ -30,7 +30,11 @@ import type { CountryPhone } from '@/services/common/common.interface';
 import { ErrorMessage } from '@hookform/error-message';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import { Clear, Check, Error } from '@mui/icons-material';
-import { sxTextField } from '@/utils/helper/styles';
+import {
+  sxDisableTextField,
+  sxSelect,
+  sxTextField,
+} from '@/utils/helper/styles';
 import { getAllPermission } from '@/store/permission/permissionAction';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
 
@@ -71,7 +75,6 @@ interface FormControlComponentProps {
 const FormControlComponent = ({
   label,
   type,
-  sx = {},
   error = false,
   required = false,
   placeholder,
@@ -83,9 +86,9 @@ const FormControlComponent = ({
 }: FormControlComponentProps) => (
   <FormControl fullWidth required={required}>
     <TextField
+      sx={sxTextField}
       label={label}
       type={type}
-      sx={sx}
       required={required}
       error={error}
       placeholder={placeholder}
@@ -311,13 +314,7 @@ export const AddYourEmployeeModal = () => {
               <TextField
                 disabled
                 className=" bg-[#F2F2F2]"
-                sx={{
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    WebkitTextFillColor: '#404044',
-                    fontWeight: '600',
-                    fontSize: '16px',
-                  },
-                }}
+                sx={sxDisableTextField}
                 id="input-with-icon-textfield"
                 label="Prefix"
                 defaultValue="(+1)"
@@ -403,6 +400,7 @@ export const AddYourEmployeeModal = () => {
                     sx={{
                       '& .css-1sv0avo-MuiGrid-root': {
                         display: 'none',
+                        sxSelect,
                       },
                     }}
                     input={<OutlinedInput />}
@@ -502,11 +500,7 @@ export const AddYourEmployeeModal = () => {
                   <Select
                     displayEmpty
                     value={valuePayStructure}
-                    sx={{
-                      '& .css-1sv0avo-MuiGrid-root': {
-                        display: 'none',
-                      },
-                    }}
+                    sx={sxSelect}
                     input={<OutlinedInput />}
                     inputProps={{ 'aria-label': 'Without label' }}
                     className="bg-white"
