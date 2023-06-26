@@ -6,11 +6,11 @@ import React, { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import type { IEmployee } from './EmployeeList';
 import { apiPostPhoto } from '@/utils/axios/instance';
-// eslint-disable-next-line import/no-cycle
-import { AntTab, StyledTabs } from '..';
+
 import EmployeeProfileTab from './EditEmployeeTab/EmployeeProfileTab';
 import RoleAndPermissionTab from './RoleAndPermissionTab/RoleAndPermissionTab';
 import WorkScheduleTab from './WorkScheduleTab/WorkScheduleTab';
+import { AntTab, StyledTabs } from '../../ConfigurationSetting';
 // import RoleAndPermissionTab from './RoleAndPermissionTab/RoleAndPermissionTab';
 // import StoreWorkingHoursSetup from '@/components/StoreProfile/StoreWorkingHoursSetup';
 
@@ -71,7 +71,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
   // eslint-disable-next-line unused-imports/no-unused-vars
   const [avatarImage, setAvatarImage] = useState<any>();
   // eslint-disable-next-line no-console
-  // console.log('🚀 ~ file: EditEmployee.tsx:68 ~ avatarImage:', avatarImage);
+  console.log('🚀 ~ file: EditEmployee.tsx:68 ~ avatarImage:', avatarImage);
 
   const handleChange = (event: any) => {
     setChecked(event.target.checked);

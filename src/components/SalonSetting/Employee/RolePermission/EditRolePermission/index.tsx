@@ -1,8 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-// eslint-disable-next-line import/no-cycle
-import { AntTab, StyledTabs } from '../..';
 
 import type { IPatchPayloadData } from '@/services/customerRole.service/customerRole.interface';
 import {
@@ -16,6 +14,10 @@ import AddRoleAndPermission from '../AddRoleAndPermission';
 import type { IStateAddRole } from '../LayoutDrawer.tsx/DrawerRolePermission';
 import SetAccessibility from '../SetAccessibility';
 import LayoutDrawer from '../LayoutDrawer.tsx';
+import {
+  AntTab,
+  StyledTabs,
+} from '@/components/SalonSetting/ConfigurationSetting';
 
 interface EditRolePermissionProps {
   idRole: any;
@@ -26,6 +28,11 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
   idRole,
   handleCloseDrawer,
 }) => {
+  const dispatch = useAppDispatch();
+  const detailRoleById = useAppSelector(
+    (state) => state.customerRoleSlice.detailRoleById
+  );
+
   const itemsTab = [
     {
       id: 0,
@@ -41,11 +48,6 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
     },
   ];
 
-  const detailRoleById = useAppSelector(
-    (state) => state.customerRoleSlice.detailRoleById
-  );
-
-  const dispatch = useAppDispatch();
   const [activeKey, setActiveKey] = React.useState<number>(0);
   const [roleName, setRoleName] = useState(detailRoleById?.Name || '');
   const [stateAddRole, setStateAddRole] = useState<IStateAddRole>({

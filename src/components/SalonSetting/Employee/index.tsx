@@ -1,53 +1,12 @@
-import { Box, Tab, styled } from '@mui/material';
-import Tabs from '@mui/material/Tabs';
+import { Box } from '@mui/material';
 import * as React from 'react';
 import { useState } from 'react';
-// eslint-disable-next-line import/no-cycle
-import EmployeeList from './EmployeeList/EmployeeList';
 
-import RolePermissionList from './RolePermission/ListRolePermission';
 import PayStructure from './PayStructure/PayStructure';
+import { StyledTabs, AntTab } from '../ConfigurationSetting';
+import EmployeeList from './EmployeeList/EmployeeList';
+import RolePermissionList from './RolePermission/ListRolePermission';
 
-interface StyledTabsProps {
-  children?: React.ReactNode;
-  value: number;
-  onChange: (event: React.SyntheticEvent, newValue: number) => void;
-}
-interface StyledTabProps {
-  label: string;
-}
-
-export const AntTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props} />
-))(() => ({
-  fontWeight: 500,
-  color: '#9B9BA00',
-  '&.Mui-selected': {
-    color: '#00BED6',
-    fontWeight: 700,
-  },
-}));
-
-export const StyledTabs = styled((props: StyledTabsProps) => (
-  <Tabs
-    {...props}
-    // eslint-disable-next-line tailwindcss/no-custom-classname
-    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-  />
-))({
-  '& .MuiTabs-indicator': {
-    display: 'flex',
-    justifyContent: 'center',
-    color: '#00BED6',
-    backgroundColor: 'transparent',
-  },
-
-  '& .MuiTabs-indicatorSpan': {
-    width: '100%',
-    color: '#00BED6',
-    backgroundColor: '#00BED6',
-  },
-});
 export const EmployeeSetting = () => {
   const [activeKey, setActiveKey] = useState<number>(0);
 
