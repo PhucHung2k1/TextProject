@@ -2,12 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isLoading: false,
+  isLoadingLogin: false,
 };
 
 const loadingSlice = createSlice({
   name: 'loading',
   initialState,
-  reducers: {},
+  reducers: {
+    showLoadingLogin: (state, action) => {
+      state.isLoadingLogin = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(
@@ -28,5 +33,5 @@ const loadingSlice = createSlice({
       );
   },
 });
-
+export const { showLoadingLogin } = loadingSlice.actions;
 export default loadingSlice.reducer;

@@ -10,13 +10,16 @@ import { useEffect } from 'react';
 import { getStoreCustomer } from '@/store/store/storeAction';
 import { useRouter } from 'next/router';
 import { getCustomerProfile, getMyRole } from '@/store/customer/customerAction';
+import { showLoadingLogin } from '@/store/loading/loadingSlice';
 
 const Index = () => {
   const { data } = useSession();
   const router = useRouter();
 
   const showLoading = useAppSelector((state) => state.loadingSlice.isLoading);
-
+  const isLoadingLogin = useAppSelector(
+    (state) => state.loadingSlice.isLoadingLogin
+  );
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getStoreCustomer({}));
@@ -25,11 +28,12 @@ const Index = () => {
   const dataMyRole = useAppSelector((state) => state.customerSlice.dataMyRole);
 
   const handleSignOut = () => {
+    dispatch(showLoadingLogin(true));
     Cookies.remove('auth-token');
     Cookies.remove('refresh-token');
     Cookies.remove('store-customer');
 
-    signOut();
+    signOut().finally(() => dispatch(showLoadingLogin(false)));
   };
   useEffect(() => {
     if (data?.user?.AccessToken) {
@@ -46,7 +50,7 @@ const Index = () => {
     }
   }, []);
 
-  return showLoading ? (
+  return showLoading || isLoadingLogin ? (
     <div className="flex h-screen w-screen items-center justify-center bg-sky-100">
       <CircularProgress />
     </div>
