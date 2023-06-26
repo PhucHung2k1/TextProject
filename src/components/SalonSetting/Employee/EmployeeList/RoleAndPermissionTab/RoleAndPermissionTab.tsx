@@ -15,6 +15,7 @@ import {
 import React, { useState } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { sxSelect } from '@/utils/helper/styles';
 
 const RoleAndPermissionTab: NextPage = () => {
   const [listData, setListData] = useState([
@@ -72,6 +73,7 @@ const RoleAndPermissionTab: NextPage = () => {
               Select Role & Permission
             </InputLabel>
             <Select
+              sx={sxSelect}
               labelId="selectRoleAndPermission"
               label="Select Role & Permission"
               displayEmpty

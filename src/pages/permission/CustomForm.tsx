@@ -178,7 +178,7 @@ import Button from '@mui/material/Button';
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { sxTextField } from '@/utils/helper/styles';
+import { sxSelect, sxTextField } from '@/utils/helper/styles';
 
 export default function CustomForm() {
   const [age, setAge] = useState('');
@@ -291,6 +291,7 @@ export default function CustomForm() {
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
                 <Select
+                  sx={sxSelect}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={age}
@@ -353,6 +354,7 @@ export default function CustomForm() {
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">Age</InputLabel>
                 <Select
+                  sx={sxSelect}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={age}

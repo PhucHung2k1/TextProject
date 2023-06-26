@@ -11,7 +11,6 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Select,
   MenuItem,
   Grid,
   Stack,
@@ -22,6 +21,7 @@ import {
   Tooltip,
   TablePagination,
   Drawer,
+  Select,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
@@ -37,6 +37,7 @@ import ModalCustomContainer from '@/components/Modal/ModalCustom';
 import { ModalDeleteRole } from './ModalDeleteRole';
 import EditRolePermission from './EditRolePermission';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
+import { sxSelect } from '@/utils/helper/styles';
 
 interface PermissionItem {
   Name: string;
@@ -259,6 +260,7 @@ const ListRolePermission = () => {
                 }}
               >
                 <Select
+                  sx={sxSelect}
                   displayEmpty
                   value={filterEmployee}
                   input={<OutlinedInput />}
@@ -292,6 +294,7 @@ const ListRolePermission = () => {
                 }}
               >
                 <Select
+                  sx={sxSelect}
                   displayEmpty
                   value={filterFunction}
                   input={<OutlinedInput />}

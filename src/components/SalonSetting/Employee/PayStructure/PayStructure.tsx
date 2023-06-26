@@ -28,7 +28,7 @@ import { Add, MoreHoriz, Search } from '@mui/icons-material';
 import { styled } from '@mui/system';
 // eslint-disable-next-line import/no-cycle
 import DrawerAddPayStructure from './AddPayStructure/DrawerAddPayStructure';
-import { sxTextField } from '@/utils/helper/styles';
+import { sxSelect, sxTextField } from '@/utils/helper/styles';
 
 // eslint-disable-next-line import/no-cycle
 interface IEmployee {
@@ -304,6 +304,7 @@ const PayStructure = () => {
             <div className="flex h-20 w-full items-center gap-6 rounded-sm bg-bg-light px-4 py-7 ">
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={sxSelect}
                   displayEmpty
                   value={filterPayType}
                   input={<OutlinedInput />}
@@ -323,6 +324,7 @@ const PayStructure = () => {
               </FormControl>
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={sxSelect}
                   displayEmpty
                   value={filterEmployee}
                   input={<OutlinedInput />}

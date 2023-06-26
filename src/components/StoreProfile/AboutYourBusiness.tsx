@@ -17,7 +17,7 @@ import { Store } from '@/services/store.service/store.service';
 import type { IStoreProfile } from '@/services/store.service/store.interface';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
-import { sxTextField } from '@/utils/helper/styles';
+import { sxTextField, sxDisableTextField } from '@/utils/helper/styles';
 
 const POST_IMAGE = '/file/upload-picture';
 
@@ -196,13 +196,7 @@ const AboutYourBusiness = () => {
           <TextField
             disabled
             className="w-[128px] bg-[#F2F2F2]"
-            sx={{
-              '& .MuiInputBase-input.Mui-disabled': {
-                WebkitTextFillColor: '#404044',
-                fontWeight: '600',
-                fontSize: '16px',
-              },
-            }}
+            sx={{ sxDisableTextField }}
             id="input-with-icon-textfield"
             label="Prefix"
             defaultValue="(+1)"

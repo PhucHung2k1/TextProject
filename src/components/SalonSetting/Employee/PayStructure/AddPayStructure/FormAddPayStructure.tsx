@@ -24,7 +24,7 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { sxTextField } from '@/utils/helper/styles';
+import { sxSelect, sxTextField } from '@/utils/helper/styles';
 
 interface IFormInput {
   firstName: string;
@@ -144,6 +144,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                       Pay Structure Type
                     </InputLabel>
                     <Select
+                      sx={sxSelect}
                       labelId="demo-select-small-label"
                       id="demo-select-small"
                       value={payStructureType}

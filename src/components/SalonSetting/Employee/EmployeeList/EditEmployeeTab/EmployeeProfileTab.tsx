@@ -30,7 +30,7 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { sxTextField } from '@/utils/helper/styles';
+import { sxTextField, sxDisableTextField } from '@/utils/helper/styles';
 
 const listColors = [
   '#FFFFFF',
@@ -408,13 +408,7 @@ const EmployeeProfileTab = () => {
                         <TextField
                           disabled
                           className=" bg-[#F2F2F2]"
-                          sx={{
-                            '& .MuiInputBase-input.Mui-disabled': {
-                              WebkitTextFillColor: '#404044',
-                              fontWeight: '600',
-                              fontSize: '16px',
-                            },
-                          }}
+                          sx={{ sxDisableTextField }}
                           id="input-with-icon-textfield"
                           label="Prefix"
                           defaultValue="(+1)"

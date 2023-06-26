@@ -14,3 +14,10 @@ export const sxSelect = {
   },
   color: '#404044',
 };
+export const sxDisableTextField = {
+  '& .MuiInputBase-input.Mui-disabled': {
+    WebkitTextFillColor: '#404044',
+    fontWeight: '600',
+    fontSize: '16px',
+  },
+};

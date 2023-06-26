@@ -24,6 +24,7 @@ import type {
 } from '@/services/workingHours.service/workingHours.interface';
 import { convertTo12h, convertTo24h } from '@/helper/stringHelper';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { sxSelect } from '@/utils/helper/styles';
 
 const WorkScheduleTab: NextPage = () => {
   const [showEditHours, setShowEditHours] = useState(false);
@@ -281,6 +282,7 @@ const WorkScheduleTab: NextPage = () => {
                         Start
                       </FormHelperText>
                       <Select
+                        sx={sxSelect}
                         labelId="demo-select-small-label"
                         id="demo-select-small"
                         value={convertTo12h(startHour)}
@@ -314,6 +316,7 @@ const WorkScheduleTab: NextPage = () => {
                         End
                       </FormHelperText>
                       <Select
+                        sx={sxSelect}
                         labelId="demo-select-small-label"
                         id="demo-select-small"
                         value={convertTo12h(endHour)}
@@ -366,6 +369,7 @@ const WorkScheduleTab: NextPage = () => {
                                 Break Time
                               </FormHelperText>
                               <Select
+                                sx={sxSelect}
                                 labelId="demo-select-small-label"
                                 id="demo-select-small"
                                 className="w-[212px]"
@@ -404,6 +408,7 @@ const WorkScheduleTab: NextPage = () => {
                                 &nbsp;
                               </FormHelperText>
                               <Select
+                                sx={sxSelect}
                                 labelId="demo-select-small-label"
                                 id="demo-select-small"
                                 value={convertTo12h(form.EndHours)}
