@@ -178,6 +178,7 @@ import Button from '@mui/material/Button';
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { sxTextField } from '@/utils/helper/styles';
 
 export default function CustomForm() {
   const [age, setAge] = useState('');
@@ -217,6 +218,7 @@ export default function CustomForm() {
             </Grid>
             <Grid item xs={12} sm={10}>
               <TextField
+                sx={sxTextField}
                 required
                 id="title"
                 name="title"
@@ -260,6 +262,7 @@ export default function CustomForm() {
             </Grid>
             <Grid item xs={12} sm={10}>
               <TextField
+                sx={sxTextField}
                 required
                 id="artist"
                 name="artist"
@@ -316,6 +319,7 @@ export default function CustomForm() {
             </Grid>
             <Grid item xs={12} sm={4}>
               <TextField
+                sx={sxTextField}
                 required
                 id="author"
                 name="author"

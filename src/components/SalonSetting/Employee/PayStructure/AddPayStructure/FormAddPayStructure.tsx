@@ -24,6 +24,7 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { sxTextField } from '@/utils/helper/styles';
 
 interface IFormInput {
   firstName: string;
@@ -106,6 +107,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
             >
               <TextField
                 label="Pay Structure Group Name"
+                sx={sxTextField}
                 type="text"
                 required
                 error={Boolean(errors.lastName)}
@@ -175,6 +177,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                   <TextField
                     label="Potential Bonus"
                     type="text"
+                    sx={sxTextField}
                     {...register('potentialbonus', {})}
                     className="!rounded-sm border border-mango-text-gray-1 !outline-none"
                     InputProps={{
@@ -196,6 +199,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                     <TextField
                       label="Commission Payout"
                       type="text"
+                      sx={sxTextField}
                       {...register('commissionpayout', {})}
                       className="!rounded-sm border border-mango-text-gray-1 !outline-none"
                       InputProps={{
@@ -214,6 +218,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
+                      sx={sxTextField}
                       label="Max Commission Payout"
                       type="text"
                       {...register('maxcommissionpayout', {})}
@@ -258,6 +263,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                       className="w-[83%] text-sm font-normal !text-mango-text-black-1"
                     >
                       <TextField
+                        sx={sxTextField}
                         type="number"
                         {...register('address1', {})}
                         className={`!rounded-sm border border-mango-text-gray-1 !outline-none ${
@@ -290,6 +296,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                       className="w-[83%] text-sm font-normal !text-mango-text-black-1"
                     >
                       <TextField
+                        sx={sxTextField}
                         type="number"
                         {...register('address1', {})}
                         className={`!rounded-sm border border-mango-text-gray-1 !outline-none ${
@@ -337,6 +344,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                       className="w-[83%] text-sm font-normal !text-mango-text-black-1"
                     >
                       <TextField
+                        sx={sxTextField}
                         type="number"
                         {...register('address1', {})}
                         className={`!rounded-sm border border-mango-text-gray-1 !outline-none ${
@@ -369,6 +377,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                       className="w-[83%] text-sm font-normal !text-mango-text-black-1"
                     >
                       <TextField
+                        sx={sxTextField}
                         type="number"
                         {...register('address1', {})}
                         className={`!rounded-sm border border-mango-text-gray-1 !outline-none ${
@@ -398,6 +407,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                   </Box>
                   <Grid xs={9}>
                     <TextField
+                      sx={sxTextField}
                       select
                       value={valueTechPortal}
                       onChange={handleChangeTechPortal}
@@ -425,6 +435,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                           className="text-sm font-normal !text-mango-text-black-1"
                         >
                           <TextField
+                            sx={sxTextField}
                             label="Min hours (h)"
                             type="number"
                             error={Boolean(errors.password)}
@@ -556,6 +567,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                     className=" text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
+                      sx={sxTextField}
                       type="number"
                       label="Tip"
                       {...register('address1', {})}
@@ -577,6 +589,7 @@ const FormAddPayStructure: React.FC<FormAddPayStructureProps> = ({
                     className=" text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
+                      sx={sxTextField}
                       type="number"
                       label="Surcharge"
                       {...register('address1', {})}

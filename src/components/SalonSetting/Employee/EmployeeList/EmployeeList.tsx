@@ -27,6 +27,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/system';
 // eslint-disable-next-line import/no-cycle
 import EditEmployee from './EditEmployee';
+import { sxTextField } from '@/utils/helper/styles';
 
 export interface IEmployee {
   id: number;
@@ -328,6 +329,7 @@ const EmployeeList = () => {
           <Grid xs={6} item>
             <div className="flex w-full items-center justify-end gap-6">
               <TextField
+                sx={sxTextField}
                 variant="outlined"
                 placeholder="Search..."
                 InputProps={{

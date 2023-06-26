@@ -27,6 +27,7 @@ import { useForm } from 'react-hook-form';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
 import { useRouter } from 'next/router';
 import { confirmInvitation } from '@/store/customer/customerAction';
+import { sxTextField } from '@/utils/helper/styles';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -114,6 +115,7 @@ export default function LoginForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Email Address"
                 type="text"
                 error={Boolean(errors.username)}
@@ -139,6 +141,7 @@ export default function LoginForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
                 error={Boolean(errors.password)}

@@ -28,6 +28,7 @@ import { Add, MoreHoriz, Search } from '@mui/icons-material';
 import { styled } from '@mui/system';
 // eslint-disable-next-line import/no-cycle
 import DrawerAddPayStructure from './AddPayStructure/DrawerAddPayStructure';
+import { sxTextField } from '@/utils/helper/styles';
 
 // eslint-disable-next-line import/no-cycle
 interface IEmployee {
@@ -268,6 +269,7 @@ const PayStructure = () => {
           <Grid xs={6} item>
             <div className="flex w-full items-center justify-end gap-6">
               <TextField
+                sx={sxTextField}
                 variant="outlined"
                 placeholder="Search..."
                 InputProps={{

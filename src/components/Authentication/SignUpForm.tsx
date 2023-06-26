@@ -21,6 +21,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import { sxTextField } from '@/utils/helper/styles';
 
 interface IFormInput {
   firstName: string;
@@ -145,6 +146,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="First Name"
                 required
                 type="text"
@@ -171,6 +173,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Last Name"
                 type="text"
                 required
@@ -197,6 +200,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Email Address"
                 type="email"
                 required
@@ -236,6 +240,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
                 error={Boolean(errors.password)}
@@ -275,6 +280,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Confirm Password"
                 type={showCfPassword ? 'text' : 'password'}
                 required

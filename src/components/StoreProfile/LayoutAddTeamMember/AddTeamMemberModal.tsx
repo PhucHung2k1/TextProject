@@ -72,7 +72,6 @@ interface FormControlComponentProps {
 const FormControlComponent = ({
   label,
   type,
-  sx = {},
   error = false,
   required = false,
   placeholder,
@@ -84,9 +83,9 @@ const FormControlComponent = ({
 }: FormControlComponentProps) => (
   <FormControl fullWidth required={required}>
     <TextField
+      sx={sxTextField}
       label={label}
       type={type}
-      sx={sx}
       required={required}
       error={error}
       placeholder={placeholder}
@@ -623,6 +622,7 @@ export const AddYourEmployeeModal = () => {
                       }}
                       renderInput={(params) => (
                         <TextField
+                          sx={sxTextField}
                           {...params}
                           {...register('serviceAndProduct', {})}
                         />

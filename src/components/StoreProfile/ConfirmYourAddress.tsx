@@ -152,10 +152,10 @@ const ConfirmYourAddress = () => {
                 renderInput={(params) => {
                   return (
                     <TextField
+                      sx={sxTextField}
                       {...params}
                       placeholder="Search"
                       label="Search your address"
-                      sx={sxTextField}
                       InputProps={{
                         ...params.InputProps,
                         startAdornment: (

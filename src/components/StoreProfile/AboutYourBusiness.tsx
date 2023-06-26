@@ -17,6 +17,7 @@ import { Store } from '@/services/store.service/store.service';
 import type { IStoreProfile } from '@/services/store.service/store.interface';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
+import { sxTextField } from '@/utils/helper/styles';
 
 const POST_IMAGE = '/file/upload-picture';
 
@@ -181,6 +182,7 @@ const AboutYourBusiness = () => {
         </p>
         <div className="mb-1 mt-[36px] h-[56px] w-full">
           <TextField
+            sx={sxTextField}
             id="outlined-basic"
             label="Your salon name"
             variant="outlined"
@@ -188,16 +190,6 @@ const AboutYourBusiness = () => {
             value={formStore.Name}
             name="Name"
             onChange={handleFieldChange}
-            sx={{
-              '& .MuiInputBase-root.Mui-focused': {
-                '& > fieldset': {
-                  borderColor: '#00BDD6',
-                },
-              },
-              '& label.Mui-focused': {
-                color: '#00BDD6',
-              },
-            }}
           />
         </div>
         <div className="flex w-full justify-between">
@@ -239,16 +231,7 @@ const AboutYourBusiness = () => {
           <div>
             <FormControl className="h-[56px] w-[352px] ">
               <TextField
-                sx={{
-                  '& .MuiInputBase-root.Mui-focused': {
-                    '& > fieldset': {
-                      borderColor: '#00BDD6',
-                    },
-                  },
-                  '& label.Mui-focused': {
-                    color: '#00BDD6',
-                  },
-                }}
+                sx={sxTextField}
                 value={formStore.PhoneNumber}
                 // error={Boolean(errors.PhoneNumber)}
                 // {...register('PhoneNumber', {
