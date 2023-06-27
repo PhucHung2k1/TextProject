@@ -34,7 +34,7 @@ const StoreProfile = () => {
   }, [router]);
 
   return (
-    <main className="flex h-screen items-center justify-center bg-mango-gray-light-2">
+    <main className="h-screen bg-mango-gray-light-2 py-[8%]">
       {
         listStepConfigStore.find((item) => item.step === progressSetupStore)
           ?.component

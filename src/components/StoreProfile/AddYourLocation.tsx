@@ -74,15 +74,13 @@ const AddYourLocation = () => {
 
   return (
     <div>
-      <div className=" text-center">
-        <div className="flex items-center justify-center ">
-          <ArrowBackIcon
-            onClick={() => handlePreviousProgressSetupStore(dispatch)}
-            className="cursor-pointer text-3xl"
-          />
+      <div className="relative text-center">
+        <ArrowBackIcon
+          onClick={() => handlePreviousProgressSetupStore(dispatch)}
+          className="absolute left-0 top-0 cursor-pointer text-3xl"
+        />
 
-          <p className="mx-auto text-[32px] font-semibold">Add your location</p>
-        </div>
+        <p className="mx-auto text-[32px] font-semibold">Add your location</p>
 
         <p className="text-mango-text-gray-2">Where can clients find you?</p>
       </div>

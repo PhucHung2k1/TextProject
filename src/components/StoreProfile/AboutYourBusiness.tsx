@@ -124,7 +124,7 @@ const AboutYourBusiness = () => {
   ]);
   return (
     <LayoutStoreProfile>
-      <p className="mb-[8px] mt-[16px] text-center text-[32px] font-semibold text-text-title">
+      <p className="mb-[8px] text-center text-[32px] font-semibold text-text-title">
         About your salon
       </p>
       <p className="mb-[48px] text-center text-[14px] text-mango-text-gray-2">

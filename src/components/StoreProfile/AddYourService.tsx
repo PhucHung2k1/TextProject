@@ -6,10 +6,9 @@ import {
   Switch,
   FormControlLabel,
 } from '@mui/material';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // import { LinearProgressWithLabel } from '../LinearProgressWithLabel';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { ArrowBack } from '@mui/icons-material';
 import {
   handleForwardProgressSetupStore,
   handlePreviousProgressSetupStore,
@@ -21,40 +20,23 @@ const AddYourService = () => {
   // const [progress, setProgress] = useState<number>(0);
 
   const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress((oldProgress) => {
-  //       if (oldProgress === 100) {
-  //         return 0;
-  //       }
-  //       return Math.min(oldProgress);
-  //     });
-  //   });
 
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
   return (
     <LayoutStoreProfile>
-      <div className="relative flex w-full items-center justify-center ">
-        <div className="absolute left-0 cursor-pointer">
-          <ArrowBack
-            fontSize="large"
-            onClick={() => handlePreviousProgressSetupStore(dispatch)}
-          />
-        </div>
+      <div className="relative text-center ">
+        <ArrowBackIcon
+          onClick={() => handlePreviousProgressSetupStore(dispatch)}
+          className="absolute left-0 top-2 cursor-pointer text-3xl text-icon-color"
+        />
 
-        <p className="mb-[8px] mt-[16px] text-center text-[32px] font-semibold text-text-title">
-          Add your service
-        </p>
+        <p className="mx-auto text-[32px] font-semibold">Add your service</p>
       </div>
-      <p className="mb-[48px] text-center text-[14px] text-mango-text-gray-2">
+      <p className="text-center text-[14px] text-mango-text-gray-2">
         Set up services for clients to easily book an appointment with you
       </p>
       <FormGroup>
         <FormControlLabel
-          className="ml-[1px]"
+          className="ml-[1px] mt-[55px]"
           sx={{
             '& .MuiSwitch-switchBase.Mui-checked': {
               color: '#00BDD6',
@@ -78,10 +60,12 @@ const AddYourService = () => {
         <div className=" mb-[20x] mt-[25px] flex h-[166px] w-full ">
           <div
             className="flex w-full
-        cursor-pointer items-center  justify-center gap-2 rounded-lg border border-[#CBCBDB] bg-[#F9F9FA]"
+        cursor-pointer items-center  justify-center gap-2 rounded-lg border border-dashed border-[#CBCBDB] bg-[#F9F9FA]"
           >
-            <PersonAddIcon fontSize="medium" />
-            <div className="mt-1 text-base font-semibold">Add service</div>
+            <PersonAddIcon className="text-[#75778F]" fontSize="medium" />
+            <div className="mt-1 text-base font-semibold text-[#75778F]">
+              Add service
+            </div>
           </div>
         </div>
       </div>

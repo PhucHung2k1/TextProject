@@ -10,7 +10,7 @@ export const LayoutStoreProfile = ({ children }: Props) => {
     <Box className="flex justify-center ">
       <Box className="relative  w-[568px] overflow-hidden rounded-2xl bg-white shadow-md">
         <LinearProgressWithLabel />
-        <Box className="px-8 pb-8 pt-12">{children}</Box>
+        <Box className="px-8 pb-8 pt-10">{children}</Box>
       </Box>
     </Box>
   );

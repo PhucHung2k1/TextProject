@@ -31,22 +31,22 @@ const LayoutAddMember: React.FC<LayoutAddMemberProps> = ({
   const dispatch = useAppDispatch();
   return (
     <LayoutStoreProfile>
-      <div className=" text-center">
-        <div className="flex items-center justify-center ">
-          {icon === 'back' ? (
-            <ArrowBackIcon
-              fontSize="large"
-              className="text-icon-color"
-              onClick={() => handlePreviousProgressSetupStore(dispatch)}
-            />
-          ) : (
-            <CloseIcon fontSize="large" className="text-icon-color" />
-          )}
+      <div className="relative text-center ">
+        {icon === 'back' ? (
+          <ArrowBackIcon
+            onClick={() => handlePreviousProgressSetupStore(dispatch)}
+            className="absolute left-0 top-2 cursor-pointer text-3xl text-icon-color"
+          />
+        ) : (
+          <CloseIcon fontSize="large" className="text-icon-color" />
+        )}
 
-          <p className="mx-auto text-[32px] font-semibold">{title}</p>
-        </div>
-        <p className="text-mango-text-gray-2"> {subTitle}</p>
+        <p className="mx-auto text-[32px] font-semibold">{title}</p>
       </div>
+      <p className="text-center text-[14px] text-mango-text-gray-2">
+        {' '}
+        {subTitle}
+      </p>
 
       <div className="w-full flex-1 ">{children}</div>
       <div className="flex w-full flex-col items-center gap-5">
