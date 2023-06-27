@@ -36,8 +36,8 @@ export const SalonSettingComponent = () => {
     },
 
     {
-      id: 'employee',
-      name: 'Employee',
+      id: 'team',
+      name: 'Team',
       image: '/assets/images/SalonSetting/employee-icon.svg',
       image1: '/assets/images/SalonSetting/employee1-icon.svg',
       selected: false,

@@ -1,10 +1,8 @@
 import {
-  Typography,
   IconButton,
   Button,
   FormControl,
   OutlinedInput,
-  InputAdornment,
   TableContainer,
   Table,
   TableHead,
@@ -24,9 +22,9 @@ import {
   Select,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import Badge from '@mui/material/Badge';
@@ -40,9 +38,9 @@ import type { IAllCustomerRole } from '@/services/customerRole.service/customerR
 import ModalCustomContainer from '@/components/Modal/ModalCustom';
 import { ModalDeleteRole } from './ModalDeleteRole';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
-// eslint-disable-next-line import/no-cycle
 import EditRolePermission from './EditRolePermission';
 import { sxSelect } from '@/utils/helper/styles';
+import { squareIconButtonStyles } from '@/helper/styleButton';
 
 interface PermissionItem {
   Name: string;
@@ -193,62 +191,17 @@ const ListRolePermission = () => {
       />
 
       <div className="min-h-screen">
-        <div className="mt-[36px] flex items-center justify-between">
-          <Typography
-            variant="h2"
-            component="h2"
-            className="text-[32px] font-semibold text-text-title"
-          >
-            Role & Permission
-          </Typography>
-          <div className="flex w-[500px] items-center justify-between">
-            <FormControl
-              sx={{
-                '& .MuiInputBase-root.Mui-focused': {
-                  '& > fieldset': {
-                    borderColor: '#00BDD6',
-                  },
-                },
-                '& label.Mui-focused': {
-                  color: '#00BDD6',
-                },
-              }}
-              variant="outlined"
-            >
-              <OutlinedInput
-                className="h-[48px] w-[212px]"
-                id="outlined-adornment-weight"
-                startAdornment={
-                  <InputAdornment position="start">
-                    {' '}
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-                aria-describedby="outlined-weight-helper-text"
-                inputProps={{
-                  'aria-label': 'Password',
-                  placeholder: 'search...',
-                }}
-              />
-            </FormControl>
-
-            <Button
-              className="h-[48px] w-[188px] bg-primary-main text-[16px] font-bold text-white hover:bg-button-hover-cyan"
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => dispatch(showDrawerRolePermission())}
-            >
-              Add Role
-            </Button>
-
-            <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded border border-mango-gray-light-3  hover:bg-[#5C5D6A29]">
-              <MoreHorizIcon />
-            </div>
-          </div>
-        </div>
         <div className="h-[80px] w-full bg-[##F3F4F6] ">
           <Grid xs={12} item>
             <div className=" mt-[24px] flex h-[80px] w-full items-center gap-6 rounded-sm bg-mango-gray-light-5 py-7 pl-[16px] pr-4 ">
+              <Button
+                className="h-[40px] bg-white px-5 text-sm font-semibold text-primary-main hover:bg-white"
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={() => dispatch(showDrawerRolePermission())}
+              >
+                New Role
+              </Button>
               <FormControl
                 variant="outlined"
                 size="small"
@@ -570,18 +523,36 @@ const ListRolePermission = () => {
                             align="right"
                             className="w-[10%] text-[16px]"
                           >
-                            <IconButton onClick={() => handleOpenDrawer(item)}>
-                              <EditIcon fontSize="small" />
-                            </IconButton>
-                            <IconButton
-                              className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
-                              onClick={() => handleDeleteRole(item)}
+                            <Stack
+                              direction="row"
+                              alignItems="center"
+                              spacing={1}
                             >
-                              <CloseIcon
-                                fontSize="small"
-                                className="text-[#DA2036] "
-                              />
-                            </IconButton>
+                              <IconButton
+                                className="bg-bg-light"
+                                onClick={() => handleOpenDrawer(item)}
+                                style={squareIconButtonStyles}
+                              >
+                                <EditIcon fontSize="small" />
+                              </IconButton>
+
+                              <IconButton
+                                className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
+                                style={squareIconButtonStyles}
+                              >
+                                <ContentCopyOutlinedIcon fontSize="small" />
+                              </IconButton>
+                              <IconButton
+                                className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
+                                style={squareIconButtonStyles}
+                                onClick={() => handleDeleteRole(item)}
+                              >
+                                <DeleteOutlineOutlinedIcon
+                                  fontSize="medium"
+                                  className="text-[#DA2036] "
+                                />
+                              </IconButton>
+                            </Stack>
                           </TableCell>
                         </TableRow>
                       );
