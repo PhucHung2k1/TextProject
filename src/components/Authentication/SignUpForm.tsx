@@ -21,7 +21,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
-import { sxCheckBox, sxTextField } from '@/utils/helper/styles';
+import {
+  sxCheckBox,
+  sxTextField,
+  sxTextFieldError,
+} from '@/utils/helper/styles';
 
 interface IFormInput {
   firstName: string;
@@ -163,7 +167,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
-                sx={sxTextField}
+                sx={[sxTextField, sxTextFieldError]}
                 label="Last Name"
                 type="text"
                 required
