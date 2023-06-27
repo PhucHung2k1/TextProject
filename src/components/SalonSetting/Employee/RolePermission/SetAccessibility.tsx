@@ -31,7 +31,7 @@ const SetAccessibility = () => {
   ]);
 
   return (
-    <Box className="h-full w-full overflow-auto ">
+    <Box className="h-full w-full">
       {arrCategory.map((category) => {
         return (
           <ConfigRoleAndPermission

@@ -18,7 +18,6 @@ import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/system';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 
-import { getEmployeeList } from '@/store/employee/employeeAction';
 import { setAddRemoveMultiRoleEmployee } from '@/store/customerRole/customerRoleSlice';
 import { sxCheckBoxBlack } from '@/utils/helper/styles';
 
@@ -33,19 +32,15 @@ const AssignEmployees = ({ idRole }: Props) => {
   const employeesList = useAppSelector(
     (state) => state.employeeSlice.employees
   );
-
-  const [addedEmployeeList, setAddedEmployeeList] = useState<string[]>([]);
-  const [removedEmployeeList, setRemovedEmployeeList] = useState<string[]>([]);
-  const [valueSearchEmployee, setValueSearchEmployee] = useState<string>('');
-  const [selectedEmployee, setSelectEmployee] = useState<string[]>(
+  const selectedInit =
     listAllRole
       .find((role) => role.Id === idRole)
-      ?.Employees.map((emp) => emp.Id) || []
-  );
-
-  const [selectAll, setSelectAll] = useState<boolean>(
-    selectedEmployee.length === employeesList.length
-  );
+      ?.Employees.map((emp) => emp.Id) || [];
+  const [addedEmployees, setAddedEmployees] = useState<string[]>([]);
+  const [removedEmployees, setRemovedEmployees] = useState<string[]>([]);
+  const [valueSearchEmployee, setValueSearchEmployee] = useState<string>('');
+  const [selectedEmployees, setSelectedEmployees] =
+    useState<string[]>(selectedInit);
 
   const dispatch = useAppDispatch();
 
@@ -67,62 +62,91 @@ const AssignEmployees = ({ idRole }: Props) => {
     },
   }));
 
-  /**
-   * Handles the checkbox value change.
-   * If the id is not in the selected list, add it to the added employees list
-   * if value is true, or remove it from the added employees list if value is false.
-   * If the id is already in the selected list, add it to the removed employees list
-   * if value is false, or remove it from the removed employees list if value is true.
-   *
-   * @param {boolean} isChecked - the new value of the checkbox
-   * @param {string} id - the id of the employee
-   */
-  const handleCheckBox = (isChecked: boolean, id: string): void => {
-    const isSelected = selectedEmployee.includes(id);
-
-    if (isChecked) {
-      setSelectEmployee((prevList) => [...prevList, id]);
-    } else {
-      setSelectEmployee((prevList) => prevList.filter((item) => item !== id));
-    }
-
-    if (!isSelected) {
-      if (isChecked) {
-        setAddedEmployeeList((prevList) => [...prevList, id]);
-      } else {
-        setAddedEmployeeList((prevList) =>
-          prevList.filter((item) => item !== id)
-        );
-      }
-    } else if (!isChecked) {
-      setRemovedEmployeeList((prevList) => [...prevList, id]);
-    } else {
-      setRemovedEmployeeList((prevList) =>
-        prevList.filter((item) => item !== id)
+  const handleEmployeeToggle = (employeeId: string) => {
+    if (selectedEmployees.includes(employeeId)) {
+      // Nếu nhân viên đã được chọn, bỏ khỏi mảng selectedEmployees và kiểm tra và xoá trong mảng removedEmployees nếu cần
+      const updatedSelectedEmployees = selectedEmployees.filter(
+        (id) => id !== employeeId
       );
+      setSelectedEmployees(updatedSelectedEmployees);
+
+      if (removedEmployees.includes(employeeId)) {
+        // Nếu ID cũng tồn tại trong mảng removedEmployees, xoá khỏi cả mảng removedEmployees và addedEmployees
+        const updatedRemovedEmployees = removedEmployees.filter(
+          (id) => id !== employeeId
+        );
+        setRemovedEmployees(updatedRemovedEmployees);
+
+        const updatedAddedEmployees = addedEmployees.filter(
+          (id) => id !== employeeId
+        );
+        setAddedEmployees(updatedAddedEmployees);
+      }
+    } else {
+      // Nếu nhân viên chưa được chọn, kiểm tra xem có trong mảng removedEmployees không
+      const isPreviouslyRemoved = removedEmployees.includes(employeeId);
+      if (isPreviouslyRemoved) {
+        // Nếu nhân viên đã được chọn trước đó nhưng bị bỏ chọn, bỏ khỏi mảng removedEmployees và addedEmployees
+        const updatedRemovedEmployees = removedEmployees.filter(
+          (id) => id !== employeeId
+        );
+        setRemovedEmployees(updatedRemovedEmployees);
+
+        const updatedAddedEmployees = addedEmployees.filter(
+          (id) => id !== employeeId
+        );
+        setAddedEmployees(updatedAddedEmployees);
+      } else if (
+        !addedEmployees.includes(employeeId) &&
+        !selectedEmployees.includes(employeeId)
+      ) {
+        // Nếu nhân viên chưa được chọn trước đó, không có trong mảng addedEmployees và không có trong mảng selectedEmployees, thêm vào mảng addedEmployees
+        setAddedEmployees([...addedEmployees, employeeId]);
+      }
+      // Thêm nhân viên vào mảng selectedEmployees
+      setSelectedEmployees([...selectedEmployees, employeeId]);
     }
   };
   const handleSelectAll = (value: boolean) => {
-    employeesList.map((emp) => handleCheckBox(value, emp.Id));
-    setSelectAll(value);
+    const empList = employeesList.map((emp) => emp.Id);
+    if (value) {
+      setAddedEmployees(empList);
+      setRemovedEmployees([]);
+      setSelectedEmployees(empList);
+    } else {
+      setAddedEmployees([]);
+      setRemovedEmployees(empList);
+      setSelectedEmployees([]);
+    }
   };
   const handleSearchEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValueSearchEmployee(e.target.value);
   };
   useEffect(() => {
+    // Set Payload for add remove to redux
     dispatch(
       setAddRemoveMultiRoleEmployee({
         roleId: idRole,
         data: {
-          AddedEmployeeIds: addedEmployeeList,
-          RemovedEmployeeIds: removedEmployeeList,
+          AddedEmployeeIds: addedEmployees,
+          RemovedEmployeeIds: removedEmployees,
         },
       })
     );
-  }, [JSON.stringify(addedEmployeeList), JSON.stringify(removedEmployeeList)]);
+  }, [JSON.stringify(addedEmployees), JSON.stringify(removedEmployees)]);
+
   useEffect(() => {
-    dispatch(getEmployeeList({}));
-  }, []);
+    // Reset list remove, added after call api
+    setRemovedEmployees([]);
+    setAddedEmployees([]);
+  }, [
+    JSON.stringify(
+      listAllRole
+        .find((role) => role.Id === idRole)
+        ?.Employees.map((emp) => emp.Id)
+    ),
+  ]);
+  console.log('add', addedEmployees, 'remove', removedEmployees);
 
   return (
     <>
@@ -162,7 +186,7 @@ const AssignEmployees = ({ idRole }: Props) => {
               <Checkbox
                 sx={sxCheckBoxBlack}
                 className="p-0"
-                checked={selectAll}
+                checked={selectedEmployees.length === employeesList.length}
                 onChange={(e) => handleSelectAll(e.target.checked)}
               />
             </TableCell>
@@ -176,18 +200,12 @@ const AssignEmployees = ({ idRole }: Props) => {
         </TableHead>
         <TableBody>
           {employeesList
-            .filter(
-              (emp) =>
-                emp.FirstName.toUpperCase().includes(
-                  valueSearchEmployee.toUpperCase()
-                ) ||
-                emp.LastName.toUpperCase().includes(
-                  valueSearchEmployee.toUpperCase()
-                )
+            .filter((emp) =>
+              `${emp.FirstName} ${emp.LastName}`
+                .toUpperCase()
+                .includes(valueSearchEmployee.toUpperCase())
             )
             .map((item) => {
-              const checked = selectedEmployee.some((id) => id === item.Id);
-
               return (
                 <TableRow key={item.Id} className="h-full ">
                   <TableCell className="w-[2%]">
@@ -205,10 +223,8 @@ const AssignEmployees = ({ idRole }: Props) => {
                         <Checkbox
                           color="default"
                           // defaultChecked={checked}
-                          checked={checked}
-                          onChange={(e) =>
-                            handleCheckBox(e.target.checked, item.Id)
-                          }
+                          checked={selectedEmployees.includes(item.Id)}
+                          onChange={() => handleEmployeeToggle(item.Id)}
                         />
                       }
                       label=""

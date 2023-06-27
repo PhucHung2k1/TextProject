@@ -13,7 +13,6 @@ import type {
   IPatchPayloadData,
 } from '@/services/customerRole.service/customerRole.interface';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
-import { getEmployeeList } from '../employee/employeeAction';
 
 export const getAllRole = createAsyncThunk(
   'account/getAllRole',
@@ -192,7 +191,7 @@ export const addRemoveMultiRoleEmployee = createAsyncThunk(
       if (status === 200 || status === 201) {
         showToastMessage(dispatch, `Update success!`, 'success');
         dispatch(getAllRole({}));
-        dispatch(getEmployeeList({}));
+
         return data;
       }
       showToastMessage(dispatch, error?.message || 'Send failed', 'error');

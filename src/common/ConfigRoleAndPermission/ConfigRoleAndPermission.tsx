@@ -102,8 +102,8 @@ export const ConfigRoleAndPermission = ({
                           <Checkbox
                             color="default"
                             sx={sxCheckBox}
-                            defaultChecked={checked}
-                            // checked={checked}
+                            // defaultChecked={checked}
+                            checked={checked}
                             onChange={(e) =>
                               handleCheckBox(e.target.checked, item.Id)
                             }
