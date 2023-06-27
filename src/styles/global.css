@@ -17,11 +17,13 @@ th td {
 }
 
 a {
-  @apply text-blue-700;
+  /* @apply text-blue-700; */
+  color: #00ADC3;
 }
 
 a:hover {
-  @apply border-b-2 border-blue-700;
+  /* @apply border-b-2 border-blue-700; */
+
 }
 
 .content p {

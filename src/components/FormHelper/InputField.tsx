@@ -139,7 +139,7 @@ const InputField = (props: Props) => {
         errors={errors}
         name={name}
         render={({ message }: any) => (
-          <div className="mt-2 text-sm text-red-700" role="alert">
+          <div className="ml-2 mt-1 text-sm text-text-error" role="alert">
             <span className="font-medium">{message}</span>
           </div>
         )}

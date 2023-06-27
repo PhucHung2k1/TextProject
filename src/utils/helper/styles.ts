@@ -8,6 +8,9 @@ export const sxTextField = {
   '& label.Mui-focused': {
     color: '#00BDD6',
   },
+  '& input:-internal-autofill-selected': {
+    '-webkit-box-shadow': '0 0 0 100px white inset',
+  },
 };
 
 export const sxCheckBoxBlack = {
@@ -16,13 +19,10 @@ export const sxCheckBoxBlack = {
   },
 };
 
-
 export const sxTextFieldError = {
-
   '& .MuiFormLabel-root.Mui-error': {
     color: '#737277 !important',
   },
-
 };
 
 // Select
@@ -60,4 +60,3 @@ export const sxSwitchBlue = {
 export const sxButtonBlue = {
   '&:hover': { backgroundColor: '#00ADC3' },
 };
-

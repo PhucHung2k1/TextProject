@@ -30,7 +30,11 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { sxTextField, sxDisableTextField } from '@/utils/helper/styles';
+import {
+  sxTextField,
+  sxDisableTextField,
+  sxTextFieldError,
+} from '@/utils/helper/styles';
 
 const listColors = [
   '#FFFFFF',
@@ -177,7 +181,10 @@ const EmployeeProfileTab = () => {
                 errors={errors}
                 name="lastName"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="ml-2 mt-1 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -350,7 +357,7 @@ const EmployeeProfileTab = () => {
                           className="text-sm font-normal !text-mango-text-black-1"
                         >
                           <TextField
-                            sx={sxTextField}
+                            sx={[sxTextField, sxTextFieldError]}
                             label="Email address"
                             type="text"
                             required
@@ -378,7 +385,7 @@ const EmployeeProfileTab = () => {
                             name="email"
                             render={({ message }: any) => (
                               <div
-                                className="mt-2 text-sm text-red-700"
+                                className="ml-2 mt-1 text-sm text-text-error"
                                 role="alert"
                               >
                                 <span className="font-medium">{message}</span>
@@ -503,7 +510,7 @@ const EmployeeProfileTab = () => {
                         name="password"
                         render={({ message }: any) => (
                           <div
-                            className="mt-2 text-sm text-red-700"
+                            className="ml-2 mt-1 text-sm text-text-error"
                             role="alert"
                           >
                             <span className="font-medium">{message}</span>
@@ -553,7 +560,7 @@ const EmployeeProfileTab = () => {
                           name="password"
                           render={({ message }: any) => (
                             <div
-                              className="mt-2 text-sm text-red-700"
+                              className="ml-2 mt-1 text-sm text-text-error"
                               role="alert"
                             >
                               <span className="font-medium">{message}</span>

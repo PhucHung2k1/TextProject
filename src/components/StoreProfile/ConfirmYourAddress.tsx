@@ -106,10 +106,10 @@ const ConfirmYourAddress = () => {
       ) : (
         <Box>
           <div className=" text-center">
-            <div className="flex items-center justify-center ">
+            <div className="relative ">
               <ArrowBackIcon
                 onClick={() => handlePreviousProgressSetupStore(dispatch)}
-                className="cursor-pointer text-3xl"
+                className="absolute left-0 top-2 cursor-pointer text-3xl text-icon-color"
               />
 
               <p className="mx-auto text-[32px] font-semibold">

@@ -125,7 +125,10 @@ export default function LoginForm() {
                 errors={errors}
                 name="username"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="ml-2 mt-1 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -164,7 +167,10 @@ export default function LoginForm() {
                 errors={errors}
                 name="password"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="ml-2 mt-1 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -188,11 +194,9 @@ export default function LoginForm() {
           />
           <Link
             href="/forget-password"
-            className="cursor-pointer font-medium text-mango-primary-blue"
+            className="cursor-pointer font-medium hover:!border-0"
           >
-            <div className="cursor-pointer text-text-primary-dark ">
-              Forget Password?
-            </div>
+            Forget Password?
           </Link>
         </div>
 
