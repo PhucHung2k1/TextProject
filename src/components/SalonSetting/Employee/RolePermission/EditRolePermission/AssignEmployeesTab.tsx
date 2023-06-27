@@ -36,7 +36,7 @@ const AssignEmployees = ({ idRole }: Props) => {
     listAllRole
       .find((role) => role.Id === idRole)
       ?.Employees.map((emp) => emp.Id) || [];
-  const [addedEmployees, setAddedEmployees] = useState<string[]>([]);
+  // const [addedEmployees, setAddedEmployees] = useState<string[]>([]);
   const [removedEmployees, setRemovedEmployees] = useState<string[]>([]);
   const [valueSearchEmployee, setValueSearchEmployee] = useState<string>('');
   const [selectedEmployees, setSelectedEmployees] =
@@ -98,12 +98,12 @@ const AssignEmployees = ({ idRole }: Props) => {
         },
       })
     );
-  }, [JSON.stringify(selectedEmployees)]);
+  }, [JSON.stringify(selectedEmployees), JSON.stringify(removedEmployees)]);
 
   useEffect(() => {
     // Reset list remove, added after call api
-    setRemovedEmployees([]);
-    setAddedEmployees([]);
+    // setRemovedEmployees([]);
+    // setAddedEmployees([]);
   }, [
     JSON.stringify(
       listAllRole
@@ -111,7 +111,6 @@ const AssignEmployees = ({ idRole }: Props) => {
         ?.Employees.map((emp) => emp.Id)
     ),
   ]);
-  console.log('add', selectedEmployees, 'remove', removedEmployees);
 
   return (
     <>
