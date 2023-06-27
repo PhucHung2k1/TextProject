@@ -11,6 +11,8 @@ interface StyledTabsProps {
 }
 interface StyledTabProps {
   label: string;
+  icon?: any;
+  iconPosition?: any;
 }
 
 export const AntTab = styled((props: StyledTabProps) => (

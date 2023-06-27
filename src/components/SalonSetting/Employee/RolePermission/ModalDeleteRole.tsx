@@ -32,8 +32,8 @@ export const ModalDeleteRole: React.FC<ModalDeleteRoleProps> = ({
           No, Cancel
         </Button>
         <Button
-          className="h-10 w-[140px] bg-icon-delete px-4 text-base font-bold capitalize hover:bg-icon-delete"
-          variant="contained"
+          className="h-10 w-[140px] border-none bg-icon-delete px-4 text-base font-bold capitalize text-white hover:bg-icon-delete"
+          variant="outlined"
           type="button"
           onClick={() => {
             dispatch(deleteRole(item.Id)).then((res) => {

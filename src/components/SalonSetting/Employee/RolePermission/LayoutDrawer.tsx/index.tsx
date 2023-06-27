@@ -71,18 +71,19 @@ const LayoutDrawer = ({
           alignItems="center"
           height="99%"
         >
-          <Box
+          <Button
+            variant="outlined"
             onClick={() => handleCloseDrawer()}
-            className="flex h-12 w-1/2 cursor-pointer items-center justify-center rounded-[4px] border border-border-secondary bg-white px-3 text-base font-semibold uppercase  text-text-secondary"
+            className="flex h-12 w-1/2 cursor-pointer items-center justify-center rounded-[4px] border border-border-secondary bg-white px-3 text-base font-semibold uppercase text-text-secondary  hover:bg-white"
           >
             Cancel
-          </Box>
+          </Button>
 
           <Button
-            variant="contained"
+            variant="outlined"
             onClick={() => handleNext()}
             disabled={disable}
-            className="flex h-12 w-1/2 cursor-pointer items-center justify-center rounded-[4px] bg-primary-main text-base  font-semibold uppercase text-white"
+            className="flex h-12 w-1/2 cursor-pointer items-center justify-center rounded-[4px] border-none bg-primary-main text-base font-semibold  uppercase text-white hover:bg-primary-main"
           >
             {activeStep === steps.length - 1 ? 'Save' : 'Continue'}
           </Button>
