@@ -15,6 +15,7 @@ import {
 import React, { useState } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { sxCheckBox, sxSelect } from '@/utils/helper/styles';
 
 const RoleAndPermissionTab: NextPage = () => {
   const [listData, setListData] = useState([
@@ -72,6 +73,7 @@ const RoleAndPermissionTab: NextPage = () => {
               Select Role & Permission
             </InputLabel>
             <Select
+              sx={sxSelect}
               labelId="selectRoleAndPermission"
               label="Select Role & Permission"
               displayEmpty
@@ -99,17 +101,35 @@ const RoleAndPermissionTab: NextPage = () => {
             <div className="text-base leading-[140%]">Technician</div>
           </div>
           <div className="ml-4 flex items-center  justify-start text-center">
-            <Checkbox color="primary" defaultChecked size="medium" disabled />
+            <Checkbox
+              sx={sxCheckBox}
+              color="primary"
+              defaultChecked
+              size="medium"
+              disabled
+            />
             <div className="text-base leading-[140%]">Take Appoment</div>
           </div>
           <div className="ml-4 flex items-center  justify-start text-center">
-            <Checkbox color="primary" defaultChecked size="medium" disabled />
+            <Checkbox
+              sx={sxCheckBox}
+              color="primary"
+              defaultChecked
+              size="medium"
+              disabled
+            />
             <div className="text-base leading-[140%]">
               Available for Booking Online
             </div>
           </div>
           <div className="ml-4 flex items-center justify-start text-center">
-            <Checkbox color="primary" defaultChecked size="medium" disabled />
+            <Checkbox
+              sx={sxCheckBox}
+              color="primary"
+              defaultChecked
+              size="medium"
+              disabled
+            />
             <div className="text-base leading-[140%]">
               Allowed to make quick payment
             </div>
@@ -173,6 +193,7 @@ const RoleAndPermissionTab: NextPage = () => {
                         className="ml-4 flex items-center  justify-start text-center"
                       >
                         <Checkbox
+                          sx={sxCheckBox}
                           color="primary"
                           checked={permiss.IsChecked}
                           size="medium"

@@ -1,7 +1,6 @@
 import InputField from '@/components/FormHelper/InputField';
 import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
 import {
-  addNewRole,
   deleteRole,
   getAllRole,
 } from '@/store/customerRole/customerRoleAction';
@@ -19,12 +18,7 @@ const ManageRole = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const handleCreateRole = (values: any) => {
-    const body = {
-      name: values.roleName,
-    };
-    dispatch(addNewRole(body));
-  };
+  const handleCreateRole = (_values: any) => {};
   const handleUpdateRole = () => {};
   const handleGetListRole = () => {
     dispatch(getAllRole({}));

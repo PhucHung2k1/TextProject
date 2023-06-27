@@ -16,6 +16,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import SendIcon from '@mui/icons-material/Send';
 import GetYourPasswordSucess from '@/components/Authentication/GetYourPasswordSucess';
 import { forgotPassword } from '@/store/passwordCustomer/passwordCustomerAction';
+import { sxTextField, sxTextFieldError } from '@/utils/helper/styles';
 
 const ForgotPassword = () => {
   const {
@@ -90,7 +91,7 @@ const ForgotPassword = () => {
     <>
       <main className="flex h-screen items-center justify-center bg-mango-gray-light-2">
         {!showSucess ? (
-          <div className="flex min-h-[30%] w-[25%] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-8">
+          <div className="flex min-h-[30%] w-[568px] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-8">
             <div className="flex flex-col items-center">
               <div className="text-3xl font-bold text-text-title ">
                 Get your password
@@ -112,6 +113,7 @@ const ForgotPassword = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
+                      sx={[sxTextField, sxTextFieldError]}
                       label="Email Address"
                       type="email"
                       required
@@ -138,7 +140,10 @@ const ForgotPassword = () => {
                       errors={errors}
                       name="email"
                       render={({ message }: any) => (
-                        <div className="mt-2 text-sm text-red-700" role="alert">
+                        <div
+                          className="ml-2 mt-1 text-sm text-text-error"
+                          role="alert"
+                        >
                           <span className="font-medium">{message}</span>
                         </div>
                       )}

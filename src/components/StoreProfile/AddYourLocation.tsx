@@ -17,6 +17,8 @@ import { useState } from 'react';
 import type { CountryPhone } from '@/services/common/common.interface';
 import { updateLocationStoreProfile } from '@/store/store/storeAction';
 import Cookies from 'js-cookie';
+import type { IPatchPayloadData } from '@/services/customerRole.service/customerRole.interface';
+import { sxTextField } from '@/utils/helper/styles';
 
 interface IFormLocation {
   addressLine1: string;
@@ -26,11 +28,7 @@ interface IFormLocation {
   zipCode: string;
   timeZone: string;
 }
-interface Payload {
-  op: string;
-  path: string;
-  value: string;
-}
+
 const AddYourLocation = () => {
   const dispatch = useAppDispatch();
 
@@ -47,7 +45,7 @@ const AddYourLocation = () => {
       null
   );
   const onSubmit = (values: IFormLocation) => {
-    const payload: Payload[] = [];
+    const payload: IPatchPayloadData[] = [];
     const addPayload = (path: string, value: any) => {
       if (value !== curStoreCustomer?.[path.substring(1)]) {
         payload.push({
@@ -76,15 +74,13 @@ const AddYourLocation = () => {
 
   return (
     <div>
-      <div className=" text-center">
-        <div className="flex items-center justify-center ">
-          <ArrowBackIcon
-            onClick={() => handlePreviousProgressSetupStore(dispatch)}
-            className="cursor-pointer text-3xl"
-          />
+      <div className="relative text-center">
+        <ArrowBackIcon
+          onClick={() => handlePreviousProgressSetupStore(dispatch)}
+          className="absolute left-0 top-0 cursor-pointer text-3xl"
+        />
 
-          <p className="mx-auto text-[32px] font-semibold">Add your location</p>
-        </div>
+        <p className="mx-auto text-[32px] font-semibold">Add your location</p>
 
         <p className="text-mango-text-gray-2">Where can clients find you?</p>
       </div>
@@ -98,6 +94,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Address line 1"
                 type="text"
                 defaultValue={curStoreCustomer?.Address1}
@@ -113,6 +110,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Address line 2"
                 type="text"
                 defaultValue={curStoreCustomer?.Address2}
@@ -128,6 +126,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="City"
                 {...register('city', {})}
                 type="text"
@@ -143,6 +142,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="State"
                 type="text"
                 defaultValue={curStoreCustomer?.State}
@@ -159,6 +159,7 @@ const AddYourLocation = () => {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={sxTextField}
                 label="Zip code"
                 type="text"
                 defaultValue={curStoreCustomer?.ZipCode}
@@ -182,6 +183,7 @@ const AddYourLocation = () => {
                 }}
                 renderInput={(params) => (
                   <TextField
+                    sx={sxTextField}
                     {...params}
                     {...register('timeZone', {})}
                     label="Time Zone"

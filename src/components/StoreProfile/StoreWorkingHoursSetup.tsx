@@ -9,7 +9,6 @@ import {
   MenuItem,
   FormHelperText,
   Select,
-  Box,
   Button,
 } from '@mui/material';
 import type { NextPage } from 'next';
@@ -30,6 +29,7 @@ import type {
 } from '@/services/workingHours.service/workingHours.interface';
 import { convertTo12h, convertTo24h } from '@/helper/stringHelper';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { sxSelect } from '@/utils/helper/styles';
 
 const StoreWorkingHoursSetup: NextPage = () => {
   const [showEditHours, setShowEditHours] = useState(false);
@@ -187,23 +187,20 @@ const StoreWorkingHoursSetup: NextPage = () => {
     <LayoutStoreProfile>
       {!showEditHours ? (
         <>
-          <div className="text-center">
-            <Box
-              className="mb-[8px] flex items-center justify-center"
-              onClick={() => {
-                handlePreviousProgressSetupStore(dispatch);
-              }}
-            >
-              <ArrowBackIcon className="cursor-pointer text-3xl text-icon-color" />
-              <p className="mx-auto text-[32px] font-semibold text-text-title">
-                Add your working hours
-              </p>
-            </Box>
-            <p className="text-[14px] text-mango-text-gray-2">
-              Set up working time for clients to easily book an appointment with
-              you
+          <div className="relative text-center">
+            <ArrowBackIcon
+              onClick={() => handlePreviousProgressSetupStore(dispatch)}
+              className="absolute left-0 top-2 cursor-pointer text-3xl text-icon-color"
+            />
+
+            <p className="mx-auto text-[32px] font-semibold">
+              Add your working hours
             </p>
           </div>
+          <p className="text-center text-[14px] text-mango-text-gray-2">
+            Set up working time for clients to easily book an appointment with
+            you
+          </p>
           <div className="mt-[60px] flex flex-col justify-center text-text-primary">
             {listData.map((item, index) => (
               <div
@@ -237,7 +234,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                       : 'Closed'}
                     {!item.IsClosed ? (
                       <KeyboardArrowRightIcon
-                        className="cursor-pointer text-2xl text-icon-color-2"
+                        className="cursor-pointer text-2xl text-icon-color"
                         onClick={() => {
                           handleDayArrowClick(item);
                         }}
@@ -265,10 +262,10 @@ const StoreWorkingHoursSetup: NextPage = () => {
       ) : (
         <>
           <div>
-            <div className="flex items-center justify-center ">
+            <div className="relative text-center">
               <Clear
                 onClick={handleShowEditHours}
-                className="cursor-pointer text-3xl"
+                className="absolute left-[-10px] top-[-10px] cursor-pointer text-3xl text-icon-color "
               />
               <p className="mx-auto text-center text-[32px] font-semibold text-text-title">
                 Edit salon hours
@@ -304,6 +301,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         Start
                       </FormHelperText>
                       <Select
+                        sx={sxSelect}
                         labelId="demo-select-small-label"
                         id="demo-select-small"
                         value={convertTo12h(startHour)}
@@ -337,6 +335,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                         End
                       </FormHelperText>
                       <Select
+                        sx={sxSelect}
                         labelId="demo-select-small-label"
                         id="demo-select-small"
                         value={convertTo12h(endHour)}
@@ -401,6 +400,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 Break Time
                               </FormHelperText>
                               <Select
+                                sx={sxSelect}
                                 labelId="demo-select-small-label"
                                 id="demo-select-small"
                                 className="w-[212px]"
@@ -436,8 +436,8 @@ const StoreWorkingHoursSetup: NextPage = () => {
                             <div
                               className={
                                 index === 0
-                                  ? ' mx-[9px] ml-[5px] mt-[45px] w-[14px] border border-solid border-line-light'
-                                  : 'mx-[9px] ml-[5px] w-[14px] border border-solid  border-line-light'
+                                  ? ' mx-[9px] mt-[45px] w-[14px] border border-solid border-line-light'
+                                  : 'mx-[9px] w-[14px] border border-solid  border-line-light'
                               }
                             />
 
@@ -451,6 +451,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 &nbsp;
                               </FormHelperText>
                               <Select
+                                sx={sxSelect}
                                 labelId="demo-select-small-label"
                                 id="demo-select-small"
                                 value={convertTo12h(form.EndHours)}
@@ -482,13 +483,7 @@ const StoreWorkingHoursSetup: NextPage = () => {
                                 ))}
                               </Select>
                             </FormControl>
-                            <div
-                              className={
-                                index === 0
-                                  ? 'ml-[5px]  mt-[45px]'
-                                  : ' ml-[5px]'
-                              }
-                            >
+                            <div className={index === 0 ? 'mt-[45px]' : ''}>
                               <Button
                                 sx={{
                                   minWidth: 'unset',

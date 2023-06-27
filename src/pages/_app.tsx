@@ -11,7 +11,6 @@ import ToastContainer from '@/components/Toast';
 import PrevLoader from '@/components/Loading/PrevLoader';
 import type { IMetaSEOProps } from '@/components/MetaSEO';
 import MetaSEO from '@/components/MetaSEO';
-import ModalMUIContainer from '@/components/Modal/ModalMUI';
 import { ThemeProvider, createTheme } from '@mui/material';
 import DrawerRolePermission from '@/components/SalonSetting/Employee/RolePermission/LayoutDrawer.tsx/DrawerRolePermission';
 
@@ -24,6 +23,20 @@ NProgress.configure({
 const theme = createTheme({
   typography: {
     fontFamily: 'Inter, sans-serif',
+  },
+  palette: {
+    success: {
+      main: '#69B000',
+    },
+    error: {
+      main: '#DA2036',
+    },
+    secondary: {
+      main: '#FFFFFF',
+    },
+    warning: {
+      main: '#F28500',
+    },
   },
 });
 
@@ -55,7 +68,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <main>
             <Component {...pageProps} />
             <PrevLoader />
-            <ModalMUIContainer />
+
             <ToastContainer />
             <DrawerRolePermission />
           </main>

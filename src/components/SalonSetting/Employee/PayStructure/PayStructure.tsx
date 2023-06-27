@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+
 import {
   Avatar,
   AvatarGroup,
@@ -11,10 +14,10 @@ import {
   FormControl,
   Grid,
   IconButton,
-  InputAdornment,
   MenuItem,
   OutlinedInput,
   Select,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -22,12 +25,12 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TextField,
 } from '@mui/material';
-import { Add, MoreHoriz, Search } from '@mui/icons-material';
 import { styled } from '@mui/system';
 // eslint-disable-next-line import/no-cycle
 import DrawerAddPayStructure from './AddPayStructure/DrawerAddPayStructure';
+import { sxSelect } from '@/utils/helper/styles';
+import { squareIconButtonStyles } from '@/helper/styleButton';
 
 // eslint-disable-next-line import/no-cycle
 interface IEmployee {
@@ -250,8 +253,8 @@ const PayStructure = () => {
       },
     },
   }));
-  // handle Select Employee
-  const handleEditEmployee = (item: IPayStructure) => {
+
+  const handleEditPayStructure = (item: IPayStructure) => {
     handleOpenAddDrawer();
     setSelectedEmployee(item);
   };
@@ -260,48 +263,19 @@ const PayStructure = () => {
     <>
       <div className="mt-5">
         <Grid container spacing={2}>
-          <Grid xs={6} item>
-            <p className="text-3xl font-semibold text-text-title">
-              Pay Structure
-            </p>
-          </Grid>
-          <Grid xs={6} item>
-            <div className="flex w-full items-center justify-end gap-6">
-              <TextField
-                variant="outlined"
-                placeholder="Search..."
-                InputProps={{
-                  style: { height: '48px' },
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <IconButton>
-                        <Search />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                onChange={(event) => {
-                  setFilterEmployee(event.target.value);
-                }}
-              />
-              <Button
-                variant="contained"
-                className="mb-1 h-12 bg-primary-main  text-base font-bold text-white"
-                startIcon={<Add />}
-                sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
-                onClick={handleOpenAddDrawer}
-              >
-                ADD PAY STRUCTURE
-              </Button>
-              <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded border border-mango-gray-light-3 hover:bg-[#5C5D6A29]">
-                <MoreHoriz />
-              </div>
-            </div>
-          </Grid>
           <Grid xs={12} item>
             <div className="flex h-20 w-full items-center gap-6 rounded-sm bg-bg-light px-4 py-7 ">
+              <Button
+                className="h-[40px]  bg-white px-5 text-sm font-semibold text-primary-main hover:bg-white"
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={handleOpenAddDrawer}
+              >
+                New Pay Structure
+              </Button>
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={sxSelect}
                   displayEmpty
                   value={filterPayType}
                   input={<OutlinedInput />}
@@ -321,6 +295,7 @@ const PayStructure = () => {
               </FormControl>
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
+                  sx={sxSelect}
                   displayEmpty
                   value={filterEmployee}
                   input={<OutlinedInput />}
@@ -414,15 +389,31 @@ const PayStructure = () => {
                         </AvatarGroup>
                       </TableCell>
                       <TableCell align="right" className="text-base">
-                        <IconButton onClick={() => handleEditEmployee(row)}>
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-                        <IconButton className="bg-[#FFEBEF] hover:bg-[#FFEBEF]">
-                          <CloseIcon
-                            fontSize="small"
-                            className="text-[#DA2036] "
-                          />
-                        </IconButton>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <IconButton
+                            className="bg-bg-light"
+                            onClick={() => handleEditPayStructure(row)}
+                            style={squareIconButtonStyles}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+
+                          <IconButton
+                            className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
+                            style={squareIconButtonStyles}
+                          >
+                            <ContentCopyOutlinedIcon fontSize="small" />
+                          </IconButton>
+                          <IconButton
+                            className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
+                            style={squareIconButtonStyles}
+                          >
+                            <DeleteOutlineOutlinedIcon
+                              fontSize="medium"
+                              className="text-[#DA2036] "
+                            />
+                          </IconButton>
+                        </Stack>
                       </TableCell>
                     </TableRow>
                   ))}

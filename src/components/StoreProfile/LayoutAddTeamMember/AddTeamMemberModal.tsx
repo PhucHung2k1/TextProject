@@ -30,7 +30,11 @@ import type { CountryPhone } from '@/services/common/common.interface';
 import { ErrorMessage } from '@hookform/error-message';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import { Clear, Check, Error } from '@mui/icons-material';
-import { sxTextField } from '@/utils/helper/styles';
+import {
+  sxDisableTextField,
+  sxSelect,
+  sxTextField,
+} from '@/utils/helper/styles';
 import { getAllPermission } from '@/store/permission/permissionAction';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
 
@@ -46,7 +50,6 @@ interface IFormInput {
   payStructure: string;
   serviceAndProduct: string;
 }
-const arrRolePermission = ['Appointment', 'Salon Center', 'Create/ Charge'];
 
 const arrServiceProduct = [
   'Artificial Nails',
@@ -72,7 +75,6 @@ interface FormControlComponentProps {
 const FormControlComponent = ({
   label,
   type,
-  sx = {},
   error = false,
   required = false,
   placeholder,
@@ -84,9 +86,9 @@ const FormControlComponent = ({
 }: FormControlComponentProps) => (
   <FormControl fullWidth required={required}>
     <TextField
+      sx={sxTextField}
       label={label}
       type={type}
-      sx={sx}
       required={required}
       error={error}
       placeholder={placeholder}
@@ -100,7 +102,7 @@ const FormControlComponent = ({
         errors={errors}
         name={name}
         render={({ message }: any) => (
-          <div className="mt-2 text-sm text-red-700" role="alert">
+          <div className="ml-2 mt-1 text-sm text-text-error" role="alert">
             <span className="font-medium">{message}</span>
           </div>
         )}
@@ -194,29 +196,40 @@ export const AddYourEmployeeModal = () => {
   };
 
   return (
-    <div className="h-auto w-[568px] rounded-2xl bg-white shadow-md">
-      <div className="h-full overflow-y-auto px-8 pb-8 pt-12">
-        <div className=" text-center">
-          <div className="flex items-center justify-center ">
-            <Clear
-              onClick={handleCloseModal}
-              className="cursor-pointer text-3xl"
-            />
-            <p className="mx-auto text-[32px] font-semibold">Add team member</p>
-          </div>
-
-          <p className="text-mango-text-gray-2">
-            Invite your team member to join your salon
-          </p>
+    <div className=" w-[568px] rounded-2xl bg-white pb-8 pt-10 shadow-md">
+      {/* <div className=" text-center">
+        <div className="flex items-center justify-center px-8">
+          <Clear
+            onClick={handleCloseModal}
+            className="cursor-pointer text-3xl"
+          />
+          <p className="mx-auto text-[32px] font-semibold">Add team member</p>
         </div>
 
-        {/*  */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="h-full w-full pt-8"
-          noValidate
-        >
-          <Grid container rowSpacing={2}>
+        <p className="text-mango-text-gray-2">
+          Invite your team member to join your salon
+        </p>
+      </div> */}
+      <div className="relative px-8 text-center">
+        <Clear
+          onClick={handleCloseModal}
+          className="absolute left-5 top-0 cursor-pointer text-3xl"
+        />
+
+        <p className="mx-auto text-[32px] font-semibold">Add team member</p>
+      </div>
+      <p className="text-center text-[14px] text-mango-text-gray-2">
+        Invite your team member to join your salon
+      </p>
+
+      {/*  */}
+      <form onSubmit={handleSubmit(onSubmit)} className="" noValidate>
+        <Grid>
+          <Grid
+            container
+            rowSpacing={2}
+            className="my-5 max-h-[65vh] w-full overflow-x-hidden overflow-y-scroll px-8 pt-5"
+          >
             <Grid container spacing={2}>
               <Grid xs={6} item>
                 <FormControlComponent
@@ -313,13 +326,7 @@ export const AddYourEmployeeModal = () => {
                 <TextField
                   disabled
                   className=" bg-[#F2F2F2]"
-                  sx={{
-                    '& .MuiInputBase-input.Mui-disabled': {
-                      WebkitTextFillColor: '#404044',
-                      fontWeight: '600',
-                      fontSize: '16px',
-                    },
-                  }}
+                  sx={sxDisableTextField}
                   id="input-with-icon-textfield"
                   label="Prefix"
                   defaultValue="(+1)"
@@ -392,7 +399,7 @@ export const AddYourEmployeeModal = () => {
                 orientation="horizontal"
               />
             </Grid>
-            <div className=" mt-4 h-[150px] w-full overflow-x-hidden overflow-y-scroll">
+            <div className=" mt-4 ">
               <Grid container rowSpacing={2} className="mt-2  w-full">
                 <Grid xs={12} item>
                   <Typography fontSize={20} fontWeight={600} mb={1}>
@@ -405,6 +412,7 @@ export const AddYourEmployeeModal = () => {
                       sx={{
                         '& .css-1sv0avo-MuiGrid-root': {
                           display: 'none',
+                          sxSelect,
                         },
                       }}
                       input={<OutlinedInput />}
@@ -469,18 +477,20 @@ export const AddYourEmployeeModal = () => {
                     This role allows team members to access functions:
                   </Typography>
                   <Box className="flex-wrap">
-                    {arrRolePermission.map((role) => (
-                      <Chip
-                        key={role}
-                        className=" m-1  bg-blue-50 px-1 text-[16px]  text-blue-700"
-                        label={role}
-                        sx={{
-                          '& .css-6od3lo-MuiChip-label': {
-                            overflow: 'unset',
-                          },
-                        }}
-                      />
-                    ))}
+                    {listRole
+                      .find((item) => item.Id === valueRole)
+                      ?.Permissions.map((role) => (
+                        <Chip
+                          key={role.Id}
+                          className=" m-1  bg-blue-50 px-1 text-[16px]  text-blue-700"
+                          label={role.Name}
+                          sx={{
+                            '& .css-6od3lo-MuiChip-label': {
+                              overflow: 'unset',
+                            },
+                          }}
+                        />
+                      ))}
                   </Box>
                 </Grid>
                 <Grid xs={12} item className="relative">
@@ -502,11 +512,7 @@ export const AddYourEmployeeModal = () => {
                     <Select
                       displayEmpty
                       value={valuePayStructure}
-                      sx={{
-                        '& .css-1sv0avo-MuiGrid-root': {
-                          display: 'none',
-                        },
-                      }}
+                      sx={sxSelect}
                       input={<OutlinedInput />}
                       inputProps={{ 'aria-label': 'Without label' }}
                       className="bg-white"
@@ -649,21 +655,21 @@ export const AddYourEmployeeModal = () => {
                 </Grid>
               </Grid>
             </div>
-            <Grid xs={12} item>
-              <FormControl fullWidth>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  className="h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white"
-                  sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
-                >
-                  SAVE
-                </Button>
-              </FormControl>
-            </Grid>
           </Grid>
-        </form>
-      </div>
+
+          <Grid xs={12} item className="mt-2 px-8">
+            <FormControl fullWidth>
+              <Button
+                type="submit"
+                variant="contained"
+                className="h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white hover:bg-button-hover-cyan"
+              >
+                SAVE
+              </Button>
+            </FormControl>
+          </Grid>
+        </Grid>
+      </form>
     </div>
   );
 };

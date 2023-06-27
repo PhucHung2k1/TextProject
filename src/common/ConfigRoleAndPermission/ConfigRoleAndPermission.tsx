@@ -5,44 +5,31 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
 import type { IPermissionChild } from '@/services/permission.services/permission.interface';
-import { useAppSelector } from '@/store/hook';
+import { sxCheckBox } from '@/utils/helper/styles';
 
 interface Props {
   configName: string;
   permissionAllByName: IPermissionChild[];
-  setListAddedPermissions: Function;
-  setListRemovedPermissions: Function;
+
+  selectedPermissions: string[];
+  setSelectedPermissions: Function;
 }
 export const ConfigRoleAndPermission = ({
   configName,
   permissionAllByName,
-  setListAddedPermissions,
-  setListRemovedPermissions,
+
+  selectedPermissions,
+  setSelectedPermissions,
 }: Props) => {
-  const listPermissionCustomByIdRedux = useAppSelector(
-    (state) => state.customerRoleSlice.listPermissionCustomById
-  );
-
   const [showAll, setShowAll] = useState<boolean>(false);
-  const handleCheckBox = (value: boolean, id: string) => {
-    const checkExist = listPermissionCustomByIdRedux.some(
-      (item) => item.Id === id
-    );
-
-    if (!checkExist) {
-      if (value) {
-        setListAddedPermissions((prev: any) => [...prev, id]);
-      } else {
-        setListAddedPermissions((prev: any) =>
-          prev.filter((item: string) => item !== id)
-        );
-      }
-    } else if (value) {
-      setListRemovedPermissions((prev: any) => [...prev, id]);
-    } else {
-      setListRemovedPermissions((prev: any) =>
-        prev.filter((item: string) => item !== id)
+  const handleCheckBox = (idPermission: string) => {
+    if (selectedPermissions.includes(idPermission)) {
+      const updatedSelectedEmployees = selectedPermissions.filter(
+        (id) => id !== idPermission
       );
+      setSelectedPermissions(updatedSelectedEmployees);
+    } else {
+      setSelectedPermissions([...selectedPermissions, idPermission]);
     }
   };
   return (
@@ -50,7 +37,7 @@ export const ConfigRoleAndPermission = ({
       <div
         className={` flex items-center justify-between border ${
           showAll ? 'rounded-[5px] rounded-b-none' : 'rounded-[6px]'
-        } min-h-[64px] w-full justify-between !border-mango-text-gray-1 bg-white px-4 text-xl font-bold capitalize text-50`}
+        } min-h-[64px] w-full justify-between !border-border-light bg-white px-4 text-xl font-bold capitalize text-50`}
       >
         <div className="px-4">
           <FormControlLabel
@@ -63,12 +50,12 @@ export const ConfigRoleAndPermission = ({
         {!showAll ? (
           <AddIcon
             onClick={() => setShowAll(!showAll)}
-            className="h-8 w-8 cursor-pointer rounded border border-mango-primary-blue bg-mango-primary-blue text-white"
+            className="h-8 w-8 cursor-pointer rounded border border-cyan-50 bg-cyan-50 text-text-primary-dark"
           />
         ) : (
           <RemoveIcon
             onClick={() => setShowAll(!showAll)}
-            className="h-8  w-8 cursor-pointer rounded bg-mango-gray-light-1 text-mango-text-gray-2"
+            className="h-8 w-8 cursor-pointer rounded border-cyan-50 bg-cyan-50 text-text-primary-dark"
           />
         )}
       </div>
@@ -78,8 +65,8 @@ export const ConfigRoleAndPermission = ({
           <TreeView>
             {Array.isArray(permissionAllByName) &&
               permissionAllByName?.map((item) => {
-                const checked = listPermissionCustomByIdRedux.some(
-                  (permission) => permission.Id === item.Id
+                const checked = selectedPermissions.some(
+                  (permission) => permission === item.Id
                 );
 
                 return (
@@ -100,11 +87,10 @@ export const ConfigRoleAndPermission = ({
                         control={
                           <Checkbox
                             color="default"
-                            defaultChecked={checked}
-                            // checked={checked}
-                            onChange={(e) =>
-                              handleCheckBox(e.target.checked, item.Id)
-                            }
+                            sx={sxCheckBox}
+                            // defaultChecked={checked}
+                            checked={checked}
+                            onChange={() => handleCheckBox(item.Id)}
                           />
                         }
                         label={item.Name}

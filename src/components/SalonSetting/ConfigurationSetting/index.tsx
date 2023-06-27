@@ -9,6 +9,23 @@ interface StyledTabsProps {
   value: number;
   onChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
+interface StyledTabProps {
+  label: string;
+  icon?: any;
+  iconPosition?: any;
+}
+
+export const AntTab = styled((props: StyledTabProps) => (
+  <Tab disableRipple {...props} />
+))(() => ({
+  fontWeight: 500,
+  color: '#9B9BA00',
+  '&.Mui-selected': {
+    color: '#00BED6',
+    fontWeight: 700,
+  },
+}));
+
 export const StyledTabs = styled((props: StyledTabsProps) => (
   <Tabs
     {...props}
@@ -19,9 +36,10 @@ export const StyledTabs = styled((props: StyledTabsProps) => (
   '& .MuiTabs-indicator': {
     display: 'flex',
     justifyContent: 'center',
-
+    color: '#00BED6',
     backgroundColor: 'transparent',
   },
+
   '& .MuiTabs-indicatorSpan': {
     width: '100%',
     color: '#00BED6',

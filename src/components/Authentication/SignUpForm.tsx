@@ -8,7 +8,6 @@ import {
   Checkbox,
   CircularProgress,
   FormControl,
-  FormControlLabel,
   Grid,
   TextField,
 } from '@mui/material';
@@ -21,6 +20,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import {
+  sxCheckBox,
+  sxTextField,
+  sxTextFieldError,
+} from '@/utils/helper/styles';
 
 interface IFormInput {
   firstName: string;
@@ -42,16 +46,12 @@ export default function SignUpForm() {
     emailName: '',
     emailStatus: 'idle', // existed , available
   });
-  const [agreePolicy, setAgreePolicy] = useState<boolean>(false);
+  const [isagreePolicy, setIsAgreePolicy] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showCfPassword, setShowCfPassword] = useState(false);
+  // const [showCfPassword, setShowCfPassword] = useState(false);
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
-  const handleToggleCfPassword = () => {
-    setShowCfPassword(!showCfPassword);
-  };
-
   const dispatch = useAppDispatch();
   const router = useRouter();
   const {
@@ -61,7 +61,7 @@ export default function SignUpForm() {
     setError,
     trigger,
     clearErrors,
-    watch,
+    // watch,
   } = useForm<IFormInput>();
 
   const onSubmit = async (values: IFormInput) => {
@@ -82,7 +82,7 @@ export default function SignUpForm() {
     });
   };
 
-  const passwordValueRealtime = watch('password');
+  // const passwordValueRealtime = watch('password');
 
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
@@ -122,12 +122,6 @@ export default function SignUpForm() {
       setError('email', { type: 'manual', message: 'errorMessage' });
     }
   };
-  const validateConfirmPassword = (value: string) => {
-    if (value === passwordValueRealtime) {
-      return true;
-    }
-    return 'Passwords do not match';
-  };
 
   useEffect(() => {
     return () => {
@@ -137,7 +131,11 @@ export default function SignUpForm() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="my-8" noValidate>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="my-8 px-[32px]"
+        noValidate
+      >
         <Grid container spacing={2}>
           <Grid xs={6} item>
             <FormControl
@@ -145,9 +143,10 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={[sxTextField, sxTextFieldError]}
                 label="First Name"
-                required
                 type="text"
+                required
                 error={Boolean(errors.firstName)}
                 {...register('firstName', {
                   required: 'Enter Your First Name!',
@@ -158,7 +157,10 @@ export default function SignUpForm() {
                 errors={errors}
                 name="firstName"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="ml-2 mt-1 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -171,12 +173,13 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={[sxTextField, sxTextFieldError]}
                 label="Last Name"
                 type="text"
                 required
                 error={Boolean(errors.lastName)}
                 {...register('lastName', {
-                  required: 'Enter Your Last Name!',
+                  required: 'Enter Your Last Name',
                 })}
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
               />
@@ -184,7 +187,10 @@ export default function SignUpForm() {
                 errors={errors}
                 name="lastName"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="ml-2 mt-1 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -197,12 +203,13 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={[sxTextField, sxTextFieldError]}
                 label="Email Address"
                 type="email"
                 required
                 error={Boolean(errors.email)}
                 {...register('email', {
-                  required: 'Enter Your Email!',
+                  required: 'Enter Your Email',
                 })}
                 onChange={handleEmailChange}
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -223,7 +230,10 @@ export default function SignUpForm() {
                 errors={errors}
                 name="email"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                  <div
+                    className="ml-2 mt-1 text-sm text-text-error"
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -236,11 +246,12 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
+                sx={[sxTextField, sxTextFieldError]}
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
                 error={Boolean(errors.password)}
                 {...register('password', {
-                  required: 'Enter Your Password!',
+                  required: 'Enter Your Password',
                   minLength: {
                     value: 9,
                     message: 'Password must be more than 8 characters!',
@@ -261,47 +272,11 @@ export default function SignUpForm() {
                 errors={errors}
                 name="password"
                 render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
-                    <span className="font-medium">{message}</span>
-                  </div>
-                )}
-              />
-            </FormControl>
-          </Grid>
+                  <div
+                    className="ml-2 mt-1 text-sm text-text-error"
 
-          <Grid xs={12} item>
-            <FormControl
-              fullWidth
-              className="text-sm font-normal !text-mango-text-black-1"
-            >
-              <TextField
-                label="Confirm Password"
-                type={showCfPassword ? 'text' : 'password'}
-                required
-                error={Boolean(errors.confirmPassword)}
-                {...register('confirmPassword', {
-                  required: 'Confirm Password is required!',
-                  // validate: (value) =>
-                  //   value === passwordValueRealtime ||
-                  //   "Passwords do not match",
-                  validate: validateConfirmPassword,
-                })}
-                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={handleToggleCfPassword}>
-                        {showCfPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="confirmPassword"
-                render={({ message }: any) => (
-                  <div className="mt-2 text-sm text-red-700" role="alert">
+                    role="alert"
+                  >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
@@ -309,23 +284,35 @@ export default function SignUpForm() {
             </FormControl>
           </Grid>
           <Grid xs={12} item className="flex items-center">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={agreePolicy}
-                  onChange={(_, v) => {
-                    setAgreePolicy(v);
-                  }}
-                />
-              }
-              label=""
-            />
+            <FormControl className="ml-[-10px]">
+              <Checkbox
+                sx={sxCheckBox}
+                checked={isagreePolicy}
+                onChange={(_, v) => {
+                  setIsAgreePolicy(v);
+                }}
+              />
 
-            <div className="ml-[-10px] flex">
+              <ErrorMessage
+                errors={errors}
+                name="confirmPassword"
+                render={({ message }: any) => (
+                  <div
+                    className="text-text-error ml-2 mt-1 text-sm"
+                    role="alert"
+                  >
+                    <span className="font-medium">{message}</span>
+                  </div>
+                )}
+              />
+
+            </FormControl>
+
+            <div className=" flex">
               <p className="text-text-secondary">
                 I agree to the{' '}
-                <span className="text-[#1F87E5]">Privacy Policy </span>
-                and <span className="text-[#1F87E5]">Terms of Use</span>
+                <span className="text-[#00BDD6]">Privacy Policy </span>
+                and <span className="text-[#00BDD6]">Terms of Use</span>
               </p>
             </div>
           </Grid>
@@ -335,6 +322,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <Button
+                disabled={!isagreePolicy}
                 variant="contained"
                 className="mt-3 h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
                 type="submit"
@@ -347,7 +335,7 @@ export default function SignUpForm() {
           <Grid xs={12} item>
             <FormControl
               fullWidth
-              className="flex cursor-pointer flex-row items-center justify-center gap-1"
+              className="mb-[50px] flex cursor-pointer flex-row items-center justify-center gap-1"
             >
               <div>Had an account?</div>
               <Link href="/login">

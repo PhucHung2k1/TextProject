@@ -17,6 +17,7 @@ import { Store } from '@/services/store.service/store.service';
 import type { IStoreProfile } from '@/services/store.service/store.interface';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
+import { sxTextField, sxDisableTextField } from '@/utils/helper/styles';
 
 const POST_IMAGE = '/file/upload-picture';
 
@@ -123,7 +124,7 @@ const AboutYourBusiness = () => {
   ]);
   return (
     <LayoutStoreProfile>
-      <p className="mb-[8px] mt-[16px] text-center text-[32px] font-semibold text-text-title">
+      <p className="mb-[8px] text-center text-[32px] font-semibold text-text-title">
         About your salon
       </p>
       <p className="mb-[48px] text-center text-[14px] text-mango-text-gray-2">
@@ -181,6 +182,7 @@ const AboutYourBusiness = () => {
         </p>
         <div className="mb-1 mt-[36px] h-[56px] w-full">
           <TextField
+            sx={sxTextField}
             id="outlined-basic"
             label="Your salon name"
             variant="outlined"
@@ -188,29 +190,13 @@ const AboutYourBusiness = () => {
             value={formStore.Name}
             name="Name"
             onChange={handleFieldChange}
-            sx={{
-              '& .MuiInputBase-root.Mui-focused': {
-                '& > fieldset': {
-                  borderColor: '#00BDD6',
-                },
-              },
-              '& label.Mui-focused': {
-                color: '#00BDD6',
-              },
-            }}
           />
         </div>
         <div className="flex w-full justify-between">
           <TextField
             disabled
             className="w-[128px] bg-[#F2F2F2]"
-            sx={{
-              '& .MuiInputBase-input.Mui-disabled': {
-                WebkitTextFillColor: '#404044',
-                fontWeight: '600',
-                fontSize: '16px',
-              },
-            }}
+            sx={{ sxDisableTextField }}
             id="input-with-icon-textfield"
             label="Prefix"
             defaultValue="(+1)"
@@ -239,16 +225,7 @@ const AboutYourBusiness = () => {
           <div>
             <FormControl className="h-[56px] w-[352px] ">
               <TextField
-                sx={{
-                  '& .MuiInputBase-root.Mui-focused': {
-                    '& > fieldset': {
-                      borderColor: '#00BDD6',
-                    },
-                  },
-                  '& label.Mui-focused': {
-                    color: '#00BDD6',
-                  },
-                }}
+                sx={sxTextField}
                 value={formStore.PhoneNumber}
                 // error={Boolean(errors.PhoneNumber)}
                 // {...register('PhoneNumber', {

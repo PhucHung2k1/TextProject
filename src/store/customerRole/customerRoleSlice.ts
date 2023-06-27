@@ -4,6 +4,7 @@ import type {
 } from '@/services/customer.service/customer.interface';
 import type {
   IAddRemoveMultiRole,
+  IAddRemoveMultiRoleEmployee,
   IAllCustomerRole,
   IDetailRoleById,
 } from '@/services/customerRole.service/customerRole.interface';
@@ -16,6 +17,7 @@ type IInitialState = {
   addNewRoleId: string;
   addRemoveMultiRoleIds: IAddRemoveMultiRole; //
   detailRoleById: IDetailRoleById;
+  addRemoveMultiRoleEmployee: IAddRemoveMultiRoleEmployee;
 };
 const initialState = {
   listRole: [
@@ -37,17 +39,25 @@ const initialState = {
   },
   detailRoleById: {
     Name: '',
-    Active: true,
+    Active: false,
     IsSystemRole: false,
     SystemName: null,
     StoreId: '',
-    Type: null,
+    Type: '',
+    IsTechnician: false,
+    TakeAppointment: false,
+    AvailableBookingOnline: false,
+    AllowQuickPayment: false,
     Permissions: [],
     Id: '',
     CreateBy: null,
     CreateDate: '',
     LastModifiedBy: null,
     LastModifiedDate: null,
+  },
+  addRemoveMultiRoleEmployee: {
+    roleId: '',
+    data: { AddedEmployeeIds: [], RemovedEmployeeIds: [] },
   },
 } as unknown as IInitialState;
 
@@ -73,6 +83,9 @@ const customerRoleSlice = createSlice({
     setDetailRoleById: (state, action) => {
       state.detailRoleById = action.payload;
     },
+    setAddRemoveMultiRoleEmployee: (state, action) => {
+      state.addRemoveMultiRoleEmployee = action.payload;
+    },
   },
 });
 export const {
@@ -82,5 +95,6 @@ export const {
   setAddNewRoleId,
   setAddRemoveMultiRoleIds,
   setDetailRoleById,
+  setAddRemoveMultiRoleEmployee,
 } = customerRoleSlice.actions;
 export default customerRoleSlice.reducer;

@@ -45,7 +45,7 @@ const SelectStore = () => {
   };
   return (
     <LayoutAuthen type="selectstore">
-      <div className="flex  max-h-80 w-full overflow-y-auto overflow-x-hidden pb-16 pt-5">
+      <div className="my-8 px-[32px] ">
         <div className="flex w-full flex-col items-center gap-0 ">
           {storeCustomer &&
             storeCustomer.map((item: IStoreCustomer, index) => {
@@ -78,16 +78,16 @@ const SelectStore = () => {
               );
             })}
         </div>
+        <Button
+          variant="contained"
+          className="mt-[30px] h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
+          type="button"
+          sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
+          onClick={handleSelectCustomer}
+        >
+          SELECT
+        </Button>
       </div>
-      <Button
-        variant="contained"
-        className="mt-3 h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
-        type="button"
-        sx={{ '&:hover': { backgroundColor: '#00ADC3' } }}
-        onClick={handleSelectCustomer}
-      >
-        SELECT
-      </Button>
     </LayoutAuthen>
   );
 };

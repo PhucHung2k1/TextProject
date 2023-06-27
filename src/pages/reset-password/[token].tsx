@@ -14,6 +14,7 @@ import {
   changePasswordByToken,
   validateForgotPasswordToken,
 } from '@/store/passwordCustomer/passwordCustomerAction';
+import { sxTextField } from '@/utils/helper/styles';
 
 const ResetPassword = () => {
   const {
@@ -80,7 +81,7 @@ const ResetPassword = () => {
         {showTokenExpired ? (
           <TokenExpired />
         ) : (
-          <div className="flex min-h-[30%] w-[25%] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-8">
+          <div className="flex min-h-[30%] w-[568px] flex-col items-center justify-between gap-2 rounded-2xl bg-white p-8">
             <div className="flex flex-col items-center">
               <div className="text-3xl font-bold text-text-title ">
                 Reset your password
@@ -102,6 +103,7 @@ const ResetPassword = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
+                      sx={sxTextField}
                       label="Enter new password"
                       type={showPassword ? 'text' : 'password'}
                       required
@@ -132,7 +134,10 @@ const ResetPassword = () => {
                       errors={errors}
                       name="password"
                       render={({ message }: any) => (
-                        <div className="mt-2 text-sm text-red-700" role="alert">
+                        <div
+                          className="ml-2 mt-1 text-sm text-text-error"
+                          role="alert"
+                        >
                           <span className="font-medium">{message}</span>
                         </div>
                       )}
@@ -145,6 +150,7 @@ const ResetPassword = () => {
                     className="text-sm font-normal !text-mango-text-black-1"
                   >
                     <TextField
+                      sx={sxTextField}
                       label="Confirm new password"
                       type={showCfPassword ? 'text' : 'password'}
                       required
@@ -172,7 +178,10 @@ const ResetPassword = () => {
                       errors={errors}
                       name="confirmPassword"
                       render={({ message }: any) => (
-                        <div className="mt-2 text-sm text-red-700" role="alert">
+                        <div
+                          className="ml-2 mt-1 text-sm text-text-error"
+                          role="alert"
+                        >
                           <span className="font-medium">{message}</span>
                         </div>
                       )}

@@ -12,6 +12,7 @@ export const lookupData = createAsyncThunk(
 
       if (status === 200) {
         dispatch(setLookupData(data));
+        return data;
       }
       return error;
     } catch (err: any) {

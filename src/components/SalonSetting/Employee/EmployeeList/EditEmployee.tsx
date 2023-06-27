@@ -6,11 +6,10 @@ import React, { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import type { IEmployee } from './EmployeeList';
 import { apiPostPhoto } from '@/utils/axios/instance';
-// eslint-disable-next-line import/no-cycle
-import { AntTab, StyledTabs } from '..';
 import EmployeeProfileTab from './EditEmployeeTab/EmployeeProfileTab';
 import RoleAndPermissionTab from './RoleAndPermissionTab/RoleAndPermissionTab';
 import WorkScheduleTab from './WorkScheduleTab/WorkScheduleTab';
+import { AntTab, StyledTabs } from '../../ConfigurationSetting';
 // import RoleAndPermissionTab from './RoleAndPermissionTab/RoleAndPermissionTab';
 // import StoreWorkingHoursSetup from '@/components/StoreProfile/StoreWorkingHoursSetup';
 
@@ -47,14 +46,18 @@ const itemsTab = [
     children: <></>,
   },
 ];
-const GreenSwitch = styled(Switch)({
-  '& .MuiSwitch-track': {
-    backgroundColor: '#69B00052',
-  },
+export const GreenSwitch = styled(Switch)(({ theme }) => ({
   '& .MuiSwitch-thumb': {
-    backgroundColor: '#69B000',
+    color: theme.palette.common.white,
+    backgroundColor: '#4CAF50',
+    '&.Mui-checked': {
+      backgroundColor: '#4CAF50',
+    },
   },
-});
+  '& .MuiSwitch-track': {
+    backgroundColor: '#8BC34A',
+  },
+}));
 const POST_IMAGE = '/file/upload-picture';
 interface EditEmployeeProps {
   handleCloseDrawer: any;
@@ -68,6 +71,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
   const [checked, setChecked] = React.useState(false);
   const [activeKey, setActiveKey] = useState<number>(0);
   const [selectedImage, setSelectedImage] = useState<any>();
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [avatarImage, setAvatarImage] = useState<any>();
   // eslint-disable-next-line no-console
   console.log('🚀 ~ file: EditEmployee.tsx:68 ~ avatarImage:', avatarImage);
@@ -115,7 +119,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
       <Grid xs={12} item>
         <form className=" mt-6 flex flex-wrap justify-center gap-2" noValidate>
           <div className="relative flex w-full flex-col items-center justify-center">
-            <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full border border-{#CBCBDB}">
+            <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full border border-border-light">
               {selectedImage ? (
                 <Image
                   src={URL?.createObjectURL(selectedImage)}

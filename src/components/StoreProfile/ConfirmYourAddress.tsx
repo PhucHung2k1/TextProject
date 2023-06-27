@@ -106,10 +106,10 @@ const ConfirmYourAddress = () => {
       ) : (
         <Box>
           <div className=" text-center">
-            <div className="flex items-center justify-center ">
+            <div className="relative ">
               <ArrowBackIcon
                 onClick={() => handlePreviousProgressSetupStore(dispatch)}
-                className="cursor-pointer text-3xl"
+                className="absolute left-0 top-2 cursor-pointer text-3xl text-icon-color"
               />
 
               <p className="mx-auto text-[32px] font-semibold">
@@ -152,10 +152,10 @@ const ConfirmYourAddress = () => {
                 renderInput={(params) => {
                   return (
                     <TextField
+                      sx={sxTextField}
                       {...params}
                       placeholder="Search"
                       label="Search your address"
-                      sx={sxTextField}
                       InputProps={{
                         ...params.InputProps,
                         startAdornment: (
@@ -175,12 +175,12 @@ const ConfirmYourAddress = () => {
                 marker={marker || undefined}
                 onMapChangeMarker={(v: any) => {
                   setYourAddress(v as IMapBoxPlace);
-                  console.log('v', v);
+                  // console.log('v', v);
 
-                  // const [lng, lat] = v.geometry.coordinates;
-                  // const lngLat = new mapboxgl.LngLat(lng, lat);
+                  const [lng, lat] = v.geometry.coordinates;
+                  const lngLat = new mapboxgl.LngLat(lng, lat);
 
-                  // setMarkers(lngLat);
+                  setMarkers(lngLat);
                 }}
               />
             </div>
