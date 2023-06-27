@@ -80,26 +80,28 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
     const payload: IPatchPayloadData[] = [];
 
     const addPayload = (path: string, value: any) => {
-      if (value !== detailRoleById?.[path.substring(1)]) {
-        payload.push({
-          op: 'replace',
-          path,
-          value,
-        });
+      const currentDetailRoleValue = detailRoleById?.[path.substring(1)];
+      if (value !== currentDetailRoleValue) {
+        payload.push({ op: 'replace', path, value });
       }
     };
+
     addPayload('/Name', roleName);
-    addPayload('/allowQuickPayment', stateAddRole.allowQuickPayment);
-    addPayload('/availableBookingOnline', stateAddRole.availableBookingOnline);
-    addPayload('/isTechnician', stateAddRole.isTechnician);
-    addPayload('/takeAppointment', stateAddRole.takeAppointment);
-    if (payload.length > 0) {
+    addPayload('/AllowQuickPayment', stateAddRole.allowQuickPayment);
+    addPayload('/AvailableBookingOnline', stateAddRole.availableBookingOnline);
+    addPayload('/IsTechnician', stateAddRole.isTechnician);
+    addPayload('/TakeAppointment', stateAddRole.takeAppointment);
+
+    const hasRolePayload = payload.length > 0;
+    if (hasRolePayload) {
       dispatch(updateRole({ id: detailRoleById.Id, data: payload }));
     }
-    if (
+
+    const listPermissionAddRemovePayloadExists =
       listPermissionAddRemove.AddedPermissions.length > 0 ||
-      listPermissionAddRemove.RemovedPermissions.length > 0
-    ) {
+      listPermissionAddRemove.RemovedPermissions.length > 0;
+
+    if (listPermissionAddRemovePayloadExists) {
       dispatch(
         addRemoveMultiRole({
           id: idRole,
@@ -107,14 +109,15 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
         })
       );
     }
-    if (
+
+    const listAddRemoveRolePermissionExists =
       listAddRemoveRolePermission.data.AddedEmployeeIds.length > 0 ||
-      listAddRemoveRolePermission.data.RemovedEmployeeIds.length > 0
-    ) {
+      listAddRemoveRolePermission.data.RemovedEmployeeIds.length > 0;
+
+    if (listAddRemoveRolePermissionExists) {
       dispatch(addRemoveMultiRoleEmployee(listAddRemoveRolePermission));
     }
   };
-
   return (
     <LayoutDrawer
       disable={false}
@@ -137,13 +140,9 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
                   ))}
                 </StyledTabs>
               </Box>
-              {itemsTab.map((item) => {
-                return item.id === activeKey ? (
-                  <div key={item.key}>{item.children}</div>
-                ) : (
-                  <></>
-                );
-              })}
+              <div>
+                {itemsTab.find((item) => item.id === activeKey)?.children}
+              </div>
             </Box>
           </Grid>
         </>

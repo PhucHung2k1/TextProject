@@ -49,7 +49,7 @@ export const sxCheckBox = {
 };
 
 export const sxSwitchBlue = {
-  display: 'block',
+  // display: 'block',
   '& .MuiSwitch-switchBase.Mui-checked': {
     color: '#00BDD6',
   },

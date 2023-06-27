@@ -2,6 +2,7 @@ import LayoutHeader from '@/components/Authentication/LayoutHeader';
 import { SalonSettingComponent } from '@/components/SalonSetting/SalonSetting';
 import { lookupData } from '@/store/common/commonAction';
 import { getAllRole } from '@/store/customerRole/customerRoleAction';
+import { getEmployeeList } from '@/store/employee/employeeAction';
 import { useAppDispatch } from '@/store/hook';
 import { getAllPermission } from '@/store/permission/permissionAction';
 import { useRouter } from 'next/router';
@@ -27,6 +28,7 @@ const SalonSetting = () => {
           GiftCards: true,
         })
       );
+      dispatch(getEmployeeList({}));
       dispatch(getAllRole({}));
       dispatch(lookupData({}));
     }

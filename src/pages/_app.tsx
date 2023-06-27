@@ -24,6 +24,20 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Inter, sans-serif',
   },
+  palette: {
+    success: {
+      main: '#69B000',
+    },
+    error: {
+      main: '#DA2036',
+    },
+    secondary: {
+      main: '#FFFFFF',
+    },
+    warning: {
+      main: '#F28500',
+    },
+  },
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
