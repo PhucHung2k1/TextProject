@@ -5,45 +5,31 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
 import type { IPermissionChild } from '@/services/permission.services/permission.interface';
-import { useAppSelector } from '@/store/hook';
 import { sxCheckBox } from '@/utils/helper/styles';
 
 interface Props {
   configName: string;
   permissionAllByName: IPermissionChild[];
-  setListAddedPermissions: Function;
-  setListRemovedPermissions: Function;
+
+  selectedPermissions: string[];
+  setSelectedPermissions: Function;
 }
 export const ConfigRoleAndPermission = ({
   configName,
   permissionAllByName,
-  setListAddedPermissions,
-  setListRemovedPermissions,
+
+  selectedPermissions,
+  setSelectedPermissions,
 }: Props) => {
-  const listPermissionCustomByIdRedux = useAppSelector(
-    (state) => state.customerRoleSlice.listPermissionCustomById
-  );
-
   const [showAll, setShowAll] = useState<boolean>(false);
-  const handleCheckBox = (value: boolean, id: string) => {
-    const isSelected = listPermissionCustomByIdRedux.some(
-      (item) => item.Id === id
-    );
-
-    if (!isSelected) {
-      if (value) {
-        setListAddedPermissions((prevList: string[]) => [...prevList, id]);
-      } else {
-        setListAddedPermissions((prevList: string[]) =>
-          prevList.filter((item: string) => item !== id)
-        );
-      }
-    } else if (!value) {
-      setListRemovedPermissions((prevList: string[]) => [...prevList, id]);
-    } else {
-      setListRemovedPermissions((prevList: string[]) =>
-        prevList.filter((item: string) => item !== id)
+  const handleCheckBox = (idPermission: string) => {
+    if (selectedPermissions.includes(idPermission)) {
+      const updatedSelectedEmployees = selectedPermissions.filter(
+        (id) => id !== idPermission
       );
+      setSelectedPermissions(updatedSelectedEmployees);
+    } else {
+      setSelectedPermissions([...selectedPermissions, idPermission]);
     }
   };
   return (
@@ -79,8 +65,8 @@ export const ConfigRoleAndPermission = ({
           <TreeView>
             {Array.isArray(permissionAllByName) &&
               permissionAllByName?.map((item) => {
-                const checked = listPermissionCustomByIdRedux.some(
-                  (permission) => permission.Id === item.Id
+                const checked = selectedPermissions.some(
+                  (permission) => permission === item.Id
                 );
 
                 return (
@@ -104,9 +90,7 @@ export const ConfigRoleAndPermission = ({
                             sx={sxCheckBox}
                             // defaultChecked={checked}
                             checked={checked}
-                            onChange={(e) =>
-                              handleCheckBox(e.target.checked, item.Id)
-                            }
+                            onChange={() => handleCheckBox(item.Id)}
                           />
                         }
                         label={item.Name}
