@@ -36,7 +36,7 @@ const AssignEmployees = ({ idRole }: Props) => {
     listAllRole
       .find((role) => role.Id === idRole)
       ?.Employees.map((emp) => emp.Id) || [];
-  // const [addedEmployees, setAddedEmployees] = useState<string[]>([]);
+  const [addedEmployees, setAddedEmployees] = useState<string[]>([]);
   const [removedEmployees, setRemovedEmployees] = useState<string[]>([]);
   const [valueSearchEmployee, setValueSearchEmployee] = useState<string>('');
   const [selectedEmployees, setSelectedEmployees] =
@@ -83,27 +83,34 @@ const AssignEmployees = ({ idRole }: Props) => {
   const handleSearchEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValueSearchEmployee(e.target.value);
   };
+
   useEffect(() => {
-    // Set Payload for add remove to redux
     const removeListId = selectedInit.filter(
       (item) => !selectedEmployees.includes(item)
     );
+    const addedListId = selectedEmployees.filter(
+      (employee) => !selectedInit.includes(employee)
+    );
+    setAddedEmployees(addedListId);
     setRemovedEmployees(removeListId);
+  }, [JSON.stringify(selectedEmployees)]);
+
+  useEffect(() => {
+    // Set Payload for add remove to redux
     dispatch(
       setAddRemoveMultiRoleEmployee({
         roleId: idRole,
         data: {
-          AddedEmployeeIds: selectedEmployees,
+          AddedEmployeeIds: addedEmployees,
           RemovedEmployeeIds: removedEmployees,
         },
       })
     );
-  }, [JSON.stringify(selectedEmployees), JSON.stringify(removedEmployees)]);
-
+  }, [JSON.stringify(addedEmployees), JSON.stringify(removedEmployees)]);
   useEffect(() => {
     // Reset list remove, added after call api
-    // setRemovedEmployees([]);
-    // setAddedEmployees([]);
+    setAddedEmployees([]);
+    setRemovedEmployees([]);
   }, [
     JSON.stringify(
       listAllRole

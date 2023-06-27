@@ -7,7 +7,9 @@ import { Box } from '@mui/material';
 
 const SetAccessibility = () => {
   const dispatch = useAppDispatch();
-
+  const [listAddedPermissions, setListAddedPermissions] = useState<string[]>(
+    []
+  );
   const [listRemovedPermissions, setListRemovedPermissions] = useState<
     string[]
   >([]);
@@ -26,18 +28,30 @@ const SetAccessibility = () => {
     const removeListId = listPermissionCustomByIdRedux.filter(
       (item) => !selectedPermissions.includes(item)
     );
+    const addedListId = selectedPermissions.filter(
+      (id) => !listPermissionCustomByIdRedux.includes(id)
+    );
+
+    setListAddedPermissions(addedListId);
     setListRemovedPermissions(removeListId);
+  }, [JSON.stringify(selectedPermissions)]);
+  useEffect(() => {
+    // Set Payload for add remove to redux
     dispatch(
       setAddRemoveMultiRoleIds({
-        AddedPermissions: selectedPermissions,
+        AddedPermissions: listAddedPermissions,
         RemovedPermissions: listRemovedPermissions,
       })
     );
   }, [
-    JSON.stringify(selectedPermissions),
+    JSON.stringify(listAddedPermissions),
     JSON.stringify(listRemovedPermissions),
   ]);
-
+  useEffect(() => {
+    // Reset list remove, added after call api
+    setListAddedPermissions([]);
+    setListRemovedPermissions([]);
+  }, [JSON.stringify(listPermissionCustomByIdRedux)]);
   return (
     <Box className="h-full w-full">
       {arrCategory.map((category) => {
