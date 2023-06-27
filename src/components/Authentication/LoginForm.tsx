@@ -173,7 +173,7 @@ export default function LoginForm() {
           </Grid>
         </Grid>
 
-        <div className="flex w-full items-center justify-between mt-[10px]">
+        <div className="mt-[10px] flex w-full items-center justify-between">
           <FormControlLabel
             control={
               <Checkbox
@@ -204,7 +204,7 @@ export default function LoginForm() {
         >
           LOGIN
         </Button>
-        <div className="flex cursor-pointer items-center justify-center  mt-[20px] mb-[120px]">
+        <div className="mb-[120px] mt-[20px] flex cursor-pointer  items-center justify-center">
           <div>Don't have an account?&ensp; </div>
           <Link href="/sign-up">
             <div className="font-bold text-mango-primary-blue">

@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import type { IEmployee } from './EmployeeList';
 import { apiPostPhoto } from '@/utils/axios/instance';
-
 import EmployeeProfileTab from './EditEmployeeTab/EmployeeProfileTab';
 import RoleAndPermissionTab from './RoleAndPermissionTab/RoleAndPermissionTab';
 import WorkScheduleTab from './WorkScheduleTab/WorkScheduleTab';
@@ -47,14 +46,18 @@ const itemsTab = [
     children: <></>,
   },
 ];
-const GreenSwitch = styled(Switch)({
-  '& .MuiSwitch-track': {
-    backgroundColor: '#69B00052',
-  },
+export const GreenSwitch = styled(Switch)(({ theme }) => ({
   '& .MuiSwitch-thumb': {
-    backgroundColor: '#69B000',
+    color: theme.palette.common.white,
+    backgroundColor: '#4CAF50',
+    '&.Mui-checked': {
+      backgroundColor: '#4CAF50',
+    },
   },
-});
+  '& .MuiSwitch-track': {
+    backgroundColor: '#8BC34A',
+  },
+}));
 const POST_IMAGE = '/file/upload-picture';
 interface EditEmployeeProps {
   handleCloseDrawer: any;
