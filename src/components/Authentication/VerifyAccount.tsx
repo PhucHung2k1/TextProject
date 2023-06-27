@@ -138,19 +138,18 @@ const VerifyAccount = () => {
 
   return (
     <div className="flex justify-center pt-[90px]">
-      <div className=" w-[568px]  rounded-2xl bg-white px-8 py-10 shadow-md">
-        <p className="text-[32px] font-semibold">Verify your email</p>
+      <div className=" w-[568px]  rounded-2xl bg-white px-8 py-10 text-center shadow-md">
+        <p className="text-[32px]  font-semibold">Verify your email</p>
         <p>
           A text message with the code has been sent to{' '}
           <span className="font-bold text-mango-text-gray-2">
             {infoSignUp?.email}.
           </span>
         </p>
-        <Link href="/" className="!text-mango-primary-blue">
+        <Link href="/" color="inherit">
           Change your email
         </Link>
 
-        {/*  */}
         <form
           ref={formRef}
           className="mt-6 flex flex-wrap justify-center gap-2"
@@ -185,7 +184,7 @@ const VerifyAccount = () => {
           <span>Didn&apos;t get a code? </span>
           <button
             type="button"
-            className="cursor-pointer text-base font-medium text-mango-primary-blue hover:underline "
+            className="cursor-pointer text-base font-medium text-text-primary-dark hover:underline "
             onClick={handleResend}
             // disabled={isActive}
           >

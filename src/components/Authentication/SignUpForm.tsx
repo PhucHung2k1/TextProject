@@ -8,7 +8,6 @@ import {
   Checkbox,
   CircularProgress,
   FormControl,
-  FormControlLabel,
   Grid,
   TextField,
 } from '@mui/material';
@@ -47,16 +46,12 @@ export default function SignUpForm() {
     emailName: '',
     emailStatus: 'idle', // existed , available
   });
-  const [agreePolicy, setAgreePolicy] = useState<boolean>(false);
+  const [isagreePolicy, setIsAgreePolicy] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showCfPassword, setShowCfPassword] = useState(false);
+  // const [showCfPassword, setShowCfPassword] = useState(false);
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
-  const handleToggleCfPassword = () => {
-    setShowCfPassword(!showCfPassword);
-  };
-
   const dispatch = useAppDispatch();
   const router = useRouter();
   const {
@@ -66,7 +61,7 @@ export default function SignUpForm() {
     setError,
     trigger,
     clearErrors,
-    watch,
+    // watch,
   } = useForm<IFormInput>();
 
   const onSubmit = async (values: IFormInput) => {
@@ -87,7 +82,7 @@ export default function SignUpForm() {
     });
   };
 
-  const passwordValueRealtime = watch('password');
+  // const passwordValueRealtime = watch('password');
 
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
@@ -127,12 +122,6 @@ export default function SignUpForm() {
       setError('email', { type: 'manual', message: 'errorMessage' });
     }
   };
-  const validateConfirmPassword = (value: string) => {
-    if (value === passwordValueRealtime) {
-      return true;
-    }
-    return 'Passwords do not match';
-  };
 
   useEffect(() => {
     return () => {
@@ -154,10 +143,27 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
-                sx={sxTextField}
+                sx={[sxTextField, sxTextFieldError]}
                 label="First Name"
                 type="text"
+                required
+                error={Boolean(errors.firstName)}
+                {...register('firstName', {
+                  required: 'Enter Your First Name!',
+                })}
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+              />
+              <ErrorMessage
+                errors={errors}
+                name="firstName"
+                render={({ message }: any) => (
+                  <div
+                    className="ml-2 mt-1 text-sm text-text-error"
+                    role="alert"
+                  >
+                    <span className="font-medium">{message}</span>
+                  </div>
+                )}
               />
             </FormControl>
           </Grid>
@@ -173,7 +179,7 @@ export default function SignUpForm() {
                 required
                 error={Boolean(errors.lastName)}
                 {...register('lastName', {
-                  required: 'Enter Your Last Name!',
+                  required: 'Enter Your Last Name',
                 })}
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
               />
@@ -203,7 +209,7 @@ export default function SignUpForm() {
                 required
                 error={Boolean(errors.email)}
                 {...register('email', {
-                  required: 'Enter Your Email!',
+                  required: 'Enter Your Email',
                 })}
                 onChange={handleEmailChange}
                 className="!rounded-sm border border-mango-text-gray-1 !outline-none"
@@ -245,7 +251,7 @@ export default function SignUpForm() {
                 type={showPassword ? 'text' : 'password'}
                 error={Boolean(errors.password)}
                 {...register('password', {
-                  required: 'Enter Your Password!',
+                  required: 'Enter Your Password',
                   minLength: {
                     value: 9,
                     message: 'Password must be more than 8 characters!',
@@ -276,63 +282,16 @@ export default function SignUpForm() {
               />
             </FormControl>
           </Grid>
-
-          <Grid xs={12} item>
-            <FormControl
-              fullWidth
-              className="text-sm font-normal !text-mango-text-black-1"
-            >
-              <TextField
-                sx={[sxTextField, sxTextFieldError]}
-                label="Confirm Password"
-                type={showCfPassword ? 'text' : 'password'}
-                required
-                error={Boolean(errors.confirmPassword)}
-                {...register('confirmPassword', {
-                  required: 'Confirm Password is required!',
-                  // validate: (value) =>
-                  //   value === passwordValueRealtime ||
-                  //   "Passwords do not match",
-                  validate: validateConfirmPassword,
-                })}
-                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={handleToggleCfPassword}>
-                        {showCfPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+          <Grid xs={12} item className="flex items-center">
+            <FormControl className="ml-[-10px]">
+              <Checkbox
+                sx={sxCheckBox}
+                checked={isagreePolicy}
+                onChange={(_, v) => {
+                  setIsAgreePolicy(v);
                 }}
               />
-              <ErrorMessage
-                errors={errors}
-                name="confirmPassword"
-                render={({ message }: any) => (
-                  <div
-                    className="ml-2 mt-1 text-sm text-text-error"
-                    role="alert"
-                  >
-                    <span className="font-medium">{message}</span>
-                  </div>
-                )}
-              />
             </FormControl>
-          </Grid>
-          <Grid xs={12} item className="flex items-center">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  sx={sxCheckBox}
-                  checked={agreePolicy}
-                  onChange={(_, v) => {
-                    setAgreePolicy(v);
-                  }}
-                />
-              }
-              label=""
-            />
 
             <div className=" flex">
               <p className="text-text-secondary">
@@ -348,6 +307,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <Button
+                disabled={!isagreePolicy}
                 variant="contained"
                 className="mt-3 h-12 w-full rounded-lg bg-mango-primary-blue font-semibold text-white "
                 type="submit"
