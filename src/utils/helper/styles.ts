@@ -9,6 +9,13 @@ export const sxTextField = {
     color: '#00BDD6',
   },
 };
+export const sxTextFieldError = {
+
+  '& .MuiFormLabel-root.Mui-error': {
+    color: '#737277 !important',
+  },
+
+};
 // Select
 export const sxSelect = {
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
@@ -31,3 +38,4 @@ export const sxCheckBox = {
     color: '#404044',
   },
 };
+
