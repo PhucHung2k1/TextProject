@@ -9,10 +9,20 @@ export const sxTextField = {
     color: '#00BDD6',
   },
 };
+
 export const sxCheckBoxBlack = {
   '&.MuiCheckbox-root': {
     color: '#404044',
   },
+};
+
+
+export const sxTextFieldError = {
+
+  '& .MuiFormLabel-root.Mui-error': {
+    color: '#737277 !important',
+  },
+
 };
 
 // Select
@@ -37,6 +47,7 @@ export const sxCheckBox = {
     color: '#404044',
   },
 };
+
 export const sxSwitchBlue = {
   // display: 'block',
   '& .MuiSwitch-switchBase.Mui-checked': {
@@ -49,3 +60,4 @@ export const sxSwitchBlue = {
 export const sxButtonBlue = {
   '&:hover': { backgroundColor: '#00ADC3' },
 };
+
