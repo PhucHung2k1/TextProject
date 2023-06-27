@@ -182,7 +182,7 @@ export default function SignUpForm() {
                 name="lastName"
                 render={({ message }: any) => (
                   <div
-                    className="mt-1 ml-2 text-sm text-text-error"
+                    className="ml-2 mt-1 text-sm text-text-error"
                     role="alert"
                   >
                     <span className="font-medium">{message}</span>
@@ -197,7 +197,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
-                sx={sxTextField}
+                sx={[sxTextField, sxTextFieldError]}
                 label="Email Address"
                 type="email"
                 required
@@ -225,7 +225,7 @@ export default function SignUpForm() {
                 name="email"
                 render={({ message }: any) => (
                   <div
-                    className="mt-1 ml-2 text-sm text-text-error"
+                    className="ml-2 mt-1 text-sm text-text-error"
                     role="alert"
                   >
                     <span className="font-medium">{message}</span>
@@ -240,7 +240,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
-                sx={sxTextField}
+                sx={[sxTextField, sxTextFieldError]}
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
                 error={Boolean(errors.password)}
@@ -267,7 +267,7 @@ export default function SignUpForm() {
                 name="password"
                 render={({ message }: any) => (
                   <div
-                    className="mt-1 ml-2 text-sm text-text-error"
+                    className="ml-2 mt-1 text-sm text-text-error"
                     role="alert"
                   >
                     <span className="font-medium">{message}</span>
@@ -283,7 +283,7 @@ export default function SignUpForm() {
               className="text-sm font-normal !text-mango-text-black-1"
             >
               <TextField
-                sx={sxTextField}
+                sx={[sxTextField, sxTextFieldError]}
                 label="Confirm Password"
                 type={showCfPassword ? 'text' : 'password'}
                 required
@@ -311,7 +311,7 @@ export default function SignUpForm() {
                 name="confirmPassword"
                 render={({ message }: any) => (
                   <div
-                    className="mt-1 ml-2 text-sm text-text-error"
+                    className="ml-2 mt-1 text-sm text-text-error"
                     role="alert"
                   >
                     <span className="font-medium">{message}</span>
@@ -360,7 +360,7 @@ export default function SignUpForm() {
           <Grid xs={12} item>
             <FormControl
               fullWidth
-              className="flex cursor-pointer flex-row items-center justify-center gap-1 mb-[50px]"
+              className="mb-[50px] flex cursor-pointer flex-row items-center justify-center gap-1"
             >
               <div>Had an account?</div>
               <Link href="/login">

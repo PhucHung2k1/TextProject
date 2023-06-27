@@ -16,13 +16,10 @@ export const sxCheckBoxBlack = {
   },
 };
 
-
 export const sxTextFieldError = {
-
   '& .MuiFormLabel-root.Mui-error': {
     color: '#737277 !important',
   },
-
 };
 
 // Select
@@ -60,4 +57,3 @@ export const sxSwitchBlue = {
 export const sxButtonBlue = {
   '&:hover': { backgroundColor: '#00ADC3' },
 };
-

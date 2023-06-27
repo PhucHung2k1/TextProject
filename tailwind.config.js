@@ -50,6 +50,7 @@ module.exports = {
         'mango-gray-light-6': '#9B9BA0',
         'mango-blue-light-1': '#E0F7FA',
         'text-title': '#1F1F23',
+        'text-error': '#DA2036',
         'text-secondary': '#737277',
         'text-disable': '#C5C4C9',
         'text-primary-dark': '#00ADC3',

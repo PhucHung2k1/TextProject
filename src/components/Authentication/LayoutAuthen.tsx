@@ -39,7 +39,7 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
             className="text-center"
           />
         </div>
-        <h1 className="text-[32px] font-semibold text-text-title my-[40px] text-center">
+        <h1 className="my-[40px] text-center text-[32px] font-semibold text-text-title">
           {type === 'login' && ' Hi, welcome back'}
           {type === 'signup' && 'Create new account'}
           {type === 'verifyAccount' && 'Verify your account'}
@@ -58,7 +58,7 @@ export default function LayoutAuthen({ children, type }: LayoutAuthenProps) {
 
         {type !== 'selectstore' && (
           <div className="">
-            <p className="text-sm font-normal text-[#505050] text-center">
+            <p className="text-center text-sm font-normal text-[#505050]">
               Connect with us
             </p>
             <div className="mt-2 flex items-center justify-center gap-5">
