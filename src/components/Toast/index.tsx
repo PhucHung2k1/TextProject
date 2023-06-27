@@ -37,6 +37,7 @@ export default function ToastContainer() {
       anchorOrigin={
         propertiesToast.position || { vertical: 'top', horizontal: 'center' }
       }
+      sx={{ zIndex: 9999 }}
       open={isShowToast}
       autoHideDuration={propertiesToast.autoHideDuration || 3000}
       onClose={handleClose}

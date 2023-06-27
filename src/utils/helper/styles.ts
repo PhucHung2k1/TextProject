@@ -1,4 +1,4 @@
-//text field
+// text field
 export const sxTextField = {
   '& .MuiInputBase-root.Mui-focused': {
     '& > fieldset': {
@@ -9,6 +9,14 @@ export const sxTextField = {
     color: '#00BDD6',
   },
 };
+
+export const sxCheckBoxBlack = {
+  '&.MuiCheckbox-root': {
+    color: '#404044',
+  },
+};
+
+
 export const sxTextFieldError = {
 
   '& .MuiFormLabel-root.Mui-error': {
@@ -16,6 +24,7 @@ export const sxTextFieldError = {
   },
 
 };
+
 // Select
 export const sxSelect = {
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
@@ -37,5 +46,18 @@ export const sxCheckBox = {
   '&.Mui-checked': {
     color: '#404044',
   },
+};
+
+export const sxSwitchBlue = {
+  display: 'block',
+  '& .MuiSwitch-switchBase.Mui-checked': {
+    color: '#00BDD6',
+  },
+  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+    backgroundColor: '#00BDD6',
+  },
+};
+export const sxButtonBlue = {
+  '&:hover': { backgroundColor: '#00ADC3' },
 };
 

@@ -26,23 +26,23 @@ export const ConfigRoleAndPermission = ({
 
   const [showAll, setShowAll] = useState<boolean>(false);
   const handleCheckBox = (value: boolean, id: string) => {
-    const checkExist = listPermissionCustomByIdRedux.some(
+    const isSelected = listPermissionCustomByIdRedux.some(
       (item) => item.Id === id
     );
 
-    if (!checkExist) {
+    if (!isSelected) {
       if (value) {
-        setListAddedPermissions((prev: any) => [...prev, id]);
+        setListAddedPermissions((prevList: string[]) => [...prevList, id]);
       } else {
-        setListAddedPermissions((prev: any) =>
-          prev.filter((item: string) => item !== id)
+        setListAddedPermissions((prevList: string[]) =>
+          prevList.filter((item: string) => item !== id)
         );
       }
-    } else if (value) {
-      setListRemovedPermissions((prev: any) => [...prev, id]);
+    } else if (!value) {
+      setListRemovedPermissions((prevList: string[]) => [...prevList, id]);
     } else {
-      setListRemovedPermissions((prev: any) =>
-        prev.filter((item: string) => item !== id)
+      setListRemovedPermissions((prevList: string[]) =>
+        prevList.filter((item: string) => item !== id)
       );
     }
   };
@@ -51,7 +51,7 @@ export const ConfigRoleAndPermission = ({
       <div
         className={` flex items-center justify-between border ${
           showAll ? 'rounded-[5px] rounded-b-none' : 'rounded-[6px]'
-        } min-h-[64px] w-full justify-between !border-mango-text-gray-1 bg-white px-4 text-xl font-bold capitalize text-50`}
+        } min-h-[64px] w-full justify-between !border-border-light bg-white px-4 text-xl font-bold capitalize text-50`}
       >
         <div className="px-4">
           <FormControlLabel
@@ -64,12 +64,12 @@ export const ConfigRoleAndPermission = ({
         {!showAll ? (
           <AddIcon
             onClick={() => setShowAll(!showAll)}
-            className="h-8 w-8 cursor-pointer rounded border border-mango-primary-blue bg-mango-primary-blue text-white"
+            className="h-8 w-8 cursor-pointer rounded border border-cyan-50 bg-cyan-50 text-text-primary-dark"
           />
         ) : (
           <RemoveIcon
             onClick={() => setShowAll(!showAll)}
-            className="h-8  w-8 cursor-pointer rounded bg-mango-gray-light-1 text-mango-text-gray-2"
+            className="h-8 w-8 cursor-pointer rounded border-cyan-50 bg-cyan-50 text-text-primary-dark"
           />
         )}
       </div>

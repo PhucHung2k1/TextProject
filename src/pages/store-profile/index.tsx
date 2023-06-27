@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { listStepConfigStore } from '../../components/StoreProfile/helper/listStepConfigStore';
 import { getWorkingHours } from '@/store/workingHours/workingHoursAction';
 import { getListPayStructure } from '@/store/payStructure/payStructureAction';
+import { getEmployeeList } from '@/store/employee/employeeAction';
 
 const StoreProfile = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ const StoreProfile = () => {
         dispatch(lookupData({}));
         dispatch(getListPayStructure({}));
         dispatch(getWorkingHours({}));
+        dispatch(getEmployeeList({}));
       }
     }
     // cleanup side effects before unmounting

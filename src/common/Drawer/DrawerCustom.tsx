@@ -11,7 +11,7 @@ export const DrawerCustom = ({ openDrawer, onClose, content }: Props) => {
   return (
     <Drawer
       anchor="right"
-      className="z-[9999]"
+      className="z-[1400]"
       open={openDrawer}
       onClose={() => onClose()}
     >

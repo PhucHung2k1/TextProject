@@ -1,4 +1,4 @@
-import { sxCheckBox, sxTextField } from '@/utils/helper/styles';
+import { sxSwitchBlue, sxTextField } from '@/utils/helper/styles';
 import {
   Checkbox,
   FormControlLabel,
@@ -7,14 +7,34 @@ import {
   Switch,
   TextField,
 } from '@mui/material';
-import { useState } from 'react';
+import type { IStateAddRole } from './LayoutDrawer.tsx/DrawerRolePermission';
 
 interface Props {
   roleName: string;
   setRoleName: Function;
+  stateAddRole: IStateAddRole;
+  setStateAddRole: Function;
 }
-function AddRoleAndPermission({ roleName, setRoleName }: Props) {
-  const [enableForTechnician, setEnableForTechnician] = useState(true);
+function AddRoleAndPermission({
+  roleName,
+  setRoleName,
+  stateAddRole,
+  setStateAddRole,
+}: Props) {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name === 'isTechnician') {
+      setStateAddRole({
+        ...stateAddRole,
+        isTechnician: event.target.checked,
+        takeAppointment: false,
+        availableBookingOnline: false,
+      });
+    } else
+      setStateAddRole({
+        ...stateAddRole,
+        [event.target.name]: event.target.checked,
+      });
+  };
 
   return (
     <>
@@ -24,10 +44,10 @@ function AddRoleAndPermission({ roleName, setRoleName }: Props) {
         className="mb-4 flex flex-row items-center justify-between"
       >
         <TextField
-          sx={sxTextField}
           variant="outlined"
           label="Role & Permission Name"
           placeholder="Role & Permission Name"
+          sx={sxTextField}
           InputProps={{
             style: { height: '48px' },
           }}
@@ -37,40 +57,56 @@ function AddRoleAndPermission({ roleName, setRoleName }: Props) {
         />
 
         <FormControlLabel
-          sx={{
-            display: 'block',
-            '& .MuiSwitch-switchBase.Mui-checked': {
-              color: '#00BDD6',
-            },
-            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-              backgroundColor: '#00BDD6',
-            },
-          }}
+          sx={sxSwitchBlue}
           control={
             <Switch
-              checked={enableForTechnician}
-              onChange={() => setEnableForTechnician(!enableForTechnician)}
-              name="isEnableTechnician"
+              checked={stateAddRole.isTechnician}
+              onChange={handleChange}
+              name="isTechnician"
               color="primary"
             />
           }
           label="Technician"
         />
       </Grid>
+
       <Grid xs={12} item>
         <FormGroup>
+          {stateAddRole.isTechnician && (
+            <>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stateAddRole.takeAppointment}
+                    color="default"
+                    onChange={handleChange}
+                  />
+                }
+                label="Take Appointment"
+                name="takeAppointment"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="default"
+                    checked={stateAddRole.availableBookingOnline}
+                    name="availableBookingOnline"
+                    onChange={handleChange}
+                  />
+                }
+                label="Available for Booking Online"
+              />
+            </>
+          )}
           <FormControlLabel
-            control={<Checkbox sx={sxCheckBox} defaultChecked />}
-            label="Allowed to make quick payment"
-          />
-          <FormControlLabel
-            disabled={!enableForTechnician}
-            control={<Checkbox sx={sxCheckBox} />}
-            label="Available for Booking Online"
-          />
-          <FormControlLabel
-            control={<Checkbox sx={sxCheckBox} />}
-            disabled={!enableForTechnician}
+            control={
+              <Checkbox
+                color="default"
+                checked={stateAddRole.allowQuickPayment}
+                name="allowQuickPayment"
+                onChange={handleChange}
+              />
+            }
             label="Allowed to make quick payment"
           />
         </FormGroup>

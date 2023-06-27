@@ -17,6 +17,7 @@ import { useState } from 'react';
 import type { CountryPhone } from '@/services/common/common.interface';
 import { updateLocationStoreProfile } from '@/store/store/storeAction';
 import Cookies from 'js-cookie';
+import type { IPatchPayloadData } from '@/services/customerRole.service/customerRole.interface';
 import { sxTextField } from '@/utils/helper/styles';
 
 interface IFormLocation {
@@ -27,11 +28,7 @@ interface IFormLocation {
   zipCode: string;
   timeZone: string;
 }
-interface Payload {
-  op: string;
-  path: string;
-  value: string;
-}
+
 const AddYourLocation = () => {
   const dispatch = useAppDispatch();
 
@@ -48,7 +45,7 @@ const AddYourLocation = () => {
       null
   );
   const onSubmit = (values: IFormLocation) => {
-    const payload: Payload[] = [];
+    const payload: IPatchPayloadData[] = [];
     const addPayload = (path: string, value: any) => {
       if (value !== curStoreCustomer?.[path.substring(1)]) {
         payload.push({

@@ -175,12 +175,12 @@ const ConfirmYourAddress = () => {
                 marker={marker || undefined}
                 onMapChangeMarker={(v: any) => {
                   setYourAddress(v as IMapBoxPlace);
-                  console.log('v', v);
+                  // console.log('v', v);
 
-                  // const [lng, lat] = v.geometry.coordinates;
-                  // const lngLat = new mapboxgl.LngLat(lng, lat);
+                  const [lng, lat] = v.geometry.coordinates;
+                  const lngLat = new mapboxgl.LngLat(lng, lat);
 
-                  // setMarkers(lngLat);
+                  setMarkers(lngLat);
                 }}
               />
             </div>

@@ -11,7 +11,6 @@ import ToastContainer from '@/components/Toast';
 import PrevLoader from '@/components/Loading/PrevLoader';
 import type { IMetaSEOProps } from '@/components/MetaSEO';
 import MetaSEO from '@/components/MetaSEO';
-import ModalMUIContainer from '@/components/Modal/ModalMUI';
 import { ThemeProvider, createTheme } from '@mui/material';
 import DrawerRolePermission from '@/components/SalonSetting/Employee/RolePermission/LayoutDrawer.tsx/DrawerRolePermission';
 
@@ -55,7 +54,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <main>
             <Component {...pageProps} />
             <PrevLoader />
-            <ModalMUIContainer />
+
             <ToastContainer />
             <DrawerRolePermission />
           </main>

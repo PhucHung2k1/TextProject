@@ -1,12 +1,13 @@
 import { ConfigRoleAndPermission } from '@/common/ConfigRoleAndPermission/ConfigRoleAndPermission';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
-import { arrCategory } from './listCategory';
 import { useEffect, useState } from 'react';
 import { setAddRemoveMultiRoleIds } from '@/store/customerRole/customerRoleSlice';
-import { Box } from '@mui/material';
+import { arrCategory } from '../listCategory';
+import { Grid } from '@mui/material';
 
-const SetAccessibility = () => {
+const AccessabilityTab = () => {
   const dispatch = useAppDispatch();
+
   const [listAddedPermissions, setListAddedPermissions] = useState<string[]>(
     []
   );
@@ -31,20 +32,22 @@ const SetAccessibility = () => {
   ]);
 
   return (
-    <Box className="h-full w-full overflow-auto ">
-      {arrCategory.map((category) => {
-        return (
-          <ConfigRoleAndPermission
-            key={category.name}
-            configName={category.title}
-            permissionAllByName={permissionAll[category.name]}
-            setListAddedPermissions={setListAddedPermissions}
-            setListRemovedPermissions={setListRemovedPermissions}
-          />
-        );
-      })}
-    </Box>
+    <Grid container spacing={2} className=" mt-4 bg-white">
+      <Grid xs={12} item>
+        {arrCategory.map((category) => {
+          return (
+            <ConfigRoleAndPermission
+              key={category.name}
+              configName={category.title}
+              permissionAllByName={permissionAll[category.name]}
+              setListAddedPermissions={setListAddedPermissions}
+              setListRemovedPermissions={setListRemovedPermissions}
+            />
+          );
+        })}
+      </Grid>
+    </Grid>
   );
 };
 
-export default SetAccessibility;
+export default AccessabilityTab;
