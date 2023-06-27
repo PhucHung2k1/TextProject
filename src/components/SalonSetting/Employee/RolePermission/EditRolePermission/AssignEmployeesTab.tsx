@@ -64,58 +64,19 @@ const AssignEmployees = ({ idRole }: Props) => {
 
   const handleEmployeeToggle = (employeeId: string) => {
     if (selectedEmployees.includes(employeeId)) {
-      // Nếu nhân viên đã được chọn, bỏ khỏi mảng selectedEmployees và kiểm tra và xoá trong mảng removedEmployees nếu cần
       const updatedSelectedEmployees = selectedEmployees.filter(
         (id) => id !== employeeId
       );
       setSelectedEmployees(updatedSelectedEmployees);
-
-      if (removedEmployees.includes(employeeId)) {
-        // Nếu ID cũng tồn tại trong mảng removedEmployees, xoá khỏi cả mảng removedEmployees và addedEmployees
-        const updatedRemovedEmployees = removedEmployees.filter(
-          (id) => id !== employeeId
-        );
-        setRemovedEmployees(updatedRemovedEmployees);
-
-        const updatedAddedEmployees = addedEmployees.filter(
-          (id) => id !== employeeId
-        );
-        setAddedEmployees(updatedAddedEmployees);
-      }
     } else {
-      // Nếu nhân viên chưa được chọn, kiểm tra xem có trong mảng removedEmployees không
-      const isPreviouslyRemoved = removedEmployees.includes(employeeId);
-      if (isPreviouslyRemoved) {
-        // Nếu nhân viên đã được chọn trước đó nhưng bị bỏ chọn, bỏ khỏi mảng removedEmployees và addedEmployees
-        const updatedRemovedEmployees = removedEmployees.filter(
-          (id) => id !== employeeId
-        );
-        setRemovedEmployees(updatedRemovedEmployees);
-
-        const updatedAddedEmployees = addedEmployees.filter(
-          (id) => id !== employeeId
-        );
-        setAddedEmployees(updatedAddedEmployees);
-      } else if (
-        !addedEmployees.includes(employeeId) &&
-        !selectedEmployees.includes(employeeId)
-      ) {
-        // Nếu nhân viên chưa được chọn trước đó, không có trong mảng addedEmployees và không có trong mảng selectedEmployees, thêm vào mảng addedEmployees
-        setAddedEmployees([...addedEmployees, employeeId]);
-      }
-      // Thêm nhân viên vào mảng selectedEmployees
       setSelectedEmployees([...selectedEmployees, employeeId]);
     }
   };
   const handleSelectAll = (value: boolean) => {
-    const empList = employeesList.map((emp) => emp.Id);
+    const empListID = employeesList.map((emp) => emp.Id);
     if (value) {
-      setAddedEmployees(empList);
-      setRemovedEmployees([]);
-      setSelectedEmployees(empList);
+      setSelectedEmployees(empListID);
     } else {
-      setAddedEmployees([]);
-      setRemovedEmployees(empList);
       setSelectedEmployees([]);
     }
   };
@@ -124,16 +85,20 @@ const AssignEmployees = ({ idRole }: Props) => {
   };
   useEffect(() => {
     // Set Payload for add remove to redux
+    const removeListId = selectedInit.filter(
+      (item) => !selectedEmployees.includes(item)
+    );
+    setRemovedEmployees(removeListId);
     dispatch(
       setAddRemoveMultiRoleEmployee({
         roleId: idRole,
         data: {
-          AddedEmployeeIds: addedEmployees,
+          AddedEmployeeIds: selectedEmployees,
           RemovedEmployeeIds: removedEmployees,
         },
       })
     );
-  }, [JSON.stringify(addedEmployees), JSON.stringify(removedEmployees)]);
+  }, [JSON.stringify(selectedEmployees)]);
 
   useEffect(() => {
     // Reset list remove, added after call api
@@ -146,7 +111,7 @@ const AssignEmployees = ({ idRole }: Props) => {
         ?.Employees.map((emp) => emp.Id)
     ),
   ]);
-  console.log('add', addedEmployees, 'remove', removedEmployees);
+  console.log('add', selectedEmployees, 'remove', removedEmployees);
 
   return (
     <>
