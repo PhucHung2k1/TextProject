@@ -27,21 +27,12 @@ import { sxSelect } from '@/utils/helper/styles';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
-import { getEmployeeList } from '@/store/employee/employeeAction';
-import { squareIconButtonStyles } from '@/helper/styleButton';
-
-export interface IEmployee {
-  id: number;
-  employee: string;
-  image?: any | string;
-  jobTitle: string;
-  phoneNumber: string;
-  rolePermission: string[];
-  payStructure: string;
-  serviceProduct: string;
-  status: boolean;
-  color: string;
-}
+import {
+  deleteEmployee,
+  getEmployeeList,
+} from '@/store/employee/employeeAction';
+import type { IEmployee } from '@/services/employee.service/employee.interface';
+import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
 
 const arrRolePermission = [
   'Technician',
@@ -59,203 +50,19 @@ const arrPayStructures = [
 
 const arrStatus = ['Active', 'Inactive'];
 const EmployeeList = () => {
-  const data: IEmployee[] = [
-    {
-      id: 1,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 1',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician', 'Technician 1'],
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 2,
-      image: '/assets/images/RolePermission/7.svg',
-      employee: 'Lane Garraway (Lane) 2',
-      jobTitle: 'Technician',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Therapist', 'Therapist 1'],
-      payStructure: 'Commission - Guarantee',
-      serviceProduct: 'Product',
-      status: false,
-      color: '#D03552',
-    },
-    {
-      id: 3,
-      image: '/assets/images/RolePermission/8.svg',
-      employee: 'Tabitha Ferguson (Tabi) 3',
-      jobTitle: 'Part time',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Manager'],
-      payStructure: 'Commission',
-      serviceProduct: 'Product',
-      status: true,
-      color: '#00AD93',
-    },
-    {
-      id: 4,
-      image: '/assets/images/RolePermission/8.svg',
-      employee: 'Samantha Robson (Sana) 4',
-      jobTitle: 'Part time',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Reception'],
-      payStructure: 'Salary',
-      serviceProduct: 'Product',
-      status: true,
-      color: '#7DB400',
-    },
-    {
-      id: 5,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 5',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 6,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 6',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 7,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 7',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 8,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 8',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 9,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 9',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 10,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 10',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      payStructure: 'Hourly',
-      serviceProduct: 'Product',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 11,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 11',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      serviceProduct: 'Product',
-      payStructure: 'Hourly',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 12,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 12',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      serviceProduct: 'Product',
-      payStructure: 'Hourly',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 13,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 13',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      serviceProduct: 'Product',
-      payStructure: 'Hourly',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 14,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 14',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      serviceProduct: 'Product',
-      payStructure: 'Hourly',
-      status: true,
-      color: '#2D9DE3',
-    },
-    {
-      id: 15,
-      image: '/assets/images/RolePermission/4.svg',
-      employee: 'Maynard Cobb (May) 15',
-      jobTitle: 'Manager',
-      phoneNumber: '123-456-7890',
-      rolePermission: ['Technician'],
-      serviceProduct: 'Product',
-      payStructure: 'Hourly',
-      status: true,
-      color: '#2D9DE3',
-    },
-  ];
-  const [employees, setEmployees] = useState(data);
-  const dispatch = useAppDispatch();
   const employeesList = useAppSelector(
     (state) => state.employeeSlice.employees
   );
-  console.log(
-    '🚀 ~ file: EmployeeList.tsx:249 ~ EmployeeList ~ employeesList:',
-    employeesList
-  );
+
+  const [employees, setEmployees] = useState(employeesList);
+
+  const dispatch = useAppDispatch();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
   const [selectedEmployee, setSelectedEmployee] = useState<IEmployee>();
   const [open, setOpen] = React.useState(false);
-
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const handleOpenDrawer = () => {
     setOpen(true);
   };
@@ -298,13 +105,13 @@ const EmployeeList = () => {
 
   const filteredData = employees.filter((row) => {
     if (
-      (filterStatus === '' ||
-        (filterStatus === 'Active' && row.status) ||
-        (filterStatus === 'Inactive' && !row.status)) &&
-      (filterRolePermission === '' ||
-        row.rolePermission.includes(filterRolePermission)) &&
-      (filterPayStructures === '' ||
-        row.payStructure.includes(filterPayStructures))
+      filterStatus === '' ||
+      (filterStatus === 'Active' && row.Status) ||
+      (filterStatus === 'Inactive' && !row.Status)
+      // (filterRolePermission === '' ||
+      //   row.rolePermission.includes(filterRolePermission)) &&
+      // (filterPayStructures === '' ||
+      //   row.payStructure.includes(filterPayStructures))
     ) {
       return true;
     }
@@ -327,17 +134,24 @@ const EmployeeList = () => {
       },
     },
   }));
-  const handleEditEmployee = (item: IEmployee) => {
+  const handleEditEmployee = (item: any) => {
     handleOpenDrawer();
     setSelectedEmployee(item);
   };
+  const handleDeleteEmployee = (item: any) => {
+    setOpenModal(true);
+    setSelectedEmployee(item);
+    // handleOpenDrawer();
+    // setSelectedEmployee(item);
+  };
+
   const handleSwitchChange = (id: any) => {
     setEmployees((prevEmployees) => {
       return prevEmployees.map((employee) => {
-        if (employee.id === id) {
+        if (employee.Id === id) {
           return {
             ...employee,
-            status: !employee.status,
+            status: !employee.Status,
           };
         }
         return employee;
@@ -347,8 +161,35 @@ const EmployeeList = () => {
   useEffect(() => {
     dispatch(getEmployeeList({}));
   }, []);
+
+  useEffect(() => {
+    setEmployees(employeesList);
+  }, [employeesList]);
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleDeleteEmployeeModal = () => {
+    dispatch(deleteEmployee(selectedEmployee?.Id)).then((res) => {
+      if (res) {
+        handleCloseModal();
+      }
+    });
+  };
+
   return (
     <>
+      <ModalCustomDelete
+        onClose={() => setOpenModal(false)}
+        open={openModal}
+        onCancel={handleCloseModal}
+        onSubmit={handleDeleteEmployeeModal}
+        titleModal="Remove Employee?"
+        subTitle={`  Would you like to remove "${selectedEmployee?.FirstName} ${selectedEmployee?.LastName}"?`}
+        textButtonCancel="No, Cancel"
+        textButtonSubmit="Yes, Delete it"
+      />
       <div className="mt-5">
         <Grid container spacing={2}>
           <Grid xs={12} item>
@@ -397,6 +238,26 @@ const EmployeeList = () => {
                 <Select
                   sx={sxSelect}
                   displayEmpty
+                  value={filterPayStructures}
+                  input={<OutlinedInput />}
+                  onChange={handleFilterPayStructures}
+                  inputProps={{ 'aria-label': 'Without label' }}
+                  className="bg-white"
+                >
+                  <MenuItem value="">
+                    <p>All Service & Product</p>
+                  </MenuItem>
+                  {arrPayStructures.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>{' '}
+              <FormControl variant="outlined" size="small" className="w-[15%]">
+                <Select
+                  sx={sxSelect}
+                  displayEmpty
                   value={filterStatus}
                   input={<OutlinedInput />}
                   label="Filter Employee"
@@ -426,9 +287,7 @@ const EmployeeList = () => {
                   <TableCell className="text-sm text-mango-text-gray-2">
                     Job Title
                   </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Phone Number
-                  </TableCell>
+
                   <TableCell className="text-sm text-mango-text-gray-2">
                     Role & Permission
                   </TableCell>
@@ -448,13 +307,13 @@ const EmployeeList = () => {
               </TableHead>
               <TableBody className="text-base">
                 {filteredData.slice(startIndex, endIndex).map((row) => (
-                  <TableRow key={row.id}>
+                  <TableRow key={row.Id}>
                     <TableCell className=" text-base text-primary-dark">
                       <Stack direction="row" alignItems="center" spacing={2}>
                         <StyledBadge
-                          isActive={row.status === true}
+                          isActive={row.Status === true}
                           overlap="circular"
-                          key={row.id}
+                          key={row.Id}
                           anchorOrigin={{
                             vertical: 'bottom',
                             horizontal: 'right',
@@ -462,26 +321,25 @@ const EmployeeList = () => {
                           variant="dot"
                         >
                           <Avatar
-                            src={row.image}
+                            src={row.ProfilePictureUrl ?? ''}
                             style={{
-                              border: `2px solid ${row.color}`,
+                              border: `2px solid #DEDEE3`,
                               background: '#DEDEE3',
                             }}
                           />
                         </StyledBadge>
-                        <div> {row.employee}</div>
+                        <div>
+                          {row.FirstName} {row.LastName} ({row.NickName})
+                        </div>
                       </Stack>
                     </TableCell>
                     <TableCell className="text-base text-primary-dark">
-                      {row.jobTitle}
-                    </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      {row.phoneNumber}
+                      {row.JobTitle}
                     </TableCell>
 
                     <TableCell className="text-base text-primary-dark">
                       <Stack direction="row" spacing={1}>
-                        {row.rolePermission
+                        {/* {row.rolePermission
                           .slice(0, 1)
                           .map((itemPermission) => (
                             <Chip
@@ -495,13 +353,15 @@ const EmployeeList = () => {
                             label={`+${row.rolePermission.slice(1).length}`}
                             className="cursor-pointer bg-blue-50 px-1  text-[16px] text-blue-700"
                           />
-                        )}
+                        )} */}
+                        111
                       </Stack>
                     </TableCell>
                     <TableCell className="text-base text-primary-dark">
                       <Chip
                         className="  bg-pink-50 px-1 text-[16px]  text-pink-500"
-                        label={row.payStructure}
+                        // label={row.payStructure}
+                        label="1"
                         sx={{
                           '& .css-6od3lo-MuiChip-label': {
                             overflow: 'unset',
@@ -512,7 +372,8 @@ const EmployeeList = () => {
                     <TableCell className="text-base text-primary-dark">
                       <Chip
                         className="  bg-cyan-50 px-1 text-[16px]  text-cyan-700"
-                        label={row.serviceProduct}
+                        // label={row.serviceProduct}
+                        label="1"
                         sx={{
                           '& .css-6od3lo-MuiChip-label': {
                             overflow: 'unset',
@@ -522,34 +383,30 @@ const EmployeeList = () => {
                     </TableCell>
                     <TableCell>
                       <Switch
-                        checked={row.status}
+                        checked={row.Status ?? false}
                         color="success"
-                        onChange={() => handleSwitchChange(row.id)}
+                        onChange={() => handleSwitchChange(row.Id)}
                       />
-                      {row.status ? 'Active' : 'Inactive'}
+                      {row.Status ? 'Active' : 'Inactive'}
                     </TableCell>
                     <TableCell className="">
-                      <Stack direction="row" alignItems="center" spacing={1}>
+                      <Stack direction="row" alignItems="center" spacing={0}>
                         <IconButton
-                          className="bg-bg-light"
+                          className="bg-transparent"
                           onClick={() => handleEditEmployee(row)}
-                          style={squareIconButtonStyles}
                         >
                           <EditIcon fontSize="small" />
                         </IconButton>
 
-                        <IconButton
-                          className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
-                          style={squareIconButtonStyles}
-                        >
+                        <IconButton className="bg-transparent hover:bg-[#FFEBEF]">
                           <ContentCopyOutlinedIcon fontSize="small" />
                         </IconButton>
                         <IconButton
-                          className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
-                          style={squareIconButtonStyles}
+                          className="bg-transparent hover:bg-[#FFEBEF]"
+                          onClick={() => handleDeleteEmployee(row)}
                         >
                           <DeleteOutlineOutlinedIcon
-                            fontSize="medium"
+                            fontSize="small"
                             className="text-[#DA2036] "
                           />
                         </IconButton>

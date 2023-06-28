@@ -18,7 +18,7 @@ export interface IEmployee {
   Status: boolean | null;
   PassCode: string | null;
   IsWorking: boolean | null;
-  ProfilePictureUrl: string | null;
+  ProfilePictureUrl: string | null | any;
   IsOfficialStaff: boolean | null;
   AllowBookingOnline: string | null;
   IsAllowRating: boolean | null;
