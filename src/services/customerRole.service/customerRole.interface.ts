@@ -1,4 +1,4 @@
-interface Employee {
+export interface IEmployeeResponse {
   FirstName: string;
   LastName: string;
   Phone: string;
@@ -30,7 +30,7 @@ export interface IAllCustomerRole {
   Id: string;
   StoreId?: string;
   CreateDate?: Date;
-  Employees: Employee[];
+  Employees: IEmployeeResponse[];
 }
 
 export interface IAddRemoveMultiRole {
