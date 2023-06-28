@@ -43,7 +43,6 @@ import { squareIconButtonStyles } from '@/helper/styleButton';
 import LabbelStyle from '@/common/Label/LabbelStyle';
 import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
 
-
 interface PermissionItem {
   Name: string;
   SystemName: string;
@@ -286,13 +285,13 @@ const ListRolePermission = () => {
         </div>
         <div>
           <Paper
-            sx={{
-              width: '100%',
-              overflow: 'auto',
-              maxHeight: '560px',
-              boxShadow: 'none',
-              marginTop: '10px',
-            }}
+          // sx={{
+          //   width: '100%',
+          //   overflow: 'auto',
+          //   maxHeight: '560px',
+          //   boxShadow: 'none',
+          //   marginTop: '10px',
+          // }}
           >
             <Table
               stickyHeader

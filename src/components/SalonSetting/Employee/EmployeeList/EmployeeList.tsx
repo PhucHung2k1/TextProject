@@ -279,7 +279,6 @@ const EmployeeList = () => {
             </div>
           </Grid>
           <Grid xs={12} item>
-
             <Paper
               sx={{
                 width: '100%',
@@ -301,9 +300,7 @@ const EmployeeList = () => {
                     <TableCell className="text-sm text-mango-text-gray-2">
                       Job Title
                     </TableCell>
-                    <TableCell className="text-sm text-mango-text-gray-2">
-                      Phone Number
-                    </TableCell>
+
                     <TableCell className="text-sm text-mango-text-gray-2">
                       Role & Permission
                     </TableCell>
@@ -318,44 +315,49 @@ const EmployeeList = () => {
                     </TableCell>
                     <TableCell className="text-sm text-mango-text-gray-2">
                       Action
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className="text-base">
-                {filteredData.slice(startIndex, endIndex).map((row) => (
-                  <TableRow key={row.Id}>
-                    <TableCell className=" text-base text-primary-dark">
-                      <Stack direction="row" alignItems="center" spacing={2}>
-                        <StyledBadge
-                          isActive={row.Status === true}
-                          overlap="circular"
-                          key={row.Id}
-                          anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                          }}
-                          variant="dot"
-                        >
-                          <Avatar
-                            src={row.ProfilePictureUrl ?? ''}
-                            style={{
-                              border: `2px solid #DEDEE3`,
-                              background: '#DEDEE3',
-                            }}
-                          />
-                        </StyledBadge>
-                        <div>
-                          {row.FirstName} {row.LastName} ({row.NickName})
-                        </div>
-                      </Stack>
                     </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      {row.JobTitle}
-                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody className="text-base">
+                  {filteredData.slice(startIndex, endIndex).map((row) => {
+                    return (
+                      <TableRow key={row.Id}>
+                        <TableCell className=" text-base text-primary-dark">
+                          <Stack
+                            direction="row"
+                            alignItems="center"
+                            spacing={2}
+                          >
+                            <StyledBadge
+                              isActive={row.Status === true}
+                              overlap="circular"
+                              key={row.Id}
+                              anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                              }}
+                              variant="dot"
+                            >
+                              <Avatar
+                                src={row.ProfilePictureUrl ?? ''}
+                                style={{
+                                  border: `2px solid #DEDEE3`,
+                                  background: '#DEDEE3',
+                                }}
+                              />
+                            </StyledBadge>
+                            <div>
+                              {row.FirstName} {row.LastName} ({row.NickName})
+                            </div>
+                          </Stack>
+                        </TableCell>
+                        <TableCell className="text-base text-primary-dark">
+                          {row.JobTitle}
+                        </TableCell>
 
-                    <TableCell className="text-base text-primary-dark">
-                      <Stack direction="row" spacing={1}>
-                        {/* {row.rolePermission
+                        <TableCell className="text-base text-primary-dark">
+                          <Stack direction="row" spacing={1}>
+                            {/* {row.rolePermission
                           .slice(0, 1)
                           .map((itemPermission) => (
                             <Chip
@@ -370,178 +372,71 @@ const EmployeeList = () => {
                             className="cursor-pointer bg-blue-50 px-1  text-[16px] text-blue-700"
                           />
                         )} */}
-                        111
-                      </Stack>
-                    </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      <Chip
-                        className="  bg-pink-50 px-1 text-[16px]  text-pink-500"
-                        // label={row.payStructure}
-                        label="1"
-                        sx={{
-                          '& .css-6od3lo-MuiChip-label': {
-                            overflow: 'unset',
-                          },
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      <Chip
-                        className="  bg-cyan-50 px-1 text-[16px]  text-cyan-700"
-                        // label={row.serviceProduct}
-                        label="1"
-                        sx={{
-                          '& .css-6od3lo-MuiChip-label': {
-                            overflow: 'unset',
-                          },
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Switch
-                        checked={row.Status ?? false}
-                        color="success"
-                        onChange={() => handleSwitchChange(row.Id)}
-                      />
-                      {row.Status ? 'Active' : 'Inactive'}
-                    </TableCell>
-                    <TableCell className="">
-                      <Stack direction="row" alignItems="center" spacing={0}>
-                        <IconButton
-                          className="bg-transparent"
-                          onClick={() => handleEditEmployee(row)}
-                        >
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-
-                        <IconButton className="bg-transparent hover:bg-[#FFEBEF]">
-                          <ContentCopyOutlinedIcon fontSize="small" />
-                        </IconButton>
-                        <IconButton
-                          className="bg-transparent hover:bg-[#FFEBEF]"
-                          onClick={() => handleDeleteEmployee(row)}
-                        >
-                          <DeleteOutlineOutlinedIcon
-                            fontSize="small"
-                            className="text-[#DA2036] "
-                          />
-                        </IconButton>
-                      </Stack>
-
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody className="text-base ">
-                  {filteredData.slice(startIndex, endIndex).map((row) => (
-                    <TableRow key={row.id}>
-                      <TableCell className=" text-base text-primary-dark">
-                        <Stack direction="row" alignItems="center" spacing={2}>
-                          <StyledBadge
-                            isActive={row.status === true}
-                            overlap="circular"
-                            key={row.id}
-                            anchorOrigin={{
-                              vertical: 'bottom',
-                              horizontal: 'right',
+                            111
+                          </Stack>
+                        </TableCell>
+                        <TableCell className="text-base text-primary-dark">
+                          <Chip
+                            className="  bg-pink-50 px-1 text-[16px]  text-pink-500"
+                            // label={row.payStructure}
+                            label="1"
+                            sx={{
+                              '& .css-6od3lo-MuiChip-label': {
+                                overflow: 'unset',
+                              },
                             }}
-                            variant="dot"
+                          />
+                        </TableCell>
+                        <TableCell className="text-base text-primary-dark">
+                          <Chip
+                            className="  bg-cyan-50 px-1 text-[16px]  text-cyan-700"
+                            // label={row.serviceProduct}
+                            label="1"
+                            sx={{
+                              '& .css-6od3lo-MuiChip-label': {
+                                overflow: 'unset',
+                              },
+                            }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Switch
+                            checked={row.Status ?? false}
+                            color="success"
+                            onChange={() => handleSwitchChange(row.Id)}
+                          />
+                          {row.Status ? 'Active' : 'Inactive'}
+                        </TableCell>
+                        <TableCell>
+                          <Stack
+                            direction="row"
+                            alignItems="center"
+                            spacing={0}
                           >
-                            <Avatar
-                              src={row.image}
-                              style={{
-                                border: `2px solid ${row.color}`,
-                                background: '#DEDEE3',
-                              }}
-                            />
-                          </StyledBadge>
-                          <div> {row.employee}</div>
-                        </Stack>
-                      </TableCell>
-                      <TableCell className="text-base text-primary-dark">
-                        {row.jobTitle}
-                      </TableCell>
-                      <TableCell className="text-base text-primary-dark">
-                        {row.phoneNumber}
-                      </TableCell>
+                            <IconButton
+                              className="bg-transparent"
+                              onClick={() => handleEditEmployee(row)}
+                            >
+                              <EditIcon fontSize="small" />
+                            </IconButton>
 
-                      <TableCell className="text-base text-primary-dark">
-                        <Stack direction="row" spacing={1}>
-                          {row.rolePermission
-                            .slice(0, 1)
-                            .map((itemPermission) => (
-                              <Chip
-                                key={`${Math.random()}`}
-                                label={itemPermission}
-                                className="bg-blue-50 px-1 text-[16px]  text-blue-700"
+                            <IconButton className="bg-transparent hover:bg-[#FFEBEF]">
+                              <ContentCopyOutlinedIcon fontSize="small" />
+                            </IconButton>
+                            <IconButton
+                              className="bg-transparent hover:bg-[#FFEBEF]"
+                              onClick={() => handleDeleteEmployee(row)}
+                            >
+                              <DeleteOutlineOutlinedIcon
+                                fontSize="small"
+                                className="text-[#DA2036] "
                               />
-                            ))}
-                          {row.rolePermission.slice(1).length > 0 && (
-                            <Chip
-                              label={`+${row.rolePermission.slice(1).length}`}
-                              className="cursor-pointer bg-blue-50 px-1  text-[16px] text-blue-700"
-                            />
-                          )}
-                        </Stack>
-                      </TableCell>
-                      <TableCell className="text-base text-primary-dark">
-                        <Chip
-                          className="  bg-pink-50 px-1 text-[16px]  text-pink-500"
-                          label={row.payStructure}
-                          sx={{
-                            '& .css-6od3lo-MuiChip-label': {
-                              overflow: 'unset',
-                            },
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell className="text-base text-primary-dark">
-                        <Chip
-                          className="  bg-cyan-50 px-1 text-[16px]  text-cyan-700"
-                          label={row.serviceProduct}
-                          sx={{
-                            '& .css-6od3lo-MuiChip-label': {
-                              overflow: 'unset',
-                            },
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Switch
-                          checked={row.status}
-                          color="success"
-                          onChange={() => handleSwitchChange(row.id)}
-                        />
-                        {row.status ? 'Active' : 'Inactive'}
-                      </TableCell>
-                      <TableCell className="">
-                        <Stack direction="row" alignItems="center" spacing={1}>
-                          <IconButton
-                            className="bg-bg-light"
-                            onClick={() => handleEditEmployee(row)}
-                            style={squareIconButtonStyles}
-                          >
-                            <EditIcon fontSize="small" />
-                          </IconButton>
-
-                          <IconButton
-                            className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
-                            style={squareIconButtonStyles}
-                          >
-                            <ContentCopyOutlinedIcon fontSize="small" />
-                          </IconButton>
-                          <IconButton
-                            className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
-                            style={squareIconButtonStyles}
-                          >
-                            <DeleteOutlineOutlinedIcon
-                              fontSize="medium"
-                              className="text-[#DA2036] "
-                            />
-                          </IconButton>
-                        </Stack>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                            </IconButton>
+                          </Stack>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </Paper>
