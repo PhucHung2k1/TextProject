@@ -9,6 +9,7 @@ import {
   IconButton,
   MenuItem,
   OutlinedInput,
+  Paper,
   Select,
   Stack,
   Switch,
@@ -252,7 +253,7 @@ const EmployeeList = () => {
   );
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [rowsPerPage, setRowsPerPage] = useState(7);
   const [selectedEmployee, setSelectedEmployee] = useState<IEmployee>();
   const [open, setOpen] = React.useState(false);
 
@@ -417,150 +418,163 @@ const EmployeeList = () => {
             </div>
           </Grid>
           <Grid xs={12} item>
-            <Table>
-              <TableHead>
-                <TableRow className=" uppercase">
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Employee
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Job Title
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Phone Number
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Role & Permission
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Pay Structure
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Service & Product
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Status
-                  </TableCell>
-                  <TableCell className="text-sm text-mango-text-gray-2">
-                    Action
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className="text-base">
-                {filteredData.slice(startIndex, endIndex).map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell className=" text-base text-primary-dark">
-                      <Stack direction="row" alignItems="center" spacing={2}>
-                        <StyledBadge
-                          isActive={row.status === true}
-                          overlap="circular"
-                          key={row.id}
-                          anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                          }}
-                          variant="dot"
-                        >
-                          <Avatar
-                            src={row.image}
-                            style={{
-                              border: `2px solid ${row.color}`,
-                              background: '#DEDEE3',
-                            }}
-                          />
-                        </StyledBadge>
-                        <div> {row.employee}</div>
-                      </Stack>
+            <Paper
+              sx={{
+                width: '100%',
+                overflow: 'auto',
+                maxHeight: '560px',
+                boxShadow: 'none',
+              }}
+            >
+              <Table
+                stickyHeader
+                aria-label="sticky table"
+                className="  overflow-auto"
+              >
+                <TableHead>
+                  <TableRow className=" uppercase">
+                    <TableCell className="text-sm text-mango-text-gray-2">
+                      Employee
                     </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      {row.jobTitle}
+                    <TableCell className="text-sm text-mango-text-gray-2">
+                      Job Title
                     </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      {row.phoneNumber}
+                    <TableCell className="text-sm text-mango-text-gray-2">
+                      Phone Number
                     </TableCell>
-
-                    <TableCell className="text-base text-primary-dark">
-                      <Stack direction="row" spacing={1}>
-                        {row.rolePermission
-                          .slice(0, 1)
-                          .map((itemPermission) => (
-                            <Chip
-                              key={`${Math.random()}`}
-                              label={itemPermission}
-                              className="bg-blue-50 px-1 text-[16px]  text-blue-700"
-                            />
-                          ))}
-                        {row.rolePermission.slice(1).length > 0 && (
-                          <Chip
-                            label={`+${row.rolePermission.slice(1).length}`}
-                            className="cursor-pointer bg-blue-50 px-1  text-[16px] text-blue-700"
-                          />
-                        )}
-                      </Stack>
+                    <TableCell className="text-sm text-mango-text-gray-2">
+                      Role & Permission
                     </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      <Chip
-                        className="  bg-pink-50 px-1 text-[16px]  text-pink-500"
-                        label={row.payStructure}
-                        sx={{
-                          '& .css-6od3lo-MuiChip-label': {
-                            overflow: 'unset',
-                          },
-                        }}
-                      />
+                    <TableCell className="text-sm text-mango-text-gray-2">
+                      Pay Structure
                     </TableCell>
-                    <TableCell className="text-base text-primary-dark">
-                      <Chip
-                        className="  bg-cyan-50 px-1 text-[16px]  text-cyan-700"
-                        label={row.serviceProduct}
-                        sx={{
-                          '& .css-6od3lo-MuiChip-label': {
-                            overflow: 'unset',
-                          },
-                        }}
-                      />
+                    <TableCell className="text-sm text-mango-text-gray-2">
+                      Service & Product
                     </TableCell>
-                    <TableCell>
-                      <Switch
-                        checked={row.status}
-                        color="success"
-                        onChange={() => handleSwitchChange(row.id)}
-                      />
-                      {row.status ? 'Active' : 'Inactive'}
+                    <TableCell className="text-sm text-mango-text-gray-2">
+                      Status
                     </TableCell>
-                    <TableCell className="">
-                      <Stack direction="row" alignItems="center" spacing={1}>
-                        <IconButton
-                          className="bg-bg-light"
-                          onClick={() => handleEditEmployee(row)}
-                          style={squareIconButtonStyles}
-                        >
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-
-                        <IconButton
-                          className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
-                          style={squareIconButtonStyles}
-                        >
-                          <ContentCopyOutlinedIcon fontSize="small" />
-                        </IconButton>
-                        <IconButton
-                          className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
-                          style={squareIconButtonStyles}
-                        >
-                          <DeleteOutlineOutlinedIcon
-                            fontSize="medium"
-                            className="text-[#DA2036] "
-                          />
-                        </IconButton>
-                      </Stack>
+                    <TableCell className="text-sm text-mango-text-gray-2">
+                      Action
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody className="text-base ">
+                  {filteredData.slice(startIndex, endIndex).map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell className=" text-base text-primary-dark">
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <StyledBadge
+                            isActive={row.status === true}
+                            overlap="circular"
+                            key={row.id}
+                            anchorOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'right',
+                            }}
+                            variant="dot"
+                          >
+                            <Avatar
+                              src={row.image}
+                              style={{
+                                border: `2px solid ${row.color}`,
+                                background: '#DEDEE3',
+                              }}
+                            />
+                          </StyledBadge>
+                          <div> {row.employee}</div>
+                        </Stack>
+                      </TableCell>
+                      <TableCell className="text-base text-primary-dark">
+                        {row.jobTitle}
+                      </TableCell>
+                      <TableCell className="text-base text-primary-dark">
+                        {row.phoneNumber}
+                      </TableCell>
+
+                      <TableCell className="text-base text-primary-dark">
+                        <Stack direction="row" spacing={1}>
+                          {row.rolePermission
+                            .slice(0, 1)
+                            .map((itemPermission) => (
+                              <Chip
+                                key={`${Math.random()}`}
+                                label={itemPermission}
+                                className="bg-blue-50 px-1 text-[16px]  text-blue-700"
+                              />
+                            ))}
+                          {row.rolePermission.slice(1).length > 0 && (
+                            <Chip
+                              label={`+${row.rolePermission.slice(1).length}`}
+                              className="cursor-pointer bg-blue-50 px-1  text-[16px] text-blue-700"
+                            />
+                          )}
+                        </Stack>
+                      </TableCell>
+                      <TableCell className="text-base text-primary-dark">
+                        <Chip
+                          className="  bg-pink-50 px-1 text-[16px]  text-pink-500"
+                          label={row.payStructure}
+                          sx={{
+                            '& .css-6od3lo-MuiChip-label': {
+                              overflow: 'unset',
+                            },
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell className="text-base text-primary-dark">
+                        <Chip
+                          className="  bg-cyan-50 px-1 text-[16px]  text-cyan-700"
+                          label={row.serviceProduct}
+                          sx={{
+                            '& .css-6od3lo-MuiChip-label': {
+                              overflow: 'unset',
+                            },
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Switch
+                          checked={row.status}
+                          color="success"
+                          onChange={() => handleSwitchChange(row.id)}
+                        />
+                        {row.status ? 'Active' : 'Inactive'}
+                      </TableCell>
+                      <TableCell className="">
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <IconButton
+                            className="bg-bg-light"
+                            onClick={() => handleEditEmployee(row)}
+                            style={squareIconButtonStyles}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+
+                          <IconButton
+                            className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
+                            style={squareIconButtonStyles}
+                          >
+                            <ContentCopyOutlinedIcon fontSize="small" />
+                          </IconButton>
+                          <IconButton
+                            className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
+                            style={squareIconButtonStyles}
+                          >
+                            <DeleteOutlineOutlinedIcon
+                              fontSize="medium"
+                              className="text-[#DA2036] "
+                            />
+                          </IconButton>
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
             <TablePagination
-              rowsPerPageOptions={[8, 15]}
+              rowsPerPageOptions={[7, 15]}
               component="div"
               count={filteredData.length}
               rowsPerPage={rowsPerPage}

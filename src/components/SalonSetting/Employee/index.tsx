@@ -89,7 +89,7 @@ export const EmployeeSetting = () => {
       </Grid>
 
       <Grid xs={12} item>
-        <Box className="h-full w-full">
+        <Box className=" h-full w-full">
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <StyledTabs value={activeKey} onChange={handleChange}>
               {items.map((item) => (
@@ -102,6 +102,7 @@ export const EmployeeSetting = () => {
               ))}
             </StyledTabs>
           </Box>
+
           <Box className="overflow-auto">
             {items.find((item) => item.id === activeKey)?.children}
           </Box>

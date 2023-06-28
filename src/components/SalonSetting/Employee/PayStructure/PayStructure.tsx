@@ -16,12 +16,12 @@ import {
   IconButton,
   MenuItem,
   OutlinedInput,
+  Paper,
   Select,
   Stack,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -316,8 +316,20 @@ const PayStructure = () => {
             </div>
           </Grid>
           <Grid xs={12} item>
-            <TableContainer>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Paper
+              sx={{
+                width: '100%',
+                overflow: 'auto',
+                maxHeight: '560px',
+                boxShadow: 'none',
+                marginTop: '10px',
+              }}
+            >
+              <Table
+                stickyHeader
+                aria-label="sticky table"
+                className="overflow-auto"
+              >
                 <TableHead>
                   <TableRow className=" uppercase">
                     <TableCell className=" text-text-secondary">
@@ -419,7 +431,7 @@ const PayStructure = () => {
                   ))}
                 </TableBody>
               </Table>
-            </TableContainer>
+            </Paper>
             <TablePagination
               rowsPerPageOptions={[3, 5]}
               component="div"
