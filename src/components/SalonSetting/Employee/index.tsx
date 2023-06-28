@@ -10,6 +10,7 @@ import { sxTextField } from '@/utils/helper/styles';
 import { Search, MoreHoriz } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import ServiceAndProduct from './ServiceAndProduct/ServiceAndProduct';
 
 export const EmployeeSetting = () => {
   const [activeKey, setActiveKey] = useState<number>(0);
@@ -43,7 +44,7 @@ export const EmployeeSetting = () => {
       id: 3,
       label: 'SERVICE & PRODUCT',
       key: 'serviceProduct',
-      children: <></>,
+      children: <ServiceAndProduct />,
     },
   ];
 
@@ -71,9 +72,10 @@ export const EmployeeSetting = () => {
                 </InputAdornment>
               ),
             }}
+            className="min-w-[188px]"
           />
           <Button
-            className="h-[48px] w-[188px] border-none bg-primary-main text-[16px] font-bold text-white hover:bg-primary-main"
+            className="h-[48px] min-w-[188px] border-none bg-primary-main text-[16px] font-bold text-white hover:bg-primary-main"
             variant="outlined"
             startIcon={<AddIcon />}
           >
@@ -89,7 +91,7 @@ export const EmployeeSetting = () => {
       </Grid>
 
       <Grid xs={12} item>
-        <Box className="h-full w-full">
+        <Box className=" h-full w-full">
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <StyledTabs value={activeKey} onChange={handleChange}>
               {items.map((item) => (
@@ -102,6 +104,7 @@ export const EmployeeSetting = () => {
               ))}
             </StyledTabs>
           </Box>
+
           <Box className="overflow-auto">
             {items.find((item) => item.id === activeKey)?.children}
           </Box>

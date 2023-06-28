@@ -27,6 +27,7 @@ import {
   IconButton,
   MenuItem,
   Divider,
+  Switch,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -35,6 +36,7 @@ import {
   sxDisableTextField,
   sxTextFieldError,
 } from '@/utils/helper/styles';
+import { apiPostPhoto } from '@/utils/axios/instance';
 
 const listColors = [
   '#FFFFFF',
@@ -61,7 +63,13 @@ interface IFormInput {
   confirmPassword: string;
 }
 
-const EmployeeProfileTab = () => {
+interface EmployeeProfileTabProps {
+  selectedEmployee: any;
+}
+const POST_IMAGE = '/file/upload-picture';
+const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
+  selectedEmployee,
+}) => {
   const {
     register,
     formState: { errors },
@@ -72,9 +80,13 @@ const EmployeeProfileTab = () => {
   } = useForm<IFormInput>();
   const [showPassword, setShowPassword] = useState(false);
   const [showPortalID, setShowPortalID] = useState(false);
-  // const [selectColor, setSelectColor] = useState<string>('');
+  const [selectedImage, setSelectedImage] = useState<any>();
   const [valueTechPortal, setValueTechPortal] = React.useState('option1');
-  // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [avatarImage, setAvatarImage] = useState<any>();
+  console.log(
+    '🚀 ~ file: EmployeeProfileTab.tsx:86 ~ avatarImage:',
+    avatarImage
+  );
   const dispatch = useAppDispatch();
   const [emailState, setEmailState] = useState({
     emailName: '',
@@ -141,84 +153,172 @@ const EmployeeProfileTab = () => {
       setError('email', { type: 'manual', message: 'errorMessage' });
     }
   };
+  const uploadImage = async (imageFile: File): Promise<void> => {
+    if (imageFile) {
+      try {
+        const formData = new FormData();
+        formData.append('File', imageFile);
+        const res = await apiPostPhoto(POST_IMAGE, formData);
+        return res.data;
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
+    }
+  };
+  const handleFileImage = async (e: any) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+    const responsive = await uploadImage(file);
+    setAvatarImage(responsive);
+  };
 
   return (
     <div className=" min-h-screen">
       <form onSubmit={handleSubmit(onSubmit)} className="my-8" noValidate>
         <Grid container spacing={2}>
-          {/* Employe Profile Head */}
-          <Grid xs={6} item>
-            <FormControl
-              fullWidth
-              className="text-sm font-normal !text-mango-text-black-1"
+          <Grid xs={4}>
+            <form
+              className=" mt-6 flex flex-wrap justify-center gap-2 "
+              noValidate
             >
-              <TextField
-                sx={sxTextField}
-                label="First Name"
-                type="text"
-                error={Boolean(errors.firstName)}
-                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-              />
-            </FormControl>
-          </Grid>
-          <Grid xs={6} item>
-            <FormControl
-              fullWidth
-              className="text-sm font-normal !text-mango-text-black-1"
-            >
-              <TextField
-                sx={sxTextField}
-                label="Last Name"
-                type="text"
-                required
-                error={Boolean(errors.lastName)}
-                {...register('lastName', {
-                  required: 'Enter Your Last Name!',
-                })}
-                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-              />
-              <ErrorMessage
-                errors={errors}
-                name="lastName"
-                render={({ message }: any) => (
-                  <div
-                    className="ml-2 mt-1 text-sm text-text-error"
-                    role="alert"
-                  >
-                    <span className="font-medium">{message}</span>
+              <div className="relative flex w-full flex-col items-center justify-center">
+                <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full border border-border-light">
+                  {selectedImage ? (
+                    <Image
+                      src={URL?.createObjectURL(selectedImage)}
+                      alt="logo"
+                      layout="fill"
+                      className="rounded-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={
+                        selectedEmployee?.ProfilePictureUrl.includes(
+                          'https://' || 'http://'
+                        )
+                          ? selectedEmployee?.ProfilePictureUrl
+                          : '/assets/images/StoreProfile/store-default.png'
+                      }
+                      alt="logo1"
+                      width={186}
+                      height={186}
+                      className={
+                        selectedEmployee?.ProfilePictureUrl !== ''
+                          ? 'rounded-full object-cover'
+                          : 'rounded-full'
+                      }
+                    />
+                  )}
+
+                  <input
+                    className="absolute bottom-0 right-0 z-10 mb-0 h-[185px] w-[185px] cursor-pointer opacity-0"
+                    accept="image/*"
+                    onChange={handleFileImage}
+                    type="file"
+                    id="imageUpload"
+                  />
+                  <div className="absolute bottom-0 right-0 mb-0 flex h-[59px] w-[59px] items-center justify-center rounded-full bg-primary-main">
+                    <Image
+                      src="/assets/images/SetupStore/picture.svg"
+                      alt="logo"
+                      width={32}
+                      height={32}
+                    />
                   </div>
-                )}
-              />
-            </FormControl>
+                </div>
+                <p className="w-full pt-[16px] text-center text-mango-text-gray-2 ">
+                  <Switch checked color="success" />
+                  Active
+                </p>
+              </div>
+            </form>
           </Grid>
-          <Grid xs={12} item>
-            <FormControl
-              fullWidth
-              className="text-sm font-normal !text-mango-text-black-1"
-            >
-              <TextField
-                sx={sxTextField}
-                label="Nick Name"
-                type="text"
-                {...register('nickName', {})}
-                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-              />
-            </FormControl>
+          <Grid xs={8} item spacing={2}>
+            <Stack direction="column" spacing={2}>
+              <Stack direction="row" spacing={2}>
+                <Grid xs={6} item>
+                  <FormControl
+                    fullWidth
+                    className="text-sm font-normal !text-mango-text-black-1"
+                  >
+                    <TextField
+                      sx={sxTextField}
+                      label="First Name"
+                      type="text"
+                      error={Boolean(errors.firstName)}
+                      className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid xs={6} item>
+                  <FormControl
+                    fullWidth
+                    className="text-sm font-normal !text-mango-text-black-1"
+                  >
+                    <TextField
+                      sx={sxTextField}
+                      label="Last Name"
+                      type="text"
+                      required
+                      error={Boolean(errors.lastName)}
+                      {...register('lastName', {
+                        required: 'Enter Your Last Name!',
+                      })}
+                      className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                    />
+                    <ErrorMessage
+                      errors={errors}
+                      name="lastName"
+                      render={({ message }: any) => (
+                        <div
+                          className="ml-2 mt-1 text-sm text-text-error"
+                          role="alert"
+                        >
+                          <span className="font-medium">{message}</span>
+                        </div>
+                      )}
+                    />
+                  </FormControl>
+                </Grid>
+              </Stack>
+
+              <Grid xs={12} item>
+                <FormControl
+                  fullWidth
+                  className="text-sm font-normal !text-mango-text-black-1"
+                >
+                  <TextField
+                    sx={sxTextField}
+                    label="Nick Name"
+                    type="text"
+                    {...register('nickName', {})}
+                    className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                  />
+                </FormControl>
+              </Grid>
+              <Grid xs={12} item>
+                <FormControl
+                  fullWidth
+                  className="text-sm font-normal !text-mango-text-black-1"
+                >
+                  <TextField
+                    sx={sxTextField}
+                    label="Job Title"
+                    type="text"
+                    {...register('jobTitle', {})}
+                    className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                  />
+                </FormControl>
+              </Grid>
+              <Grid xs={12} item>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker className="w-full" />
+                </LocalizationProvider>
+              </Grid>
+            </Stack>
           </Grid>
-          <Grid xs={12} item className="">
-            <FormControl
-              fullWidth
-              className="text-sm font-normal !text-mango-text-black-1"
-            >
-              <TextField
-                sx={sxTextField}
-                label="Job Title"
-                type="text"
-                {...register('jobTitle', {})}
-                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-              />
-            </FormControl>
-          </Grid>
+
           <Grid xs={12} item>
             <Divider />
           </Grid>

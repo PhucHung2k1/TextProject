@@ -16,21 +16,21 @@ import {
   IconButton,
   MenuItem,
   OutlinedInput,
-  Paper,
   Select,
   Stack,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
 } from '@mui/material';
 import { styled } from '@mui/system';
 // eslint-disable-next-line import/no-cycle
-import DrawerAddPayStructure from './AddPayStructure/DrawerAddPayStructure';
 import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
+import DrawerAddServiceAndProduct from './AddServiceAndProduct/DrawerAddServiceAndProduct';
 
 // eslint-disable-next-line import/no-cycle
 interface IEmployee {
@@ -159,8 +159,12 @@ const data: IPayStructure[] = [
 ];
 
 const arrEmployee = ['A', 'B', 'C', 'D'];
-const PayStructure = () => {
+const ServiceAndProduct = () => {
   const [page, setPage] = useState(0);
+  console.log(
+    '🚀 ~ file: ServiceAndProduct.tsx:164 ~ ServiceAndProduct ~ page:',
+    page
+  );
   const [rowsPerPage, setRowsPerPage] = useState(3);
   // Filter State
   const [filterPayType, setFilterPayType] = useState('');
@@ -271,7 +275,7 @@ const PayStructure = () => {
                 startIcon={<AddIcon />}
                 onClick={handleOpenAddDrawer}
               >
-                New Pay Structure
+                NEW SERVICE & PRODUCT GROUP
               </Button>
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
@@ -284,7 +288,7 @@ const PayStructure = () => {
                   onChange={handleFilterPayType}
                 >
                   <MenuItem value="">
-                    <p>Paystructure type</p>
+                    <p>All Employee</p>
                   </MenuItem>
                   {arrPayStructureType.map((name) => (
                     <MenuItem key={name} value={name}>
@@ -304,7 +308,7 @@ const PayStructure = () => {
                   className="bg-white"
                 >
                   <MenuItem value="">
-                    <p>All Employee</p>
+                    <p>All Service & Product </p>
                   </MenuItem>
                   {arrEmployee.map((name) => (
                     <MenuItem key={name} value={name}>
@@ -316,30 +320,18 @@ const PayStructure = () => {
             </div>
           </Grid>
           <Grid xs={12} item>
-            <Paper
-              sx={{
-                width: '100%',
-                overflow: 'auto',
-                maxHeight: '560px',
-                boxShadow: 'none',
-                marginTop: '10px',
-              }}
-            >
-              <Table
-                stickyHeader
-                aria-label="sticky table"
-                className="overflow-auto"
-              >
+            <TableContainer>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow className=" uppercase">
                     <TableCell className=" text-text-secondary">
-                      Pay Structure Group
-                    </TableCell>
-                    <TableCell className=" text-text-secondary" align="left">
-                      Pay Structure Type
+                      Service & Product Group
                     </TableCell>
                     <TableCell className=" text-text-secondary" align="left">
                       Employee
+                    </TableCell>
+                    <TableCell className=" text-text-secondary" align="left">
+                      Accessibility
                     </TableCell>
                     <TableCell className="text-text-secondary" align="left" />
                   </TableRow>
@@ -358,21 +350,6 @@ const PayStructure = () => {
                         component="td"
                         scope="row"
                         className="text-base"
-                      >
-                        <Chip
-                          className="  bg-pink-50 px-1 text-base  text-pink-500"
-                          label={row.paystructureType}
-                          sx={{
-                            '& .css-6od3lo-MuiChip-label': {
-                              overflow: 'unset',
-                            },
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="td"
-                        scope="row"
-                        className="min-w-[500px] text-base"
                       >
                         {row.employee.length} users
                         <AvatarGroup max={5} className="mt-[4px] justify-end">
@@ -399,6 +376,21 @@ const PayStructure = () => {
                             );
                           })}
                         </AvatarGroup>
+                      </TableCell>
+                      <TableCell
+                        component="td"
+                        scope="row"
+                        className="min-w-[500px] text-base"
+                      >
+                        <Chip
+                          className="  bg-cyan-50 px-1 text-base  text-cyan-800"
+                          label={row.paystructureType}
+                          sx={{
+                            '& .css-6od3lo-MuiChip-label': {
+                              overflow: 'unset',
+                            },
+                          }}
+                        />
                       </TableCell>
                       <TableCell align="right" className="text-base">
                         <Stack direction="row" alignItems="center" spacing={1}>
@@ -431,7 +423,7 @@ const PayStructure = () => {
                   ))}
                 </TableBody>
               </Table>
-            </Paper>
+            </TableContainer>
             <TablePagination
               rowsPerPageOptions={[3, 5]}
               component="div"
@@ -449,15 +441,13 @@ const PayStructure = () => {
           open={openAddDrawer}
           onClose={handleCloseAddDrawer}
         >
-          {/* <EditEmployee
-            handleCloseDrawer={handleCloseDrawer}
-            selectedEmployee={selectedEmployee}
-          /> */}
-          <DrawerAddPayStructure handleCloseDrawer={handleCloseAddDrawer} />
+          <DrawerAddServiceAndProduct
+            handleCloseDrawer={handleCloseAddDrawer}
+          />
         </Drawer>
       </div>
     </>
   );
 };
 
-export default PayStructure;
+export default ServiceAndProduct;
