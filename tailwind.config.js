@@ -96,6 +96,7 @@ module.exports = {
         cyan: {
           50: '#E0F7FA',
           700: '#0098A9',
+          800: '#008491',
         },
         'background-paper-elevation-1': '#ecedee',
         'button-hover-cyan': '#00ADC3',

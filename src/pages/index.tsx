@@ -10,12 +10,15 @@ import { useEffect } from 'react';
 import { getStoreCustomer } from '@/store/store/storeAction';
 import { useRouter } from 'next/router';
 import { getCustomerProfile, getMyRole } from '@/store/customer/customerAction';
+import type { RootState } from '@/store/store';
 
 const Index = () => {
   const { data } = useSession();
   const router = useRouter();
 
-  const showLoading = useAppSelector((state) => state.loadingSlice.isLoading);
+  const showLoading = useAppSelector(
+    (state: RootState) => state.loadingSlice.isLoading
+  );
 
   const dispatch = useAppDispatch();
   useEffect(() => {

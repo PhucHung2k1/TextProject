@@ -30,18 +30,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import Badge from '@mui/material/Badge';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import {
+  deleteRole,
   getAllRole,
   getListPermissionCustomById,
   getRoleDetailById,
 } from '@/store/customerRole/customerRoleAction';
 import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
-import ModalCustomContainer from '@/components/Modal/ModalCustom';
-import { ModalDeleteRole } from './ModalDeleteRole';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
 import EditRolePermission from './EditRolePermission';
 import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
 import LabbelStyle from '@/common/Label/LabbelStyle';
+import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
+
 
 interface PermissionItem {
   Name: string;
@@ -179,18 +180,25 @@ const ListRolePermission = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+  const handleDeleteRoleModal = () => {
+    if (selectedItem) {
+      dispatch(deleteRole(selectedItem?.Id)).then((res) => {
+        if (res) {
+          handleCloseModal();
+        }
+      });
+    }
+  };
 
   return (
     <>
-      <ModalCustomContainer
+      <ModalCustomDelete
         onClose={() => setOpenModal(false)}
         open={openModal}
-        modalContent={
-          <ModalDeleteRole
-            item={selectedItem}
-            handleCloseModal={handleCloseModal}
-          />
-        }
+        titleModal="Remove Role?"
+        subTitle={`  Would you like to remove "${selectedItem?.Name}"?`}
+        onSubmit={handleDeleteRoleModal}
+        onCancel={handleCloseModal}
       />
 
       <div className="min-h-screen">

@@ -1,51 +1,67 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import Image from 'next/image';
-import { Box, Grid, Switch, styled } from '@mui/material';
-import React, { useState } from 'react';
+import {
+  Box,
+  Grid,
+  Stack,
+  Step,
+  StepLabel,
+  Stepper,
+  Switch,
+  styled,
+  Typography,
+} from '@mui/material';
+import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import type { IEmployee } from './EmployeeList';
-import { apiPostPhoto } from '@/utils/axios/instance';
+
+import type { IEmployee } from '@/services/employee.service/employee.interface';
+// eslint-disable-next-line import/no-named-as-default
 import EmployeeProfileTab from './EditEmployeeTab/EmployeeProfileTab';
-import RoleAndPermissionTab from './RoleAndPermissionTab/RoleAndPermissionTab';
-import WorkScheduleTab from './WorkScheduleTab/WorkScheduleTab';
-import { AntTab, StyledTabs } from '../../ConfigurationSetting';
-// import RoleAndPermissionTab from './RoleAndPermissionTab/RoleAndPermissionTab';
-// import StoreWorkingHoursSetup from '@/components/StoreProfile/StoreWorkingHoursSetup';
 
-const itemsTab = [
+const steps = [
   {
-    id: 0,
-    label: 'EMPLOYEE PROFILE ',
-    key: 'employeeList',
-    children: <EmployeeProfileTab />,
+    label: 'Select campaign settings',
   },
   {
-    id: 1,
-    label: 'WORK SCHEDULE',
-    key: 'rolePermissions',
-    children: <WorkScheduleTab />,
-  },
-
-  {
-    id: 2,
-    label: 'ROLE & PERMISSION',
-    key: 'payStructure',
-    children: <RoleAndPermissionTab />,
+    label: 'Create an ad group',
   },
   {
-    id: 4,
-    label: 'PAY STRUCTURE ',
-    key: 'serviceProduct',
-    children: <></>,
-  },
-  {
-    id: 5,
-    label: 'SERVICE & PRODUCT ',
-    key: 'serviceProduct',
-    children: <></>,
+    label: 'Create an ad',
   },
 ];
+// const itemsTab = [
+//   {
+//     id: 0,
+//     label: 'EMPLOYEE PROFILE ',
+//     key: 'employeeList',
+//     children: <EmployeeProfileTab />,
+//   },
+//   {
+//     id: 1,
+//     label: 'WORK SCHEDULE',
+//     key: 'rolePermissions',
+//     children: <WorkScheduleTab />,
+//   },
+
+//   {
+//     id: 2,
+//     label: 'ROLE & PERMISSION',
+//     key: 'payStructure',
+//     children: <RoleAndPermissionTab />,
+//   },
+//   {
+//     id: 4,
+//     label: 'PAY STRUCTURE ',
+//     key: 'serviceProduct',
+//     children: <></>,
+//   },
+//   {
+//     id: 5,
+//     label: 'SERVICE & PRODUCT ',
+//     key: 'serviceProduct',
+//     children: <></>,
+//   },
+// ];
 export const GreenSwitch = styled(Switch)(({ theme }) => ({
   '& .MuiSwitch-thumb': {
     color: theme.palette.common.white,
@@ -58,7 +74,7 @@ export const GreenSwitch = styled(Switch)(({ theme }) => ({
     backgroundColor: '#8BC34A',
   },
 }));
-const POST_IMAGE = '/file/upload-picture';
+
 interface EditEmployeeProps {
   handleCloseDrawer: any;
   selectedEmployee: IEmployee | undefined;
@@ -68,129 +84,106 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
   handleCloseDrawer,
   selectedEmployee,
 }) => {
-  const [checked, setChecked] = React.useState(false);
-  const [activeKey, setActiveKey] = useState<number>(0);
-  const [selectedImage, setSelectedImage] = useState<any>();
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  const [avatarImage, setAvatarImage] = useState<any>();
-  // eslint-disable-next-line no-console
-  console.log('🚀 ~ file: EditEmployee.tsx:68 ~ avatarImage:', avatarImage);
-
-  const handleChange = (event: any) => {
-    setChecked(event.target.checked);
-  };
-  const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
-    setActiveKey(newValue);
-  };
-
-  const uploadImage = async (imageFile: File): Promise<void> => {
-    if (imageFile) {
-      try {
-        const formData = new FormData();
-        formData.append('File', imageFile);
-        const res = await apiPostPhoto(POST_IMAGE, formData);
-        return res.data;
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
-      }
-    }
-  };
-  const handleFileImage = async (e: any) => {
-    const file = e.target.files[0];
-    setSelectedImage(file);
-    const responsive = await uploadImage(file);
-    setAvatarImage(responsive);
-  };
-
   return (
-    <Grid container spacing={2} className=" w-[796px] bg-white p-8">
-      <Grid xs={12} item>
-        <div className="relative flex items-center justify-center text-3xl font-semibold text-text-title">
-          <p>Edit Employee</p>
-          <div
-            onClick={handleCloseDrawer}
-            className="absolute left-0  cursor-pointer text-icon-color"
+    <Stack
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      className="relative"
+    >
+      <Grid
+        container
+        spacing={2}
+        className="  w-full bg-white p-8 sm:max-w-[100%] lg:max-w-[50%]"
+      >
+        <Grid xs={12} item>
+          <div className=" flex items-center justify-center text-3xl font-semibold text-text-title">
+            <p>Edit Member</p>
+          </div>
+        </Grid>
+
+        <Stack
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          spacing={2}
+        >
+          <Grid
+            xs={12}
+            item
+            className="relative mt-8 rounded-lg border  border-mango-gray-light-3 "
           >
-            <CloseIcon fontSize="large" />
-          </div>
-        </div>
-      </Grid>
-      <Grid xs={12} item>
-        <form className=" mt-6 flex flex-wrap justify-center gap-2" noValidate>
-          <div className="relative flex w-full flex-col items-center justify-center">
-            <div className="relative flex h-[186px] w-[186px] items-center justify-center rounded-full border border-border-light">
-              {selectedImage ? (
-                <Image
-                  src={URL?.createObjectURL(selectedImage)}
-                  alt="logo"
-                  layout="fill"
-                  className="rounded-full object-cover"
-                />
-              ) : (
-                <Image
-                  src={
-                    selectedEmployee?.image !== ''
-                      ? selectedEmployee?.image
-                      : '/assets/images/StoreProfile/store-default.png'
-                  }
-                  alt="logo1"
-                  width={186}
-                  height={186}
-                  className={
-                    selectedEmployee?.image !== ''
-                      ? 'rounded-full object-cover'
-                      : 'rounded-full'
-                  }
-                />
-              )}
-
-              <input
-                className="absolute bottom-0 right-0 z-10 mb-0 h-[185px] w-[185px] cursor-pointer opacity-0"
-                accept="image/*"
-                onChange={handleFileImage}
-                type="file"
-                id="imageUpload"
-              />
-              <div className="absolute bottom-0 right-0 mb-0 flex h-[59px] w-[59px] items-center justify-center rounded-full bg-primary-main">
-                <Image
-                  src="/assets/images/SetupStore/picture.svg"
-                  alt="logo"
-                  width={32}
-                  height={32}
-                />
-              </div>
-            </div>
-            <p className="w-full pt-[16px] text-center text-mango-text-gray-2 ">
-              Upload employee's profile picture
-            </p>
-
-            <div className="absolute right-6 top-0 text-primary-dark">
-              <GreenSwitch checked={checked} onChange={handleChange} />
-              {checked ? 'Active' : 'Inactive'}
-            </div>
-          </div>
-        </form>
-      </Grid>
-      <Grid xs={12} item>
-        <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <StyledTabs value={activeKey} onChange={handleChangeTab}>
-              {itemsTab.map((item) => (
-                <AntTab key={item.key} label={item.label} />
+            <Stepper
+              activeStep={0}
+              orientation="vertical"
+              className="absolute left-[-220px] "
+            >
+              {steps.map((step, index) => (
+                <Step key={step.label}>
+                  <StepLabel
+                    optional={
+                      index === 2 ? (
+                        <Typography variant="caption">Last step</Typography>
+                      ) : null
+                    }
+                  >
+                    {step.label}
+                  </StepLabel>
+                </Step>
               ))}
-            </StyledTabs>
-          </Box>
-          {itemsTab.map((item) => {
-            return item.id === activeKey ? (
-              <div key={item.key}>{item.children}</div>
-            ) : (
-              <></>
-            );
-          })}
-        </Box>
+            </Stepper>
+            <Grid xs={12} item className="border-b border-line-main px-6 py-4">
+              <Typography variant="caption" className="text-2xl font-semibold">
+                Team member profile
+              </Typography>
+            </Grid>
+            <Box className="px-5">
+              <Grid xs={12} item>
+                <Box sx={{ width: '100%' }}>
+                  <EmployeeProfileTab selectedEmployee={selectedEmployee} />
+                </Box>
+              </Grid>
+            </Box>
+          </Grid>
+          <Grid
+            xs={12}
+            item
+            className="rounded-lg border  border-mango-gray-light-3 px-4"
+          >
+            <Grid xs={12} item>
+              <Box sx={{ width: '100%' }}>
+                <EmployeeProfileTab selectedEmployee={selectedEmployee} />
+              </Box>
+            </Grid>
+          </Grid>
+        </Stack>
       </Grid>
-    </Grid>
+      <div
+        onClick={handleCloseDrawer}
+        className="absolute inset-6 h-5 w-5 cursor-pointer  text-icon-color"
+      >
+        <CloseIcon fontSize="large" />
+      </div>
+      <div className="w-full border-t border-mango-gray-light-3 py-6">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          spacing={2}
+        >
+          <Grid xs={3} item>
+            <div className="flex h-12 w-full cursor-pointer items-center justify-center rounded-[4px] border border-border-secondary bg-white px-3 text-base font-semibold uppercase  text-text-secondary">
+              Cancel
+            </div>
+          </Grid>
+          <Grid xs={3} item>
+            <div className="flex h-12 w-full cursor-pointer items-center justify-center rounded-[4px] bg-primary-main text-base  font-semibold uppercase text-white">
+              Save
+            </div>
+          </Grid>
+        </Stack>
+      </div>
+    </Stack>
   );
 };
 
