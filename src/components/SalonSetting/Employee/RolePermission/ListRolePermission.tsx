@@ -20,27 +20,27 @@ import {
   Drawer,
   Stack,
   Select,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditIcon from "@mui/icons-material/Edit";
-import CloseIcon from "@mui/icons-material/Close";
-import Badge from "@mui/material/Badge";
-import { useAppDispatch, useAppSelector } from "@/store/hook";
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import AddIcon from '@mui/icons-material/Add';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
+import Badge from '@mui/material/Badge';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
 import {
   getAllRole,
   getListPermissionCustomById,
   getRoleDetailById,
-} from "@/store/customerRole/customerRoleAction";
-import type { IAllCustomerRole } from "@/services/customerRole.service/customerRole.interface";
-import ModalCustomContainer from "@/components/Modal/ModalCustom";
-import { ModalDeleteRole } from "./ModalDeleteRole";
-import { showDrawerRolePermission } from "@/store/common/commonSlice";
-import EditRolePermission from "./EditRolePermission";
-import { sxSelect } from "@/utils/helper/styles";
-import { squareIconButtonStyles } from "@/helper/styleButton";
+} from '@/store/customerRole/customerRoleAction';
+import type { IAllCustomerRole } from '@/services/customerRole.service/customerRole.interface';
+import ModalCustomContainer from '@/components/Modal/ModalCustom';
+import { ModalDeleteRole } from './ModalDeleteRole';
+import { showDrawerRolePermission } from '@/store/common/commonSlice';
+import EditRolePermission from './EditRolePermission';
+import { sxSelect } from '@/utils/helper/styles';
+import { squareIconButtonStyles } from '@/helper/styleButton';
 
 interface PermissionItem {
   Name: string;
@@ -66,47 +66,47 @@ interface Employee {
   LastModifiedDate: any;
 }
 const StyledChip = styled(Chip)({
-  position: "relative",
+  position: 'relative',
 });
 
 const StyledDeleteIconButton = styled(IconButton)({
-  position: "absolute",
+  position: 'absolute',
   top: -10,
   right: -15,
   padding: 0,
-  width: "25px",
-  height: "25px",
-  borderRadius: "50%",
-  visibility: "hidden",
-  "&.MuiIconButton-root": {
-    backgroundColor: "#FFEBEF",
-    "&:hover": {
-      backgroundColor: "#FFEBEF",
+  width: '25px',
+  height: '25px',
+  borderRadius: '50%',
+  visibility: 'hidden',
+  '&.MuiIconButton-root': {
+    backgroundColor: '#FFEBEF',
+    '&:hover': {
+      backgroundColor: '#FFEBEF',
     },
   },
 });
 
 const StyledCloseIcon = styled(CloseIcon)({
-  fontSize: "18px",
-  color: "#DA2036",
-  marginTop: "-11px",
+  fontSize: '18px',
+  color: '#DA2036',
+  marginTop: '-11px',
 });
 const ListRolePermission = () => {
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(
     ({ theme, isActive }) => ({
-      "& .MuiBadge-badge": {
-        backgroundColor: isActive ? "#69B000" : "#9B9BA0",
-        color: isActive ? "#69B000" : "#9B9BA0",
+      '& .MuiBadge-badge': {
+        backgroundColor: isActive ? '#69B000' : '#9B9BA0',
+        color: isActive ? '#69B000' : '#9B9BA0',
         boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-        "&::after": {
-          position: "absolute",
+        '&::after': {
+          position: 'absolute',
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
-          borderRadius: "50%",
-          animation: "ripple 1.2s infinite ease-in-out",
-          border: "1px solid currentColor",
+          width: '100%',
+          height: '100%',
+          borderRadius: '50%',
+          animation: 'ripple 1.2s infinite ease-in-out',
+          border: '1px solid currentColor',
           content: '""',
         },
       },
@@ -155,8 +155,8 @@ const ListRolePermission = () => {
     return [...acc, ...role.Permissions];
   }, []);
   const dispatch = useAppDispatch();
-  const [filterFunction, setfilterFunction] = useState("");
-  const [filterEmployee, setFiterEmployee] = useState("");
+  const [filterFunction, setfilterFunction] = useState('');
+  const [filterEmployee, setFiterEmployee] = useState('');
   const [open, setOpen] = React.useState(false);
 
   const handleOpenDrawer = (item: IAllCustomerRole) => {
@@ -179,7 +179,7 @@ const ListRolePermission = () => {
   const handleFilterData = () => {
     let filteredData = listRole;
 
-    if (filterEmployee !== "") {
+    if (filterEmployee !== '') {
       filteredData = filteredData.filter((row) => {
         const filteredEmployees = row.Employees.filter(
           (employee) => employee.Id === filterEmployee
@@ -189,7 +189,7 @@ const ListRolePermission = () => {
       });
     }
 
-    if (filterFunction !== "") {
+    if (filterFunction !== '') {
       filteredData = filteredData.filter((row) => {
         const hasSelectedPermission = row.Permissions.some(
           (permission) => permission.Id === filterFunction
@@ -245,13 +245,13 @@ const ListRolePermission = () => {
                 size="small"
                 className="w-[20%]"
                 sx={{
-                  "& .MuiInputBase-root.Mui-focused": {
-                    "& > fieldset": {
-                      borderColor: "#00BDD6",
+                  '& .MuiInputBase-root.Mui-focused': {
+                    '& > fieldset': {
+                      borderColor: '#00BDD6',
                     },
                   },
-                  "& label.Mui-focused": {
-                    color: "#00BDD6",
+                  '& label.Mui-focused': {
+                    color: '#00BDD6',
                   },
                 }}
               >
@@ -260,7 +260,7 @@ const ListRolePermission = () => {
                   displayEmpty
                   value={filterEmployee}
                   input={<OutlinedInput />}
-                  inputProps={{ "aria-label": "Without label" }}
+                  inputProps={{ 'aria-label': 'Without label' }}
                   className="bg-white"
                   onChange={handleFilterEmployee}
                 >
@@ -279,13 +279,13 @@ const ListRolePermission = () => {
                 size="small"
                 className="w-[20%]"
                 sx={{
-                  "& .MuiInputBase-root.Mui-focused": {
-                    "& > fieldset": {
-                      borderColor: "#00BDD6",
+                  '& .MuiInputBase-root.Mui-focused': {
+                    '& > fieldset': {
+                      borderColor: '#00BDD6',
                     },
                   },
-                  "& label.Mui-focused": {
-                    color: "#00BDD6",
+                  '& label.Mui-focused': {
+                    color: '#00BDD6',
                   },
                 }}
               >
@@ -295,7 +295,7 @@ const ListRolePermission = () => {
                   value={filterFunction}
                   input={<OutlinedInput />}
                   onChange={handlefilterFunction}
-                  inputProps={{ "aria-label": "Without label" }}
+                  inputProps={{ 'aria-label': 'Without label' }}
                   className="bg-white"
                 >
                   <MenuItem value="">
@@ -307,7 +307,7 @@ const ListRolePermission = () => {
                     </MenuItem>
                   ))}
                 </Select>
-              </FormControl>{" "}
+              </FormControl>{' '}
             </div>
           </Grid>
         </div>
@@ -338,7 +338,7 @@ const ListRolePermission = () => {
                 </TableRow>
               </TableHead>
               <TableBody className="text-[16px]">
-                {filterEmployee !== "" || filterFunction !== ""
+                {filterEmployee !== '' || filterFunction !== ''
                   ? dataFilterd.slice(startIndex, endIndex).map((item) => {
                       const uniqueCategories = [
                         ...new Set(
@@ -364,18 +364,18 @@ const ListRolePermission = () => {
                             scope="row"
                             className="w-[20%] text-base"
                           >
-                            {filterEmployee !== ""
+                            {filterEmployee !== ''
                               ? item.Employees.filter(
                                   (filter) => filter.Id === filterEmployee
                                 ).length
                               : item.Employees.length}
-                            {item.Employees.length < 2 ? " user" : " users"}
+                            {item.Employees.length < 2 ? ' user' : ' users'}
                             {item.Employees.length > 0 && (
                               <AvatarGroup
                                 max={5}
                                 className="mt-[4px] justify-end"
                               >
-                                {filterEmployee !== ""
+                                {filterEmployee !== ''
                                   ? item.Employees.filter(
                                       (avt) => avt.Id === filterEmployee
                                     ).map((avatarItem) => (
@@ -388,8 +388,8 @@ const ListRolePermission = () => {
                                           overlap="circular"
                                           key={avatarItem.Id}
                                           anchorOrigin={{
-                                            vertical: "bottom",
-                                            horizontal: "right",
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
                                           }}
                                           variant="dot"
                                         >
@@ -397,7 +397,7 @@ const ListRolePermission = () => {
                                             src={avatarItem.ProfilePictureUrl}
                                             style={{
                                               border: `2px solid #9B9BA0`,
-                                              background: "#DEDEE3",
+                                              background: '#DEDEE3',
                                             }}
                                           />
                                         </StyledBadge>
@@ -413,8 +413,8 @@ const ListRolePermission = () => {
                                           overlap="circular"
                                           key={avatarItem.Id}
                                           anchorOrigin={{
-                                            vertical: "bottom",
-                                            horizontal: "right",
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
                                           }}
                                           variant="dot"
                                         >
@@ -422,7 +422,7 @@ const ListRolePermission = () => {
                                             src={avatarItem.ProfilePictureUrl}
                                             style={{
                                               border: `2px solid #9B9BA0`,
-                                              background: "#DEDEE3",
+                                              background: '#DEDEE3',
                                             }}
                                           />
                                         </StyledBadge>
@@ -445,8 +445,8 @@ const ListRolePermission = () => {
                                     className="float-right mr-2 mt-2 bg-blue-50 px-[10px] py-[7px] text-[16px] font-normal text-blue-700"
                                     label={itemPermission}
                                     sx={{
-                                      "& .css-6od3lo-MuiChip-label": {
-                                        overflow: "unset",
+                                      '& .css-6od3lo-MuiChip-label': {
+                                        overflow: 'unset',
                                       },
                                     }}
                                   />
@@ -500,7 +500,7 @@ const ListRolePermission = () => {
                             className="w-[20%] text-base"
                           >
                             {item.Employees.length}
-                            {item.Employees.length < 2 ? " user" : " users"}
+                            {item.Employees.length < 2 ? ' user' : ' users'}
                             {item.Employees.length > 0 && (
                               <AvatarGroup
                                 max={maxAvatars[item.Id] || 5}
@@ -525,8 +525,8 @@ const ListRolePermission = () => {
                                       overlap="circular"
                                       key={avatarItem.Id}
                                       anchorOrigin={{
-                                        vertical: "bottom",
-                                        horizontal: "right",
+                                        vertical: 'bottom',
+                                        horizontal: 'right',
                                       }}
                                       variant="dot"
                                     >
@@ -534,7 +534,7 @@ const ListRolePermission = () => {
                                         src={avatarItem.ProfilePictureUrl}
                                         style={{
                                           border: `2px solid #9B9BA0`,
-                                          background: "#DEDEE3",
+                                          background: '#DEDEE3',
                                         }}
                                       />
                                     </StyledBadge>
@@ -566,21 +566,21 @@ const ListRolePermission = () => {
                                         // onClick={() => handleDelete(itemPermission.Id)}
                                         className={
                                           hoveredChipId === itemPermission.Id
-                                            ? "visible"
-                                            : "hidden"
+                                            ? 'visible'
+                                            : 'hidden'
                                         }
                                       >
                                         <StyledCloseIcon />
                                       </StyledDeleteIconButton>
                                     }
                                     sx={{
-                                      "&:hover": {
+                                      '&:hover': {
                                         // backgroundColor: '#f5f5f5',
                                       },
-                                      "& .MuiChip-deleteIcon": {
+                                      '& .MuiChip-deleteIcon': {
                                         display: hoveredChipId
-                                          ? "block"
-                                          : "none",
+                                          ? 'block'
+                                          : 'none',
                                       },
                                     }}
                                   />

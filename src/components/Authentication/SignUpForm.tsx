@@ -274,7 +274,6 @@ export default function SignUpForm() {
                 render={({ message }: any) => (
                   <div
                     className="ml-2 mt-1 text-sm text-text-error"
-
                     role="alert"
                   >
                     <span className="font-medium">{message}</span>
@@ -298,14 +297,13 @@ export default function SignUpForm() {
                 name="confirmPassword"
                 render={({ message }: any) => (
                   <div
-                    className="text-text-error ml-2 mt-1 text-sm"
+                    className="ml-2 mt-1 text-sm text-text-error"
                     role="alert"
                   >
                     <span className="font-medium">{message}</span>
                   </div>
                 )}
               />
-
             </FormControl>
 
             <div className=" flex">
