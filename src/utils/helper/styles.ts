@@ -60,3 +60,9 @@ export const sxSwitchBlue = {
 export const sxButtonBlue = {
   '&:hover': { backgroundColor: '#00ADC3' },
 };
+// Radio
+export const sxRadioBlue = {
+  '&.Mui-checked': {
+    color: '#00BDD6',
+  },
+};
