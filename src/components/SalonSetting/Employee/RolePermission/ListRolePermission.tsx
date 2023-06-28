@@ -3,7 +3,6 @@ import {
   Button,
   FormControl,
   OutlinedInput,
-  TableContainer,
   Table,
   TableHead,
   TableRow,
@@ -20,6 +19,7 @@ import {
   Drawer,
   Stack,
   Select,
+  Paper,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
@@ -40,7 +40,9 @@ import { showDrawerRolePermission } from '@/store/common/commonSlice';
 import EditRolePermission from './EditRolePermission';
 import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
+import LabbelStyle from '@/common/Label/LabbelStyle';
 import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
+
 
 interface PermissionItem {
   Name: string;
@@ -65,32 +67,7 @@ interface Employee {
   LastModifiedBy: any;
   LastModifiedDate: any;
 }
-const StyledChip = styled(Chip)({
-  position: 'relative',
-});
 
-const StyledDeleteIconButton = styled(IconButton)({
-  position: 'absolute',
-  top: -10,
-  right: -15,
-  padding: 0,
-  width: '25px',
-  height: '25px',
-  borderRadius: '50%',
-  visibility: 'hidden',
-  '&.MuiIconButton-root': {
-    backgroundColor: '#FFEBEF',
-    '&:hover': {
-      backgroundColor: '#FFEBEF',
-    },
-  },
-});
-
-const StyledCloseIcon = styled(CloseIcon)({
-  fontSize: '18px',
-  color: '#DA2036',
-  marginTop: '-11px',
-});
 const ListRolePermission = () => {
   const StyledBadge = styled(Badge)<{ isActive: boolean }>(
     ({ theme, isActive }) => ({
@@ -120,18 +97,7 @@ const ListRolePermission = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const startIndex = page * rowsPerPage;
   const endIndex = Math.min(startIndex + rowsPerPage, listRole.length);
-  const [hoveredChipId, setHoveredChipId] = useState<string | null>(null);
   const [maxAvatars, setMaxAvatars] = useState<{ [key: string]: number }>({});
-
-  const handleMouseIn = (chipId: string) => {
-    setHoveredChipId(chipId);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredChipId(null);
-  };
-
-  const handleDelete = () => {};
 
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement> | null,
@@ -319,8 +285,20 @@ const ListRolePermission = () => {
           </Grid>
         </div>
         <div>
-          <TableContainer className="mt-[35px]">
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Paper
+            sx={{
+              width: '100%',
+              overflow: 'auto',
+              maxHeight: '560px',
+              boxShadow: 'none',
+              marginTop: '10px',
+            }}
+          >
+            <Table
+              stickyHeader
+              aria-label="sticky table"
+              className="overflow-auto"
+            >
               <TableHead>
                 <TableRow className=" text-[14px]">
                   <TableCell className="pb-[7px]  text-mango-text-gray-2">
@@ -559,37 +537,10 @@ const ListRolePermission = () => {
                             <div>
                               <Stack direction="row" flexWrap="wrap">
                                 {item.Permissions.map((itemPermission) => (
-                                  <StyledChip
+                                  <LabbelStyle
                                     key={itemPermission.Id}
-                                    className="float-right mr-2 mt-2 bg-blue-50 px-[10px] py-[7px] text-[16px] font-normal text-blue-700"
+                                    Id={itemPermission.Id}
                                     label={itemPermission.Category}
-                                    onDelete={handleDelete}
-                                    onMouseEnter={() =>
-                                      handleMouseIn(itemPermission.Id)
-                                    }
-                                    onMouseLeave={handleMouseLeave}
-                                    deleteIcon={
-                                      <StyledDeleteIconButton
-                                        // onClick={() => handleDelete(itemPermission.Id)}
-                                        className={
-                                          hoveredChipId === itemPermission.Id
-                                            ? 'visible'
-                                            : 'hidden'
-                                        }
-                                      >
-                                        <StyledCloseIcon />
-                                      </StyledDeleteIconButton>
-                                    }
-                                    sx={{
-                                      '&:hover': {
-                                        // backgroundColor: '#f5f5f5',
-                                      },
-                                      '& .MuiChip-deleteIcon': {
-                                        display: hoveredChipId
-                                          ? 'block'
-                                          : 'none',
-                                      },
-                                    }}
                                   />
                                 ))}
                               </Stack>
@@ -635,22 +586,22 @@ const ListRolePermission = () => {
                     })}
               </TableBody>
             </Table>
-            <TablePagination
-              rowsPerPageOptions={[10, 15]}
-              component="div"
-              count={listRole.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+          </Paper>
+          <TablePagination
+            rowsPerPageOptions={[10, 15]}
+            component="div"
+            count={listRole.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+          <Drawer anchor="right" open={open} onClose={handleCloseDrawer}>
+            <EditRolePermission
+              idRole={selectedItem?.Id}
+              handleCloseDrawer={handleCloseDrawer}
             />
-            <Drawer anchor="right" open={open} onClose={handleCloseDrawer}>
-              <EditRolePermission
-                idRole={selectedItem?.Id}
-                handleCloseDrawer={handleCloseDrawer}
-              />
-            </Drawer>
-          </TableContainer>
+          </Drawer>
         </div>
       </div>
     </>
