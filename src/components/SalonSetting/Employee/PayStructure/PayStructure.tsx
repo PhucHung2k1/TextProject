@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
@@ -31,131 +31,17 @@ import { styled } from '@mui/system';
 import DrawerAddPayStructure from './AddPayStructure/DrawerAddPayStructure';
 import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
+import type { IPayStructureData } from '@/services/payStructure.service/payStructure.interface';
+import { getListPayStructure } from '@/store/payStructure/payStructureAction';
 
 // eslint-disable-next-line import/no-cycle
-interface IEmployee {
-  name?: string;
-  avatar: string;
-  color: string;
-  isActive: boolean;
-}
-
-interface IPayStructure {
-  id: number;
-  role: string;
-  employee: IEmployee[];
-  paystructureType: string;
-}
 
 const arrPayStructureType = [
   'Commission-Guarantee',
   'Commission',
   'Salary',
   'Hourly',
-];
-
-const data: IPayStructure[] = [
-  {
-    id: 1,
-    role: 'Owner',
-    employee: [
-      {
-        avatar: '/assets/images/RolePermission/4.svg',
-        color: '#2D9DE3',
-        name: 'A',
-        isActive: true,
-      },
-      {
-        avatar: '/assets/images/RolePermission/5.svg',
-        color: '#9D46DE',
-        name: 'A',
-        isActive: true,
-      },
-    ],
-    paystructureType: 'Commission-Guarantee',
-  },
-  {
-    id: 2,
-    role: 'Technician',
-    employee: [
-      {
-        avatar: '/assets/images/RolePermission/4.svg',
-        color: '#2D9DE3',
-        name: 'B',
-        isActive: true,
-      },
-      {
-        avatar: '/assets/images/RolePermission/4.svg',
-        color: '#9D46DE',
-        name: 'B',
-        isActive: true,
-      },
-      {
-        avatar: '/assets/images/RolePermission/7.svg',
-        color: '#2D9DE3',
-        name: 'B',
-        isActive: true,
-      },
-      {
-        avatar: '/assets/images/RolePermission/6.svg',
-        color: '#9D46DE',
-        name: 'B',
-        isActive: true,
-      },
-    ],
-    paystructureType: 'Commission',
-  },
-  {
-    id: 3,
-    role: 'Reception',
-    employee: [
-      {
-        avatar: '/assets/images/RolePermission/4.svg',
-        color: '#2D9DE3',
-        name: 'C',
-        isActive: true,
-      },
-    ],
-    paystructureType: 'Salary',
-  },
-  {
-    id: 4,
-    role: 'Part time',
-    employee: [
-      {
-        avatar: '/assets/images/RolePermission/5.svg',
-        color: '#2D9DE3',
-        name: 'D',
-        isActive: true,
-      },
-      {
-        avatar: '/assets/images/RolePermission/6.svg',
-        color: '#2D9DE3',
-        name: 'D',
-        isActive: true,
-      },
-      {
-        avatar: '/assets/images/RolePermission/5.svg',
-        color: '#2D9DE3',
-        name: 'D',
-        isActive: true,
-      },
-    ],
-    paystructureType: 'Hourly',
-  },
-  {
-    id: 5,
-    role: 'Part time',
-    employee: [
-      {
-        avatar: '/assets/images/RolePermission/5.svg',
-        color: '#2D9DE3',
-        name: 'D',
-        isActive: false,
-      },
-    ],
-    paystructureType: 'Hourly',
-  },
 ];
 
 const arrEmployee = ['A', 'B', 'C', 'D'];
@@ -168,12 +54,18 @@ const PayStructure = () => {
   const [filterEmployee, setFilterEmployee] = useState('');
 
   // Selected Employee
-  const [selectedEmployee, setSelectedEmployee] = useState<IPayStructure>();
+  const [selectedEmployee, setSelectedEmployee] = useState<IPayStructureData>();
   console.log(
     '🚀 ~ file: PayStructure.tsx:169 ~ PayStructure ~ selectedEmployee:',
     selectedEmployee
   );
   const [openAddDrawer, setOpenAddDrawer] = React.useState(false);
+  const dispatch = useAppDispatch();
+
+  const payStructureList = useAppSelector(
+    (state) => state.payStructureSlice.listPayStructure
+  );
+
   // Open and close drawer add paystructure
   const handleOpenAddDrawer = () => {
     setOpenAddDrawer(true);
@@ -190,33 +82,39 @@ const PayStructure = () => {
     setFilterEmployee(event.target.value as string);
   };
   const startIndex = page * rowsPerPage;
-  const endIndex = Math.min(startIndex + rowsPerPage, data.length);
+  const endIndex = Math.min(startIndex + rowsPerPage, payStructureList.length);
 
   // Filter data list
-  const filteredData = data.filter((row) => {
+  const filteredData = payStructureList.filter((row) => {
     if (filterPayType !== '' && filterEmployee !== '') {
-      return (
-        row.paystructureType
-          .toLowerCase()
-          .includes(filterPayType.toLowerCase()) &&
-        row.employee.some(
-          (employee) =>
-            employee.name &&
-            employee.name.toLowerCase().includes(filterEmployee.toLowerCase())
-        )
-      );
+      return true;
+      // row.Name.toLowerCase().includes(filterPayType.toLowerCase()) &&
+      // row.Employees.some(
+      //   (employee) =>
+      //     (employee.FirstName || employee.LastName) &&
+      //     (employee.FirstName.toLowerCase().includes(
+      //       filterEmployee.toLowerCase()
+      //     ) ||
+      //       employee.LastName.toLowerCase().includes(
+      //         filterEmployee.toLowerCase()
+      //       ))
+      // )
     }
     if (filterPayType !== '') {
-      return row.paystructureType
-        .toLowerCase()
-        .includes(filterPayType.toLowerCase());
+      return row.Name.toLowerCase().includes(filterPayType.toLowerCase());
     }
     if (filterEmployee !== '') {
-      return row.employee.some(
-        (employee) =>
-          employee.name &&
-          employee.name.toLowerCase().includes(filterEmployee.toLowerCase())
-      );
+      return true;
+      // row.Employees.some(
+      //   (employee) =>
+      //     (employee.FirstName || employee.LastName) &&
+      //     (employee.FirstName.toLowerCase().includes(
+      //       filterEmployee.toLowerCase()
+      //     ) ||
+      //       employee.LastName.toLowerCase().includes(
+      //         filterEmployee.toLowerCase()
+      //       ))
+      // );
     }
     return true;
   });
@@ -254,10 +152,14 @@ const PayStructure = () => {
     },
   }));
 
-  const handleEditPayStructure = (item: IPayStructure) => {
+  const handleEditPayStructure = (item: IPayStructureData) => {
     handleOpenAddDrawer();
     setSelectedEmployee(item);
   };
+
+  useEffect(() => {
+    dispatch(getListPayStructure({}));
+  }, []);
 
   return (
     <>
@@ -346,13 +248,13 @@ const PayStructure = () => {
                 </TableHead>
                 <TableBody className="text-base">
                   {filteredData.slice(startIndex, endIndex).map((row) => (
-                    <TableRow key={row.id}>
+                    <TableRow key={row.Id}>
                       <TableCell
                         component="td"
                         scope="row"
                         className="text-base"
                       >
-                        {row.role}
+                        {row.Name}
                       </TableCell>
                       <TableCell
                         component="td"
@@ -361,7 +263,7 @@ const PayStructure = () => {
                       >
                         <Chip
                           className="  bg-pink-50 px-1 text-base  text-pink-500"
-                          label={row.paystructureType}
+                          label={row.Type}
                           sx={{
                             '& .css-6od3lo-MuiChip-label': {
                               overflow: 'unset',
@@ -374,14 +276,14 @@ const PayStructure = () => {
                         scope="row"
                         className="min-w-[500px] text-base"
                       >
-                        {row.employee.length} users
+                        {row.Employees.length} users
                         <AvatarGroup max={5} className="mt-[4px] justify-end">
-                          {row.employee.map((avatarItem) => {
+                          {row.Employees.map((avatarItem) => {
                             return (
                               <StyledBadge
-                                isActive={avatarItem.isActive}
+                                isActive
                                 overlap="circular"
-                                key={avatarItem.name}
+                                key={`${avatarItem.FirstName} ${avatarItem.LastName}`}
                                 anchorOrigin={{
                                   vertical: 'bottom',
                                   horizontal: 'right',
@@ -389,9 +291,12 @@ const PayStructure = () => {
                                 variant="dot"
                               >
                                 <Avatar
-                                  src={avatarItem.avatar}
+                                  src={
+                                    avatarItem.ProfilePictureUrl ??
+                                    '/assets/images/RolePermission/4.svg'
+                                  }
                                   style={{
-                                    border: `2px solid ${avatarItem.color}`,
+                                    border: `2px solid ${'#fff'}`,
                                     background: '#DEDEE3',
                                   }}
                                 />
