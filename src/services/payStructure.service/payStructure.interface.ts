@@ -1,19 +1,14 @@
-export interface IPayStructureData {
-  Configurations: Configuration[];
-  Name: string;
-  Value: string;
-  Description: null;
-  Id: string;
-  CreateBy: null;
-  CreateDate: null;
-  LastModifiedBy: null;
-  LastModifiedDate: null;
-}
+import type { IEmployeeResponse } from '../customerRole.service/customerRole.interface';
 
-export interface Configuration {
-  SystemName: string;
+export interface IPayStructureData {
+  Id: string;
+  StoreId: string;
   Name: string;
-  Description: null;
-  Value: string;
-  PayStructureId: string;
+  Type: string;
+  Description: string;
+  Employees: IEmployeeResponse[];
+  CreateBy: Date | string;
+  CreateDate: Date | string;
+  LastModifiedBy: string;
+  LastModifiedDate: Date;
 }
