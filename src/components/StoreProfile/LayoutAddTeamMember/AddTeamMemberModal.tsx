@@ -24,7 +24,7 @@ import { emailRegex, phoneNumberRegex } from '@/utils/helper/regex';
 import { hideModalCustom } from '@/store/modal/modalSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import type { ISendInvitationPayload } from '@/services/customer.service/customer.interface';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { sendInvitation } from '@/store/customer/customerAction';
 import type { CountryPhone } from '@/services/common/common.interface';
 import { ErrorMessage } from '@hookform/error-message';
@@ -37,6 +37,8 @@ import {
 } from '@/utils/helper/styles';
 import { getAllPermission } from '@/store/permission/permissionAction';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
+import { PayStructureConfiguration } from '@/services/payStructure.service/payStructure.interface';
+import { getListPayStructure } from '@/store/payStructure/payStructureAction';
 
 interface IFormInput {
   firstName: string;
@@ -137,7 +139,7 @@ export const AddYourEmployeeModal = () => {
   );
 
   const [valueRole, setValueRole] = useState<string | null>(
-    listRole.find((role) => role.Name === 'Technician')?.Id || null
+    listRole[0]?.Id || null
   );
 
   const [valueServiceProduct, setValueServiceProduct] =
@@ -146,7 +148,9 @@ export const AddYourEmployeeModal = () => {
   const [valuePayStructure, setValuePayStructure] = useState<string | null>(
     listPayStructure[0]?.Id || null
   );
-
+  const [selectPaystructureConfig, setSelectPaystructureConfig] = useState<
+    PayStructureConfiguration | null | undefined
+  >(listPayStructure[0]?.Configuration);
   const validateEmail = debounce(async (emailValue: string) => {
     if (emailRegex.test(emailValue)) {
       setEmailState((pre) => ({
@@ -194,7 +198,18 @@ export const AddYourEmployeeModal = () => {
   const handleCloseModal = () => {
     dispatch(hideModalCustom());
   };
-
+  useEffect(() => {
+    const selectedPayStructureConfig = listPayStructure.find(
+      (item) => item.Id === valuePayStructure
+    )?.Configuration;
+    setSelectPaystructureConfig(selectedPayStructureConfig);
+  }, [valuePayStructure]);
+  useEffect(() => {
+    dispatch(getListPayStructure({}));
+  }, []);
+  const aa = listPayStructure.find((item) => item.Id === valuePayStructure)
+    ?.Configuration?.PayStructureSettings;
+  console.log('asd', aa);
   return (
     <div className=" w-[568px] rounded-2xl bg-white pb-8 pt-10 shadow-md">
       {/* <div className=" text-center">
@@ -563,7 +578,7 @@ export const AddYourEmployeeModal = () => {
                       label={
                         listPayStructure.find(
                           (item) => item.Id === valuePayStructure
-                        )?.Name
+                        )?.Type
                       }
                       sx={{
                         '& .css-6od3lo-MuiChip-label': {
@@ -573,17 +588,37 @@ export const AddYourEmployeeModal = () => {
                     />
                   </Box>
                   <Box className="my-2 flex-wrap text-mango-text-gray-2">
-                    {listPayStructure
-                      .find((item) => item.Id === valuePayStructure)
-                      ?.Configurations.map((itemConfig, index) => (
-                        // eslint-disable-next-line react/no-array-index-key
-                        <Box key={index} className="m-1 flex">
-                          <Typography>{itemConfig.Name}: </Typography>
-                          <Typography fontWeight="bold">
-                            {itemConfig.Value}
-                          </Typography>
-                        </Box>
-                      ))}
+                    <Box className="m-1 flex">
+                      <Typography>Potential Bonus: </Typography>
+                      <Typography fontWeight="bold">
+                        %
+                        {
+                          selectPaystructureConfig?.PayStructureSettings
+                            .PotentialBonus
+                        }
+                      </Typography>
+                    </Box>
+                    <Box className="m-1 flex">
+                      <Typography>Commission Payout: </Typography>
+                      <Typography fontWeight="bold">
+                        %
+                        {
+                          selectPaystructureConfig?.PayStructureSettings
+                            .CommissionPayout
+                        }
+                      </Typography>
+                    </Box>
+
+                    <Box className="m-1 flex">
+                      <Typography>Max Commission Payout: </Typography>
+                      <Typography fontWeight="bold">
+                        %
+                        {
+                          selectPaystructureConfig?.PayStructureSettings
+                            .MaxCommissionPayout
+                        }
+                      </Typography>
+                    </Box>
                   </Box>
                 </Grid>
                 <Grid xs={12} item className="relative">
