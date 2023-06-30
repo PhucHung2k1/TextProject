@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import {
   Box,
   Grid,
@@ -13,10 +11,11 @@ import {
 } from '@mui/material';
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-
 import type { IEmployee } from '@/services/employee.service/employee.interface';
-// eslint-disable-next-line import/no-named-as-default
 import EmployeeProfileTab from './EditEmployeeTab/EmployeeProfileTab';
+import AppPortalManagementTab from './EditEmployeeTab/AppPortalManagementTab';
+import WorkingHoursTab from './EditEmployeeTab/WorkingHoursTab';
+import RoleAndPermissionTab from './EditEmployeeTab/RoleAndPermissionTab';
 
 const steps = [
   {
@@ -29,39 +28,7 @@ const steps = [
     label: 'Create an ad',
   },
 ];
-// const itemsTab = [
-//   {
-//     id: 0,
-//     label: 'EMPLOYEE PROFILE ',
-//     key: 'employeeList',
-//     children: <EmployeeProfileTab />,
-//   },
-//   {
-//     id: 1,
-//     label: 'WORK SCHEDULE',
-//     key: 'rolePermissions',
-//     children: <WorkScheduleTab />,
-//   },
 
-//   {
-//     id: 2,
-//     label: 'ROLE & PERMISSION',
-//     key: 'payStructure',
-//     children: <RoleAndPermissionTab />,
-//   },
-//   {
-//     id: 4,
-//     label: 'PAY STRUCTURE ',
-//     key: 'serviceProduct',
-//     children: <></>,
-//   },
-//   {
-//     id: 5,
-//     label: 'SERVICE & PRODUCT ',
-//     key: 'serviceProduct',
-//     children: <></>,
-//   },
-// ];
 export const GreenSwitch = styled(Switch)(({ theme }) => ({
   '& .MuiSwitch-thumb': {
     color: theme.palette.common.white,
@@ -108,6 +75,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
           justifyContent="center"
           spacing={2}
         >
+          {/* Team member profile */}
           <Grid
             xs={12}
             item
@@ -132,38 +100,49 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({
                 </Step>
               ))}
             </Stepper>
-            <Grid xs={12} item className="border-b border-line-main px-6 py-4">
-              <Typography variant="caption" className="text-2xl font-semibold">
-                Team member profile
-              </Typography>
+
+            <Grid xs={12} item>
+              <EmployeeProfileTab selectedEmployee={selectedEmployee} />
             </Grid>
-            <Box className="px-5">
-              <Grid xs={12} item>
-                <Box sx={{ width: '100%' }}>
-                  <EmployeeProfileTab selectedEmployee={selectedEmployee} />
-                </Box>
-              </Grid>
-            </Box>
           </Grid>
+          {/* App & Potal Management */}
           <Grid
             xs={12}
             item
-            className="rounded-lg border  border-mango-gray-light-3 px-4"
+            className=" mt-8 rounded-lg border  border-mango-gray-light-3 "
           >
             <Grid xs={12} item>
-              <Box sx={{ width: '100%' }}>
-                <EmployeeProfileTab selectedEmployee={selectedEmployee} />
-              </Box>
+              <AppPortalManagementTab selectedEmployee={selectedEmployee} />
+            </Grid>
+          </Grid>
+          {/* Working Hours Tab */}
+          <Grid
+            xs={12}
+            item
+            className=" mt-8 rounded-lg border  border-mango-gray-light-3 "
+          >
+            <Grid xs={12} item>
+              <WorkingHoursTab />
+            </Grid>
+          </Grid>
+          {/* Role and permission */}
+          <Grid
+            xs={12}
+            item
+            className=" mt-8 rounded-lg border  border-mango-gray-light-3 "
+          >
+            <Grid xs={12} item>
+              <RoleAndPermissionTab />
             </Grid>
           </Grid>
         </Stack>
       </Grid>
-      <div
+      <Box
         onClick={handleCloseDrawer}
         className="absolute inset-6 h-5 w-5 cursor-pointer  text-icon-color"
       >
         <CloseIcon fontSize="large" />
-      </div>
+      </Box>
       <div className="w-full border-t border-mango-gray-light-3 py-6">
         <Stack
           direction="row"

@@ -114,6 +114,7 @@ module.exports = {
         'success-dark': '#1C7A00',
         tertiary: '#9B9BA0',
         'disable-input': '#F2F2F2',
+        'primary-gradient': '#4DD1E3',
       },
     },
   },
