@@ -80,6 +80,11 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
       values
     );
   };
+  console.log(
+    '🚀 ~ file: EmployeeProfileTab.tsx:61 ~  ~ avatarImage:',
+    avatarImage,
+    selectedEmployee
+  );
 
   const uploadImage = async (imageFile: File): Promise<void> => {
     if (imageFile) {
@@ -127,6 +132,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
                       className="rounded-full object-cover"
                     />
                   ) : (
+                    ''
                     // <Image
                     //   src={
                     //     selectedEmployee?.ProfilePictureUrl.includes(
@@ -144,7 +150,6 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
                     //       : 'rounded-full'
                     //   }
                     // />
-                    ''
                   )}
 
                   <input
