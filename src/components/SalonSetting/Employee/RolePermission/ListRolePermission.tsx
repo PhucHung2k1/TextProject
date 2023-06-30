@@ -42,6 +42,7 @@ import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
 import LabbelStyle from '@/common/Label/LabelStyle';
 import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
+import LabbelStyle from '@/common/Label/LabbelStyle';
 
 interface PermissionItem {
   Name: string;
