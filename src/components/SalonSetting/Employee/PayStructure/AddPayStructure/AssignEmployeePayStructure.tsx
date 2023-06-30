@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook';
 
 import { sxCheckBoxBlack } from '@/utils/helper/styles';
 import { setAddRemoveMultiPayStructureEmployee } from '@/store/payStructure/payStructureSlice';
+import { urlImage } from '@/utils/helper/url_image';
 
 const AssignEmployeePayStructure = () => {
   const idPayStructure = useAppSelector(
@@ -180,15 +181,6 @@ const AssignEmployeePayStructure = () => {
                 <TableRow key={item.Id} className="h-full ">
                   <TableCell className="w-[2%]">
                     <FormControlLabel
-                      sx={{
-                        '&.MuiCheckbox-root': {
-                          color: '#404044',
-                          background: '#404044',
-                        },
-                        '&.Mui-checked': {
-                          color: '#404044',
-                        },
-                      }}
                       control={
                         <Checkbox
                           color="default"
@@ -213,7 +205,7 @@ const AssignEmployeePayStructure = () => {
                     >
                       <Avatar
                         src={
-                          item.ProfilePictureUrl ??
+                          urlImage + item.ProfilePictureUrl ??
                           '/assets/images/RolePermission/4.svg'
                         }
                         style={{

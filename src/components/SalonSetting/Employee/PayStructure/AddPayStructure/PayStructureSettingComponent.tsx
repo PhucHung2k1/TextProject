@@ -20,7 +20,6 @@ import {
   Stack,
   FormControl,
   InputLabel,
-  Select,
   MenuItem,
   Box,
   Radio,
@@ -30,6 +29,7 @@ import {
   InputAdornment,
   RadioGroup,
   TextField,
+  Select,
 } from '@mui/material';
 
 import React, { useEffect, useState } from 'react';
@@ -83,47 +83,48 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
       },
     }));
   }, [payStructureSettings]);
+
   return (
     <Grid xs={12} item>
       <Stack direction="column" spacing={2}>
         <Grid xs={5.85} item>
-          <Stack direction="column" spacing={2}>
-            <div className="text-2xl font-semibold text-text-title">
-              Pay Structure settings
-            </div>
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
-              <InputLabel id="demo-select-small-label">
-                Pay Structure Type
-              </InputLabel>
-              <Select
-                sx={[sxSelect]}
-                label="Pay Structure Type"
-                className="h-14"
-                value={payStructureSettings.PayStructureType}
-                onChange={(e) =>
-                  handleChangeValue(e.target.value, 'PayStructureType')
-                }
-              >
-                {listPayStructureType.map((item) => (
-                  <MenuItem key={item.value} value={item.value}>
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="start"
-                    >
-                      <Radio
-                        sx={sxRadioBlue}
-                        checked={
-                          item.value === payStructureSettings.PayStructureType
-                        }
-                      />
-                      <ListItemText primary={item.name} />
-                    </Box>
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Stack>
+          <div className="text-2xl font-semibold text-text-title">
+            Pay Structure settings
+          </div>
+          <FormControl fullWidth className="mt-4">
+            <InputLabel id="pay-structure-type-select-label">
+              Pay Structure Type
+            </InputLabel>
+            <Select
+              id="pay-structure-type-select"
+              sx={[sxSelect]}
+              label="Pay Structure Type"
+              labelId="pay-structure-type-select-label"
+              className="h-14"
+              value={payStructureSettings.PayStructureType}
+              onChange={(e) =>
+                handleChangeValue(e.target.value, 'PayStructureType')
+              }
+            >
+              {listPayStructureType.map((item) => (
+                <MenuItem key={item.value} value={item.value}>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="start"
+                  >
+                    <Radio
+                      sx={sxRadioBlue}
+                      checked={
+                        item.value === payStructureSettings.PayStructureType
+                      }
+                    />
+                    <ListItemText primary={item.name} />
+                  </Box>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid xs={5.85} item>
           <FormControl
@@ -268,6 +269,7 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
               <Grid xs={12}>
                 {/* Day, Week, Monthly, Base On Period Dropdown */}
                 <Select
+                  id="working-time-type-select"
                   sx={[sxSelect]}
                   fullWidth
                   className="h-14"

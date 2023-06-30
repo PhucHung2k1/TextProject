@@ -117,6 +117,7 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
     if (listAddRemoveRolePermissionExists) {
       dispatch(addRemoveMultiRoleEmployee(listAddRemoveRolePermission));
     }
+    handleCloseDrawer();
   };
   return (
     <LayoutDrawer
