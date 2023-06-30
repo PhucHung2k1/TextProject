@@ -113,7 +113,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border border-t-0 border-mango-gray-light-3 rounded-[8px] rounded-t-none "
+        className="rounded-[8px] rounded-t-none border border-t-0 border-mango-gray-light-3 "
         noValidate
       >
         <Grid container spacing={2}>

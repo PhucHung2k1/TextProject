@@ -40,7 +40,7 @@ import { showDrawerRolePermission } from '@/store/common/commonSlice';
 import EditRolePermission from './EditRolePermission';
 import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
-import LabbelStyle from '@/common/Label/LabbelStyle';
+import LabbelStyle from '@/common/Label/LabelStyle';
 import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
 
 interface PermissionItem {
@@ -288,7 +288,7 @@ const ListRolePermission = () => {
             sx={{
               width: '100%',
               overflow: 'auto',
-              maxHeight: '550px',
+              maxHeight: '500px',
               boxShadow: 'none',
               marginTop: '10px',
             }}
