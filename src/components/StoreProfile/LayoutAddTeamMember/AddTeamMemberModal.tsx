@@ -18,7 +18,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import Image from 'next/image';
-//import type { FieldErrors } from 'react-hook-form';
+// import type { FieldErrors } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { emailRegex, phoneNumberRegex } from '@/utils/helper/regex';
 import { hideModalCustom } from '@/store/modal/modalSlice';
@@ -27,7 +27,7 @@ import type { ISendInvitationPayload } from '@/services/customer.service/custome
 import { useEffect, useState } from 'react';
 import { sendInvitation } from '@/store/customer/customerAction';
 import type { CountryPhone } from '@/services/common/common.interface';
-//import { ErrorMessage } from '@hookform/error-message';
+// import { ErrorMessage } from '@hookform/error-message';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import { Clear, Check, Error } from '@mui/icons-material';
 import {
@@ -37,7 +37,7 @@ import {
 } from '@/utils/helper/styles';
 import { getAllPermission } from '@/store/permission/permissionAction';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
-import { PayStructureConfiguration } from '@/services/payStructure.service/payStructure.interface';
+import type { PayStructureConfiguration } from '@/services/payStructure.service/payStructure.interface';
 import { getListPayStructure } from '@/store/payStructure/payStructureAction';
 import FormControlComponent from '@/common/Input/FormControlComponent';
 import { renderPayStructureDetail } from '../helper/renderPaystructureAddNewTeam';

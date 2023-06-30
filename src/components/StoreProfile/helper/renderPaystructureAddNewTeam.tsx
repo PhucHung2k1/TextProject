@@ -35,7 +35,8 @@ export const renderPayStructureDetail = (
         </Grid>
       </>
     );
-  } else if (payStructureStyle === 'Commission - Guarantee') {
+  }
+  if (payStructureStyle === 'Commission - Guarantee') {
     return (
       <>
         <Grid container spacing={2}>
@@ -93,7 +94,8 @@ export const renderPayStructureDetail = (
         </Grid>
       </>
     );
-  } else if (payStructureStyle === 'Hourly') {
+  }
+  if (payStructureStyle === 'Hourly') {
     return (
       <>
         <Grid container spacing={2}>
@@ -117,7 +119,8 @@ export const renderPayStructureDetail = (
         </Grid>
       </>
     );
-  } else if (payStructureStyle === 'Salary') {
+  }
+  if (payStructureStyle === 'Salary') {
     return (
       <>
         <Grid container spacing={2}>
@@ -148,5 +151,6 @@ export const renderPayStructureDetail = (
         </Grid>
       </>
     );
-  } else return '';
+  }
+  return '';
 };

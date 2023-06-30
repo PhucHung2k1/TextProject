@@ -34,7 +34,6 @@ import type { IPayStructureData } from '@/services/payStructure.service/payStruc
 import {
   getListPayStructure,
   deletePayStructure,
-  getListPayStructure,
 } from '@/store/payStructure/payStructureAction';
 import { showDrawerPayStructure } from '@/store/common/commonSlice';
 
