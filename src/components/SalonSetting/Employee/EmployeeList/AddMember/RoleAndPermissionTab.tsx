@@ -13,7 +13,7 @@ import {
   ListItemText,
   Button,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import IconButton from '@mui/material/IconButton';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
@@ -33,6 +33,7 @@ const CustomListItemIcon = styled(ListItemIcon)({
   marginRight: '8px',
 });
 const RoleAndPermissionTab: React.FC<RoleAndPermissionTabProps> = () => {
+  const [showMore, setShowMore] = useState<boolean>(false);
   const { handleSubmit } = useForm<IFormInput>();
 
   const onSubmit = async (values: any) => {
@@ -42,32 +43,18 @@ const RoleAndPermissionTab: React.FC<RoleAndPermissionTabProps> = () => {
       values
     );
   };
+  const handleShowMoreToggle = () => {
+    setShowMore(!showMore);
+  };
 
   return (
     <div className="min-w-[893px]">
-      <form onSubmit={handleSubmit(onSubmit)} className="my-4 " noValidate>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="py-4 rounded-[8px] rounded-t-none border border-t-0 border-mango-gray-light-3 "
+        noValidate
+      >
         <Grid container spacing={2}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            className="w-full px-5 pt-4"
-          >
-            <Box>
-              <Typography
-                variant="caption"
-                className="px-5 text-2xl font-semibold"
-              >
-                Role & Permission
-              </Typography>
-            </Box>
-          </Stack>
-
-          {/* Mango Biz */}
-
-          <Grid xs={12} item>
-            <Divider />
-          </Grid>
           {/* Working hours  */}
           <Grid item xs={12}>
             <Stack
@@ -90,7 +77,7 @@ const RoleAndPermissionTab: React.FC<RoleAndPermissionTabProps> = () => {
                   Team members are allowed access with the following roles:
                 </Typography>
                 <Grid>
-                  <Grid item xs={12} className="bg-bg-light">
+                  <Grid item xs={12} className="bg-bg-light rounded-[8px]">
                     <Stack
                       direction="row"
                       justifyContent="space-between"
@@ -112,302 +99,292 @@ const RoleAndPermissionTab: React.FC<RoleAndPermissionTabProps> = () => {
                     <Grid xs={12} item>
                       <Divider />
                     </Grid>
-                    <Grid xs={12} item>
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        className="w-full bg-bg-light px-5 py-3"
-                      >
-                        <AccountCircleIcon />
-                        <Typography
-                          variant="caption"
-                          className=" text-base font-semibold text-text-title"
-                        >
-                          Technician
-                        </Typography>
-                      </Stack>
-                      <List className="pb-3 pt-0">
-                        <ListItem className="py-0">
-                          <CustomListItemIcon>
-                            <FiberManualRecordIcon style={{ fontSize: 10 }} />
-                          </CustomListItemIcon>
-                          <ListItemText primary="Take Appointment" />
-                        </ListItem>
-                        <ListItem className="py-0">
-                          <CustomListItemIcon>
-                            <FiberManualRecordIcon style={{ fontSize: 10 }} />
-                          </CustomListItemIcon>
-                          <ListItemText primary="Available for Booking Online" />
-                        </ListItem>
-                        <ListItem className="py-0">
-                          <CustomListItemIcon>
-                            <FiberManualRecordIcon style={{ fontSize: 10 }} />
-                          </CustomListItemIcon>
-                          <Typography variant="caption" className=" text-base">
-                            Allowed to make quick payment
-                          </Typography>
-                        </ListItem>
-                      </List>
-                    </Grid>
-                    <Grid xs={12} item>
-                      <Divider />
-                    </Grid>
-                    <Grid xs={12} item>
-                      <Stack direction="row" className="w-full " spacing={2}>
-                        <Grid xs={6} item>
-                          <Stack direction="column" spacing={0}>
-                            <Grid xs={12} item>
-                              <Stack
-                                direction="row"
-                                spacing={1}
-                                alignItems="center"
-                                className="w-full bg-bg-light px-5 py-3"
+                    <Grid xs={12} className="flex flex-col-reverse" item>
+                      <div className=" px-4 py-3">
+                        {showMore ? (
+                          <Button
+                            variant="outlined"
+                            onClick={handleShowMoreToggle}
+                            className="border border-mango-text-gray-2 text-mango-text-gray-2 hover:border-mango-text-gray-2"
+                          >
+                            Show less
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="outlined"
+                            onClick={handleShowMoreToggle}
+                            className="border border-mango-text-gray-2 text-mango-text-gray-2 hover:border-mango-text-gray-2 mt-[5px]"
+                          >
+                            Show more
+                          </Button>
+                        )}
+                      </div>
+                      {showMore ? (
+                        <div>
+                          {' '}
+                          <Grid xs={12} item>
+                            <Stack
+                              direction="row"
+                              spacing={1}
+                              alignItems="center"
+                              className="w-full bg-bg-light px-5 py-3"
+                            >
+                              <AccountCircleIcon />
+                              <Typography
+                                variant="caption"
+                                className=" text-base font-semibold text-text-title"
                               >
+                                Technician
+                              </Typography>
+                            </Stack>
+                            <List className="pb-3 pt-0">
+                              <ListItem className="py-0">
+                                <CustomListItemIcon>
+                                  <FiberManualRecordIcon
+                                    style={{ fontSize: 10 }}
+                                  />
+                                </CustomListItemIcon>
+                                <ListItemText primary="Take Appointment" />
+                              </ListItem>
+                              <ListItem className="py-0">
+                                <CustomListItemIcon>
+                                  <FiberManualRecordIcon
+                                    style={{ fontSize: 10 }}
+                                  />
+                                </CustomListItemIcon>
+                                <ListItemText primary="Available for Booking Online" />
+                              </ListItem>
+                              <ListItem className="py-0">
+                                <CustomListItemIcon>
+                                  <FiberManualRecordIcon
+                                    style={{ fontSize: 10 }}
+                                  />
+                                </CustomListItemIcon>
                                 <Typography
                                   variant="caption"
-                                  className=" text-base font-semibold text-text-title"
+                                  className=" text-base"
                                 >
-                                  Appointment
+                                  Allowed to make quick payment
                                 </Typography>
-                              </Stack>
-                              <List className="pb-3 pt-0">
-                                <ListItem className="py-0">
-                                  <CustomListItemIcon>
-                                    <LockOpenOutlinedIcon fontSize="small" />
-                                  </CustomListItemIcon>
-                                  <ListItemText primary="Access Appointment Book" />
-                                </ListItem>
-                                <ListItem className="py-0">
-                                  <CustomListItemIcon>
-                                    <FiberManualRecordIcon
-                                      style={{ fontSize: 10 }}
-                                    />
-                                  </CustomListItemIcon>
-                                  <ListItemText primary="Manage Appointment" />
-                                </ListItem>
-                                <ListItem className="py-0">
-                                  <CustomListItemIcon>
-                                    <FiberManualRecordIcon
-                                      style={{ fontSize: 10 }}
-                                    />
-                                  </CustomListItemIcon>
-                                  <Typography
-                                    variant="caption"
-                                    className=" text-base"
+                              </ListItem>
+                            </List>
+                          </Grid>
+                          <Grid xs={12} item>
+                            <Divider />
+                          </Grid>
+                          <Grid xs={12} item>
+                            <Stack
+                              direction="row"
+                              className="w-full "
+                              spacing={2}
+                            >
+                              <Grid xs={6} item>
+                                <Stack direction="column" spacing={0}>
+                                  <Grid xs={12} item>
+                                    <Stack
+                                      direction="row"
+                                      spacing={1}
+                                      alignItems="center"
+                                      className="w-full bg-bg-light px-5 py-3"
+                                    >
+                                      <Typography
+                                        variant="caption"
+                                        className=" text-base font-semibold text-text-title"
+                                      >
+                                        Appointment
+                                      </Typography>
+                                    </Stack>
+                                    <List className="pb-3 pt-0">
+                                      <ListItem className="py-0">
+                                        <CustomListItemIcon>
+                                          <LockOpenOutlinedIcon fontSize="small" />
+                                        </CustomListItemIcon>
+                                        <ListItemText primary="Access Appointment Book" />
+                                      </ListItem>
+                                      <ListItem className="py-0">
+                                        <CustomListItemIcon>
+                                          <FiberManualRecordIcon
+                                            style={{ fontSize: 10 }}
+                                          />
+                                        </CustomListItemIcon>
+                                        <ListItemText primary="Manage Appointment" />
+                                      </ListItem>
+                                      <ListItem className="py-0">
+                                        <CustomListItemIcon>
+                                          <FiberManualRecordIcon
+                                            style={{ fontSize: 10 }}
+                                          />
+                                        </CustomListItemIcon>
+                                        <Typography
+                                          variant="caption"
+                                          className=" text-base"
+                                        >
+                                          Manage Tech Request
+                                        </Typography>
+                                      </ListItem>
+                                    </List>
+                                  </Grid>
+                                  <Grid xs={12} item>
+                                    <Stack
+                                      direction="row"
+                                      spacing={1}
+                                      alignItems="center"
+                                      className="w-full bg-bg-light px-5 py-3"
+                                    >
+                                      <Typography
+                                        variant="caption"
+                                        className=" text-base font-semibold text-text-title"
+                                      >
+                                        Create/ Charge
+                                      </Typography>
+                                    </Stack>
+                                  </Grid>
+                                </Stack>
+                                <List className="pb-3 pt-0">
+                                  <ListItem className="py-0">
+                                    <CustomListItemIcon>
+                                      <LockOpenOutlinedIcon fontSize="small" />
+                                    </CustomListItemIcon>
+                                    <ListItemText primary="Access Create/ Charge" />
+                                  </ListItem>
+                                  <ListItem className="py-0">
+                                    <CustomListItemIcon>
+                                      <FiberManualRecordIcon
+                                        style={{ fontSize: 10 }}
+                                      />
+                                    </CustomListItemIcon>
+                                    <ListItemText primary="Access Manage Tips" />
+                                  </ListItem>
+                                  <ListItem className="py-0">
+                                    <CustomListItemIcon>
+                                      <FiberManualRecordIcon
+                                        style={{ fontSize: 10 }}
+                                      />
+                                    </CustomListItemIcon>
+                                    <ListItemText primary="Allow Receive Cash Payment" />
+                                  </ListItem>
+                                  <ListItem className="py-0">
+                                    <CustomListItemIcon>
+                                      <FiberManualRecordIcon
+                                        style={{ fontSize: 10 }}
+                                      />
+                                    </CustomListItemIcon>
+                                    <ListItemText primary="Add Discount" />
+                                  </ListItem>
+                                  <ListItem className="py-0">
+                                    <CustomListItemIcon>
+                                      <FiberManualRecordIcon
+                                        style={{ fontSize: 10 }}
+                                      />
+                                    </CustomListItemIcon>
+                                    <ListItemText primary="Manager Client" />
+                                  </ListItem>
+                                </List>
+                              </Grid>
+
+                              <Stack direction="column" spacing={0}>
+                                <Grid xs={12} item>
+                                  <Stack
+                                    direction="row"
+                                    spacing={1}
+                                    alignItems="center"
+                                    className="w-full bg-bg-light px-5 py-3"
                                   >
-                                    Manage Tech Request
-                                  </Typography>
-                                </ListItem>
-                              </List>
-                            </Grid>
-                            <Grid xs={12} item>
-                              <Stack
-                                direction="row"
-                                spacing={1}
-                                alignItems="center"
-                                className="w-full bg-bg-light px-5 py-3"
-                              >
-                                <Typography
-                                  variant="caption"
-                                  className=" text-base font-semibold text-text-title"
-                                >
-                                  Create/ Charge
-                                </Typography>
+                                    <Typography
+                                      variant="caption"
+                                      className=" text-base font-semibold text-text-title"
+                                    >
+                                      Client Management
+                                    </Typography>
+                                  </Stack>
+                                  <List className="pb-3 pt-0">
+                                    <ListItem className="py-0">
+                                      <CustomListItemIcon>
+                                        <LockOpenOutlinedIcon fontSize="small" />
+                                      </CustomListItemIcon>
+                                      <ListItemText primary="Access Client Managemen" />
+                                    </ListItem>
+                                    <ListItem className="py-0">
+                                      <CustomListItemIcon>
+                                        <FiberManualRecordIcon
+                                          style={{ fontSize: 10 }}
+                                        />
+                                      </CustomListItemIcon>
+                                      <ListItemText primary="Adjust Loyalty Points" />
+                                    </ListItem>
+                                    <ListItem className="py-0">
+                                      <CustomListItemIcon>
+                                        <FiberManualRecordIcon
+                                          style={{ fontSize: 10 }}
+                                        />
+                                      </CustomListItemIcon>
+                                      <ListItemText primary="Delete Client" />
+                                    </ListItem>
+                                    <ListItem className="py-0">
+                                      <CustomListItemIcon>
+                                        <FiberManualRecordIcon
+                                          style={{ fontSize: 10 }}
+                                        />
+                                      </CustomListItemIcon>
+                                      <ListItemText primary="View Client Password" />
+                                    </ListItem>
+                                  </List>
+                                </Grid>
+                                <Grid xs={12} item>
+                                  <Stack
+                                    direction="row"
+                                    spacing={1}
+                                    alignItems="center"
+                                    className="w-full bg-bg-light px-5 py-3"
+                                  >
+                                    <Typography
+                                      variant="caption"
+                                      className=" text-base font-semibold text-text-title"
+                                    >
+                                      Tech Portal
+                                    </Typography>
+                                  </Stack>
+                                  <List className="pb-3 pt-0">
+                                    <ListItem className="py-0">
+                                      <CustomListItemIcon>
+                                        <LockOpenOutlinedIcon />
+                                      </CustomListItemIcon>
+                                      <ListItemText primary="Access Tech Portal" />
+                                    </ListItem>
+                                    <ListItem className="py-0">
+                                      <CustomListItemIcon>
+                                        <FiberManualRecordIcon
+                                          style={{ fontSize: 10 }}
+                                        />
+                                      </CustomListItemIcon>
+                                      <ListItemText primary="View Appointment in Tech Portal" />
+                                    </ListItem>
+                                    <ListItem className="py-0">
+                                      <CustomListItemIcon>
+                                        <FiberManualRecordIcon
+                                          style={{ fontSize: 10 }}
+                                        />
+                                      </CustomListItemIcon>
+                                      <ListItemText primary="View Payroll in Tech Portal" />
+                                    </ListItem>
+                                  </List>
+                                </Grid>
                               </Stack>
-                            </Grid>
-                          </Stack>
-                          <List className="pb-3 pt-0">
-                            <ListItem className="py-0">
-                              <CustomListItemIcon>
-                                <LockOpenOutlinedIcon fontSize="small" />
-                              </CustomListItemIcon>
-                              <ListItemText primary="Access Create/ Charge" />
-                            </ListItem>
-                            <ListItem className="py-0">
-                              <CustomListItemIcon>
-                                <FiberManualRecordIcon
-                                  style={{ fontSize: 10 }}
-                                />
-                              </CustomListItemIcon>
-                              <ListItemText primary="Access Manage Tips" />
-                            </ListItem>
-                            <ListItem className="py-0">
-                              <CustomListItemIcon>
-                                <FiberManualRecordIcon
-                                  style={{ fontSize: 10 }}
-                                />
-                              </CustomListItemIcon>
-                              <ListItemText primary="Allow Receive Cash Payment" />
-                            </ListItem>
-                            <ListItem className="py-0">
-                              <CustomListItemIcon>
-                                <FiberManualRecordIcon
-                                  style={{ fontSize: 10 }}
-                                />
-                              </CustomListItemIcon>
-                              <ListItemText primary="Add Discount" />
-                            </ListItem>
-                            <ListItem className="py-0">
-                              <CustomListItemIcon>
-                                <FiberManualRecordIcon
-                                  style={{ fontSize: 10 }}
-                                />
-                              </CustomListItemIcon>
-                              <ListItemText primary="Manager Client" />
-                            </ListItem>
-                          </List>
-                        </Grid>
-
-                        <Stack direction="column" spacing={0}>
-                          <Grid xs={12} item>
-                            <Stack
-                              direction="row"
-                              spacing={1}
-                              alignItems="center"
-                              className="w-full bg-bg-light px-5 py-3"
-                            >
-                              <Typography
-                                variant="caption"
-                                className=" text-base font-semibold text-text-title"
-                              >
-                                Client Management
-                              </Typography>
                             </Stack>
-                            <List className="pb-3 pt-0">
-                              <ListItem className="py-0">
-                                <CustomListItemIcon>
-                                  <LockOpenOutlinedIcon fontSize="small" />
-                                </CustomListItemIcon>
-                                <ListItemText primary="Access Client Managemen" />
-                              </ListItem>
-                              <ListItem className="py-0">
-                                <CustomListItemIcon>
-                                  <FiberManualRecordIcon
-                                    style={{ fontSize: 10 }}
-                                  />
-                                </CustomListItemIcon>
-                                <ListItemText primary="Adjust Loyalty Points" />
-                              </ListItem>
-                              <ListItem className="py-0">
-                                <CustomListItemIcon>
-                                  <FiberManualRecordIcon
-                                    style={{ fontSize: 10 }}
-                                  />
-                                </CustomListItemIcon>
-                                <ListItemText primary="Delete Client" />
-                              </ListItem>
-                              <ListItem className="py-0">
-                                <CustomListItemIcon>
-                                  <FiberManualRecordIcon
-                                    style={{ fontSize: 10 }}
-                                  />
-                                </CustomListItemIcon>
-                                <ListItemText primary="View Client Password" />
-                              </ListItem>
-                            </List>
                           </Grid>
-                          <Grid xs={12} item>
-                            <Stack
-                              direction="row"
-                              spacing={1}
-                              alignItems="center"
-                              className="w-full bg-bg-light px-5 py-3"
-                            >
-                              <Typography
-                                variant="caption"
-                                className=" text-base font-semibold text-text-title"
-                              >
-                                Tech Portal
-                              </Typography>
-                            </Stack>
-                            <List className="pb-3 pt-0">
-                              <ListItem className="py-0">
-                                <CustomListItemIcon>
-                                  <LockOpenOutlinedIcon />
-                                </CustomListItemIcon>
-                                <ListItemText primary="Access Tech Portal" />
-                              </ListItem>
-                              <ListItem className="py-0">
-                                <CustomListItemIcon>
-                                  <FiberManualRecordIcon
-                                    style={{ fontSize: 10 }}
-                                  />
-                                </CustomListItemIcon>
-                                <ListItemText primary="View Appointment in Tech Portal" />
-                              </ListItem>
-                              <ListItem className="py-0">
-                                <CustomListItemIcon>
-                                  <FiberManualRecordIcon
-                                    style={{ fontSize: 10 }}
-                                  />
-                                </CustomListItemIcon>
-                                <ListItemText primary="View Payroll in Tech Portal" />
-                              </ListItem>
-                            </List>
-                          </Grid>
-                        </Stack>
-                      </Stack>
-                    </Grid>
-                    <Grid xs={12} item>
-                      <Box className="mb-4 px-5">
-                        <Button
-                          variant="outlined"
-                          className="border-border-light normal-case  text-text-secondary"
-                        >
-                          Show less
-                        </Button>
-                      </Box>
-                    </Grid>
-
-                    <Grid xs={12} item>
-                      <Divider />
-                    </Grid>
-                  </Grid>
-                </Grid>
-                {/* Saler */}
-                <Grid>
-                  <Grid item xs={12} className="bg-bg-light">
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      className="w-full  px-5 py-3"
-                    >
-                      <Typography
-                        variant="caption"
-                        className=" text-xl font-semibold text-text-title"
-                      >
-                        Saler
-                      </Typography>
-                      <IconButton className="bg-transparent hover:bg-[#FFEBEF]">
-                        <DeleteOutlineOutlinedIcon
-                          fontSize="small"
-                          className="text-[#DA2036] "
-                        />
-                      </IconButton>
-                    </Stack>
-                    <Grid xs={12} item>
-                      <Divider />
-                    </Grid>
-
-                    <Grid xs={12} item>
-                      <Box className="px-5 py-4">
-                        <Button
-                          variant="outlined"
-                          className="border-border-light normal-case  text-text-secondary"
-                        >
-                          Show less
-                        </Button>
-                      </Box>
+                        </div>
+                      ) : (
+                        ''
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>
               </Stack>
               <IconButton
-                className=" h-[40px] w-[120px] border-none bg-transparent text-base font-bold   normal-case  text-primary-main hover:bg-transparent"
+                className=" my-3 h-[40px] w-[120px] border-none bg-transparent text-base font-bold  normal-case  text-primary-main hover:bg-transparent"
                 style={squareIconButtonStyles}
               >
-                <AddOutlinedIcon className="mr-2" fontSize="small" /> Add Role
+                <AddOutlinedIcon className="" fontSize="small" /> Add Role
               </IconButton>
             </Stack>
           </Grid>

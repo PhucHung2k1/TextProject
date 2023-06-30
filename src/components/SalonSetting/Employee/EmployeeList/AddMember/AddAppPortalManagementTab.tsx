@@ -46,6 +46,17 @@ const AppPortalManagementTab: React.FC<AppPortalManagementTabProps> = ({
     handleSubmit,
   } = useForm<IFormInput>();
   const [showPassword, setShowPassword] = useState(false);
+  const [itemVisibility, setItemVisibility] = useState({
+    Pos: true,
+    Biz: true,
+    Portal: true,
+  });
+  const handleSwitchChange = (itemName: any) => {
+    setItemVisibility((prevState: any) => ({
+      ...prevState,
+      [itemName]: !prevState[itemName],
+    }));
+  };
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -93,26 +104,37 @@ const AppPortalManagementTab: React.FC<AppPortalManagementTabProps> = ({
                     Allow team member access your Mango POS
                   </Typography>
                 </Stack>
-                <Stack direction="column" spacing={1}>
-                  <Typography
-                    variant="caption"
-                    className="text-sm  text-text-secondary"
-                  >
-                    Send invitation email to your team member
-                  </Typography>
-                  <Button
-                    variant="outlined"
-                    startIcon={<EmailOutlinedIcon />}
-                    className=" w-[158px] border-primary-main   text-sm  normal-case text-text-primary-dark"
-                  >
-                    Send Invitation
-                  </Button>
-                </Stack>
+                {itemVisibility.Pos && (
+                  <Stack direction="column" spacing={1}>
+                    <Typography
+                      variant="caption"
+                      className="text-sm  text-text-secondary"
+                    >
+                      Send invitation email to your team member
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      startIcon={<EmailOutlinedIcon />}
+                      className=" w-[158px] border-primary-main   text-sm  normal-case text-text-primary-dark"
+                    >
+                      Send Invitation
+                    </Button>
+                  </Stack>
+                )}
               </Stack>
-              <Box>
-                <Switch checked color="primary" />
-                Active
-              </Box>
+
+              <FormControlLabel
+                value="active"
+                control={
+                  <Switch
+                    color="primary"
+                    checked={itemVisibility.Pos}
+                    onChange={() => handleSwitchChange('Pos')}
+                  />
+                }
+                label="Active"
+                labelPlacement="end"
+              />
             </Stack>
           </Grid>
 
@@ -145,35 +167,45 @@ const AppPortalManagementTab: React.FC<AppPortalManagementTabProps> = ({
                     Allow team member access your Mango Biz
                   </Typography>
                 </Stack>
-                <Stack direction="column" spacing={1}>
-                  <Typography
-                    variant="caption"
-                    className="text-sm  text-text-secondary"
-                  >
-                    Send invitation to your team member
-                  </Typography>
-                  <Stack direction="row" spacing={2}>
-                    <Button
-                      variant="outlined"
-                      startIcon={<PhoneIphoneIcon />}
-                      className="w-[158px] border-primary-main  text-sm  normal-case text-text-primary-dark"
+                {itemVisibility.Biz && (
+                  <Stack direction="column" spacing={1}>
+                    <Typography
+                      variant="caption"
+                      className="text-sm  text-text-secondary"
                     >
-                      Send via SMS
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      startIcon={<EmailOutlinedIcon />}
-                      className="w-[158px] border-primary-main  text-sm  normal-case text-text-primary-dark"
-                    >
-                      Send via Email
-                    </Button>
+                      Send invitation to your team member
+                    </Typography>
+                    <Stack direction="row" spacing={2}>
+                      <Button
+                        variant="outlined"
+                        startIcon={<PhoneIphoneIcon />}
+                        className="w-[158px] border-primary-main  text-sm  normal-case text-text-primary-dark"
+                      >
+                        Send via SMS
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        startIcon={<EmailOutlinedIcon />}
+                        className="w-[158px] border-primary-main  text-sm  normal-case text-text-primary-dark"
+                      >
+                        Send via Email
+                      </Button>
+                    </Stack>
                   </Stack>
-                </Stack>
+                )}
               </Stack>
-              <Box>
-                <Switch checked color="primary" />
-                Active
-              </Box>
+              <FormControlLabel
+                value="active"
+                control={
+                  <Switch
+                    color="primary"
+                    checked={itemVisibility.Biz}
+                    onChange={() => handleSwitchChange('Biz')}
+                  />
+                }
+                label="Active"
+                labelPlacement="end"
+              />
             </Stack>
           </Grid>
 
@@ -208,105 +240,115 @@ const AppPortalManagementTab: React.FC<AppPortalManagementTabProps> = ({
                     Allow team member access portal
                   </Typography>
                 </Stack>
+                {itemVisibility.Portal && (
+                  <Stack>
+                    <Grid xs={6}>
+                      <FormControl
+                        fullWidth
+                        className="text-sm font-normal !text-mango-text-black-1"
+                      >
+                        <TextField
+                          sx={sxTextField}
+                          label="Portal Touch ID"
+                          type={showPassword ? 'text' : 'password'}
+                          error={Boolean(errors.portaltouchid)}
+                          {...register('portaltouchid', {
+                            required: 'Enter Your Password!',
+                            minLength: {
+                              value: 9,
+                              message:
+                                'Password must be more than 8 characters!',
+                            },
+                          })}
+                          className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton onClick={handleTogglePassword}>
+                                  {showPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                        <ErrorMessage
+                          errors={errors}
+                          name="portaltouchid"
+                          render={({ message }: any) => (
+                            <div
+                              className="ml-2 mt-1 text-sm text-text-error"
+                              role="alert"
+                            >
+                              <span className="font-medium">{message}</span>
+                            </div>
+                          )}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid xs={6}>
+                      <Stack direction="row" spacing={1}>
+                        <Grid xs={6} item>
+                          <FormControlLabel
+                            value="tipOnCCFeeFromCreditCard"
+                            control={<Radio sx={sxRadioBlue} />}
+                            label="Tech Portal"
+                          />
+                        </Grid>
 
-                <Grid xs={6}>
-                  <FormControl
-                    fullWidth
-                    className="text-sm font-normal !text-mango-text-black-1"
-                  >
-                    <TextField
-                      sx={sxTextField}
-                      label="Portal Touch ID"
-                      type={showPassword ? 'text' : 'password'}
-                      error={Boolean(errors.portaltouchid)}
-                      {...register('portaltouchid', {
-                        required: 'Enter Your Password!',
-                        minLength: {
-                          value: 9,
-                          message: 'Password must be more than 8 characters!',
-                        },
-                      })}
-                      className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton onClick={handleTogglePassword}>
-                              {showPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                    <ErrorMessage
-                      errors={errors}
-                      name="portaltouchid"
-                      render={({ message }: any) => (
-                        <div
-                          className="ml-2 mt-1 text-sm text-text-error"
-                          role="alert"
+                        <Grid xs={6} item>
+                          <FormControlLabel
+                            value="tipOnCCDailyFixedFee"
+                            control={<Radio sx={sxRadioBlue} />}
+                            label="Boss Manage"
+                          />
+                        </Grid>
+                      </Stack>
+                    </Grid>
+                    <Grid xs={6}>
+                      <Stack direction="column" spacing={1}>
+                        <Typography
+                          variant="caption"
+                          className="text-sm  text-text-secondary"
                         >
-                          <span className="font-medium">{message}</span>
-                        </div>
-                      )}
-                    />
-                  </FormControl>
-                </Grid>
+                          Allow team member access portal
+                        </Typography>
 
-                <Grid xs={6}>
-                  <Stack direction="row" spacing={1}>
-                    <Grid xs={6} item>
-                      <FormControlLabel
-                        value="tipOnCCFeeFromCreditCard"
-                        control={<Radio sx={sxRadioBlue} />}
-                        label="Tech Portal"
-                      />
-                    </Grid>
-
-                    <Grid xs={6} item>
-                      <FormControlLabel
-                        value="tipOnCCDailyFixedFee"
-                        control={<Radio sx={sxRadioBlue} />}
-                        label="Boss Manage"
-                      />
+                        <Stack direction="row" spacing={2}>
+                          <Button
+                            variant="outlined"
+                            startIcon={<PhoneIphoneIcon />}
+                            className="w-[158px] border border-primary-main  text-sm  normal-case text-text-primary-dark"
+                          >
+                            Send Portal ID
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            startIcon={<RestartAltOutlinedIcon />}
+                            className="min-w-[158px]  border  border-icon-delete text-sm normal-case text-icon-delete hover:border-icon-delete"
+                          >
+                            Send Reset Link
+                          </Button>
+                        </Stack>
+                      </Stack>
                     </Grid>
                   </Stack>
-                </Grid>
-                <Grid xs={6}>
-                  <Stack direction="column" spacing={1}>
-                    <Typography
-                      variant="caption"
-                      className="text-sm  text-text-secondary"
-                    >
-                      Allow team member access portal
-                    </Typography>
-
-                    <Stack direction="row" spacing={2}>
-                      <Button
-                        variant="outlined"
-                        startIcon={<PhoneIphoneIcon />}
-                        className="w-[158px] border border-primary-main  text-sm  normal-case text-text-primary-dark"
-                      >
-                        Send Portal ID
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        startIcon={<RestartAltOutlinedIcon />}
-                        className="min-w-[158px]  border  border-icon-delete text-sm normal-case text-icon-delete hover:border-icon-delete"
-                      >
-                        Send Reset Link
-                      </Button>
-                    </Stack>
-                  </Stack>
-                </Grid>
+                )}
               </Stack>
               <FormControlLabel
-                control={<Switch checked name="jason" />}
+                value="Active"
+                control={
+                  <Switch
+                    color="primary"
+                    checked={itemVisibility.Portal}
+                    onChange={() => handleSwitchChange('Portal')}
+                  />
+                }
                 label="Active"
-                className="mr-0"
+                labelPlacement="end"
               />
             </Stack>
           </Grid>

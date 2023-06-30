@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Divider, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
