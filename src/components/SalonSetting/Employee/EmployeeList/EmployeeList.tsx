@@ -390,6 +390,7 @@ const EmployeeList = () => {
                         <TableCell className="text-base text-primary-dark">
                           <Chip
                             className="  bg-cyan-50 px-1 text-[16px]  text-cyan-700"
+                            // label={row.serviceProduct}
                             label="1"
                             sx={{
                               '& .css-6od3lo-MuiChip-label': {

@@ -573,7 +573,7 @@ export const AddYourEmployeeModal = () => {
                     />
                   </Box>
                   <Box className="my-2 flex-wrap text-mango-text-gray-2">
-                    {listPayStructure
+                    {/* {listPayStructure
                       .find((item) => item.Id === valuePayStructure)
                       ?.Configurations.map((itemConfig, index) => (
                         // eslint-disable-next-line react/no-array-index-key
@@ -583,7 +583,7 @@ export const AddYourEmployeeModal = () => {
                             {itemConfig.Value}
                           </Typography>
                         </Box>
-                      ))}
+                      ))} */}
                   </Box>
                 </Grid>
                 <Grid xs={12} item className="relative">
