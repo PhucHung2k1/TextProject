@@ -12,7 +12,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ServiceAndProduct from './ServiceAndProduct/ServiceAndProduct';
 import { AddYourEmployeeModal } from '@/components/StoreProfile/LayoutAddTeamMember/AddTeamMemberModal';
 import type { IEmployee } from '@/services/employee.service/employee.interface';
-import AddMember from './EmployeeList/EditEmployeeTab/AddMember';
+import AddMember from './EmployeeList/AddMember/AddMember';
 
 export const EmployeeSetting = () => {
   const [activeKey, setActiveKey] = useState<number>(0);
