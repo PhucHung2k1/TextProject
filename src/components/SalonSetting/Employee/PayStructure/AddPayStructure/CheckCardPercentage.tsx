@@ -1,7 +1,6 @@
-import { sxTextField } from '@/utils/helper/styles';
 import { Grid, Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import FormControlComponent from '@/common/Input/FormControlComponent';
+import InputTwoValue from '@/common/Input/InputTwoValue';
 
 interface Props {
   setPayStructureData: Function;
@@ -12,7 +11,10 @@ const CheckCardPercentage = ({ setPayStructureData }: Props) => {
     TipFeeCheckPercentage: 0,
     SurchargeCheckPercentage: 0,
   });
-  const handleChangeValue = (value: boolean | string, name: string) => {
+  const handleChangeValue = (
+    value: boolean | string | number,
+    name: string
+  ) => {
     setCheckCashPercentage((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
@@ -33,32 +35,22 @@ const CheckCardPercentage = ({ setPayStructureData }: Props) => {
 
         <Stack direction="row" spacing={2} className="w-full">
           <Grid xs={6} item>
-            <FormControlComponent
-              sx={sxTextField}
-              type="number"
+            <InputTwoValue
               label="Tip"
               value={checkCashPercentage.TipFeeCheckPercentage}
-              className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-              onChange={(e: any) =>
-                handleChangeValue(e.target.value, 'TipFeeCheckPercentage')
+              setValue={(value: number) =>
+                handleChangeValue(value, 'TipFeeCheckPercentage')
               }
-              name="TipFeeCheckPercentage"
-              startIconInputProps="percent"
             />
           </Grid>
 
           <Grid xs={6} item>
-            <FormControlComponent
-              name="SurchargeCheckPercentage"
-              sx={sxTextField}
-              type="number"
+            <InputTwoValue
               label="Surcharge"
-              startIconInputProps="percent"
               value={checkCashPercentage.SurchargeCheckPercentage}
-              onChange={(e: any) =>
-                handleChangeValue(e.target.value, 'SurchargeCheckPercentage')
+              setValue={(value: number) =>
+                handleChangeValue(value, 'SurchargeCheckPercentage')
               }
-              className="!rounded-sm border border-mango-text-gray-1 !outline-none"
             />
           </Grid>
         </Stack>
