@@ -18,7 +18,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import Image from 'next/image';
-import type { FieldErrors } from 'react-hook-form';
+// import type { FieldErrors } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { emailRegex, phoneNumberRegex } from '@/utils/helper/regex';
 import { hideModalCustom } from '@/store/modal/modalSlice';
@@ -27,7 +27,7 @@ import type { ISendInvitationPayload } from '@/services/customer.service/custome
 import { useEffect, useState } from 'react';
 import { sendInvitation } from '@/store/customer/customerAction';
 import type { CountryPhone } from '@/services/common/common.interface';
-import { ErrorMessage } from '@hookform/error-message';
+// import { ErrorMessage } from '@hookform/error-message';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import { Clear, Check, Error } from '@mui/icons-material';
 import {
@@ -39,6 +39,7 @@ import { getAllPermission } from '@/store/permission/permissionAction';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
 import { PayStructureConfiguration } from '@/services/payStructure.service/payStructure.interface';
 import { getListPayStructure } from '@/store/payStructure/payStructureAction';
+import FormControlComponent from '@/common/Input/FormControlComponent';
 
 interface IFormInput {
   firstName: string;
@@ -61,57 +62,7 @@ const arrServiceProduct = [
   'Extra',
   'Natural Nails',
 ];
-interface FormControlComponentProps {
-  errors?: FieldErrors<IFormInput>;
-  required?: boolean;
-  label: string;
-  type: string;
-  sx?: any;
-  error?: boolean;
-  placeholder: string;
-  requiredField: any;
-  name: any;
-  onChange?: Function;
-  InputProps?: any;
-}
-const FormControlComponent = ({
-  label,
-  type,
-  error = false,
-  required = false,
-  placeholder,
-  requiredField,
-  errors,
-  name,
-  onChange,
-  InputProps,
-}: FormControlComponentProps) => (
-  <FormControl fullWidth required={required}>
-    <TextField
-      sx={sxTextField}
-      label={label}
-      type={type}
-      required={required}
-      error={error}
-      placeholder={placeholder}
-      {...requiredField}
-      onChange={onChange}
-      InputProps={InputProps}
-      className="!rounded-sm border border-mango-text-gray-1 text-sm font-normal !text-mango-text-black-1 !outline-none"
-    />
-    {errors && (
-      <ErrorMessage
-        errors={errors}
-        name={name}
-        render={({ message }: any) => (
-          <div className="ml-2 mt-1 text-sm text-text-error" role="alert">
-            <span className="font-medium">{message}</span>
-          </div>
-        )}
-      />
-    )}
-  </FormControl>
-);
+
 export const AddYourEmployeeModal = () => {
   const dispatch = useAppDispatch();
 
