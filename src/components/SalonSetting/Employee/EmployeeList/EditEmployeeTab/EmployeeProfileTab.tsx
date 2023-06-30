@@ -1,11 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/jsx-no-undef */
-import { checkExistEmail } from '@/store/account/accountAction';
-import { useAppDispatch } from '@/store/hook';
-import { emailRegex } from '@/utils/helper/regex';
 import { ErrorMessage } from '@hookform/error-message';
 import Image from 'next/image';
-import { Check, Error } from '@mui/icons-material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -15,15 +11,13 @@ import {
   Grid,
   FormControl,
   TextField,
-  debounce,
   Stack,
   InputAdornment,
   Box,
-  CircularProgress,
   IconButton,
   Divider,
+  Button,
   Switch,
-  Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -69,23 +63,12 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
     register,
     formState: { errors },
     handleSubmit,
-    setError,
-    trigger,
-    clearErrors,
   } = useForm<IFormInput>();
   const [showPassword, setShowPassword] = useState(false);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImage, setSelectedImage] = useState<any>();
   const [avatarImage, setAvatarImage] = useState<any>();
-  console.log(
-    '🚀 ~ file: EmployeeProfileTab.tsx:86 ~ avatarImage:',
-    avatarImage
-  );
-  const dispatch = useAppDispatch();
-  const [emailState, setEmailState] = useState({
-    emailName: '',
-    emailStatus: 'idle',
-  });
+  const [showMore, setShowMore] = useState<boolean>(false);
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -97,45 +80,12 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
       values
     );
   };
+  console.log(
+    '🚀 ~ file: EmployeeProfileTab.tsx:61 ~  ~ avatarImage:',
+    avatarImage,
+    selectedEmployee
+  );
 
-  const validateEmail = debounce(async (emailValue: string) => {
-    if (emailRegex.test(emailValue)) {
-      setEmailState((pre) => ({ ...pre, emailName: emailValue }));
-      dispatch(
-        checkExistEmail({
-          Email: emailValue,
-        })
-      ).then((res) => {
-        if (res.payload) {
-          setEmailState((pre) => ({ ...pre, emailStatus: 'existed' }));
-          setError('email', {
-            type: 'manual',
-            message: 'Email already exists',
-          });
-        } else {
-          setEmailState((pre) => ({ ...pre, emailStatus: 'available' }));
-          clearErrors('email');
-        }
-      });
-    } else {
-      setEmailState({ emailStatus: 'idle', emailName: '' });
-      setError('email', {
-        type: 'manual',
-        message: 'Invalid email address',
-      });
-    }
-  }, 800);
-
-  const handleEmailChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    await trigger('email');
-    try {
-      await validateEmail(event.target.value);
-    } catch (error) {
-      setError('email', { type: 'manual', message: 'errorMessage' });
-    }
-  };
   const uploadImage = async (imageFile: File): Promise<void> => {
     if (imageFile) {
       try {
@@ -155,25 +105,21 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
     const responsive = await uploadImage(file);
     setAvatarImage(responsive);
   };
+  const handleShowMoreToggle = () => {
+    setShowMore(!showMore);
+  };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="my-4 " noValidate>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="border border-t-0 border-mango-gray-light-3 rounded-[8px] rounded-t-none "
+        noValidate
+      >
         <Grid container spacing={2}>
-          <Grid xs={12} item>
-            <Typography
-              variant="caption"
-              className="px-5 text-2xl font-semibold"
-            >
-              Team member profile
-            </Typography>
-          </Grid>
-          <Grid xs={12} item>
-            <Divider />
-          </Grid>
           <Grid xs={4}>
             <form
-              className=" mt-6 flex flex-wrap justify-center gap-2 "
+              className=" mt-6 flex flex-wrap justify-center gap-2  px-[24px] py-[32px]"
               noValidate
             >
               <div className="relative flex w-full flex-col items-center justify-center">
@@ -186,23 +132,24 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
                       className="rounded-full object-cover"
                     />
                   ) : (
-                    <Image
-                      src={
-                        selectedEmployee?.ProfilePictureUrl.includes(
-                          'https://' || 'http://'
-                        )
-                          ? selectedEmployee?.ProfilePictureUrl
-                          : '/assets/images/StoreProfile/store-default.png'
-                      }
-                      alt="logo1"
-                      width={186}
-                      height={186}
-                      className={
-                        selectedEmployee?.ProfilePictureUrl !== ''
-                          ? 'rounded-full object-cover'
-                          : 'rounded-full'
-                      }
-                    />
+                    ''
+                    // <Image
+                    //   src={
+                    //     selectedEmployee?.ProfilePictureUrl.includes(
+                    //       'https://' || 'http://'
+                    //     )
+                    //       ? selectedEmployee?.ProfilePictureUrl
+                    //       : '/assets/images/StoreProfile/store-default.png'
+                    //   }
+                    //   alt="logo1"
+                    //   width={186}
+                    //   height={186}
+                    //   className={
+                    //     selectedEmployee?.ProfilePictureUrl !== ''
+                    //       ? 'rounded-full object-cover'
+                    //       : 'rounded-full'
+                    //   }
+                    // />
                   )}
 
                   <input
@@ -221,7 +168,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
                     />
                   </div>
                 </div>
-                <p className="w-full pt-[16px] text-center text-mango-text-gray-2 ">
+                <p className="mt-[33px] w-full text-center text-mango-text-gray-2 ">
                   <Switch checked color="success" />
                   Active
                 </p>
@@ -229,7 +176,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
             </form>
           </Grid>
           <Grid xs={8} className="pr-5" item spacing={2}>
-            <Stack direction="column" spacing={2}>
+            <Stack direction="column" className="pt-[32px]" spacing={2}>
               <Stack direction="row" spacing={2}>
                 <Grid xs={6} item>
                   <FormControl
@@ -310,16 +257,50 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
                   <DatePicker className="w-full" />
                 </LocalizationProvider>
               </Grid>
+              <Grid xs={12} item>
+                <FormControl
+                  fullWidth
+                  className="text-sm font-normal !text-mango-text-black-1"
+                >
+                  <TextField
+                    sx={[sxTextField, sxTextFieldError]}
+                    label="Passcode "
+                    type={showPassword ? 'text' : 'password'}
+                    error={Boolean(errors.password)}
+                    className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleTogglePassword}>
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    name="password"
+                    render={({ message }: any) => (
+                      <div
+                        className="ml-2 mt-1 text-sm text-text-error"
+                        role="alert"
+                      >
+                        <span className="font-medium">{message}</span>
+                      </div>
+                    )}
+                  />
+                </FormControl>
+              </Grid>
             </Stack>
           </Grid>
-
-          <Grid xs={12} item>
+          <Grid xs={12} item className="my-[8px]">
             <Divider />
           </Grid>
           {/* Color */}
           <Grid xs={12} item>
             <Stack direction="column" spacing={2} className="px-5">
-              <Box className="text-2xl font-semibold text-text-title">
+              <Box className="text-xl font-semibold text-text-title">
                 Select Color
               </Box>
               <Stack direction="row" spacing={2}>
@@ -351,86 +332,13 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
               </Stack>
             </Stack>
           </Grid>
-          <Grid xs={12} item>
-            <Divider />
-          </Grid>
-          {/* Address */}
-          <Grid xs={12} item>
-            <Stack direction="column" spacing={2} className="px-5">
-              <Box className="text-2xl font-semibold text-text-title">
-                Address
-              </Box>
-              <Stack direction="column" spacing={2}>
-                <Grid xs={12} item>
-                  <FormControl
-                    fullWidth
-                    className="text-sm font-normal !text-mango-text-black-1"
-                  >
-                    <TextField
-                      sx={sxTextField}
-                      label="Address line "
-                      type="text"
-                      {...register('address', {})}
-                      className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                    />
-                  </FormControl>
-                </Grid>
-
-                <Grid xs={12} item>
-                  <FormControl
-                    fullWidth
-                    className="text-sm font-normal !text-mango-text-black-1"
-                  >
-                    <TextField
-                      sx={sxTextField}
-                      label="City"
-                      type="text"
-                      {...register('city', {})}
-                      className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                    />
-                  </FormControl>
-                </Grid>
-                <Stack direction="row" spacing={2}>
-                  <Grid xs={6} item>
-                    <FormControl
-                      fullWidth
-                      className="text-sm font-normal !text-mango-text-black-1"
-                    >
-                      <TextField
-                        sx={sxTextField}
-                        label="State"
-                        type="text"
-                        error={Boolean(errors.firstName)}
-                        className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid xs={6} item>
-                    <FormControl
-                      fullWidth
-                      className="text-sm font-normal !text-mango-text-black-1"
-                    >
-                      <TextField
-                        sx={sxTextField}
-                        label="Zip code"
-                        type="text"
-                        error={Boolean(errors.lastName)}
-                        {...register('lastName', {})}
-                        className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                      />
-                    </FormControl>
-                  </Grid>
-                </Stack>
-              </Stack>
-            </Stack>
-          </Grid>
-          <Grid xs={12} item>
+          <Grid xs={12} item className="my-[8px]">
             <Divider />
           </Grid>
           {/* Contact Info */}
           <Grid xs={12} item>
-            <Stack direction="column" spacing={2} className="px-5">
-              <div className="text-2xl font-semibold text-text-title">
+            <Stack direction="column" spacing={2} className="px-5 ">
+              <div className="text-xl font-semibold text-text-title">
                 Contact
               </div>
               <Stack direction="column" spacing={2}>
@@ -449,37 +357,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
                             sx={[sxTextField, sxTextFieldError]}
                             label="Email address"
                             type="text"
-                            required
-                            error={Boolean(errors.email)}
-                            {...register('email', {
-                              required: 'Enter Your Email!',
-                            })}
-                            onChange={handleEmailChange}
                             className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                            InputProps={{
-                              endAdornment:
-                                emailState.emailStatus === 'available' ? (
-                                  <Check className=" bg-transparent text-green-700" />
-                                ) : emailState.emailStatus === 'existed' ? (
-                                  <Error className=" text-red-500" />
-                                ) : emailState.emailName ? (
-                                  <CircularProgress size="1.2rem" />
-                                ) : (
-                                  <></>
-                                ),
-                            }}
-                          />
-                          <ErrorMessage
-                            errors={errors}
-                            name="email"
-                            render={({ message }: any) => (
-                              <div
-                                className="ml-2 mt-1 text-sm text-text-error"
-                                role="alert"
-                              >
-                                <span className="font-medium">{message}</span>
-                              </div>
-                            )}
                           />
                         </FormControl>
                       </FormControl>
@@ -542,66 +420,117 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
               </Stack>
             </Stack>
           </Grid>
-          {/* UnderLine */}
+          {showMore ? (
+            <Grid xs={12} item className="my-[8px]">
+              <Divider />
+            </Grid>
+          ) : (
+            ''
+          )}
+
+          {/* Address Info */}
           <Grid xs={12} item>
-            <Divider />
-          </Grid>
-          {/* Password */}
-          <Grid xs={12} item>
-            <Stack direction="column" spacing={2} className="px-5">
-              <Box className="text-2xl font-semibold text-text-title">
-                Password
-              </Box>
-              <Stack direction="column" spacing={2}>
-                <Grid xs={12} item>
-                  <Grid xs={5.9}>
-                    <FormControl
-                      fullWidth
-                      className="text-sm font-normal !text-mango-text-black-1"
+            <Stack className="px-5 pb-5">
+              <Grid xs={12} className="flex flex-col-reverse" item>
+                <div>
+                  {showMore ? (
+                    <Button
+                      className="mt-5"
+                      variant="outlined"
+                      onClick={handleShowMoreToggle}
                     >
-                      <TextField
-                        sx={sxTextField}
-                        label="Password"
-                        type={showPassword ? 'text' : 'password'}
-                        error={Boolean(errors.password)}
-                        {...register('password', {
-                          required: 'Enter Your Password!',
-                          minLength: {
-                            value: 9,
-                            message: 'Password must be more than 8 characters!',
-                          },
-                        })}
-                        className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton onClick={handleTogglePassword}>
-                                {showPassword ? (
-                                  <VisibilityOff />
-                                ) : (
-                                  <Visibility />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                      <ErrorMessage
-                        errors={errors}
-                        name="password"
-                        render={({ message }: any) => (
-                          <div
-                            className="ml-2 mt-1 text-sm text-text-error"
-                            role="alert"
-                          >
-                            <span className="font-medium">{message}</span>
-                          </div>
-                        )}
-                      />
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </Stack>
+                      Show less
+                    </Button>
+                  ) : (
+                    <Button
+                      className="mt-[5px]"
+                      variant="outlined"
+                      onClick={handleShowMoreToggle}
+                    >
+                      Show more
+                    </Button>
+                  )}
+                </div>
+                {showMore ? (
+                  <div>
+                    {/* Address */}
+
+                    <Grid xs={12} item>
+                      <Stack direction="column" spacing={2}>
+                        <Box className="text-xl font-semibold text-text-title">
+                          Address
+                        </Box>
+                        <Stack direction="column" spacing={2}>
+                          <Grid xs={12} item>
+                            <FormControl
+                              fullWidth
+                              className="text-sm font-normal !text-mango-text-black-1"
+                            >
+                              <TextField
+                                sx={sxTextField}
+                                label="Address line "
+                                type="text"
+                                {...register('address', {})}
+                                className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Stack direction="row" spacing={2}>
+                            <Grid xs={6} item>
+                              <FormControl
+                                fullWidth
+                                className="text-sm font-normal !text-mango-text-black-1"
+                              >
+                                <TextField
+                                  sx={sxTextField}
+                                  label="City"
+                                  type="text"
+                                  {...register('city', {})}
+                                  className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                                />
+                              </FormControl>
+                            </Grid>
+                            <Grid xs={6} item>
+                              <FormControl
+                                fullWidth
+                                className="text-sm font-normal !text-mango-text-black-1"
+                              >
+                                <TextField
+                                  sx={sxTextField}
+                                  label="State"
+                                  type="text"
+                                  error={Boolean(errors.firstName)}
+                                  className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+                                />
+                              </FormControl>
+                            </Grid>
+                          </Stack>
+
+                          <Stack>
+                            <Grid xs={6} spacing={2}>
+                              <FormControl
+                                fullWidth
+                                className="text-sm font-normal !text-mango-text-black-1"
+                              >
+                                <TextField
+                                  sx={sxTextField}
+                                  label="Zip code"
+                                  type="text"
+                                  error={Boolean(errors.lastName)}
+                                  {...register('lastName', {})}
+                                  className="mr-[8px]  !rounded-sm border border-mango-text-gray-1 !outline-none"
+                                />
+                              </FormControl>
+                            </Grid>
+                          </Stack>
+                        </Stack>
+                      </Stack>
+                    </Grid>
+                  </div>
+                ) : (
+                  ''
+                )}
+              </Grid>
             </Stack>
           </Grid>
         </Grid>
