@@ -314,7 +314,7 @@ const EmployeeList = () => {
       <div className="mt-5">
         <Grid container spacing={2}>
           <Grid xs={12} item>
-            <div className="flex h-20 w-full items-center gap-6 rounded-sm bg-bg-light px-4 py-7 ">
+            <div className="f20 flex w-full items-center gap-6 rounded-sm bg-bg-light px-4 py-7 ">
               <FormControl variant="outlined" size="small" className="w-[15%]">
                 <Select
                   sx={sxSelect}
@@ -420,7 +420,7 @@ const EmployeeList = () => {
               sx={{
                 width: '100%',
                 overflow: 'auto',
-                maxHeight: '540px',
+                maxHeight: '500px',
                 boxShadow: 'none',
               }}
             >
