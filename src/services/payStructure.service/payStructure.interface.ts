@@ -7,29 +7,27 @@ export interface IPayStructureData {
   Type: string;
   Description: string;
   Employees: IEmployeeResponse[];
-  CreateBy: Date | string;
-  CreateDate: Date | string;
-  LastModifiedBy: string;
-  LastModifiedDate: Date;
+  Configuration: PayStructureConfiguration;
 }
+
 export interface ICreatePayStructurePayLoad {
-  payStructure: PayStructure;
-  payStructureConfiguration: PayStructureConfiguration;
+  PayStructure: PayStructure;
+  PayStructureConfiguration: PayStructureConfiguration;
 }
 
 export interface PayStructure {
-  name: string;
-  description: string;
+  Name: string;
+  Description: string;
 }
 
 export interface PayStructureConfiguration {
-  payStructureSettings: PayStructureSettings;
-  tipOnCC: TipOnCC;
-  dailySurcharge: DailySurcharge;
-  productCharge: ProductCharge;
-  productCommission: ProductCommission;
-  holdCash: HoldCash;
-  checkCashPercentage: CheckCashPercentage;
+  PayStructureSettings: PayStructureSettings;
+  TipOnCC: TipOnCC;
+  DailySurcharge: DailySurcharge;
+  ProductCharge: ProductCharge;
+  ProductCommission: ProductCommission;
+  HoldCash: HoldCash;
+  CheckCashPercentage: CheckCashPercentage;
 }
 
 export interface CheckCashPercentage {
@@ -38,61 +36,63 @@ export interface CheckCashPercentage {
 }
 
 export interface DailySurcharge {
-  dailySurchargeType: string;
-  dailySurchargeFromCommission: number;
-  dailySurchargeFixedSurcharge: number;
-  dailySurchargeWorkingTimeType: string;
-  dailySurchargeWorkingDailyMinHour: number;
-  dailySurchargeWorkingWeeklyType: string;
-  dailySurchargeWorkingWeeklyMinHour: number;
-  dailySurchargeWorkingWeeklyMinDay: number;
-  dailySurchargeWorkingWeeklyMinTotalHour: number;
+  DailySurchargeType: string;
+  DailySurchargeFromCommission: number;
+  DailySurchargeFixedSurcharge: number;
+  DailySurchargeWorkingTimeType: string;
+  DailySurchargeWorkingDailyMinHour: number;
+  DailySurchargeWorkingWeeklyType: string;
+  DailySurchargeWorkingWeeklyMinHour: number;
+  DailySurchargeWorkingWeeklyMinDay: number;
+  DailySurchargeWorkingWeeklyMinTotalHour: number;
 }
 
 export interface HoldCash {
-  allowHoldCash: boolean;
+  AllowHoldCash: boolean;
 }
 
 export interface PayStructureSettings {
-  payStructureType: string;
-  potentialBonus: number;
-  commissionPayout: number;
-  maxCommissionPayout: number;
-  salaryGuaranteePayout: number;
-  maxSalaryGuaranteePayout: number;
-  allowSalaryAndCommissionCombination: boolean;
-  requiresWorkingTimeOver: boolean;
-  workingTimeType: string;
-  dayMinHour: number;
-  weekType: string;
-  weekMinHour: number;
-  weekMinDay: number;
-  weekMinTotalHour: number;
-  monthType: string;
-  monthMinHour: number;
-  monthMinDay: number;
-  monthMinTotalHour: number;
-  baseOnPeriodType: string;
-  baseOnPeriodMinHour: number;
-  baseOnPeriodMinDay: number;
-  baseOnPeriodMinTotalHour: number;
+  PayStructureType: string;
+  PotentialBonus: number;
+  CommissionPayout: number;
+  MaxCommissionPayout: number;
+  SalaryGuaranteePayout: number;
+  HourlyPayout: number;
+  MaxHourlyPayout: number;
+  MaxSalaryGuaranteePayout: number;
+  AllowSalaryAndCommissionCombination: boolean;
+  RequiresWorkingTimeOver: boolean;
+  WorkingTimeType: string;
+  DayMinHour: number;
+  WeekType: string;
+  WeekMinHour: number;
+  WeekMinDay: number;
+  WeekMinTotalHour: number;
+  MonthType: string;
+  MonthMinHour: number;
+  MonthMinDay: number;
+  MonthMinTotalHour: number;
+  BaseOnPeriodType: string;
+  BaseOnPeriodMinHour: number;
+  BaseOnPeriodMinDay: number;
+  BaseOnPeriodMinTotalHour: number;
 }
 
 export interface ProductCharge {
-  productChargeType: string;
-  baseOnTicketAmount: number;
-  baseOnTicketMinChargeAmount: number;
-  baseOnTicketMinChargePercent: number;
+  ProductChargeType: string;
+  BaseOnTicketAmount: number;
+  BaseOnTicketMinChargeAmount: number;
+  BaseOnTicketMinChargePercent: number;
 }
 
 export interface ProductCommission {
-  allowProductCommission: boolean;
-  productCommissionPercent: number;
-  maxPayoutProductCommissionPercent: number;
+  AllowProductCommission: boolean;
+  ProductCommissionPercent: number;
+  MaxPayoutProductCommissionPercent: number;
 }
 
 export interface TipOnCC {
-  tipOnCCType: string;
-  tipOnCCFeeFromCreditCard: string;
-  tipOnCCDailyFixedFee: number;
+  TipOnCCType: string;
+  TipOnCCFeeFromCreditCard: string;
+  TipOnCCDailyFixedFee: number;
 }
