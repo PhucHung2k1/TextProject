@@ -42,7 +42,7 @@ import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
 // eslint-disable-next-line import/no-cycle
 
 const arrPayStructureType = [
-  'Commission-Guarantee',
+  'CommissionGuarantee',
   'Commission',
   'Salary',
   'Hourly',
@@ -105,7 +105,7 @@ const PayStructure = () => {
       // )
     }
     if (filterPayType !== '') {
-      return row.Name.toLowerCase().includes(filterPayType.toLowerCase());
+      return row.Type.toLowerCase().includes(filterPayType.toLowerCase());
     }
     if (filterEmployee !== '') {
       return true;
