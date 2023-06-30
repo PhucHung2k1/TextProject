@@ -93,7 +93,7 @@ const AddMember: React.FC<AddMemberProps> = ({
   return (
     <div>
       <div
-        className={`sticky top-0 pb-[20px] pt-[32px] bg-white z-10 ${
+        className={`sticky top-0 z-10 bg-white pb-[20px] pt-[32px] ${
           trigger ? 'mb-4' : ''
         }`}
       >
@@ -133,7 +133,7 @@ const AddMember: React.FC<AddMemberProps> = ({
           })}
         </Timeline>
       </div>
-      <Grid container spacing={2} className=" w-[972px] mx-auto bg-white">
+      <Grid container spacing={2} className=" mx-auto w-[972px] bg-white">
         <Grid xs={12} item>
           <List className="">
             {renderCollapse(
