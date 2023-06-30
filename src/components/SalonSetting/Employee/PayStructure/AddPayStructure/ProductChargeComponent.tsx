@@ -24,7 +24,10 @@ const ProductChargeComponent = ({ setPayStructureData }: Props) => {
     setProductCharge((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
-    setPayStructureData((prev: any) => ({ ...prev, productCharge }));
+    setPayStructureData((prev: any) => ({
+      ...prev,
+      ProductCharge: productCharge,
+    }));
   }, [productCharge]);
   return (
     <Grid xs={12} item className="">

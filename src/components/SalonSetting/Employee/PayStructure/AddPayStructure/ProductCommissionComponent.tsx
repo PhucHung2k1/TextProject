@@ -40,6 +40,7 @@ const ProductCommissionComponent = ({ setPayStructureData }: Props) => {
             control={
               <Switch
                 name="Allow"
+                checked={productCommission.AllowProductCommission}
                 onChange={(e) =>
                   handleChangeValue(e.target.checked, 'AllowProductCommission')
                 }

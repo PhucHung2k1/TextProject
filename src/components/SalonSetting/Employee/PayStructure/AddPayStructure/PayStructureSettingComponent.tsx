@@ -40,8 +40,8 @@ const listPayStructureType = [
     value: 'Salary',
   },
   {
-    name: 'Hour',
-    value: 'Hour',
+    name: 'Hourly',
+    value: 'Hourly',
   },
 ];
 const listWorkingTimeType = [
@@ -132,7 +132,6 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
           nameMinDay: 'MonthMinDay',
           valueMinHour: payStructureSettings.MonthMinHour,
           nameMinHour: 'MonthMinHour',
-
           valueMinTotalHour: payStructureSettings.MonthMinTotalHour,
           nameMinTotalHour: 'MonthMinTotalHour',
           type: 'MonthType',
@@ -161,6 +160,56 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
         };
     }
   };
+  const currentDataPayStructureByType = () => {
+    switch (payStructureSettings.PayStructureType) {
+      case 'Commission':
+        return {
+          label1Row1: 'Commission Payout',
+          name1Row1: 'CommissionPayout',
+          value1Row1: payStructureSettings.CommissionPayout,
+          label2Row1: 'Max Hourly Payout',
+          name2Row1: 'MaxCommissionPayout',
+          value2Row1: payStructureSettings.MaxCommissionPayout,
+        };
+      case 'CommissionGuarantee':
+        return {
+          label1Row1: 'Commission Payout',
+          name1Row1: 'CommissionPayout',
+          value1Row1: payStructureSettings.CommissionPayout,
+          label2Row1: 'Max Commission Payout',
+          name2Row1: 'MaxCommissionPayout',
+          value2Row1: payStructureSettings.MaxCommissionPayout,
+        };
+      case 'Hourly':
+        return {
+          label1Row1: 'Hourly Payout',
+          name1Row1: 'HourlyPayout',
+          value1Row1: payStructureSettings.HourlyPayout,
+          label2Row1: 'Max Hourly Payout',
+          name2Row1: 'MaxHourlyPayout',
+          value2Row1: payStructureSettings.MaxHourlyPayout,
+        };
+
+      case 'Salary':
+        return {
+          label1Row1: 'Salary (Guarantee) Payout',
+          name1Row1: 'SalaryGuaranteePayout',
+          value1Row1: payStructureSettings.SalaryGuaranteePayout,
+          label2Row1: 'Max Salary (Guarantee) Payout',
+          name2Row1: 'MaxSalaryGuaranteePayout',
+          value2Row1: payStructureSettings.MaxSalaryGuaranteePayout,
+        };
+      default:
+        return {
+          label1Row1: 'Commission Payout',
+          name1Row1: 'CommissionPayout',
+          value1Row1: payStructureSettings.CommissionPayout,
+          label2Row1: 'Max Hourly Payout',
+          name2Row1: 'MaxCommissionPayout',
+          value2Row1: payStructureSettings.MaxCommissionPayout,
+        };
+    }
+  };
   const handleChangeValue = (
     value: boolean | string | number,
     name: string
@@ -169,7 +218,10 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
   };
 
   useEffect(() => {
-    setPayStructureData((prev: any) => ({ ...prev, payStructureSettings }));
+    setPayStructureData((prev: any) => ({
+      ...prev,
+      PayStructureSettings: payStructureSettings,
+    }));
   }, [payStructureSettings]);
   return (
     <Grid xs={12} item>
@@ -232,40 +284,47 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
             />
           </FormControl>
         </Grid>
-        <Stack direction="row" spacing={2}>
-          <Grid xs={6} item>
-            <FormControlComponent
-              name="CommissionPayout"
-              startIconInputProps="percent"
-              label="Commission Payout"
-              type="text"
-              sx={sxTextField}
-              value={payStructureSettings.CommissionPayout}
-              onChange={(e: any) =>
-                handleChangeValue(e.target.value, 'CommissionPayout')
-              }
-              // className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-            />
-          </Grid>
-          <Grid xs={6} item>
-            <FormControlComponent
-              name="MaxCommissionPayout"
-              startIconInputProps="percent"
-              sx={sxTextField}
-              label="Max Commission Payout"
-              type="text"
-              value={payStructureSettings.MaxCommissionPayout}
-              // className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-            />
-          </Grid>
-        </Stack>
+        {/* Row 1 Text Field */}
+        {currentDataPayStructureByType().name1Row1 && (
+          <Stack direction="row" spacing={2}>
+            <Grid xs={6} item>
+              <FormControlComponent
+                name={currentDataPayStructureByType().name1Row1}
+                startIconInputProps="percent"
+                label={currentDataPayStructureByType().label1Row1}
+                type="text"
+                sx={sxTextField}
+                value={payStructureSettings.CommissionPayout}
+                onChange={(e: any) =>
+                  handleChangeValue(
+                    e.target.value,
+                    currentDataPayStructureByType().name1Row1
+                  )
+                }
+                // className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+              />
+            </Grid>
+            <Grid xs={6} item>
+              <FormControlComponent
+                name="MaxCommissionPayout"
+                startIconInputProps="percent"
+                sx={sxTextField}
+                label="Max Commission Payout"
+                type="text"
+                value={payStructureSettings.MaxCommissionPayout}
+                // className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+              />
+            </Grid>
+          </Stack>
+        )}
+        {/* Row 2 Text Field  */}
         {payStructureSettings.PayStructureType === 'CommissionGuarantee' && (
           <Stack direction="row" spacing={2}>
             <Grid xs={6} item>
               <FormControlComponent
                 name="SalaryGuaranteePayout"
                 startIconInputProps="percent"
-                label="salary (Guarantee) Payout"
+                label="Salary (Guarantee) Payout"
                 type="text"
                 sx={sxTextField}
                 value={payStructureSettings.SalaryGuaranteePayout}
@@ -292,6 +351,7 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
           </Stack>
         )}
 
+        {/* Toggle allow salary only (Guarantee) and requires working time (guarantee and salary) */}
         <Stack direction="column" rowGap={2}>
           {payStructureSettings.PayStructureType === 'CommissionGuarantee' && (
             <FormControlLabel
