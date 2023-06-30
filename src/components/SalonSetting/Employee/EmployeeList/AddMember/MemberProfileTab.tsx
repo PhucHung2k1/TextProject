@@ -59,6 +59,10 @@ const POST_IMAGE = '/file/upload-picture';
 const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
   selectedEmployee,
 }) => {
+  console.log(
+    '🚀 ~ file: MemberProfileTab.tsx:62 ~ selectedEmployee:',
+    selectedEmployee
+  );
   const {
     register,
     formState: { errors },
@@ -68,6 +72,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImage, setSelectedImage] = useState<any>();
   const [avatarImage, setAvatarImage] = useState<any>();
+  console.log('🚀 ~ file: MemberProfileTab.tsx:71 ~ avatarImage:', avatarImage);
   const [showMore, setShowMore] = useState<boolean>(false);
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -80,11 +85,6 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
       values
     );
   };
-  console.log(
-    '🚀 ~ file: EmployeeProfileTab.tsx:61 ~  ~ avatarImage:',
-    avatarImage,
-    selectedEmployee
-  );
 
   const uploadImage = async (imageFile: File): Promise<void> => {
     if (imageFile) {
@@ -113,7 +113,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="border border-t-0 border-mango-gray-light-3 rounded-[8px] rounded-t-none "
+        className="rounded-[8px] rounded-t-none border border-t-0 border-mango-gray-light-3 "
         noValidate
       >
         <Grid container spacing={2}>

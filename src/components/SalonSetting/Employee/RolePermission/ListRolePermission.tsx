@@ -40,8 +40,8 @@ import { showDrawerRolePermission } from '@/store/common/commonSlice';
 import EditRolePermission from './EditRolePermission';
 import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
-import LabbelStyle from '@/common/Label/LabbelStyle';
 import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
+import LabbelStyle from '@/common/Label/LabbelStyle';
 
 interface PermissionItem {
   Name: string;

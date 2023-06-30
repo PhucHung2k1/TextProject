@@ -161,10 +161,7 @@ const data: IPayStructure[] = [
 const arrEmployee = ['A', 'B', 'C', 'D'];
 const ServiceAndProduct = () => {
   const [page, setPage] = useState(0);
-  console.log(
-    '🚀 ~ file: ServiceAndProduct.tsx:164 ~ ServiceAndProduct ~ page:',
-    page
-  );
+
   const [rowsPerPage, setRowsPerPage] = useState(3);
   // Filter State
   const [filterPayType, setFilterPayType] = useState('');
@@ -174,11 +171,11 @@ const ServiceAndProduct = () => {
   // Selected Employee
   const [selectedEmployee, setSelectedEmployee] = useState<IPayStructure>();
   console.log(
-    '🚀 ~ file: PayStructure.tsx:169 ~ PayStructure ~ selectedEmployee:',
+    '🚀 ~ file: ServiceAndProduct.tsx:173 ~ ServiceAndProduct ~ selectedEmployee:',
     selectedEmployee
   );
+
   const [openAddDrawer, setOpenAddDrawer] = React.useState(false);
-  // Open and close drawer add paystructure
   const handleOpenAddDrawer = () => {
     setOpenAddDrawer(true);
   };

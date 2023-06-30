@@ -13,11 +13,16 @@ import ServiceAndProduct from './ServiceAndProduct/ServiceAndProduct';
 import { AddYourEmployeeModal } from '@/components/StoreProfile/LayoutAddTeamMember/AddTeamMemberModal';
 import type { IEmployee } from '@/services/employee.service/employee.interface';
 import AddMember from './EmployeeList/AddMember/AddMember';
+import { useAppDispatch } from '@/store/hook';
+import { setValueSearchName } from '@/store/employee/employeeSlice';
 
 export const EmployeeSetting = () => {
   const [activeKey, setActiveKey] = useState<number>(0);
   const [open, setOpen] = React.useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<IEmployee>();
+  const [valueSearch, setValueSearch] = useState<any>('');
+  const dispatch = useAppDispatch();
+
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setActiveKey(newValue);
   };
@@ -60,6 +65,10 @@ export const EmployeeSetting = () => {
     },
   ];
 
+  React.useEffect(() => {
+    dispatch(setValueSearchName(valueSearch));
+  }, [valueSearch]);
+
   return (
     <>
       <Grid container spacing={2} className="mt-0">
@@ -86,6 +95,8 @@ export const EmployeeSetting = () => {
                 ),
               }}
               className="min-w-[188px]"
+              value={valueSearch}
+              onChange={(e) => setValueSearch(e.target.value)}
             />
             <Button
               className="h-[48px] min-w-[188px] border-none bg-primary-main text-[16px] font-bold text-white hover:bg-primary-main"
