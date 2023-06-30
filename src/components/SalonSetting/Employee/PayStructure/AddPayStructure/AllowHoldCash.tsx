@@ -11,7 +11,13 @@ const AllowHoldCash = ({ setPayStructureData }: Props) => {
     setHoldCash((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
-    setPayStructureData((prev: any) => ({ ...prev, HoldCash: holdCash }));
+    setPayStructureData((prevState: any) => ({
+      ...prevState,
+      Configuration: {
+        ...prevState.Configuration,
+        HoldCash: holdCash,
+      },
+    }));
   }, [holdCash]);
 
   return (

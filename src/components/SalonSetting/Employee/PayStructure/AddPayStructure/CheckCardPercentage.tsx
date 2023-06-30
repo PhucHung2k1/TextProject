@@ -16,9 +16,12 @@ const CheckCardPercentage = ({ setPayStructureData }: Props) => {
     setCheckCashPercentage((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
-    setPayStructureData((prev: any) => ({
-      ...prev,
-      CheckCashPercentage: checkCashPercentage,
+    setPayStructureData((prevState: any) => ({
+      ...prevState,
+      Configuration: {
+        ...prevState.Configuration,
+        CheckCashPercentage: checkCashPercentage,
+      },
     }));
   }, [checkCashPercentage]);
   return (

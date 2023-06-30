@@ -59,9 +59,12 @@ const DailySurchargeComponent = ({ setPayStructureData }: Props) => {
     setDailySurcharge((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
-    setPayStructureData((prev: any) => ({
-      ...prev,
-      DailySurcharge: dailySurcharge,
+    setPayStructureData((prevState: any) => ({
+      ...prevState,
+      Configuration: {
+        ...prevState.Configuration,
+        DailySurcharge: dailySurcharge,
+      },
     }));
   }, [dailySurcharge]);
   return (

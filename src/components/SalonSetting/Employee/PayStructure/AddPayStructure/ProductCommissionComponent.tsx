@@ -22,9 +22,12 @@ const ProductCommissionComponent = ({ setPayStructureData }: Props) => {
     setProductCommission((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
-    setPayStructureData((prev: any) => ({
-      ...prev,
-      ProductCommission: productCommission,
+    setPayStructureData((prevState: any) => ({
+      ...prevState,
+      Configuration: {
+        ...prevState.Configuration,
+        ProductCommission: productCommission,
+      },
     }));
   }, [productCommission]);
   return (

@@ -1,5 +1,15 @@
 import FormControlComponent from '@/common/Input/FormControlComponent';
 import {
+  currentDataPayStructureByType,
+  currentDataRadioWorkingTimeByType,
+} from '@/components/SalonSetting/helper';
+import type { PayStructureSettings } from '@/services/payStructure.service/payStructure.interface';
+import {
+  PayStructureMinTimeUnitType,
+  listPayStructureType,
+  listWorkingTimeType,
+} from '@/utils/helper/lookupData';
+import {
   sxSelect,
   sxRadioBlue,
   sxTextField,
@@ -21,195 +31,42 @@ import {
   RadioGroup,
   TextField,
 } from '@mui/material';
+
 import React, { useEffect, useState } from 'react';
 
 interface Props {
   setPayStructureData: Function;
 }
-const listPayStructureType = [
-  {
-    name: 'Commission',
-    value: 'Commission',
-  },
-  {
-    name: 'Commission-Guarantee',
-    value: 'CommissionGuarantee',
-  },
-  {
-    name: 'Salary',
-    value: 'Salary',
-  },
-  {
-    name: 'Hourly',
-    value: 'Hourly',
-  },
-];
-const listWorkingTimeType = [
-  {
-    Value: 'Day',
-    Name: 'Day',
-    Description: 'Day',
-    IconUrl: null,
-  },
-  {
-    Value: 'Week',
-    Name: 'Week',
-    Description: 'Week',
-    IconUrl: null,
-  },
-  {
-    Value: 'Monthly',
-    Name: 'Monthly',
-    Description: 'Monthly',
-    IconUrl: null,
-  },
-  {
-    Value: 'BaseOnPeriod',
-    Name: 'Base On Period',
-    Description: 'Base On Period',
-    IconUrl: null,
-  },
-];
-const PayStructureMinTimeUnitType = [
-  {
-    Value: 'MinDayAndHour',
-    Name: 'Min Day And Hour',
-    Description: 'Min Day And Hour (day, hour)',
-    IconUrl: null,
-  },
-  {
-    Value: 'MinTotalHour',
-    Name: 'Min Total Hour',
-    Description: 'Min Total Hour (hours)',
-    IconUrl: null,
-  },
-];
+
 const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
-  const [payStructureSettings, setPayStructureSettings] = useState({
-    PayStructureType: 'Commission',
-    PotentialBonus: 50,
-    CommissionPayout: 30,
-    MaxCommissionPayout: 60,
-    SalaryGuaranteePayout: 0,
-    MaxSalaryGuaranteePayout: 0,
-    HourlyPayout: 0.0,
-    MaxHourlyPayout: 0.0,
-    AllowSalaryAndCommissionCombination: false,
-    RequiresWorkingTimeOver: false,
-    WorkingTimeType: 'Day',
-    DayMinHour: 0,
-    WeekType: 'MinDayAndHour',
-    WeekMinHour: 0,
-    WeekMinDay: 0,
-    WeekMinTotalHour: 0,
-    MonthType: 'MinDayAndHour',
-    MonthMinHour: 0,
-    MonthMinDay: 0,
-    MonthMinTotalHour: 0,
-    BaseOnPeriodType: 'MinDayAndHour',
-    BaseOnPeriodMinHour: 0,
-    BaseOnPeriodMinDay: 0,
-    BaseOnPeriodMinTotalHour: 0,
-  });
+  const [payStructureSettings, setPayStructureSettings] =
+    useState<PayStructureSettings>({
+      PayStructureType: 'Commission',
+      PotentialBonus: 50,
+      CommissionPayout: 30,
+      MaxCommissionPayout: 60,
+      SalaryGuaranteePayout: 0,
+      MaxSalaryGuaranteePayout: 0,
+      HourlyPayout: 0.0,
+      MaxHourlyPayout: 0.0,
+      AllowSalaryAndCommissionCombination: false,
+      RequiresWorkingTimeOver: false,
+      WorkingTimeType: 'Day',
+      DayMinHour: 0,
+      WeekType: 'MinDayAndHour',
+      WeekMinHour: 0,
+      WeekMinDay: 0,
+      WeekMinTotalHour: 0,
+      MonthType: 'MinDayAndHour',
+      MonthMinHour: 0,
+      MonthMinDay: 0,
+      MonthMinTotalHour: 0,
+      BaseOnPeriodType: 'MinDayAndHour',
+      BaseOnPeriodMinHour: 0,
+      BaseOnPeriodMinDay: 0,
+      BaseOnPeriodMinTotalHour: 0,
+    });
 
-  const currentDataRadioWorkingTimeByType = () => {
-    switch (payStructureSettings.WorkingTimeType) {
-      case 'Week':
-        return {
-          valueType: payStructureSettings.WeekType,
-          valueMinDay: payStructureSettings.WeekMinDay,
-          nameMinDay: 'WeekMinDay',
-          valueMinHour: payStructureSettings.WeekMinHour,
-          nameMinHour: 'WeekMinHour',
-          valueMinTotalHour: payStructureSettings.WeekMinTotalHour,
-          nameMinTotalHour: 'WeekMinTotalHour',
-          type: 'WeekType',
-        };
-      case 'Monthly':
-        return {
-          valueType: payStructureSettings.MonthType,
-          valueMinDay: payStructureSettings.MonthMinDay,
-          nameMinDay: 'MonthMinDay',
-          valueMinHour: payStructureSettings.MonthMinHour,
-          nameMinHour: 'MonthMinHour',
-          valueMinTotalHour: payStructureSettings.MonthMinTotalHour,
-          nameMinTotalHour: 'MonthMinTotalHour',
-          type: 'MonthType',
-        };
-      case 'BaseOnPeriod':
-        return {
-          valueType: payStructureSettings.BaseOnPeriodType,
-          valueMinDay: payStructureSettings.BaseOnPeriodMinDay,
-          nameMinDay: 'BaseOnPeriodMinDay',
-          valueMinHour: payStructureSettings.BaseOnPeriodMinHour,
-          nameMinHour: 'BaseOnPeriodMinHour',
-          valueMinTotalHour: payStructureSettings.BaseOnPeriodMinTotalHour,
-          nameMinTotalHour: 'BaseOnPeriodMinTotalHour',
-          type: 'BaseOnPeriodType',
-        };
-      default:
-        return {
-          valueType: payStructureSettings.WeekType,
-          valueMinDay: payStructureSettings.WeekMinDay,
-          nameMinDay: 'WeekMinDay',
-          valueMinHour: payStructureSettings.WeekMinHour,
-          nameMinHour: 'WeekMinHour',
-          valueMinTotalHour: payStructureSettings.WeekMinTotalHour,
-          nameMinTotalHour: 'WeekMinTotalHour',
-          type: 'WeekType',
-        };
-    }
-  };
-  const currentDataPayStructureByType = () => {
-    switch (payStructureSettings.PayStructureType) {
-      case 'Commission':
-        return {
-          label1Row1: 'Commission Payout',
-          name1Row1: 'CommissionPayout',
-          value1Row1: payStructureSettings.CommissionPayout,
-          label2Row1: 'Max Hourly Payout',
-          name2Row1: 'MaxCommissionPayout',
-          value2Row1: payStructureSettings.MaxCommissionPayout,
-        };
-      case 'CommissionGuarantee':
-        return {
-          label1Row1: 'Commission Payout',
-          name1Row1: 'CommissionPayout',
-          value1Row1: payStructureSettings.CommissionPayout,
-          label2Row1: 'Max Commission Payout',
-          name2Row1: 'MaxCommissionPayout',
-          value2Row1: payStructureSettings.MaxCommissionPayout,
-        };
-      case 'Hourly':
-        return {
-          label1Row1: 'Hourly Payout',
-          name1Row1: 'HourlyPayout',
-          value1Row1: payStructureSettings.HourlyPayout,
-          label2Row1: 'Max Hourly Payout',
-          name2Row1: 'MaxHourlyPayout',
-          value2Row1: payStructureSettings.MaxHourlyPayout,
-        };
-
-      case 'Salary':
-        return {
-          label1Row1: 'Salary (Guarantee) Payout',
-          name1Row1: 'SalaryGuaranteePayout',
-          value1Row1: payStructureSettings.SalaryGuaranteePayout,
-          label2Row1: 'Max Salary (Guarantee) Payout',
-          name2Row1: 'MaxSalaryGuaranteePayout',
-          value2Row1: payStructureSettings.MaxSalaryGuaranteePayout,
-        };
-      default:
-        return {
-          label1Row1: 'Commission Payout',
-          name1Row1: 'CommissionPayout',
-          value1Row1: payStructureSettings.CommissionPayout,
-          label2Row1: 'Max Hourly Payout',
-          name2Row1: 'MaxCommissionPayout',
-          value2Row1: payStructureSettings.MaxCommissionPayout,
-        };
-    }
-  };
   const handleChangeValue = (
     value: boolean | string | number,
     name: string
@@ -218,9 +75,12 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
   };
 
   useEffect(() => {
-    setPayStructureData((prev: any) => ({
-      ...prev,
-      PayStructureSettings: payStructureSettings,
+    setPayStructureData((prevState: any) => ({
+      ...prevState,
+      Configuration: {
+        ...prevState.Configuration,
+        PayStructureSettings: payStructureSettings,
+      },
     }));
   }, [payStructureSettings]);
   return (
@@ -237,7 +97,6 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
               </InputLabel>
               <Select
                 sx={[sxSelect]}
-                labelId="demo-select-small-label"
                 label="Pay Structure Type"
                 className="h-14"
                 value={payStructureSettings.PayStructureType}
@@ -285,38 +144,42 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
           </FormControl>
         </Grid>
         {/* Row 1 Text Field */}
-        {currentDataPayStructureByType().name1Row1 && (
-          <Stack direction="row" spacing={2}>
-            <Grid xs={6} item>
-              <FormControlComponent
-                name={currentDataPayStructureByType().name1Row1}
-                startIconInputProps="percent"
-                label={currentDataPayStructureByType().label1Row1}
-                type="text"
-                sx={sxTextField}
-                value={payStructureSettings.CommissionPayout}
-                onChange={(e: any) =>
-                  handleChangeValue(
-                    e.target.value,
-                    currentDataPayStructureByType().name1Row1
-                  )
-                }
-                // className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-              />
-            </Grid>
-            <Grid xs={6} item>
-              <FormControlComponent
-                name="MaxCommissionPayout"
-                startIconInputProps="percent"
-                sx={sxTextField}
-                label="Max Commission Payout"
-                type="text"
-                value={payStructureSettings.MaxCommissionPayout}
-                // className="!rounded-sm border border-mango-text-gray-1 !outline-none"
-              />
-            </Grid>
-          </Stack>
-        )}
+
+        <Stack direction="row" spacing={2}>
+          <Grid xs={6} item>
+            <FormControlComponent
+              name={
+                currentDataPayStructureByType(payStructureSettings).name1Row1
+              }
+              startIconInputProps="percent"
+              label={
+                currentDataPayStructureByType(payStructureSettings).label1Row1
+              }
+              type="text"
+              sx={sxTextField}
+              value={payStructureSettings.CommissionPayout}
+              onChange={(e: any) =>
+                handleChangeValue(
+                  e.target.value,
+                  currentDataPayStructureByType(payStructureSettings).name1Row1
+                )
+              }
+              // className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+            />
+          </Grid>
+          <Grid xs={6} item>
+            <FormControlComponent
+              name="MaxCommissionPayout"
+              startIconInputProps="percent"
+              sx={sxTextField}
+              label="Max Commission Payout"
+              type="text"
+              value={payStructureSettings.MaxCommissionPayout}
+              // className="!rounded-sm border border-mango-text-gray-1 !outline-none"
+            />
+          </Grid>
+        </Stack>
+
         {/* Row 2 Text Field  */}
         {payStructureSettings.PayStructureType === 'CommissionGuarantee' && (
           <Stack direction="row" spacing={2}>
@@ -397,11 +260,12 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
         {/* Require Working Time */}
         {payStructureSettings.RequiresWorkingTimeOver && (
           <Grid
-            xs={11}
+            xs={8}
+            item
             className="min-h-[218px] rounded-md border border-mango-gray-light-3 p-5 "
           >
             <Stack direction="column" spacing={1}>
-              <Grid xs={9}>
+              <Grid xs={12}>
                 {/* Day, Week, Monthly, Base On Period Dropdown */}
                 <Select
                   sx={[sxSelect]}
@@ -432,20 +296,23 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
                 </Select>
               </Grid>
               {/* Content Dropdown */}
-              <Grid xs={9} item>
+              <Grid xs={12} item>
                 <Box className=" rounded bg-bg-light p-5">
-                  <FormControl
-                    fullWidth
-                    className="text-sm font-normal !text-mango-text-black-1"
-                  >
-                    {/* Content Working Time Drop Down (Type Day) */}
+                  {/* Content Working Time Drop Down (Type Day) */}
 
-                    {payStructureSettings.WorkingTimeType === 'Day' ? (
+                  {payStructureSettings.WorkingTimeType === 'Day' ? (
+                    <FormControl
+                      fullWidth
+                      className="text-sm font-normal !text-mango-text-black-1"
+                    >
                       <TextField
                         sx={sxTextField}
                         label="Min hours (h)"
                         type="number"
                         value={payStructureSettings.DayMinHour}
+                        onChange={(e) =>
+                          handleChangeValue(e.target.value, 'DayMinHour')
+                        }
                         className="w-40 !rounded-sm border border-mango-text-gray-1 bg-white !outline-none"
                         InputProps={{
                           startAdornment: (
@@ -456,112 +323,99 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
                             </InputAdornment>
                           ),
                         }}
-                      />
-                    ) : (
-                      <Box>
-                        {/* Content Working Time Drop Down (Type Week, Monthly, Base On Period) */}
-                        <RadioGroup
-                          row
-                          value={currentDataRadioWorkingTimeByType().valueType}
-                          onChange={(e) => {
-                            const { type } =
-                              currentDataRadioWorkingTimeByType();
-                            handleChangeValue(e.target.value, type);
-                          }}
-                          name={currentDataRadioWorkingTimeByType().type}
+                      />{' '}
+                    </FormControl>
+                  ) : (
+                    <Box>
+                      {/* Content Working Time Drop Down (Type Week, Monthly, Base On Period) */}
+                      <RadioGroup
+                        row
+                        value={
+                          currentDataRadioWorkingTimeByType(
+                            payStructureSettings
+                          ).valueType
+                        }
+                        onChange={(e) => {
+                          const { type } =
+                            currentDataRadioWorkingTimeByType(
+                              payStructureSettings
+                            );
+                          handleChangeValue(e.target.value, type);
+                        }}
+                        name={
+                          currentDataRadioWorkingTimeByType(
+                            payStructureSettings
+                          ).type
+                        }
+                      >
+                        <Stack
+                          direction="column"
+                          spacing={1}
+                          className="mb-2 w-full"
                         >
-                          <Stack
-                            direction="column"
-                            spacing={1}
-                            className="mb-2 w-full"
-                          >
-                            {PayStructureMinTimeUnitType.map((item) => (
-                              <Grid xs={12} item key={item.Value}>
-                                <FormControlLabel
-                                  control={<Radio sx={sxRadioBlue} />}
-                                  label={item.Description}
-                                  value={item.Value}
-                                />
-                              </Grid>
-                            ))}
-                          </Stack>
-                        </RadioGroup>
+                          {PayStructureMinTimeUnitType.map((item) => (
+                            <Grid xs={12} item key={item.Value}>
+                              <FormControlLabel
+                                control={<Radio sx={sxRadioBlue} />}
+                                label={item.Description}
+                                value={item.Value}
+                              />
+                            </Grid>
+                          ))}
+                        </Stack>
+                      </RadioGroup>
 
-                        {/* Type & Hours (day, hour) */}
-                        {currentDataRadioWorkingTimeByType().valueType ===
-                          'MinDayAndHour' && (
-                          <Stack direction="row" className="w-full">
-                            <FormControlComponent
-                              name="WeekMinDay"
-                              sx={sxTextField}
-                              label="Min Day (d)"
-                              type="number"
-                              value={
-                                currentDataRadioWorkingTimeByType().valueMinDay
-                              }
-                              onChange={(e: any) => {
-                                const { nameMinDay } =
-                                  currentDataRadioWorkingTimeByType();
-                                handleChangeValue(e.target.value, nameMinDay);
-                              }}
-                              className="!w-40 bg-white"
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <div className="text-lg font-bold text-icon-color">
-                                      D
-                                    </div>
-                                  </InputAdornment>
-                                ),
-                              }}
-                            />
+                      {/* Type & Hours (day, hour) */}
+                      {currentDataRadioWorkingTimeByType(payStructureSettings)
+                        .valueType === 'MinDayAndHour' && (
+                        <Stack direction="row" className="w-full">
+                          <FormControlComponent
+                            name="WeekMinDay"
+                            sx={sxTextField}
+                            label="Min Day (d)"
+                            type="number"
+                            value={
+                              currentDataRadioWorkingTimeByType(
+                                payStructureSettings
+                              ).valueMinDay
+                            }
+                            onChange={(e: any) => {
+                              const { nameMinDay } =
+                                currentDataRadioWorkingTimeByType(
+                                  payStructureSettings
+                                );
+                              handleChangeValue(e.target.value, nameMinDay);
+                            }}
+                            className="!w-40 bg-white"
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <div className="text-lg font-bold text-icon-color">
+                                    D
+                                  </div>
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
 
-                            <FormControlComponent
-                              name="DailySurchargeWorkingWeeklyMinHour"
-                              sx={sxTextField}
-                              label="Min hours (h)"
-                              type="number"
-                              value={
-                                currentDataRadioWorkingTimeByType().valueMinHour
-                              }
-                              onChange={(e: any) => {
-                                const { nameMinHour } =
-                                  currentDataRadioWorkingTimeByType();
-                                handleChangeValue(e.target.value, nameMinHour);
-                              }}
-                              className="!w-40 bg-white"
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <div className="text-lg font-bold text-icon-color">
-                                      H
-                                    </div>
-                                  </InputAdornment>
-                                ),
-                              }}
-                            />
-                          </Stack>
-                        )}
-
-                        {/* Min total hours (hours) */}
-                        {currentDataRadioWorkingTimeByType().valueType ===
-                          'MinTotalHour' && (
-                          <TextField
+                          <FormControlComponent
+                            name="DailySurchargeWorkingWeeklyMinHour"
                             sx={sxTextField}
                             label="Min hours (h)"
                             type="number"
                             value={
-                              currentDataRadioWorkingTimeByType().valueMinHour
+                              currentDataRadioWorkingTimeByType(
+                                payStructureSettings
+                              ).valueMinHour
                             }
                             onChange={(e: any) => {
-                              const { nameMinTotalHour } =
-                                currentDataRadioWorkingTimeByType();
-                              handleChangeValue(
-                                e.target.value,
-                                nameMinTotalHour
-                              );
+                              const { nameMinHour } =
+                                currentDataRadioWorkingTimeByType(
+                                  payStructureSettings
+                                );
+                              handleChangeValue(e.target.value, nameMinHour);
                             }}
-                            className="!w-40 !rounded-sm border border-mango-text-gray-1 bg-white !outline-none"
+                            className="!w-40 bg-white"
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment position="start">
@@ -572,10 +426,42 @@ const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
                               ),
                             }}
                           />
-                        )}
-                      </Box>
-                    )}
-                  </FormControl>
+                        </Stack>
+                      )}
+
+                      {/* Min total hours (hours) */}
+                      {currentDataRadioWorkingTimeByType(payStructureSettings)
+                        .valueType === 'MinTotalHour' && (
+                        <TextField
+                          sx={sxTextField}
+                          label="Min hours (h)"
+                          type="number"
+                          value={
+                            currentDataRadioWorkingTimeByType(
+                              payStructureSettings
+                            ).valueMinHour
+                          }
+                          onChange={(e: any) => {
+                            const { nameMinTotalHour } =
+                              currentDataRadioWorkingTimeByType(
+                                payStructureSettings
+                              );
+                            handleChangeValue(e.target.value, nameMinTotalHour);
+                          }}
+                          className="!w-40 !rounded-sm border border-mango-text-gray-1 bg-white !outline-none"
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <div className="text-lg font-bold text-icon-color">
+                                  H
+                                </div>
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      )}
+                    </Box>
+                  )}
                 </Box>
               </Grid>
             </Stack>

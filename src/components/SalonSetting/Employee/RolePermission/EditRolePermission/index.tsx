@@ -13,7 +13,7 @@ import AssignEmployees from './AssignEmployeesTab';
 import AddRoleAndPermission from '../AddRoleAndPermission';
 import type { IStateAddRole } from '../LayoutDrawer.tsx/DrawerRolePermission';
 import SetAccessibility from '../SetAccessibility';
-import LayoutDrawer from '../LayoutDrawer.tsx';
+import LayoutDrawer from '../../../../../common/LayoutDrawer';
 import {
   AntTab,
   StyledTabs,

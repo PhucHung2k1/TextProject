@@ -65,6 +65,10 @@ export interface IAddRemoveMultiRoleEmployee {
   roleId: string;
   data: IAddRemoveMultiRoleEmployeeData;
 }
+export interface IAddRemoveMultiPayStructureEmployee {
+  payStructureId: string;
+  data: IAddRemoveMultiRoleEmployeeData;
+}
 export interface IPatchPayloadData {
   op: string;
   path: string;
