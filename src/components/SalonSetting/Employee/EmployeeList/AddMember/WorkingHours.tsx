@@ -1,15 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/jsx-no-undef */
-import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import {
-  Grid,
-  Box,
-  Divider,
-  Typography,
-  Stack,
-  Switch,
-  Button,
-} from '@mui/material';
+import { Grid, Divider, Stack, Switch } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
@@ -79,6 +70,7 @@ const WorkingHoursTab: React.FC<WorkingHoursTabProps> = () => {
 
     dispatch(updateWorkingHours(data));
   };
+  console.log(handleUpdateWorkingHours);
 
   useEffect(() => {
     dispatch(getWorkingHours({}));

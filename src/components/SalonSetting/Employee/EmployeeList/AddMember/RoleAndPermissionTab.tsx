@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-no-undef */
 import {
   Grid,
-  Box,
   Typography,
   Stack,
   Divider,
@@ -51,7 +50,7 @@ const RoleAndPermissionTab: React.FC<RoleAndPermissionTabProps> = () => {
     <div className="min-w-[893px]">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="py-4 rounded-[8px] rounded-t-none border border-t-0 border-mango-gray-light-3 "
+        className="rounded-[8px] rounded-t-none border border-t-0 border-mango-gray-light-3 py-4 "
         noValidate
       >
         <Grid container spacing={2}>
@@ -77,7 +76,7 @@ const RoleAndPermissionTab: React.FC<RoleAndPermissionTabProps> = () => {
                   Team members are allowed access with the following roles:
                 </Typography>
                 <Grid>
-                  <Grid item xs={12} className="bg-bg-light rounded-[8px]">
+                  <Grid item xs={12} className="rounded-[8px] bg-bg-light">
                     <Stack
                       direction="row"
                       justifyContent="space-between"
@@ -113,7 +112,7 @@ const RoleAndPermissionTab: React.FC<RoleAndPermissionTabProps> = () => {
                           <Button
                             variant="outlined"
                             onClick={handleShowMoreToggle}
-                            className="border border-mango-text-gray-2 text-mango-text-gray-2 hover:border-mango-text-gray-2 mt-[5px]"
+                            className="mt-[5px] border border-mango-text-gray-2 text-mango-text-gray-2 hover:border-mango-text-gray-2"
                           >
                             Show more
                           </Button>

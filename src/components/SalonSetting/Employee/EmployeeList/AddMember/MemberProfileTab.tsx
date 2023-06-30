@@ -435,7 +435,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
                 <div>
                   {showMore ? (
                     <Button
-                      className="border border-mango-text-gray-2 text-mango-text-gray-2 text-[14px] hover:border-mango-text-gray-2 mt-5"
+                      className="mt-5 border border-mango-text-gray-2 text-[14px] text-mango-text-gray-2 hover:border-mango-text-gray-2"
                       variant="outlined"
                       onClick={handleShowMoreToggle}
                     >
@@ -444,7 +444,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
                   ) : (
                     <Button
                       variant="outlined"
-                      className="border border-mango-text-gray-2 text-mango-text-gray-2 hover:border-mango-text-gray-2 mt-[5px]"
+                      className="mt-[5px] border border-mango-text-gray-2 text-mango-text-gray-2 hover:border-mango-text-gray-2"
                       onClick={handleShowMoreToggle}
                     >
                       Show more
