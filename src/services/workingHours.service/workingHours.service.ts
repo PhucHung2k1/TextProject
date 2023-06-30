@@ -4,7 +4,7 @@ import { apiGet, apiPost } from '@/utils/axios/instance';
 import type { IWorkingHours } from './workingHours.interface';
 // import { IStoreProfile } from "./store.interface"
 
-const GET_STORE_HOURS = '/store/store-hours';
+const GET_STORE_HOURS = '/store-hours/setup-store';
 export class WorkingHours {
   public getWorkingHours = async (): Promise<IResponse> => {
     const response: IResponse = await apiGet(GET_STORE_HOURS).catch(
