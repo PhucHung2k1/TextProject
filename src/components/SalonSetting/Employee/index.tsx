@@ -32,7 +32,7 @@ export const EmployeeSetting = () => {
       id: 1,
       label: 'ROLE & PERMISSION',
       key: 'rolePermissions',
-      children: <AddYourEmployeeModal />,
+      children: <RolePermissionList />,
     },
 
     {

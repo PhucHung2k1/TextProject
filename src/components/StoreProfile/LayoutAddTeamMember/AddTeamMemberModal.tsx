@@ -214,9 +214,6 @@ export const AddYourEmployeeModal = () => {
   useEffect(() => {
     dispatch(getListPayStructure({}));
   }, []);
-  const aa = listPayStructure.find((item) => item.Id === valuePayStructure)
-    ?.Configuration?.PayStructureSettings;
-  console.log('asd', aa);
   return (
     <div className=" w-[568px] rounded-2xl bg-white pb-8 pt-10 shadow-md">
       {/* <div className=" text-center">
