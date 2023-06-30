@@ -21,7 +21,7 @@ import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
 import Timeline from '@mui/lab/Timeline';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import EmployeeProfileTab from './EmployeeProfileTab';
+import MemberProfileTab from './MemberProfileTab';
 import type { IEmployee } from '@/services/employee.service/employee.interface';
 
 interface AddMemberProps {
@@ -139,7 +139,7 @@ const AddMember: React.FC<AddMemberProps> = ({
             {renderCollapse(
               'Team member profile',
               'Team member profile',
-              <EmployeeProfileTab selectedEmployee={selectedEmployee} />
+              <MemberProfileTab selectedEmployee={selectedEmployee} />
             )}
             {renderCollapse(
               'App & Portal Management',
