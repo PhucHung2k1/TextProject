@@ -48,7 +48,24 @@ export const addPayStructure = createAsyncThunk(
         );
         return error;
       }
-      return data;
+    } catch (err: any) {
+      // throw new Error(`Error signing in: ${err.message}`);
+    }
+  }
+);
+
+export const deletePayStructure = createAsyncThunk(
+  'payStructure/deletePayStructure',
+  async (id: string, { dispatch }) => {
+    const PayStructureServiceAPI = new PayStructureService();
+
+    try {
+      const { status } = await PayStructureServiceAPI.deletePayStructure(id);
+
+      if (status === 200 || status === 201 || status === 204) {
+        showToastMessage(dispatch, `Update success!`, 'success');
+        dispatch(getListPayStructure({}));
+      }
     } catch (err: any) {
       // throw new Error(`Error signing in: ${err.message}`);
     }

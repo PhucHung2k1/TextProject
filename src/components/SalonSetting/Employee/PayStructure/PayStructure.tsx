@@ -31,8 +31,14 @@ import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import type { IPayStructureData } from '@/services/payStructure.service/payStructure.interface';
-import { getListPayStructure } from '@/store/payStructure/payStructureAction';
+import {
+  getListPayStructure,
+  deletePayStructure,
+  getListPayStructure,
+} from '@/store/payStructure/payStructureAction';
 import { showDrawerPayStructure } from '@/store/common/commonSlice';
+
+import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
 
 // eslint-disable-next-line import/no-cycle
 
@@ -47,10 +53,16 @@ const arrEmployee = ['A', 'B', 'C', 'D'];
 const PayStructure = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
   // Filter State
   const [filterPayType, setFilterPayType] = useState('');
 
   const [filterEmployee, setFilterEmployee] = useState('');
+
+  // Selected Employee
+  const [selectedPayStructure, setSelectedPayStructure] =
+    useState<IPayStructureData>();
 
   const dispatch = useAppDispatch();
 
@@ -63,6 +75,9 @@ const PayStructure = () => {
     dispatch(showDrawerPayStructure());
   };
 
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
   // Handle Filter
   const handleFilterPayType = (event: any) => {
     setFilterPayType(event.target.value as string);
@@ -141,11 +156,24 @@ const PayStructure = () => {
       },
     },
   }));
+  const handleDeleteButton = (item: any) => {
+    setOpenModal(true);
+    setSelectedPayStructure(item);
+    // handleOpenDrawer();
+    // setSelectedEmployee(item);
+  };
+  const handleDeletePayStructure = () => {
+    if (selectedPayStructure) {
+      dispatch(deletePayStructure(selectedPayStructure?.Id));
+    }
+    handleCloseModal();
+  };
 
   const handleEditPayStructure = (item: IPayStructureData) => {
     console.log('item', item.Id);
 
     handleOpenAddDrawer();
+    setSelectedPayStructure(item);
   };
 
   useEffect(() => {
@@ -154,6 +182,16 @@ const PayStructure = () => {
 
   return (
     <>
+      <ModalCustomDelete
+        onClose={() => setOpenModal(false)}
+        open={openModal}
+        onCancel={handleCloseModal}
+        onSubmit={handleDeletePayStructure}
+        titleModal="Remove Pay Structure?"
+        subTitle={`  Would you like to remove "${selectedPayStructure?.Name}"?`}
+        textButtonCancel="No, Cancel"
+        textButtonSubmit="Yes, Delete it"
+      />
       <div className="mt-5">
         <Grid container spacing={2}>
           <Grid xs={12} item>
@@ -315,6 +353,7 @@ const PayStructure = () => {
                           <IconButton
                             className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
                             style={squareIconButtonStyles}
+                            onClick={() => handleDeleteButton(row)}
                           >
                             <DeleteOutlineOutlinedIcon
                               fontSize="medium"
