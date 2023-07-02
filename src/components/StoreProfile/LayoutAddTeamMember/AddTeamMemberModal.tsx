@@ -553,6 +553,18 @@ export const AddYourEmployeeModal = () => {
                       payStructureStyle,
                       selectPaystructureConfig
                     )}
+
+                    {/* {listPayStructure
+                      .find((item) => item.Id === valuePayStructure)
+                      ?.Configurations.map((itemConfig, index) => (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <Box key={index} className="m-1 flex">
+                          <Typography>{itemConfig.Name}: </Typography>
+                          <Typography fontWeight="bold">
+                            {itemConfig.Value}
+                          </Typography>
+                        </Box>
+                      ))} */}
                   </Box>
                 </Grid>
                 <Grid xs={12} item className="relative">

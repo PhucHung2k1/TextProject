@@ -1,16 +1,12 @@
 import {
   Grid,
-  Box,
   Collapse,
   ListItem,
   ListItemButton,
   ListItemText,
   List,
-  Divider,
-  useScrollTrigger,
 } from '@mui/material';
-import React, { useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
+import React, { useState, useEffect } from 'react';
 import {
   TimelineConnector,
   TimelineContent,
@@ -21,11 +17,16 @@ import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
 import Timeline from '@mui/lab/Timeline';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import MemberProfileTab from './MemberProfileTab';
+import AddAppPortalManagementTab from './AddAppPortalManagementTab';
+import type { IEmployee } from '@/services/employee.service/employee.interface';
+import StickyListWithDivider from '@/common/StickyHeader';
+import WorkingHours from './WorkingHours';
+import RoleAndPermissionTab from './RoleAndPermissionTab';
 
-import EmployeeProfileTab from './EditEmployeeTab/EmployeeProfileTab';
-
-interface EditEmployeeProps {
+interface AddMemberProps {
   handleCloseDrawer: any;
+  selectedEmployee: IEmployee | undefined;
 }
 const listTabs = [
   'Team member profile',
@@ -35,11 +36,34 @@ const listTabs = [
   'Pay Structure',
   'Service & Product',
 ];
-const EditEmployee: React.FC<EditEmployeeProps> = ({ handleCloseDrawer }) => {
+const AddMember: React.FC<AddMemberProps> = ({
+  handleCloseDrawer,
+  selectedEmployee,
+}) => {
   const [openCollapses, setOpenCollapses] = useState<string[]>([
     'Team member profile',
   ]);
-  const trigger = useScrollTrigger();
+  const [showDivider, setShowDivider] = useState(false);
+  const handleScroll = () => {
+    const scrollThreshold = 200;
+    const scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+
+    if (scrollTop > scrollThreshold) {
+      setShowDivider(true);
+      console.log('Scroll event occurred.');
+    } else {
+      setShowDivider(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('scroll', handleScroll);
+
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const handleCollapseToggle = (id: any) => {
     if (openCollapses.includes(id)) {
       setOpenCollapses(openCollapses.filter((collapseId) => collapseId !== id));
@@ -49,7 +73,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({ handleCloseDrawer }) => {
   };
   const renderCollapse = (id: any, label: any, content: any) => {
     const isOpen = openCollapses.includes(id);
-
+    window.addEventListener('scroll', handleScroll);
     return (
       <React.Fragment key={id}>
         <ListItem
@@ -72,7 +96,7 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({ handleCloseDrawer }) => {
               primary={label}
             />
             {isOpen ? (
-              <RemoveIcon className="h-8 w-8 cursor-pointer rounded border border-cyan-50 bg-background-paper-elevation-1 text-icon-color" />
+              <RemoveIcon className="h-8 w-8 cursor-pointer rounded  bg-background-paper-elevation-1 text-icon-color" />
             ) : (
               <AddIcon className="h-8 w-8 cursor-pointer rounded border border-cyan-50 bg-cyan-50 text-text-primary-dark" />
             )}
@@ -87,24 +111,13 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({ handleCloseDrawer }) => {
   };
 
   return (
-    <div className="w-screen">
-      <div
-        className={`sticky top-0 z-10 bg-white pb-[20px] pt-[32px] ${
-          trigger ? 'mb-4' : ''
-        }`}
-      >
-        <div className="text-center text-3xl font-semibold text-text-title">
-          <p>Add new member</p>
-        </div>
-        <Box
-          onClick={handleCloseDrawer}
-          className="absolute left-5 top-8 cursor-pointer text-icon-color"
-        >
-          <CloseIcon fontSize="large" />
-        </Box>
-        {trigger && <Divider />}
-      </div>
-      <div className="fixed top-40 mt-[36px] flex w-[474px] justify-end ">
+    <div>
+      <StickyListWithDivider
+        isShowDivider={showDivider}
+        handleCloseDrawer={handleCloseDrawer}
+        title="Add new member"
+      />
+      <div className="top-25 fixed mt-[36px] flex w-[474px] justify-end ">
         <Timeline
           position="left"
           sx={{
@@ -114,12 +127,19 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({ handleCloseDrawer }) => {
             },
           }}
         >
-          {listTabs.map((item) => {
+          {listTabs.map((item, index) => {
             return (
               <TimelineItem key={`${Math.random()}`}>
                 <TimelineSeparator>
                   <TimelineDot sx={{ background: '#C5C4C9' }} />
-                  <TimelineConnector sx={{ background: '#C5C4C9' }} />
+                  <TimelineConnector
+                    sx={{
+                      background:
+                        index === listTabs.length - 1
+                          ? 'transparent'
+                          : '#C5C4C9',
+                    }}
+                  />
                 </TimelineSeparator>
                 <TimelineContent sx={{ color: '#404044' }}>
                   {item}
@@ -135,22 +155,18 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({ handleCloseDrawer }) => {
             {renderCollapse(
               'Team member profile',
               'Team member profile',
-              <EmployeeProfileTab />
+              <MemberProfileTab selectedEmployee={selectedEmployee} />
             )}
             {renderCollapse(
               'App & Portal Management',
               'App & Portal Management',
-              <div>Content for Collapse 2</div>
+              <AddAppPortalManagementTab selectedEmployee={selectedEmployee} />
             )}
-            {renderCollapse(
-              'Working hours',
-              'Working hours',
-              <div>Content for Collapse 3</div>
-            )}
+            {renderCollapse('Working hours', 'Working hours', <WorkingHours />)}
             {renderCollapse(
               'Role & Permission',
               'Role & Permission',
-              <div>Content for Collapse 3</div>
+              <RoleAndPermissionTab />
             )}
             {renderCollapse(
               'Pay Structure',
@@ -168,4 +184,4 @@ const EditEmployee: React.FC<EditEmployeeProps> = ({ handleCloseDrawer }) => {
     </div>
   );
 };
-export default EditEmployee;
+export default AddMember;

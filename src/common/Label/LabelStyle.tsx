@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
 
-interface ILabbelStyle {
+interface ILabelStyle {
   label: string;
   Id: string;
 }
@@ -33,7 +33,7 @@ const StyledCloseIcon = styled(CloseIcon)({
   marginTop: '-11px',
 });
 
-const LabbelStyle = ({ label, Id }: ILabbelStyle) => {
+const LabelStyle = ({ label, Id }: ILabelStyle) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const handleMouseIn = () => {
     setIsActive(!isActive);
@@ -69,4 +69,4 @@ const LabbelStyle = ({ label, Id }: ILabbelStyle) => {
   );
 };
 
-export default LabbelStyle;
+export default LabelStyle;

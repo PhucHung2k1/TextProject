@@ -40,7 +40,7 @@ import { showDrawerRolePermission } from '@/store/common/commonSlice';
 import EditRolePermission from './EditRolePermission';
 import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
-import LabbelStyle from '@/common/Label/LabbelStyle';
+import LabbelStyle from '@/common/Label/LabelStyle';
 import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
 
 interface PermissionItem {
@@ -93,7 +93,7 @@ const ListRolePermission = () => {
   const listRole = useAppSelector((state) => state.customerRoleSlice.listRole);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
   const startIndex = page * rowsPerPage;
   const endIndex = Math.min(startIndex + rowsPerPage, listRole.length);
   const [maxAvatars, setMaxAvatars] = useState<{ [key: string]: number }>({});
@@ -288,7 +288,7 @@ const ListRolePermission = () => {
             sx={{
               width: '100%',
               overflow: 'auto',
-              maxHeight: '560px',
+              maxHeight: '500px',
               boxShadow: 'none',
               marginTop: '10px',
             }}
@@ -587,7 +587,7 @@ const ListRolePermission = () => {
             </Table>
           </Paper>
           <TablePagination
-            rowsPerPageOptions={[10, 15]}
+            rowsPerPageOptions={[3, 15]}
             component="div"
             count={listRole.length}
             rowsPerPage={rowsPerPage}

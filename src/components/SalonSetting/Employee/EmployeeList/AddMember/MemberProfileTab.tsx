@@ -27,7 +27,6 @@ import {
   sxTextFieldError,
 } from '@/utils/helper/styles';
 import { apiPostPhoto } from '@/utils/axios/instance';
-import { useAppSelector } from '@/store/hook';
 
 const listColors = [
   '#FFFFFF',
@@ -53,17 +52,16 @@ interface IFormInput {
   confirmPassword: string;
 }
 
-interface EmployeeProfileTabProps {}
+interface EmployeeProfileTabProps {
+  selectedEmployee: any;
+}
 const POST_IMAGE = '/file/upload-picture';
-const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = () => {
-  const employeeDetailRedux = useAppSelector(
-    (state) => state.employeeSlice.employeeDetail
-  );
-
-  const [employeeDetail] = useState(employeeDetailRedux);
+const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = ({
+  selectedEmployee,
+}) => {
   console.log(
-    '🚀 ~ file: EmployeeProfileTab.tsx:67 ~ employeeDetail:',
-    employeeDetail
+    '🚀 ~ file: MemberProfileTab.tsx:62 ~ selectedEmployee:',
+    selectedEmployee
   );
   const {
     register,
@@ -134,23 +132,24 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = () => {
                       className="rounded-full object-cover"
                     />
                   ) : (
-                    <Image
-                      src={
-                        employeeDetail?.Information?.ProfilePictureUrl?.includes(
-                          'https://' || 'http://'
-                        )
-                          ? employeeDetail.Information.ProfilePictureUrl
-                          : '/assets/images/StoreProfile/store-default.png'
-                      }
-                      alt="logo1"
-                      width={186}
-                      height={186}
-                      className={
-                        employeeDetail.Information.ProfilePictureUrl !== ''
-                          ? 'rounded-full object-cover'
-                          : 'rounded-full'
-                      }
-                    />
+                    ''
+                    // <Image
+                    //   src={
+                    //     selectedEmployee?.ProfilePictureUrl.includes(
+                    //       'https://' || 'http://'
+                    //     )
+                    //       ? selectedEmployee?.ProfilePictureUrl
+                    //       : '/assets/images/StoreProfile/store-default.png'
+                    //   }
+                    //   alt="logo1"
+                    //   width={186}
+                    //   height={186}
+                    //   className={
+                    //     selectedEmployee?.ProfilePictureUrl !== ''
+                    //       ? 'rounded-full object-cover'
+                    //       : 'rounded-full'
+                    //   }
+                    // />
                   )}
 
                   <input
@@ -160,7 +159,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = () => {
                     type="file"
                     id="imageUpload"
                   />
-                  <div className="absolute bottom-0 right-0 mb-0 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-primary-main">
+                  <div className="absolute bottom-0 right-0 mb-0 flex h-[59px] w-[59px] items-center justify-center rounded-full bg-primary-main">
                     <Image
                       src="/assets/images/SetupStore/picture.svg"
                       alt="logo"
@@ -436,7 +435,7 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = () => {
                 <div>
                   {showMore ? (
                     <Button
-                      className="mt-5"
+                      className="mt-5 border border-mango-text-gray-2 text-[14px] text-mango-text-gray-2 hover:border-mango-text-gray-2"
                       variant="outlined"
                       onClick={handleShowMoreToggle}
                     >
@@ -444,8 +443,8 @@ const EmployeeProfileTab: React.FC<EmployeeProfileTabProps> = () => {
                     </Button>
                   ) : (
                     <Button
-                      className="mt-[5px]"
                       variant="outlined"
+                      className="mt-[5px] border border-mango-text-gray-2 text-mango-text-gray-2 hover:border-mango-text-gray-2"
                       onClick={handleShowMoreToggle}
                     >
                       Show more
