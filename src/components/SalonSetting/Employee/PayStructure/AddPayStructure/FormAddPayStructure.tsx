@@ -1,5 +1,5 @@
-import { Grid, Stack, Divider, Box, Button } from '@mui/material';
-import React, { useState } from 'react';
+import { Grid, Divider } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { sxTextField } from '@/utils/helper/styles';
 import TipOnCCComponent from './TipOnCCComponent';
@@ -11,27 +11,25 @@ import AllowHoldCash from './AllowHoldCash';
 import CheckCardPercentage from './CheckCardPercentage';
 import FormControlComponent from '@/common/Input/FormControlComponent';
 
+import { useAppDispatch } from '@/store/hook';
+import { setPayloadAddPayStructure } from '@/store/payStructure/payStructureSlice';
+
 export interface IFormInputPayStructure {
   Name: string;
 }
-interface FormAddPayStructureProps {
-  handleCloseDrawer: Function;
-}
 
-const FormAddPayStructure = ({
-  handleCloseDrawer,
-}: FormAddPayStructureProps) => {
+const FormAddPayStructure = () => {
+  const dispatch = useAppDispatch();
   const {
     register,
     formState: { errors },
-    handleSubmit,
   } = useForm<IFormInputPayStructure>();
 
   const [payStructureData, setPayStructureData] = useState({
     PayStructure: {
       Name: '',
     },
-    PayStructureConfiguration: {
+    Configuration: {
       PayStructureSettings: {},
       TipOnCC: {},
       DailySurcharge: {},
@@ -41,20 +39,22 @@ const FormAddPayStructure = ({
       CheckCashPercentage: {},
     },
   });
-  console.log('payStructureData', payStructureData);
 
-  const onSubmit = async (_values: IFormInputPayStructure) => {
+  const handleChangeName = (Name: string) => {
     setPayStructureData((prev) => ({
       ...prev,
       PayStructure: {
-        Name: _values.Name,
+        Name,
       },
     }));
   };
+  useEffect(() => {
+    dispatch(setPayloadAddPayStructure(payStructureData));
+  }, [payStructureData]);
 
   return (
     <div className=" min-h-screen">
-      <form onSubmit={handleSubmit(onSubmit)} className="my-8" noValidate>
+      <form className="my-8" noValidate>
         <Grid container spacing={2}>
           <Grid xs={12} item>
             <FormControlComponent
@@ -63,6 +63,7 @@ const FormAddPayStructure = ({
               type="text"
               name="Name"
               error={Boolean(errors.Name)}
+              onChange={(e: any) => handleChangeName(e.target.value)}
               errors={errors}
               requiredField={{
                 ...register('Name', {
@@ -115,31 +116,6 @@ const FormAddPayStructure = ({
           </Grid>
           {/* Check/ Card percentage */}
           <CheckCardPercentage setPayStructureData={setPayStructureData} />
-          <Grid xs={12} item>
-            <Divider />
-          </Grid>
-          {/* Button bottom */}
-          <Grid xs={12} item>
-            <Stack direction="row" spacing={2}>
-              <Grid xs={6} item>
-                <Box
-                  className="flex h-12 w-full cursor-pointer items-center justify-center rounded-[4px] border
-                 border-border-secondary bg-white px-3 text-base font-semibold text-text-secondary"
-                  onClick={() => handleCloseDrawer()}
-                >
-                  CANCEL
-                </Box>
-              </Grid>
-              <Grid xs={6} item>
-                <Button
-                  type="submit"
-                  className="flex h-12 w-full cursor-pointer items-center justify-center rounded-[4px] bg-primary-main text-base font-semibold  text-white"
-                >
-                  SAVE
-                </Button>
-              </Grid>
-            </Stack>
-          </Grid>
         </Grid>
       </form>
     </div>

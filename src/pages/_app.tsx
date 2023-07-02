@@ -13,6 +13,7 @@ import type { IMetaSEOProps } from '@/components/MetaSEO';
 import MetaSEO from '@/components/MetaSEO';
 import { ThemeProvider, createTheme } from '@mui/material';
 import DrawerRolePermission from '@/components/SalonSetting/Employee/RolePermission/LayoutDrawer.tsx/DrawerRolePermission';
+import DrawerPayStructure from '@/components/SalonSetting/Employee/PayStructure/AddPayStructure/DrawerPayStructure';
 
 NProgress.configure({
   showSpinner: false,
@@ -74,6 +75,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
             <ToastContainer />
             <DrawerRolePermission />
+            <DrawerPayStructure />
           </main>
         </SessionProvider>
       </ThemeProvider>

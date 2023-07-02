@@ -20,11 +20,20 @@ const ProductChargeComponent = ({ setPayStructureData }: Props) => {
     BaseOnTicketMinChargeAmount: 0,
     BaseOnTicketMinChargePercent: 0,
   });
-  const handleChangeValue = (value: boolean | string, name: string) => {
+  const handleChangeValue = (
+    value: boolean | string | number,
+    name: string
+  ) => {
     setProductCharge((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
-    setPayStructureData((prev: any) => ({ ...prev, productCharge }));
+    setPayStructureData((prevState: any) => ({
+      ...prevState,
+      Configuration: {
+        ...prevState.Configuration,
+        ProductCharge: productCharge,
+      },
+    }));
   }, [productCharge]);
   return (
     <Grid xs={12} item className="">
@@ -73,6 +82,9 @@ const ProductChargeComponent = ({ setPayStructureData }: Props) => {
                   label="Min ticket amount"
                   type="number"
                   value={productCharge.BaseOnTicketAmount}
+                  onChange={(e: any) =>
+                    handleChangeValue(e.target.value, 'BaseOnTicketAmount')
+                  }
                   // className="!max-w-[50%] !rounded-sm border border-mango-text-gray-1 bg-white !outline-none"
                 />
 
@@ -85,6 +97,12 @@ const ProductChargeComponent = ({ setPayStructureData }: Props) => {
                       startIconInputProps="money"
                       sx={[sxTextField, { marginLeft: 2 }]}
                       type="number"
+                      onChange={(e: any) =>
+                        handleChangeValue(
+                          e.target.value,
+                          'BaseOnTicketMinChargeAmount'
+                        )
+                      }
                       value={productCharge.BaseOnTicketMinChargeAmount}
                       // className="!w-40 !rounded-sm border border-mango-text-gray-1 bg-white !outline-none"
                     />
@@ -97,11 +115,17 @@ const ProductChargeComponent = ({ setPayStructureData }: Props) => {
                   labelPlacement="start"
                   control={
                     <FormControlComponent
-                      name="BaseOnTicketMinChargeAmount"
+                      name="BaseOnTicketMinChargePercent"
                       sx={[sxTextField, { marginLeft: 2 }]}
                       type="number"
                       startIconInputProps="money"
                       value={productCharge.BaseOnTicketMinChargePercent}
+                      onChange={(e: any) =>
+                        handleChangeValue(
+                          e.target.value,
+                          'BaseOnTicketMinChargePercent'
+                        )
+                      }
                       // className="!w-40  !rounded-sm border border-mango-text-gray-1 bg-white !outline-none"
                     />
                   }

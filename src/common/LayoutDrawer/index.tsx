@@ -3,7 +3,7 @@ import { ProgressComponent } from '@/common/ProgressComponent';
 import { Box, Button, Divider, Stack } from '@mui/material';
 import React from 'react';
 import { type ReactNode } from 'react';
-import type { ISteps } from './DrawerRolePermission';
+import type { ISteps } from '../../components/SalonSetting/Employee/RolePermission/LayoutDrawer.tsx/DrawerRolePermission';
 // eslint-disable-next-line import/no-cycle
 // eslint-disable-next-line import/no-cycle
 
@@ -83,7 +83,7 @@ const LayoutDrawer = ({
             variant="outlined"
             onClick={() => handleNext()}
             disabled={disable}
-            className="flex h-12 w-1/2 cursor-pointer items-center justify-center rounded-[4px] border-none bg-primary-main text-base font-semibold  uppercase text-white hover:bg-primary-main"
+            className="flex h-12 w-1/2 cursor-pointer items-center justify-center rounded-[4px] border-none bg-primary-main text-base font-semibold  uppercase !text-white hover:bg-primary-main"
           >
             {activeStep === steps.length - 1 ? 'Save' : 'Continue'}
           </Button>

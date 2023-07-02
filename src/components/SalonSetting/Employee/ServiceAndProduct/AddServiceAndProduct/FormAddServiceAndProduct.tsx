@@ -58,7 +58,7 @@ const FormAddServiceAndProduct: React.FC<FormAddPayStructureProps> = ({
   } = useForm<IFormInput>();
 
   const [payStructureType, setPayStructureType] = React.useState(
-    'commissionguarantee'
+    'CommissionGuarantee'
   );
   // state select radio tip on cc
   const [selectedTipOnCC, setSelectedTipOnCC] = useState('feefromcreditcard');
@@ -163,12 +163,12 @@ const FormAddServiceAndProduct: React.FC<FormAddPayStructureProps> = ({
                         </InputAdornment>
                       }
                     >
-                      <MenuItem value="commissionguarantee">
+                      <MenuItem value="CommissionGuarantee">
                         Commission-Guarantee
                       </MenuItem>
-                      <MenuItem value="commission">Commission</MenuItem>
-                      <MenuItem value="salary">Salary</MenuItem>
-                      <MenuItem value="hourly">Hourly</MenuItem>
+                      <MenuItem value="Commission">Commission</MenuItem>
+                      <MenuItem value="Salary">Salary</MenuItem>
+                      <MenuItem value="Hourly">Hourly</MenuItem>
                     </Select>
                   </FormControl>
                 </Stack>

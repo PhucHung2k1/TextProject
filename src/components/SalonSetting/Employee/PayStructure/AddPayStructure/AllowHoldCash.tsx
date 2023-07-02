@@ -11,7 +11,13 @@ const AllowHoldCash = ({ setPayStructureData }: Props) => {
     setHoldCash((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
-    setPayStructureData((prev: any) => ({ ...prev, HoldCash: holdCash }));
+    setPayStructureData((prevState: any) => ({
+      ...prevState,
+      Configuration: {
+        ...prevState.Configuration,
+        HoldCash: holdCash,
+      },
+    }));
   }, [holdCash]);
 
   return (
@@ -28,7 +34,7 @@ const AllowHoldCash = ({ setPayStructureData }: Props) => {
               control={
                 <Switch
                   name="Yes"
-                  value={holdCash.AllowHoldCash}
+                  checked={holdCash.AllowHoldCash}
                   onChange={(e) =>
                     handleChangeValue(e.target.checked, 'AllowHoldCash')
                   }

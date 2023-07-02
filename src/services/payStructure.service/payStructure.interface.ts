@@ -11,13 +11,12 @@ export interface IPayStructureData {
 }
 
 export interface ICreatePayStructurePayLoad {
-  PayStructure: PayStructure;
-  PayStructureConfiguration: PayStructureConfiguration;
+  PayStructure: PayStructure | object;
+  Configuration: PayStructureConfiguration | object;
 }
 
 export interface PayStructure {
   Name: string;
-  Description: string;
 }
 
 export interface PayStructureConfiguration {
