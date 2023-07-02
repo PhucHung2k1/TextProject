@@ -23,7 +23,13 @@ const TipOnCCComponent = ({ setPayStructureData }: Props) => {
     setTipOnCC((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
-    setPayStructureData((prev: any) => ({ ...prev, TipOnCC: tipOnCC }));
+    setPayStructureData((prevState: any) => ({
+      ...prevState,
+      Configuration: {
+        ...prevState.Configuration,
+        TipOnCC: tipOnCC,
+      },
+    }));
   }, [tipOnCC]);
   return (
     <Grid xs={12} item>

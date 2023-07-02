@@ -37,9 +37,10 @@ import {
 } from '@/utils/helper/styles';
 import { getAllPermission } from '@/store/permission/permissionAction';
 import { showDrawerRolePermission } from '@/store/common/commonSlice';
-import { PayStructureConfiguration } from '@/services/payStructure.service/payStructure.interface';
+import type { PayStructureConfiguration } from '@/services/payStructure.service/payStructure.interface';
 import { getListPayStructure } from '@/store/payStructure/payStructureAction';
 import FormControlComponent from '@/common/Input/FormControlComponent';
+import { renderPayStructureDetail } from '../helper/renderPaystructureAddNewTeam';
 
 interface IFormInput {
   firstName: string;
@@ -132,7 +133,6 @@ export const AddYourEmployeeModal = () => {
       setError('email', { type: 'manual', message: 'errorMessage' });
     }
   };
-
   const onSubmit = (values: IFormInput) => {
     const body: ISendInvitationPayload = {
       firstName: values.firstName,
@@ -165,9 +165,6 @@ export const AddYourEmployeeModal = () => {
   useEffect(() => {
     dispatch(getListPayStructure({}));
   }, []);
-  const aa = listPayStructure.find((item) => item.Id === valuePayStructure)
-    ?.Configuration?.PayStructureSettings;
-  console.log('asd', aa);
   return (
     <div className=" w-[568px] rounded-2xl bg-white pb-8 pt-10 shadow-md">
       {/* <div className=" text-center">
@@ -552,156 +549,9 @@ export const AddYourEmployeeModal = () => {
                         }
                       </Typography>
                     </Box>
-                    {payStructureStyle === 'Commission' && (
-                      <>
-                        <Grid container spacing={2}>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>Commission Payout: </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .CommissionPayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>Max Commission Payout: </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .MaxCommissionPayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                        </Grid>
-                      </>
-                    )}
-                    {payStructureStyle === 'Commission - Guarantee' && (
-                      <>
-                        <Grid container spacing={2}>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>Commission Payout: </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .CommissionPayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>Max Commission Payout: </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .MaxCommissionPayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                        </Grid>
-
-                        <Grid container spacing={2}>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>Salary Guarantee Payout: </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .SalaryGuaranteePayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>
-                                Max Salary Guarantee Payout:{' '}
-                              </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .MaxSalaryGuaranteePayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                        </Grid>
-                      </>
-                    )}
-                    {payStructureStyle === 'Hourly' && (
-                      <>
-                        <Grid container spacing={2}>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>Hourly Payout: </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .HourlyPayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>Max Hourly Payout: </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .MaxHourlyPayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                        </Grid>
-                      </>
-                    )}
-                    {payStructureStyle === 'Salary' && (
-                      <>
-                        <Grid container spacing={2}>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>Salary Guarantee Payout: </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .SalaryGuaranteePayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                          <Grid xs={6} item>
-                            <Box className="m-1 flex">
-                              <Typography>
-                                Max Salary Guarantee Payout:{' '}
-                              </Typography>
-                              <Typography fontWeight="bold">
-                                %
-                                {
-                                  selectPaystructureConfig?.PayStructureSettings
-                                    .MaxSalaryGuaranteePayout
-                                }
-                              </Typography>
-                            </Box>
-                          </Grid>
-                        </Grid>
-                      </>
+                    {renderPayStructureDetail(
+                      payStructureStyle,
+                      selectPaystructureConfig
                     )}
                   </Box>
                 </Grid>

@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { DrawerCustom } from '@/common/Drawer/DrawerCustom';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { hideDrawerRolePermission } from '@/store/common/commonSlice';
-import LayoutDrawer from '.';
+import LayoutDrawer from '../../../../../common/LayoutDrawer';
 import {
   addNewRole,
   addRemoveMultiRole,

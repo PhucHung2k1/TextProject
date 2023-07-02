@@ -10,7 +10,6 @@ import {
   Badge,
   Button,
   Chip,
-  Drawer,
   FormControl,
   Grid,
   IconButton,
@@ -28,17 +27,22 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 // eslint-disable-next-line import/no-cycle
-import DrawerAddPayStructure from './AddPayStructure/DrawerAddPayStructure';
 import { sxSelect } from '@/utils/helper/styles';
 import { squareIconButtonStyles } from '@/helper/styleButton';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import type { IPayStructureData } from '@/services/payStructure.service/payStructure.interface';
-import { getListPayStructure } from '@/store/payStructure/payStructureAction';
+import {
+  getListPayStructure,
+  deletePayStructure,
+} from '@/store/payStructure/payStructureAction';
+import { showDrawerPayStructure } from '@/store/common/commonSlice';
+
+import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
 
 // eslint-disable-next-line import/no-cycle
 
 const arrPayStructureType = [
-  'Commission-Guarantee',
+  'CommissionGuarantee',
   'Commission',
   'Salary',
   'Hourly',
@@ -47,19 +51,18 @@ const arrPayStructureType = [
 const arrEmployee = ['A', 'B', 'C', 'D'];
 const PayStructure = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
   // Filter State
   const [filterPayType, setFilterPayType] = useState('');
 
   const [filterEmployee, setFilterEmployee] = useState('');
 
   // Selected Employee
-  const [selectedEmployee, setSelectedEmployee] = useState<IPayStructureData>();
-  console.log(
-    '🚀 ~ file: PayStructure.tsx:169 ~ PayStructure ~ selectedEmployee:',
-    selectedEmployee
-  );
-  const [openAddDrawer, setOpenAddDrawer] = React.useState(false);
+  const [selectedPayStructure, setSelectedPayStructure] =
+    useState<IPayStructureData>();
+
   const dispatch = useAppDispatch();
 
   const payStructureList = useAppSelector(
@@ -68,10 +71,11 @@ const PayStructure = () => {
 
   // Open and close drawer add paystructure
   const handleOpenAddDrawer = () => {
-    setOpenAddDrawer(true);
+    dispatch(showDrawerPayStructure());
   };
-  const handleCloseAddDrawer = () => {
-    setOpenAddDrawer(false);
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
   // Handle Filter
   const handleFilterPayType = (event: any) => {
@@ -85,7 +89,7 @@ const PayStructure = () => {
   const endIndex = Math.min(startIndex + rowsPerPage, payStructureList.length);
 
   // Filter data list
-  const filteredData = payStructureList.filter((row) => {
+  const filteredData: IPayStructureData[] = payStructureList.filter((row) => {
     if (filterPayType !== '' && filterEmployee !== '') {
       return true;
       // row.Name.toLowerCase().includes(filterPayType.toLowerCase()) &&
@@ -101,7 +105,7 @@ const PayStructure = () => {
       // )
     }
     if (filterPayType !== '') {
-      return row.Name.toLowerCase().includes(filterPayType.toLowerCase());
+      return row.Type.toLowerCase().includes(filterPayType.toLowerCase());
     }
     if (filterEmployee !== '') {
       return true;
@@ -151,10 +155,24 @@ const PayStructure = () => {
       },
     },
   }));
+  const handleDeleteButton = (item: any) => {
+    setOpenModal(true);
+    setSelectedPayStructure(item);
+    // handleOpenDrawer();
+    // setSelectedEmployee(item);
+  };
+  const handleDeletePayStructure = () => {
+    if (selectedPayStructure) {
+      dispatch(deletePayStructure(selectedPayStructure?.Id));
+    }
+    handleCloseModal();
+  };
 
   const handleEditPayStructure = (item: IPayStructureData) => {
+    console.log('item', item.Id);
+
     handleOpenAddDrawer();
-    setSelectedEmployee(item);
+    setSelectedPayStructure(item);
   };
 
   useEffect(() => {
@@ -163,6 +181,16 @@ const PayStructure = () => {
 
   return (
     <>
+      <ModalCustomDelete
+        onClose={() => setOpenModal(false)}
+        open={openModal}
+        onCancel={handleCloseModal}
+        onSubmit={handleDeletePayStructure}
+        titleModal="Remove Pay Structure?"
+        subTitle={`  Would you like to remove "${selectedPayStructure?.Name}"?`}
+        textButtonCancel="No, Cancel"
+        textButtonSubmit="Yes, Delete it"
+      />
       <div className="mt-5">
         <Grid container spacing={2}>
           <Grid xs={12} item>
@@ -186,7 +214,7 @@ const PayStructure = () => {
                   onChange={handleFilterPayType}
                 >
                   <MenuItem value="">
-                    <p>Paystructure type</p>
+                    <p>Pay structure type</p>
                   </MenuItem>
                   {arrPayStructureType.map((name) => (
                     <MenuItem key={name} value={name}>
@@ -324,6 +352,7 @@ const PayStructure = () => {
                           <IconButton
                             className="bg-[#FFEBEF] hover:bg-[#FFEBEF]"
                             style={squareIconButtonStyles}
+                            onClick={() => handleDeleteButton(row)}
                           >
                             <DeleteOutlineOutlinedIcon
                               fontSize="medium"
@@ -338,7 +367,7 @@ const PayStructure = () => {
               </Table>
             </Paper>
             <TablePagination
-              rowsPerPageOptions={[3, 5]}
+              rowsPerPageOptions={[5, 10]}
               component="div"
               count={filteredData.length}
               rowsPerPage={rowsPerPage}
@@ -347,19 +376,7 @@ const PayStructure = () => {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Grid>
-        </Grid>{' '}
-        {/* Drawer add pay structure */}
-        <Drawer
-          anchor="right"
-          open={openAddDrawer}
-          onClose={handleCloseAddDrawer}
-        >
-          {/* <EditEmployee
-            handleCloseDrawer={handleCloseDrawer}
-            selectedEmployee={selectedEmployee}
-          /> */}
-          <DrawerAddPayStructure handleCloseDrawer={handleCloseAddDrawer} />
-        </Drawer>
+        </Grid>
       </div>
     </>
   );

@@ -11,7 +11,6 @@ import { Search, MoreHoriz } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ServiceAndProduct from './ServiceAndProduct/ServiceAndProduct';
-import { AddYourEmployeeModal } from '@/components/StoreProfile/LayoutAddTeamMember/AddTeamMemberModal';
 
 export const EmployeeSetting = () => {
   const [activeKey, setActiveKey] = useState<number>(0);
@@ -32,7 +31,7 @@ export const EmployeeSetting = () => {
       id: 1,
       label: 'ROLE & PERMISSION',
       key: 'rolePermissions',
-      children: <AddYourEmployeeModal />,
+      children: <RolePermissionList />,
     },
 
     {

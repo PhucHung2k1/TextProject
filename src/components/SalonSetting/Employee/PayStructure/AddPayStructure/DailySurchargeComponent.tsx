@@ -59,9 +59,12 @@ const DailySurchargeComponent = ({ setPayStructureData }: Props) => {
     setDailySurcharge((prev) => ({ ...prev, [name]: value }));
   };
   useEffect(() => {
-    setPayStructureData((prev: any) => ({
-      ...prev,
-      DailySurcharge: dailySurcharge,
+    setPayStructureData((prevState: any) => ({
+      ...prevState,
+      Configuration: {
+        ...prevState.Configuration,
+        DailySurcharge: dailySurcharge,
+      },
     }));
   }, [dailySurcharge]);
   return (
@@ -179,6 +182,12 @@ const DailySurchargeComponent = ({ setPayStructureData }: Props) => {
                       label="Min hours (h)"
                       type="number"
                       value={dailySurcharge.DailySurchargeWorkingDailyMinHour}
+                      onChange={(e) =>
+                        handleChangeValue(
+                          e.target.value,
+                          'DailySurchargeWorkingDailyMinHour'
+                        )
+                      }
                       className="w-40 !rounded-sm border border-mango-text-gray-1 bg-white !outline-none"
                       InputProps={{
                         startAdornment: (
@@ -235,6 +244,12 @@ const DailySurchargeComponent = ({ setPayStructureData }: Props) => {
                             value={
                               dailySurcharge.DailySurchargeWorkingWeeklyMinDay
                             }
+                            onChange={(e: any) =>
+                              handleChangeValue(
+                                e.target.value,
+                                'DailySurchargeWorkingWeeklyMinDay'
+                              )
+                            }
                             className="!w-40 bg-white"
                             InputProps={{
                               startAdornment: (
@@ -253,6 +268,12 @@ const DailySurchargeComponent = ({ setPayStructureData }: Props) => {
                             type="number"
                             value={
                               dailySurcharge.DailySurchargeWorkingWeeklyMinHour
+                            }
+                            onChange={(e: any) =>
+                              handleChangeValue(
+                                e.target.value,
+                                'DailySurchargeWorkingWeeklyMinHour'
+                              )
                             }
                             className="!w-40 bg-white"
                             InputProps={{
@@ -276,7 +297,13 @@ const DailySurchargeComponent = ({ setPayStructureData }: Props) => {
                           label="Min hours (h)"
                           type="number"
                           value={
-                            dailySurcharge.DailySurchargeWorkingWeeklyMinHour
+                            dailySurcharge.DailySurchargeWorkingWeeklyMinTotalHour
+                          }
+                          onChange={(e: any) =>
+                            handleChangeValue(
+                              e.target.value,
+                              'DailySurchargeWorkingWeeklyMinTotalHour'
+                            )
                           }
                           className="!w-40 !rounded-sm border border-mango-text-gray-1 bg-white !outline-none"
                           InputProps={{

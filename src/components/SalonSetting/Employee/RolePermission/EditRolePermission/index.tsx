@@ -13,7 +13,7 @@ import AssignEmployees from './AssignEmployeesTab';
 import AddRoleAndPermission from '../AddRoleAndPermission';
 import type { IStateAddRole } from '../LayoutDrawer.tsx/DrawerRolePermission';
 import SetAccessibility from '../SetAccessibility';
-import LayoutDrawer from '../LayoutDrawer.tsx';
+import LayoutDrawer from '../../../../../common/LayoutDrawer';
 import {
   AntTab,
   StyledTabs,
@@ -117,6 +117,7 @@ const EditRolePermission: React.FC<EditRolePermissionProps> = ({
     if (listAddRemoveRolePermissionExists) {
       dispatch(addRemoveMultiRoleEmployee(listAddRemoveRolePermission));
     }
+    handleCloseDrawer();
   };
   return (
     <LayoutDrawer
