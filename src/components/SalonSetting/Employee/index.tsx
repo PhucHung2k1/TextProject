@@ -10,11 +10,11 @@ import { Search, MoreHoriz } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ServiceAndProduct from './ServiceAndProduct/ServiceAndProduct';
-import { AddYourEmployeeModal } from '@/components/StoreProfile/LayoutAddTeamMember/AddTeamMemberModal';
 import type { IEmployee } from '@/services/employee.service/employee.interface';
 import AddMember from './EmployeeList/AddMember/AddMember';
 import { useAppDispatch } from '@/store/hook';
 import { setValueSearchName } from '@/store/employee/employeeSlice';
+import ListRolePermission from './RolePermission/ListRolePermission';
 
 export const EmployeeSetting = () => {
   const [activeKey, setActiveKey] = useState<number>(0);
@@ -48,7 +48,7 @@ export const EmployeeSetting = () => {
       id: 1,
       label: 'ROLE & PERMISSION',
       key: 'rolePermissions',
-      children: <RolePermissionList />,
+      children: <ListRolePermission />,
     },
 
     {
