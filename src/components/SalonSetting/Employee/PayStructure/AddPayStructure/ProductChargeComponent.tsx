@@ -1,4 +1,5 @@
 import FormControlComponent from '@/common/Input/FormControlComponent';
+import type { ProductCharge } from '@/services/payStructure.service/payStructure.interface';
 import { sxRadioBlue, sxTextField } from '@/utils/helper/styles';
 
 import {
@@ -11,15 +12,15 @@ import {
 import React, { useEffect, useState } from 'react';
 
 interface Props {
+  productChargeData: ProductCharge;
   setPayStructureData: Function;
 }
-const ProductChargeComponent = ({ setPayStructureData }: Props) => {
-  const [productCharge, setProductCharge] = useState({
-    ProductChargeType: 'Based on Service',
-    BaseOnTicketAmount: 0,
-    BaseOnTicketMinChargeAmount: 0,
-    BaseOnTicketMinChargePercent: 0,
-  });
+const ProductChargeComponent = ({
+  productChargeData,
+  setPayStructureData,
+}: Props) => {
+  const [productCharge, setProductCharge] =
+    useState<ProductCharge>(productChargeData);
   const handleChangeValue = (
     value: boolean | string | number,
     name: string

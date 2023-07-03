@@ -1,16 +1,19 @@
 import { Grid, Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import InputTwoValue from '@/common/Input/InputTwoValue';
+import type { CheckCashPercentage } from '@/services/payStructure.service/payStructure.interface';
 
 interface Props {
+  checkCashPercentageData: CheckCashPercentage;
   setPayStructureData: Function;
 }
-const CheckCardPercentage = ({ setPayStructureData }: Props) => {
+const CheckCardPercentage = ({
+  checkCashPercentageData,
+  setPayStructureData,
+}: Props) => {
   // eslint-disable-next-line unused-imports/no-unused-vars
-  const [checkCashPercentage, setCheckCashPercentage] = useState({
-    TipFeeCheckPercentage: 0,
-    SurchargeCheckPercentage: 0,
-  });
+  const [checkCashPercentage, setCheckCashPercentage] =
+    useState<CheckCashPercentage>(checkCashPercentageData);
   const handleChangeValue = (
     value: boolean | string | number,
     name: string

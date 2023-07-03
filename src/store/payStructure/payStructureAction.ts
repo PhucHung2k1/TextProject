@@ -4,10 +4,14 @@ import { PayStructureService } from '@/services/payStructure.service/payStructur
 import {
   setIdPayStructureAssignEmployee,
   setListPayStructure,
+  setPayStructureById,
 } from './payStructureSlice';
 import type { ICreatePayStructurePayLoad } from '@/services/payStructure.service/payStructure.interface';
 import { showToastMessage } from '@/utils/helper/showToastMessage';
-import type { IAddRemoveMultiPayStructureEmployee } from '@/services/customerRole.service/customerRole.interface';
+import type {
+  IAddRemoveMultiPayStructureEmployee,
+  IPatchPayloadData,
+} from '@/services/customerRole.service/customerRole.interface';
 
 export const getListPayStructure = createAsyncThunk(
   'payStructure/getPayStructure',
@@ -96,6 +100,54 @@ export const addRemoveMultiPayStructureEmployee = createAsyncThunk(
       }
     } catch (err: any) {
       // err
+    }
+  }
+);
+
+export const getPayStructureById = createAsyncThunk(
+  'payStructure/getPayStructureById',
+  async (id: string, { dispatch }) => {
+    const PayStructureServiceAPI = new PayStructureService();
+
+    try {
+      const { data, status, error } =
+        await PayStructureServiceAPI.getPayStructureById(id);
+
+      if (status === 200 || status === 201) {
+        dispatch(setPayStructureById(data));
+        return { data, status };
+      }
+      if (error) {
+        return error;
+      }
+    } catch (err: any) {
+      // throw new Error(`Error signing in: ${err.message}`);
+    }
+  }
+);
+
+interface IUpdatePayStructureById {
+  id: string;
+  data: IPatchPayloadData[];
+}
+export const updatePayStructureById = createAsyncThunk(
+  'payStructure/updatePayStructureById',
+  async (body: IUpdatePayStructureById, { dispatch }) => {
+    const PayStructureServiceAPI = new PayStructureService();
+
+    try {
+      const { data, status, error } =
+        await PayStructureServiceAPI.updatePayStructureById(body.id, body.data);
+
+      if (status === 200 || status === 201) {
+        dispatch(getListPayStructure({}));
+        return { data, status };
+      }
+      if (error) {
+        return error;
+      }
+    } catch (err: any) {
+      // throw new Error(`Error signing in: ${err.message}`);
     }
   }
 );

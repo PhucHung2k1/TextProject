@@ -178,7 +178,7 @@ const AssignEmployees = ({ idRole }: Props) => {
             )
             .map((item) => {
               return (
-                <TableRow key={item.Id} className="h-full ">
+                <TableRow key={item.CustomerId} className="h-full ">
                   <TableCell className="w-[2%]">
                     <FormControlLabel
                       sx={{

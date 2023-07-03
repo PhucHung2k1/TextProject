@@ -30,8 +30,8 @@ export interface PayStructureConfiguration {
 }
 
 export interface CheckCashPercentage {
-  tipFeeCheckPercentage: number;
-  surchargeCheckPercentage: number;
+  TipFeeCheckPercentage: number;
+  SurchargeCheckPercentage: number;
 }
 
 export interface DailySurcharge {
@@ -93,5 +93,19 @@ export interface ProductCommission {
 export interface TipOnCC {
   TipOnCCType: string;
   TipOnCCFeeFromCreditCard: string;
-  TipOnCCDailyFixedFee: number;
+  TipOnCCDailyFixedFee: string;
+}
+export interface IPayStructureById {
+  PayStructure: PayStructureById;
+  Configuration: PayStructureConfiguration;
+}
+export interface PayStructureById {
+  Id: string;
+  StoreId: string;
+  Name: string;
+  Description: null;
+  CreateBy: null;
+  CreateDate: Date | string;
+  LastModifiedBy: null;
+  LastModifiedDate: null;
 }

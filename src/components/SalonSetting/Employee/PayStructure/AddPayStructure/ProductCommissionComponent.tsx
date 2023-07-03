@@ -1,4 +1,5 @@
 import FormControlComponent from '@/common/Input/FormControlComponent';
+import type { ProductCommission } from '@/services/payStructure.service/payStructure.interface';
 import { sxSwitchBlue, sxTextField } from '@/utils/helper/styles';
 import {
   Grid,
@@ -10,14 +11,16 @@ import {
 import React, { useEffect, useState } from 'react';
 
 interface Props {
+  productCommissionData: ProductCommission;
   setPayStructureData: Function;
 }
-const ProductCommissionComponent = ({ setPayStructureData }: Props) => {
-  const [productCommission, setProductCommission] = useState({
-    AllowProductCommission: true,
-    ProductCommissionPercent: 0,
-    MaxPayoutProductCommissionPercent: 0,
-  });
+const ProductCommissionComponent = ({
+  productCommissionData,
+  setPayStructureData,
+}: Props) => {
+  const [productCommission, setProductCommission] = useState<ProductCommission>(
+    productCommissionData
+  );
   const handleChangeValue = (value: boolean | string, name: string) => {
     setProductCommission((prev) => ({ ...prev, [name]: value }));
   };
