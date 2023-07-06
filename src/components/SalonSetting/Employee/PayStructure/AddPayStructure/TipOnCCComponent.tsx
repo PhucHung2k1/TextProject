@@ -9,16 +9,14 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import FormControlComponent from '@/common/Input/FormControlComponent';
+import type { TipOnCC } from '@/services/payStructure.service/payStructure.interface';
 
 interface Props {
+  tipOnCCData: TipOnCC;
   setPayStructureData: Function;
 }
-const TipOnCCComponent = ({ setPayStructureData }: Props) => {
-  const [tipOnCC, setTipOnCC] = useState({
-    TipOnCCType: 'TipOnCCFeeFromCreditCard',
-    TipOnCCFeeFromCreditCard: '0',
-    TipOnCCDailyFixedFee: '0',
-  });
+const TipOnCCComponent = ({ tipOnCCData, setPayStructureData }: Props) => {
+  const [tipOnCC, setTipOnCC] = useState<TipOnCC>(tipOnCCData);
   const handleChangeValue = (value: boolean | string, name: string) => {
     setTipOnCC((prev) => ({ ...prev, [name]: value }));
   };

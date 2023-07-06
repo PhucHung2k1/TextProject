@@ -1,12 +1,14 @@
+import type { HoldCash } from '@/services/payStructure.service/payStructure.interface';
 import { sxSwitchBlue } from '@/utils/helper/styles';
 import { Grid, Stack, FormControlLabel, Switch } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
 interface Props {
+  allowHoldCashData: HoldCash;
   setPayStructureData: Function;
 }
-const AllowHoldCash = ({ setPayStructureData }: Props) => {
-  const [holdCash, setHoldCash] = useState({ AllowHoldCash: true });
+const AllowHoldCash = ({ allowHoldCashData, setPayStructureData }: Props) => {
+  const [holdCash, setHoldCash] = useState<HoldCash>(allowHoldCashData);
   const handleChangeValue = (value: boolean | string, name: string) => {
     setHoldCash((prev) => ({ ...prev, [name]: value }));
   };

@@ -35,37 +35,16 @@ import {
 import React, { useEffect, useState } from 'react';
 
 interface Props {
+  payStructureSettingsData: PayStructureSettings;
   setPayStructureData: Function;
 }
 
-const PayStructureSettingComponent = ({ setPayStructureData }: Props) => {
+const PayStructureSettingComponent = ({
+  payStructureSettingsData,
+  setPayStructureData,
+}: Props) => {
   const [payStructureSettings, setPayStructureSettings] =
-    useState<PayStructureSettings>({
-      PayStructureType: 'Commission',
-      PotentialBonus: 50,
-      CommissionPayout: 30,
-      MaxCommissionPayout: 60,
-      SalaryGuaranteePayout: 0,
-      MaxSalaryGuaranteePayout: 0,
-      HourlyPayout: 0.0,
-      MaxHourlyPayout: 0.0,
-      AllowSalaryAndCommissionCombination: false,
-      RequiresWorkingTimeOver: false,
-      WorkingTimeType: 'Day',
-      DayMinHour: 0,
-      WeekType: 'MinDayAndHour',
-      WeekMinHour: 0,
-      WeekMinDay: 0,
-      WeekMinTotalHour: 0,
-      MonthType: 'MinDayAndHour',
-      MonthMinHour: 0,
-      MonthMinDay: 0,
-      MonthMinTotalHour: 0,
-      BaseOnPeriodType: 'MinDayAndHour',
-      BaseOnPeriodMinHour: 0,
-      BaseOnPeriodMinDay: 0,
-      BaseOnPeriodMinTotalHour: 0,
-    });
+    useState<PayStructureSettings>(payStructureSettingsData);
 
   const handleChangeValue = (
     value: boolean | string | number,

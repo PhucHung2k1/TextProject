@@ -10,6 +10,7 @@ import {
   Badge,
   Button,
   Chip,
+  Drawer,
   FormControl,
   Grid,
   IconButton,
@@ -34,10 +35,12 @@ import type { IPayStructureData } from '@/services/payStructure.service/payStruc
 import {
   getListPayStructure,
   deletePayStructure,
+  getPayStructureById,
 } from '@/store/payStructure/payStructureAction';
 import { showDrawerPayStructure } from '@/store/common/commonSlice';
 
 import ModalCustomDelete from '@/components/Modal/ModalCustomDelete';
+import EditPayStructure from './EditPayStructure';
 
 // eslint-disable-next-line import/no-cycle
 
@@ -52,7 +55,7 @@ const arrEmployee = ['A', 'B', 'C', 'D'];
 const PayStructure = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
+  const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   // Filter State
   const [filterPayType, setFilterPayType] = useState('');
@@ -158,6 +161,7 @@ const PayStructure = () => {
   const handleDeleteButton = (item: any) => {
     setOpenModal(true);
     setSelectedPayStructure(item);
+
     // handleOpenDrawer();
     // setSelectedEmployee(item);
   };
@@ -169,16 +173,17 @@ const PayStructure = () => {
   };
 
   const handleEditPayStructure = (item: IPayStructureData) => {
-    console.log('item', item.Id);
-
-    handleOpenAddDrawer();
+    dispatch(getPayStructureById(item.Id));
+    setOpenEdit(true);
     setSelectedPayStructure(item);
   };
 
   useEffect(() => {
     dispatch(getListPayStructure({}));
   }, []);
-
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+  };
   return (
     <>
       <ModalCustomDelete
@@ -311,7 +316,7 @@ const PayStructure = () => {
                               <StyledBadge
                                 isActive
                                 overlap="circular"
-                                key={`${avatarItem.FirstName} ${avatarItem.LastName}`}
+                                key={avatarItem.Id}
                                 anchorOrigin={{
                                   vertical: 'bottom',
                                   horizontal: 'right',
@@ -375,6 +380,12 @@ const PayStructure = () => {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            <Drawer anchor="right" open={openEdit} onClose={handleCloseEdit}>
+              <EditPayStructure
+                idPayStructure={selectedPayStructure?.Id || ''}
+                handleCloseDrawer={handleCloseEdit}
+              />
+            </Drawer>
           </Grid>
         </Grid>
       </div>

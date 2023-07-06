@@ -11,8 +11,9 @@ import AllowHoldCash from './AllowHoldCash';
 import CheckCardPercentage from './CheckCardPercentage';
 import FormControlComponent from '@/common/Input/FormControlComponent';
 
-import { useAppDispatch } from '@/store/hook';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { setPayloadAddPayStructure } from '@/store/payStructure/payStructureSlice';
+import { initAddPayStructure } from '@/utils/helper/initPayStructure';
 
 export interface IFormInputPayStructure {
   Name: string;
@@ -24,21 +25,10 @@ const FormAddPayStructure = () => {
     register,
     formState: { errors },
   } = useForm<IFormInputPayStructure>();
-
-  const [payStructureData, setPayStructureData] = useState({
-    PayStructure: {
-      Name: '',
-    },
-    Configuration: {
-      PayStructureSettings: {},
-      TipOnCC: {},
-      DailySurcharge: {},
-      ProductCharge: {},
-      ProductCommission: {},
-      HoldCash: {},
-      CheckCashPercentage: {},
-    },
-  });
+  const openDrawerPayStructure = useAppSelector(
+    (state) => state.commonSlice.openDrawerPayStructure
+  );
+  const [payStructureData, setPayStructureData] = useState(initAddPayStructure);
 
   const handleChangeName = (Name: string) => {
     setPayStructureData((prev) => ({
@@ -51,7 +41,11 @@ const FormAddPayStructure = () => {
   useEffect(() => {
     dispatch(setPayloadAddPayStructure(payStructureData));
   }, [payStructureData]);
-
+  useEffect(() => {
+    if (openDrawerPayStructure) {
+      setPayStructureData(initAddPayStructure);
+    }
+  }, [openDrawerPayStructure]);
   return (
     <div className=" min-h-screen">
       <form className="my-8" noValidate>
@@ -79,6 +73,9 @@ const FormAddPayStructure = () => {
           </Grid>
           {/* Pay Structure settings */}
           <PayStructureSettingComponent
+            payStructureSettingsData={
+              payStructureData.Configuration.PayStructureSettings
+            }
             setPayStructureData={setPayStructureData}
           />
 
@@ -86,36 +83,56 @@ const FormAddPayStructure = () => {
             <Divider />
           </Grid>
           {/* Tip on cc */}
-          <TipOnCCComponent setPayStructureData={setPayStructureData} />
+          <TipOnCCComponent
+            tipOnCCData={payStructureData.Configuration.TipOnCC}
+            setPayStructureData={setPayStructureData}
+          />
           <Grid xs={12} item>
             <Divider />
           </Grid>
           {/* Daily Surcharge */}
-          <DailySurchargeComponent setPayStructureData={setPayStructureData} />
+          <DailySurchargeComponent
+            dailySurchargeData={payStructureData.Configuration.DailySurcharge}
+            setPayStructureData={setPayStructureData}
+          />
           <Grid xs={12} item>
             <Divider />
           </Grid>
           {/* Product Charge */}
-          <ProductChargeComponent setPayStructureData={setPayStructureData} />
+          <ProductChargeComponent
+            productChargeData={payStructureData.Configuration.ProductCharge}
+            setPayStructureData={setPayStructureData}
+          />
           {/* Under line */}
           <Grid xs={12} item>
             <Divider />
           </Grid>
           {/* Product Commission */}
           <ProductCommissionComponent
+            productCommissionData={
+              payStructureData.Configuration.ProductCommission
+            }
             setPayStructureData={setPayStructureData}
           />
           <Grid xs={12} item>
             <Divider />
           </Grid>
           {/* Allow Hold Cash */}
-          <AllowHoldCash setPayStructureData={setPayStructureData} />
+          <AllowHoldCash
+            allowHoldCashData={payStructureData.Configuration.HoldCash}
+            setPayStructureData={setPayStructureData}
+          />
           {/* Divider */}
           <Grid xs={12} item>
             <Divider />
           </Grid>
           {/* Check/ Card percentage */}
-          <CheckCardPercentage setPayStructureData={setPayStructureData} />
+          <CheckCardPercentage
+            checkCashPercentageData={
+              payStructureData.Configuration.CheckCashPercentage
+            }
+            setPayStructureData={setPayStructureData}
+          />
         </Grid>
       </form>
     </div>

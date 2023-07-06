@@ -1,4 +1,5 @@
 import FormControlComponent from '@/common/Input/FormControlComponent';
+import type { DailySurcharge } from '@/services/payStructure.service/payStructure.interface';
 import { sxRadioBlue, sxTextField, sxSelect } from '@/utils/helper/styles';
 import {
   Grid,
@@ -17,6 +18,7 @@ import {
 import React, { useEffect, useState } from 'react';
 
 interface Props {
+  dailySurchargeData: DailySurcharge;
   setPayStructureData: Function;
 }
 const listWorkingTimeType = [
@@ -43,18 +45,12 @@ const PayStructureMinTimeUnitType = [
     IconUrl: null,
   },
 ];
-const DailySurchargeComponent = ({ setPayStructureData }: Props) => {
-  const [dailySurcharge, setDailySurcharge] = useState({
-    DailySurchargeType: 'DailySurchargeFromCommission',
-    DailySurchargeFromCommission: 0,
-    DailySurchargeFixedSurcharge: 0,
-    DailySurchargeWorkingTimeType: 'Day',
-    DailySurchargeWorkingDailyMinHour: 8,
-    DailySurchargeWorkingWeeklyType: 'MinDayAndHour',
-    DailySurchargeWorkingWeeklyMinHour: 0,
-    DailySurchargeWorkingWeeklyMinDay: 0,
-    DailySurchargeWorkingWeeklyMinTotalHour: 0,
-  });
+const DailySurchargeComponent = ({
+  dailySurchargeData,
+  setPayStructureData,
+}: Props) => {
+  const [dailySurcharge, setDailySurcharge] =
+    useState<DailySurcharge>(dailySurchargeData);
   const handleChangeValue = (value: boolean | string, name: string) => {
     setDailySurcharge((prev) => ({ ...prev, [name]: value }));
   };
